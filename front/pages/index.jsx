@@ -6,98 +6,140 @@ import ClientLayout from "../components/ClientLayout";
 import axios from "axios";
 import wrapper from "../store/configureStore";
 import { END } from "redux-saga";
-import { ColWrapper, RowWrapper, Image } from "../components/commonComponents";
+import {
+  Image,
+  WholeWrapper,
+  RsWrapper,
+  Wrapper,
+  Text,
+} from "../components/commonComponents";
 import useWidth from "../hooks/useWidth";
 import Theme from "../components/Theme";
 
 const Home = ({}) => {
   const width = useWidth();
+
+  ////// HOOKS //////
+
+  ////// REDUX //////
+
+  ////// USEEFFECT //////
+
+  ////// TOGGLE ///////
+
+  ///// HANDLER //////
+
+  ////// DATAVIEW //////
   return (
     <ClientLayout>
-      <RowWrapper>
-        <ColWrapper
-          span={24}
-          height={`100vh`}
-          bgImg={`url("https://firebasestorage.googleapis.com/v0/b/storage-4leaf.appspot.com/o/SOUL%2Fassets%2Fimages%2Fbanner%2Fbanner.png?alt=media&token=c12d963d-f88f-4034-9392-524cac91ab39")`}
-          position={`relative`}
-        >
-          <ColWrapper
-            width={`100%`}
-            height={`100%`}
-            bgColor={`rgba(0,0,0,0.25)`}
-          >
-            <RowWrapper>
-              <ColWrapper xs={1} sm={2}></ColWrapper>
-              <ColWrapper xs={22} sm={20} al={`flex-end`}>
-                <ColWrapper al={`flex-end`}>
-                  <Image
-                    width={width < 700 ? `100%` : `30%`}
-                    src={`https://4leaf-s3.s3.ap-northeast-2.amazonaws.com/SOUL/assets/images/logo/logo_long_white.png`}
-                  />
-                </ColWrapper>
-                <ColWrapper
-                  fontSize={width < 700 ? `2rem` : `2.4rem`}
-                  color={Theme.white_C}
-                  margin={`30px 0`}
-                  isNanum={true}
-                >
-                  진심을 내건 소울 한의원
-                </ColWrapper>
+      <WholeWrapper height={`100vh`}>
+        <Wrapper height={`45%`} bgColor={Theme.basicTheme_C} ju={`flex-start`}>
+          <RsWrapper ju={`flex-start`} position={`relative`}>
+            <Wrapper padding={`10px 0`}>
+              <Image src={`#`} alt={`logo`} width={`40px`} />
+            </Wrapper>
 
-                <ColWrapper
-                  fontSize={`1.3rem`}
-                  lineHeight={`1.8`}
-                  color={Theme.white_C}
-                  textAlign={`right`}
-                  display={width < 700 ? `flex` : `none`}
-                >
-                  저희 소울 한의원은 대표 박정재 원장님과 공동대표 김주익
-                  원장님의 가장 한의학다운 환자중심의 의료를 실현하는 공동
-                  프로젝트입니다. 통합의학에 기반하여 진짜 한의학 개념을 환자와
-                  함께 나눌 수 있는 한의원, 이제 시작합니다.
-                </ColWrapper>
+            <Text
+              bold={true}
+              color={Theme.white_C}
+              fontSize={`3rem`}
+              margin={`30px 0 0`}
+            >
+              맡아줘 내 짐!
+            </Text>
+            <Wrapper al={`flex-start`} margin={`45px 0 0`}>
+              <Text bold={true} color={Theme.white_C}>
+                원할 때 맡겨!
+              </Text>
+            </Wrapper>
 
-                <ColWrapper
-                  color={Theme.white_C}
-                  fontSize={`1.3rem`}
-                  display={width < 700 ? `none` : `flex`}
-                  lineHeight={`1.8`}
-                >
-                  저희 소울 한의원은 대표 박정재 원장님과 공동대표 김주익
-                  원장님의
-                </ColWrapper>
-                <ColWrapper
-                  color={Theme.white_C}
-                  fontSize={`1.3rem`}
-                  display={width < 700 ? `none` : `flex`}
-                  lineHeight={`1.8`}
-                >
-                  가장 한의학다운 환자중심의 의료를 실현하는 공동
-                  프로젝트입니다.
-                </ColWrapper>
-                <ColWrapper
-                  color={Theme.white_C}
-                  fontSize={`1.3rem`}
-                  display={width < 700 ? `none` : `flex`}
-                  lineHeight={`1.8`}
-                >
-                  통합의학에 기반하여 진짜 한의학 개념을 환자와 함께 나눌 수
-                  있는 한의원,
-                </ColWrapper>
-                <ColWrapper
-                  color={Theme.white_C}
-                  fontSize={`1.3rem`}
-                  display={width < 700 ? `none` : `flex`}
-                  lineHeight={`1.8`}
-                >
-                  이제 시작합니다.
-                </ColWrapper>
-              </ColWrapper>
-              <ColWrapper xs={1} sm={2}></ColWrapper>
-            </RowWrapper>
-          </ColWrapper>
-        </ColWrapper>
-      </RowWrapper>
+            <Wrapper al={`flex-end`} margin={`35px 0 0`}>
+              <Text bold={true} color={Theme.white_C}>
+                원할 때 찾고!
+              </Text>
+            </Wrapper>
+
+            <Image
+              src={`#`}
+              position={`absolute`}
+              bottom={`0`}
+              left={`50%`}
+              width={`auto`}
+            />
+          </RsWrapper>
+        </Wrapper>
+        <Wrapper height={`55%`} bgColor={Theme.white_C}>
+          <RsWrapper ju={`flex-start`}>
+            <Wrapper al={`flex-start`} margin={`50px 0 0`}>
+              <Text>3초 만에 내가 맡길 짐 가격 알아보기</Text>
+
+              <Wrapper
+                height={`50px`}
+                padding={`10px`}
+                border={`4px solid ${Theme.grey_C}`}
+                radius={`10px`}
+                margin={`10px 0 0s`}
+                ju={`space-between`}
+                dr={`row`}
+              >
+                <Text fontSize={`1.2rem`} bold={true}>
+                  내 짐 맡기면 얼마일까 ?
+                </Text>
+
+                <Image src={`#`} width={`auto`} />
+              </Wrapper>
+            </Wrapper>
+
+            <Text margin={`40px 0 0`}>보관중인 고객님의 소중한 물건</Text>
+
+            <Wrapper dr={`row`} margin={`5px 0 0`}>
+              <Text
+                padding={`0 5px`}
+                bgColor={Theme.lightGrey_C}
+                fontWeight={`700`}
+                fontSize={`1.2rem`}
+              >
+                1
+              </Text>
+              <Text
+                padding={`0 5px`}
+                bgColor={Theme.lightGrey_C}
+                fontWeight={`700`}
+                fontSize={`1.2rem`}
+                margin={`0 3px`}
+              >
+                5
+              </Text>
+              <Text
+                padding={`0 5px`}
+                bgColor={Theme.lightGrey_C}
+                fontWeight={`700`}
+                fontSize={`1.2rem`}
+              >
+                7
+              </Text>
+              <Text
+                padding={`0 5px`}
+                bgColor={Theme.lightGrey_C}
+                fontWeight={`700`}
+                fontSize={`1.2rem`}
+                margin={`0 0 0 3px`}
+              >
+                8
+              </Text>
+              <Text
+                padding={`0 5px`}
+                bgColor={Theme.lightGrey_C}
+                fontWeight={`700`}
+                fontSize={`1.2rem`}
+                margin={`0 0 0 3px`}
+              >
+                개
+              </Text>
+            </Wrapper>
+          </RsWrapper>
+        </Wrapper>
+      </WholeWrapper>
     </ClientLayout>
   );
 };
