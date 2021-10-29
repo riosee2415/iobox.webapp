@@ -142,6 +142,8 @@ export const Wrapper = styled.div`
   text-align: ${(props) => props.textAlign};
   letter-spacing: ${(props) => props.letterSpacing};
   opacity: ${(props) => props.opacity};
+
+  font-family: ${(props) => (props.bold && `SBAggroB` ? `SBAggroB` : ``)};
 `;
 
 export const RsWrapper = styled.article`
@@ -268,6 +270,7 @@ export const Text = styled.p`
   border-bottom: ${(props) => props.borderBottom};
   opacity: ${(props) => props.opacity};
   letter-spacing: ${(props) => props.letterSpacing};
+  font-family: ${(props) => (props.bold && `SBAggroB` ? `SBAggroB` : ``)};
 
   ${(props) =>
     props.isEllipsis
@@ -382,7 +385,7 @@ export const GradientText = styled.h2`
   width: ${(props) => props.width};
   text-align: left;
   display: inline-block;
-  font-size: ${(props) => props.fontSize || `3rem`};
+  font-size: ${(props) => props.fontSize || `1.4rem`};
   font-weight: ${(props) => props.fontWeight || `600`};
   font-style: ${(props) => props.fontStyle};
   line-height: ${(props) => props.lineHeight};
@@ -406,7 +409,5 @@ export const GradientText = styled.h2`
     rgb(241, 115, 80)
   );
 
-  @media (max-width: 700px) {
-    font-size: 2rem;
-  }
+  font-family: ${(props) => (props.bold && `SBAggroB` ? `SBAggroB` : ``)};
 `;
