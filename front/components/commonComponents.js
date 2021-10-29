@@ -375,3 +375,38 @@ export const ATag = styled.a`
   background: ${(props) => props.bgColor};
   color: ${(props) => props.color};
 `;
+
+////////////////////////////////////////////////////////////////////////////
+
+export const GradientText = styled.h2`
+  width: ${(props) => props.width};
+  text-align: left;
+  display: inline-block;
+  font-size: ${(props) => props.fontSize || `3rem`};
+  font-weight: ${(props) => props.fontWeight || `600`};
+  font-style: ${(props) => props.fontStyle};
+  line-height: ${(props) => props.lineHeight};
+  color: ${(props) => props.color};
+  margin: ${(props) => props.margin};
+  padding: ${(props) => props.padding};
+  border-bottom: ${(props) => props.borderBottom};
+  position: relative;
+  padding: ${(props) => props.padding || `0 10px 0 0`};
+  -webkit-text-fill-color: transparent !important;
+  -webkit-background-clip: text !important;
+  background: ${(props) =>
+    props.bgColor ||
+    `linear-gradient(90deg,rgb(249, 2, 80),rgb(247, 141, 150),rgb(242, 146, 98),rgb(241, 115, 80))`};
+
+  -webkit-background: linear-gradient(
+    90deg,
+    rgb(249, 2, 80),
+    rgb(247, 141, 150),
+    rgb(242, 146, 98),
+    rgb(241, 115, 80)
+  );
+
+  @media (max-width: 700px) {
+    font-size: 2rem;
+  }
+`;

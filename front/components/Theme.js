@@ -1,18 +1,23 @@
 export default {
-  basicTheme_C: "#1879B8",
-  // blue
-  subTheme_C: "#31A5F0",
-  subTheme2_C: "#106BDC",
-  subTheme3_C: "#2D53A3",
-  subTheme5_C: "#1E5AA9",
-  // yellow
-  subTheme4_C: "#FFD321",
+  basicTheme_C: "#F90250",
+  // subTheme
+  subTheme_C: "#F78DB4",
+  subTheme2_C: "#F29262",
+  subTheme3_C: "#F17350",
+
+  //kakao
+  kakao_C: "#F6E04B",
+  kakaoBrown_C: "#381F1F",
+
+  //naver
+  naver_C: "#68CC6A",
 
   // white
   white_C: "#ffffff",
   // black
   black_C: "#000000",
   // grey
-  grey_C: "#747474",
-  lightGrey_C: "#E2E2E2",
+  grey_C: "#BCBCBC",
+  lightGrey_C: "#EDEDED",
+  darkGrey_C: "#3C3A3A",
 };
