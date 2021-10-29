@@ -1,8 +1,15 @@
 import React, { useCallback, useState } from "react";
-import { Image, Wrapper, Text, GradientText } from "./commonComponents";
+import {
+  Image,
+  Wrapper,
+  Text,
+  GradientText,
+  WholeWrapper,
+} from "./commonComponents";
 import Theme from "./Theme";
 import styled from "styled-components";
 import { Drawer } from "antd";
+import useWidth from "../hooks/useWidth";
 
 const TextWrapper = styled(Wrapper)`
   width: auto;
@@ -41,7 +48,9 @@ const Logo = styled(Image)`
 `;
 
 const AppFooter = () => {
+  const width = useWidth();
   ////// HOOKS //////
+
   const [drawar, setDrawar] = useState(false);
 
   ////// REDUX //////
@@ -57,7 +66,13 @@ const AppFooter = () => {
 
   ////// DATAVIEW //////
   return (
-    <Wrapper position={`absolute`} bottom={`0`} left={`0`}>
+    <Wrapper
+      position={`absolute`}
+      bottom={`0`}
+      left={width < 700 ? `0` : `50%`}
+      margin={width < 700 ? `0` : `0 0 0 -250px`}
+      width={width < 700 ? `100%` : `500px`}
+    >
       <Wrapper
         dr={`row`}
         height={`100px`}

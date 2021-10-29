@@ -78,7 +78,22 @@ const GlobalStyles = createGlobalStyle`
   }
 
   .ant-drawer-content-wrapper{
-    width : 80vw !important;
+    width : 400px !important;
+
+    @media (max-width : 700px) {
+      width : 80vw !important;
+    }
+    
+  }
+
+  .ant-drawer-right{
+    right : 50% !important;
+    margin : 0 -250px 0 0;
+
+    @media (max-width : 700px) {
+      right : 0 !important;
+      margin : 0;
+    }
   }
 
   a {

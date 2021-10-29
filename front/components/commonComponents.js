@@ -96,6 +96,10 @@ export const WholeWrapper = styled.section`
   margin: ${(props) => props.margin};
   padding: ${(props) => props.padding};
   border-radius: ${(props) => props.radius};
+
+  @media (max-width: 700px) {
+    width: 100%;
+  }
 `;
 
 export const Wrapper = styled.div`
@@ -147,7 +151,7 @@ export const Wrapper = styled.div`
 `;
 
 export const RsWrapper = styled.article`
-  width: 1350px;
+  width: 100%;
   height: ${(props) => props.height || `100%`};
   ${(props) => props.minHeight}
   color: ${(props) => props.color};
@@ -167,29 +171,8 @@ export const RsWrapper = styled.article`
   font-size: ${(props) => props.fontSize};
   position: ${(props) => props.position};
 
-  @media (max-width: 1500px) {
-    width: 1350px;
-  }
-  @media (max-width: 1350px) {
-    width: 1280px;
-  }
-  @media (max-width: 1280px) {
-    width: 1100px;
-  }
-  @media (max-width: 1100px) {
-    width: 900px;
-  }
-  @media (max-width: 900px) {
-    width: 800px;
-  }
-  @media (max-width: 800px) {
-    width: 700px;
-  }
-  @media (max-width: 700px) {
-    width: 100%;
-    padding-left: 50px;
-    padding-right: 50px;
-  }
+  padding-left: 50px;
+  padding-right: 50px;
 `;
 
 export const CommonButton = styled(Button)`
