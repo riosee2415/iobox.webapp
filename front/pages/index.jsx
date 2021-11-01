@@ -100,7 +100,10 @@ const Home = ({}) => {
                     내 짐 맡기면 얼마일까 ?
                   </Text>
 
-                  <Image src={`#`} width={`auto`} />
+                  <Image
+                    src={`https://4leaf-s3.s3.ap-northeast-2.amazonaws.com/iobox/assets/images/search.png`}
+                    width={`auto`}
+                  />
                 </Wrapper>
               </Wrapper>
 
