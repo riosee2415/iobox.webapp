@@ -72,11 +72,13 @@ const Home = ({}) => {
               </Wrapper>
 
               <Image
-                src={`#`}
+                src={`https://4leaf-s3.s3.ap-northeast-2.amazonaws.com/iobox/assets/images/woman.png`}
                 position={`absolute`}
                 bottom={`0`}
                 left={`50%`}
-                width={`auto`}
+                width={`130px`}
+                zIndex={`2`}
+                margin={`0 0 0 -65px`}
               />
             </RsWrapper>
           </Wrapper>
