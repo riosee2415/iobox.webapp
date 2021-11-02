@@ -17,9 +17,12 @@ export default {
   // white
   white_C: "#ffffff",
   // black
-  black_C: "#000000",
+  black_C: "#232323",
+  black2_C: "#000",
+  // blue
+  blue_C: "#0B0EAC",
   // grey
-  grey_C: "#BCBCBC",
-  lightGrey_C: "#EDEDED",
+  grey_C: "#C7C7C7",
+  lightGrey_C: "##F5F3F3",
   darkGrey_C: "#3C3A3A",
 };

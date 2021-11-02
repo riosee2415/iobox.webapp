@@ -332,7 +332,7 @@ const AppFooter = () => {
 
             {drawar && (
               <Drawer
-                placement="right"
+                placement="left"
                 closable={true}
                 onClose={drawarToggle}
                 visible={drawarToggle}

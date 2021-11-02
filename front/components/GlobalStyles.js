@@ -1,4 +1,5 @@
 import { createGlobalStyle, css } from "styled-components";
+import Theme from "../components/Theme";
 
 const fontStyle = css`
   @font-face {
@@ -67,6 +68,7 @@ const GlobalStyles = createGlobalStyle`
 
   body {
       font-family: "NanumBarunGothic", sans-serif;
+      color:${Theme.black_C}
   }
 
   .ant-modal-content{
