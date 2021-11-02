@@ -10,6 +10,7 @@ import Theme from "./Theme";
 import styled from "styled-components";
 import { Drawer } from "antd";
 import useWidth from "../hooks/useWidth";
+import { useRouter } from "next/dist/client/router";
 
 const IconBox = styled(Wrapper)`
   width: 200px;
@@ -100,6 +101,7 @@ const Logo = styled(Image)`
 
 const AppFooter = () => {
   const width = useWidth();
+  const router = useRouter();
   ////// HOOKS //////
 
   const [tab, setTab] = useState(false);
@@ -120,6 +122,10 @@ const AppFooter = () => {
     setDrawar(!drawar);
   });
   ///// HANDLER //////
+
+  const moveLinkHandler = useCallback((link) => {
+    router.push(link);
+  }, []);
 
   ////// DATAVIEW //////
   return (
@@ -324,7 +330,14 @@ const AppFooter = () => {
                   width={`30px`}
                   margin={`0 0 5px`}
                 />
-                <GradientText fontSize={`0.8rem`} bold={true} padding={`0`}>
+                <GradientText
+                  fontSize={`0.8rem`}
+                  bold={true}
+                  padding={`0`}
+                  onClick={() => {
+                    moveLinkHandler("/locker");
+                  }}
+                >
                   내 보관함
                 </GradientText>
               </TextWrapper>
