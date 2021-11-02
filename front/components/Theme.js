@@ -23,6 +23,6 @@ export default {
   blue_C: "#0B0EAC",
   // grey
   grey_C: "#C7C7C7",
-  lightGrey_C: "##F5F3F3",
-  darkGrey_C: "#3C3A3A",
+  lightGrey_C: "#F5F3F3",
+  darkGrey_C: "#B2ADAD",
 };

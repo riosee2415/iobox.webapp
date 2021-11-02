@@ -112,43 +112,43 @@ const Home = ({}) => {
               <Wrapper dr={`row`} margin={`5px 0 0`}>
                 <Text
                   padding={`0 5px`}
-                  bgColor={Theme.lightGrey_C}
+                  bgColor={Theme.grey_C}
                   fontWeight={`700`}
-                  fontSize={`1.2rem`}
+                  fontSize={`1.3rem`}
                 >
                   1
                 </Text>
                 <Text
                   padding={`0 5px`}
-                  bgColor={Theme.lightGrey_C}
+                  bgColor={Theme.grey_C}
                   fontWeight={`700`}
-                  fontSize={`1.2rem`}
+                  fontSize={`1.3rem`}
                   margin={`0 3px`}
                 >
                   5
                 </Text>
                 <Text
                   padding={`0 5px`}
-                  bgColor={Theme.lightGrey_C}
+                  bgColor={Theme.grey_C}
                   fontWeight={`700`}
-                  fontSize={`1.2rem`}
+                  fontSize={`1.3rem`}
                 >
                   7
                 </Text>
                 <Text
                   padding={`0 5px`}
-                  bgColor={Theme.lightGrey_C}
+                  bgColor={Theme.grey_C}
                   fontWeight={`700`}
-                  fontSize={`1.2rem`}
+                  fontSize={`1.3rem`}
                   margin={`0 0 0 3px`}
                 >
                   8
                 </Text>
                 <Text
                   padding={`0 5px`}
-                  bgColor={Theme.lightGrey_C}
+                  bgColor={Theme.grey_C}
                   fontWeight={`700`}
-                  fontSize={`1.2rem`}
+                  fontSize={`1.3rem`}
                   margin={`0 0 0 3px`}
                 >
                   개

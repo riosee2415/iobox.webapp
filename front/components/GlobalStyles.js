@@ -44,6 +44,10 @@ const fontStyle = css`
         format("truetype");
   }
 
+  .nanumbarungothic * {
+    font-family: "NanumBarunGothic", sans-serif;
+  }
+
   @font-face {
     font-family: "SBAggroB";
     src: url("https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2108@1.1/SBAggroB.woff")

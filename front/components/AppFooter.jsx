@@ -67,8 +67,8 @@ const TextWrapper = styled(Wrapper)`
   cursor: pointer;
 
   & h2 {
-    color: ${Theme.lightGrey_C};
-    background: initial;
+    color: ${Theme.darkGrey_C} !important;
+    background: initial !important;
     -webkit-text-fill-color: initial !important;
     -webkit-background-clip: initial !important;
 
