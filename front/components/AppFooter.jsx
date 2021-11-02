@@ -68,7 +68,7 @@ const TextWrapper = styled(Wrapper)`
 
   & h2 {
     color: ${Theme.darkGrey_C} !important;
-    background: initial !important;
+    background: initial;
     -webkit-text-fill-color: initial !important;
     -webkit-background-clip: initial !important;
 
@@ -191,7 +191,7 @@ const AppFooter = () => {
                         alt={`icon`}
                         width={`40px`}
                       />
-                      <Text>io 박스</Text>
+                      <Text>아이오 박스</Text>
                     </IconBox>
                   </Wrapper>
                   <Wrapper
@@ -206,7 +206,7 @@ const AppFooter = () => {
                         alt={`icon`}
                         width={`40px`}
                       />
-                      <Text>배송현황</Text>
+                      <Text>행거박스</Text>
                     </IconBox>
                     <IconBox>
                       <Image
@@ -214,7 +214,7 @@ const AppFooter = () => {
                         alt={`icon`}
                         width={`40px`}
                       />
-                      <Text>io 베이직</Text>
+                      <Text>아이오 박스</Text>
                     </IconBox>
                   </Wrapper>
 
@@ -229,7 +229,7 @@ const AppFooter = () => {
                         alt={`icon`}
                         width={`40px`}
                       />
-                      <Text>내 정보</Text>
+                      <Text>총알배송</Text>
                     </IconBox>
                     <IconBox>
                       <Image
@@ -237,7 +237,7 @@ const AppFooter = () => {
                         alt={`icon`}
                         width={`40px`}
                       />
-                      <Text>io 프리미엄</Text>
+                      <Text>대용량 박스</Text>
                     </IconBox>
                   </Wrapper>
                   <Wrapper height={`calc(100% / 4)`} margin={`-20px 0 0`}>
@@ -247,7 +247,7 @@ const AppFooter = () => {
                         alt={`icon`}
                         width={`40px`}
                       />
-                      <Text>io 정기구독</Text>
+                      <Text>텐트보관 박스</Text>
                     </IconBox>
                   </Wrapper>
                 </Wrapper>
