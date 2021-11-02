@@ -7,6 +7,7 @@ import {
   Text,
   Image,
   CommonButton,
+  TextInput,
 } from "../../../components/commonComponents";
 import styled from "styled-components";
 import ClientLayout from "../../../components/ClientLayout";
@@ -66,16 +67,29 @@ const Index = () => {
           <CloseOutlined />
         </Wrapper>
         <RsWrapper
-          height={`100%`}
-          ju={`flex-start`}
+          height={`100vh`}
+          ju={`space-between`}
           position={`relative`}
           al={`flex-start`}
           padding={`30px 0`}
           bgColor={Theme.white_C}
         >
-          <Text bold={true} fontSize={`2rem`}>
-            이름 변경
-          </Text>
+          <Wrapper al={`flex-start`}>
+            <Text bold={true} fontSize={`2rem`}>
+              이름 변경
+            </Text>
+
+            <TextInput
+              width={`100%`}
+              margin={`30px 0 0`}
+              height={`50px`}
+              placeholder="이름을 적어주세요."
+            />
+          </Wrapper>
+
+          <CommonButton radius={`0`} width={`100%`} height={`50px`}>
+            저장하기
+          </CommonButton>
         </RsWrapper>
       </Wrapper>
     </WholeWrapper>

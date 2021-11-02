@@ -184,6 +184,7 @@ export const CommonButton = styled(Button)`
   font-weight: ${(props) => props.fontWeight};
   color: ${(props) => props.color || props.theme.subTheme2_C};
   border-radius: ${(props) => props.radius || `7px`};
+  background: ${(props) => props.bgColor};
 
   ${(props) => !props.kindOf && `background : ${props.theme.basicTheme_C};`}
   ${(props) => !props.kindOf && `color : ${props.theme.white_C};`}
@@ -370,6 +371,8 @@ export const TextInput = styled.input`
   height: ${(props) => props.height || `40px`};
   border: ${(props) => props.border};
   border-bottom: ${(props) => props.borderBottom};
+  border-right: ${(props) => props.borderRight};
+  border-left: ${(props) => props.borderLeft};
   padding: ${(props) => props.padding || `10px`};
   transition: ${(props) => props.transition || props.theme.transition};
   margin: ${(props) => props.margin};
@@ -382,6 +385,7 @@ export const TextInput = styled.input`
   &:focus {
     box-shadow: ${(props) => props.focusShadow};
     background-color: ${(props) => props.theme.white_C};
+    border: 1px solid ${(props) => props.theme.basicTheme_C};
     outline: none;
   }
 
@@ -397,6 +401,7 @@ export const TextInput = styled.input`
   &::placeholder {
     font-size: 14px;
     line-height: 1.6;
+    color: ${(props) => props.theme.grey_C};
   }
 `;
 
