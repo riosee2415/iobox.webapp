@@ -92,6 +92,10 @@ const GlobalStyles = createGlobalStyle`
     
   }
 
+  .ant-drawer-body{
+    padding:0;
+  }
+
   .ant-drawer-left{
     left : 50% !important;
     margin : 0 0 0 -250px;
