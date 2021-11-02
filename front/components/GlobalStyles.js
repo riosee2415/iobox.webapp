@@ -44,6 +44,10 @@ const fontStyle = css`
         format("truetype");
   }
 
+  .nanumbarungothic * {
+    font-family: "NanumBarunGothic", sans-serif;
+  }
+
   @font-face {
     font-family: "SBAggroB";
     src: url("https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2108@1.1/SBAggroB.woff")
@@ -88,9 +92,9 @@ const GlobalStyles = createGlobalStyle`
     
   }
 
-  .ant-drawer-right{
-    right : 50% !important;
-    margin : 0 -250px 0 0;
+  .ant-drawer-left{
+    left : 50% !important;
+    margin : 0 0 0 -250px;
 
     @media (max-width : 700px) {
       right : 0 !important;
