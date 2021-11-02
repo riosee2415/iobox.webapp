@@ -365,6 +365,63 @@ export const ATag = styled.a`
   color: ${(props) => props.color};
 `;
 
+export const TextInput = styled.input`
+  width: ${(props) => props.width};
+  height: ${(props) => props.height || `40px`};
+  border: ${(props) => props.border};
+  border-bottom: ${(props) => props.borderBottom};
+  padding: ${(props) => props.padding || `10px`};
+  transition: ${(props) => props.transition || props.theme.transition};
+  margin: ${(props) => props.margin};
+  background-color: ${(props) => props.bgColor};
+  border-radius: ${(props) => props.radius};
+  font-size: ${(props) => props.fontSize};
+  cursor: ${(props) => props.cursor};
+  border-radius: ${(props) => props.radius};
+
+  &:focus {
+    box-shadow: ${(props) => props.focusShadow};
+    background-color: ${(props) => props.theme.white_C};
+    outline: none;
+  }
+
+  &:read-only {
+    background-color: ${(props) => props.theme.lightGrey_C};
+    cursor: auto;
+  }
+
+  &:read-only:focus {
+    box-shadow: none;
+  }
+
+  &::placeholder {
+    font-size: 14px;
+    line-height: 1.6;
+  }
+`;
+
+export const TextArea = styled.textarea`
+  width: ${(props) => props.width};
+  height: ${(props) => props.height || `100px`};
+  padding: ${(props) => props.padding || `10px`};
+  border: ${(props) => props.border || `1px solid ${props.theme.grey_C}`};
+  /* border-radius: ${(props) => props.theme.radius}; */
+  transition: ${(props) => props.transition || props.theme.transition};
+  margin: ${(props) => props.margin};
+  resize: none;
+  border-radius: ${(props) => props.radius || `10px`};
+
+  &:focus {
+    box-shadow: ${(props) => props.theme.boxShadow};
+    outline: none;
+  }
+
+  &::placeholder {
+    font-size: 14px;
+    line-height: 1.6;
+  }
+`;
+
 ////////////////////////////////////////////////////////////////////////////
 
 export const GradientText = styled.h2`
