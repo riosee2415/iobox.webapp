@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useCallback, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { LOAD_MY_INFO_REQUEST, LOGIN_REQUEST } from "../reducers/user";
 import useInput from "../hooks/useInput";
@@ -15,9 +15,11 @@ import {
 } from "../components/commonComponents";
 import useWidth from "../hooks/useWidth";
 import Theme from "../components/Theme";
+import { useRouter } from "next/dist/client/router";
 
 const Home = ({}) => {
   const width = useWidth();
+  const router = useRouter();
 
   ////// HOOKS //////
 
@@ -28,6 +30,9 @@ const Home = ({}) => {
   ////// TOGGLE ///////
 
   ///// HANDLER //////
+  const moveLinkHandler = useCallback((link) => {
+    router.push(link);
+  }, []);
 
   ////// DATAVIEW //////
   return (
@@ -95,6 +100,10 @@ const Home = ({}) => {
                   margin={`10px 0 0s`}
                   ju={`space-between`}
                   dr={`row`}
+                  onClick={() => {
+                    moveLinkHandler("/calculate");
+                  }}
+                  cursor={`pointer`}
                 >
                   <Text fontSize={`1.2rem`} bold={true}>
                     내 짐 맡기면 얼마일까 ?
