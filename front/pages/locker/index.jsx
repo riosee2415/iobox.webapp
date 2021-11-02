@@ -42,17 +42,12 @@ const Index = () => {
 
   ////// DATAVIEW //////
   return (
-    <WholeWrapper
-      height={`100vh`}
-      bgColor={width < 700 ? Theme.white_C : Theme.lightGrey_C}
-    >
+    <WholeWrapper bgColor={width < 700 ? Theme.white_C : Theme.lightGrey_C}>
       <Wrapper
         width={width < 700 ? `100%` : `500px`}
         height={`100%`}
         shadow={`0px 0px 10px ${Theme.grey_C}`}
         bgColor={Theme.white_C}
-        overflowY={`scroll`}
-        // 보관하기가 아무것도 없을때 overflowY={`initial`} 하나라도 있으면 overflowY={`scroll`}
         al={`flex-start`}
         ju={`flex-start`}
         position={`relative`}

@@ -91,6 +91,9 @@ const GlobalStyles = createGlobalStyle`
     }
     
   }
+  .ant-switch-checked{
+    background-color : ${(props) => props.theme.basicTheme_C};
+  }
 
   .ant-drawer-left{
     left : 50% !important;

@@ -76,6 +76,7 @@ export const ColWrapper = styled(Col)`
 export const WholeWrapper = styled.section`
   width: ${(props) => props.width || `100%`};
   height: ${(props) => props.height};
+  min-height: ${(props) => props.minHeight || `100vh`};
   color: ${(props) => props.color};
   display: ${(props) => props.display || `flex`};
   background: ${(props) => props.bgColor};
@@ -153,7 +154,6 @@ export const Wrapper = styled.div`
 export const RsWrapper = styled.article`
   width: 100%;
   height: ${(props) => props.height || `100%`};
-  ${(props) => props.minHeight}
   color: ${(props) => props.color};
   display: ${(props) => props.display || `flex`};
   background: ${(props) => props.bgColor};
