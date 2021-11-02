@@ -67,8 +67,8 @@ const GlobalStyles = createGlobalStyle`
 
 
   body {
-      font-family: "NanumBarunGothic", sans-serif;
-      color:${Theme.black_C}
+    font-family: "NanumBarunGothic", sans-serif;
+    color: ${(props) => props.theme.black_C};
   }
 
   .ant-modal-content{
