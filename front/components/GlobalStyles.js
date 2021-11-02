@@ -44,6 +44,10 @@ const fontStyle = css`
         format("truetype");
   }
 
+  .nanumbarungothic * {
+    font-family: "NanumBarunGothic", sans-serif;
+  }
+
   @font-face {
     font-family: "SBAggroB";
     src: url("https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2108@1.1/SBAggroB.woff")
@@ -67,8 +71,8 @@ const GlobalStyles = createGlobalStyle`
 
 
   body {
-      font-family: "NanumBarunGothic", sans-serif;
-      color:${Theme.black_C}
+    font-family: "NanumBarunGothic", sans-serif;
+    color: ${(props) => props.theme.black_C};
   }
 
   .ant-modal-content{
