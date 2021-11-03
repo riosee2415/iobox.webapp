@@ -9,6 +9,8 @@ import gallery from "./gallery";
 import question from "./question";
 import accept from "./accept";
 import box from "./box";
+import event from "./event";
+import faq from "./faq";
 
 const rootReducer = (state, action) => {
   switch (action.type) {
@@ -27,6 +29,8 @@ const rootReducer = (state, action) => {
           question,
           accept,
           box,
+          event,
+          faq,
         });
         return combinedReducer(state, action);
       }

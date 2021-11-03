@@ -8,6 +8,8 @@ import gallerySage from "./gallery";
 import questionSage from "./question";
 import acceptSaga from "./accept";
 import boxSaga from "./box";
+import eventSaga from "./event";
+import faqSaga from "./faq";
 //
 import axios from "axios";
 import backURL from "../config/config";
@@ -26,5 +28,7 @@ export default function* rootSaga() {
     fork(questionSage),
     fork(acceptSaga),
     fork(boxSaga),
+    fork(eventSaga),
+    fork(faqSaga),
   ]);
 }
