@@ -84,27 +84,54 @@ const Index = () => {
           al={`flex-start`}
           padding={`30px 0`}
           bgColor={Theme.white_C}
+          minHeight={`100vh`}
         >
           <Wrapper al={`flex-start`} margin={`0 0 10px`}>
             <Text bold={true} fontSize={`2rem`}>
-              쿠폰
+              알림
             </Text>
 
-            <Wrapper dr={`row`} margin={`10px 0 0`}>
-              <TextInput
-                width={`80%`}
-                border={`1px solid ${Theme.grey_C}`}
-                placeholder="쿠폰 코드를 입력해주세요."
-              />
-              <CommonButton width={`20%`} radius={`0`} height={`40px`}>
-                등록
-              </CommonButton>
+            <Wrapper
+              al={`flex-start`}
+              padding={`20px`}
+              minHeight={`100px`}
+              shadow={`0px 0px 10px ${Theme.lightGrey_C}`}
+              ju={`space-between`}
+              margin={`0 0 10px`}
+            >
+              <Text>
+                내용이 들어올 곳 입니다. 내용이 들어올 곳 입니다.내용이 들어올
+                곳 입니다.내용이 들어올 곳 입니다.내용이 들어올 곳 입니다.내용이
+                들어올 곳 입니다.내용이 들어올 곳 입니다.내용이 들어올 곳
+                입니다.내용이 들어올 곳 입니다.내용이 들어올 곳 입니다.
+              </Text>
+              <Wrapper al={`flex-end`} margin={`5px 0 0`}>
+                <Text color={Theme.grey_C} fontSize={`0.7rem`}>
+                  날짜가 들어올 곳 입니다.
+                </Text>
+              </Wrapper>
             </Wrapper>
 
-            <Text fontSize={`0.7rem`} color={Theme.grey_C} margin={`10px 0 0`}>
-              쿠폰은 이용료 결제시 자동으로 할인되며, 다수의 쿠폰을 보유하신
-              경우 가장 할인 혜택이 높은 쿠폰으로 적용됩니다.
-            </Text>
+            <Wrapper
+              al={`flex-start`}
+              padding={`20px`}
+              minHeight={`100px`}
+              shadow={`0px 0px 10px ${Theme.lightGrey_C}`}
+              ju={`space-between`}
+              margin={`0 0 10px`}
+            >
+              <Text>
+                내용이 들어올 곳 입니다. 내용이 들어올 곳 입니다.내용이 들어올
+                곳 입니다.내용이 들어올 곳 입니다.내용이 들어올 곳 입니다.내용이
+                들어올 곳 입니다.내용이 들어올 곳 입니다.내용이 들어올 곳
+                입니다.내용이 들어올 곳 입니다.내용이 들어올 곳 입니다.
+              </Text>
+              <Wrapper al={`flex-end`} margin={`5px 0 0`}>
+                <Text color={Theme.grey_C} fontSize={`0.7rem`}>
+                  날짜가 들어올 곳 입니다.
+                </Text>
+              </Wrapper>
+            </Wrapper>
           </Wrapper>
         </RsWrapper>
       </Wrapper>

@@ -7,12 +7,30 @@ import {
   Text,
   Image,
   CommonButton,
+  TextInput,
 } from "../../../components/commonComponents";
 import styled from "styled-components";
 import ClientLayout from "../../../components/ClientLayout";
 import useWidth from "../../../hooks/useWidth";
 import { CloseOutlined, DownOutlined, UpOutlined } from "@ant-design/icons";
 import { useRouter } from "next/dist/client/router";
+import { QuestionCircleOutlined } from "@ant-design/icons";
+
+const ImageBox = styled(Wrapper)`
+  height: 150px;
+  background: ${Theme.grey_C};
+  margin: 0 0 20px;
+  cursor: pointer;
+  overflow: hidden;
+
+  ${Image} {
+    transition: 0.5s;
+  }
+
+  &:hover ${Image} {
+    transform: scale(1.1);
+  }
+`;
 
 const Index = () => {
   const width = useWidth();
@@ -66,13 +84,51 @@ const Index = () => {
           <CloseOutlined />
         </Wrapper>
         <RsWrapper
-          height={`100%`}
-          ju={`flex-start`}
+          ju={`space-between`}
           position={`relative`}
           al={`flex-start`}
           padding={`30px 0`}
           bgColor={Theme.white_C}
-        ></RsWrapper>
+          minHeight={`100vh`}
+        >
+          <Wrapper al={`flex-start`}>
+            <Text bold={true} fontSize={`2rem`} margin={`0 0 10px`}>
+              이벤트
+            </Text>
+
+            <ImageBox>
+              <Image src={`#`} alt={`thumbnail`} />
+            </ImageBox>
+
+            <ImageBox>
+              <Image src={`#`} alt={`thumbnail`} />
+            </ImageBox>
+
+            <ImageBox>
+              <Image src={`#`} alt={`thumbnail`} />
+            </ImageBox>
+
+            <ImageBox>
+              <Image src={`#`} alt={`thumbnail`} />
+            </ImageBox>
+
+            <ImageBox>
+              <Image src={`#`} alt={`thumbnail`} />
+            </ImageBox>
+
+            <ImageBox>
+              <Image src={`#`} alt={`thumbnail`} />
+            </ImageBox>
+
+            <ImageBox>
+              <Image src={`#`} alt={`thumbnail`} />
+            </ImageBox>
+
+            <ImageBox>
+              <Image src={`#`} alt={`thumbnail`} />
+            </ImageBox>
+          </Wrapper>
+        </RsWrapper>
       </Wrapper>
     </WholeWrapper>
   );
