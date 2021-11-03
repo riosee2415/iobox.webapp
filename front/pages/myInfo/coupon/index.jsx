@@ -15,6 +15,18 @@ import useWidth from "../../../hooks/useWidth";
 import { CloseOutlined, DownOutlined, UpOutlined } from "@ant-design/icons";
 import { useRouter } from "next/dist/client/router";
 
+const CouponWrapper = styled(Wrapper)`
+  height: 150px;
+  border-radius: 20px;
+  margin: 0 0 15px;
+  box-shadow: 0px 0px 10px ${Theme.grey_C};
+  cursor: pointer;
+
+  &:hover {
+    box-shadow: 0px 0px 10px ${Theme.basicTheme_C};
+  }
+`;
+
 const Index = () => {
   const width = useWidth();
   const router = useRouter();
@@ -67,14 +79,13 @@ const Index = () => {
           <CloseOutlined />
         </Wrapper>
         <RsWrapper
-          height={`100vh`}
-          ju={`space-between`}
+          ju={`flex-start`}
           position={`relative`}
           al={`flex-start`}
           padding={`30px 0`}
           bgColor={Theme.white_C}
         >
-          <Wrapper al={`flex-start`}>
+          <Wrapper al={`flex-start`} margin={`0 0 10px`}>
             <Text bold={true} fontSize={`2rem`}>
               쿠폰
             </Text>
@@ -96,8 +107,143 @@ const Index = () => {
             </Text>
           </Wrapper>
 
+          <CouponWrapper>
+            <Wrapper width={`85%`} padding={`20px`} al={`flex-start`}>
+              <Text fontSize={`1.3rem`} fontWeight={`700`}>
+                쿠폰이름
+              </Text>
+              <Text fontSize={`0.8rem`} color={Theme.grey_C}>
+                2021년 02월 10일 ~ 2022년 02월 10일
+              </Text>
+
+              <Text fontSize={`2rem`} bold={true} margin={`10px 0 0`}>
+                10% 할인
+              </Text>
+            </Wrapper>
+            <Wrapper
+              width={`15%`}
+              height={`100%`}
+              radius={`0 20px 20px 0`}
+              bgColor={Theme.basicTheme_C}
+              ju={`flex-end`}
+              al={`flex-start`}
+              padding={`10px 5px`}
+              border={`1px solid  ${Theme.basicTheme_C}`}
+            >
+              <Image src={`#`} alt={`logo`} />
+            </Wrapper>
+          </CouponWrapper>
+
+          <CouponWrapper>
+            <Wrapper width={`85%`} padding={`20px`} al={`flex-start`}>
+              <Text fontSize={`1.3rem`} fontWeight={`700`}>
+                쿠폰이름
+              </Text>
+              <Text fontSize={`0.8rem`} color={Theme.grey_C}>
+                2021년 02월 10일 ~ 2022년 02월 10일
+              </Text>
+
+              <Text fontSize={`2rem`} bold={true} margin={`10px 0 0`}>
+                10% 할인
+              </Text>
+            </Wrapper>
+            <Wrapper
+              width={`15%`}
+              height={`100%`}
+              radius={`0 20px 20px 0`}
+              bgColor={Theme.basicTheme_C}
+              ju={`flex-end`}
+              al={`flex-start`}
+              padding={`10px 5px`}
+              border={`1px solid  ${Theme.basicTheme_C}`}
+            >
+              <Image src={`#`} alt={`logo`} />
+            </Wrapper>
+          </CouponWrapper>
+
+          <CouponWrapper>
+            <Wrapper width={`85%`} padding={`20px`} al={`flex-start`}>
+              <Text fontSize={`1.3rem`} fontWeight={`700`}>
+                쿠폰이름
+              </Text>
+              <Text fontSize={`0.8rem`} color={Theme.grey_C}>
+                2021년 02월 10일 ~ 2022년 02월 10일
+              </Text>
+
+              <Text fontSize={`2rem`} bold={true} margin={`10px 0 0`}>
+                10% 할인
+              </Text>
+            </Wrapper>
+            <Wrapper
+              width={`15%`}
+              height={`100%`}
+              radius={`0 20px 20px 0`}
+              bgColor={Theme.basicTheme_C}
+              ju={`flex-end`}
+              al={`flex-start`}
+              padding={`10px 5px`}
+              border={`1px solid  ${Theme.basicTheme_C}`}
+            >
+              <Image src={`#`} alt={`logo`} />
+            </Wrapper>
+          </CouponWrapper>
+
+          <CouponWrapper>
+            <Wrapper width={`85%`} padding={`20px`} al={`flex-start`}>
+              <Text fontSize={`1.3rem`} fontWeight={`700`}>
+                쿠폰이름
+              </Text>
+              <Text fontSize={`0.8rem`} color={Theme.grey_C}>
+                2021년 02월 10일 ~ 2022년 02월 10일
+              </Text>
+
+              <Text fontSize={`2rem`} bold={true} margin={`10px 0 0`}>
+                10% 할인
+              </Text>
+            </Wrapper>
+            <Wrapper
+              width={`15%`}
+              height={`100%`}
+              radius={`0 20px 20px 0`}
+              bgColor={Theme.basicTheme_C}
+              ju={`flex-end`}
+              al={`flex-start`}
+              padding={`10px 5px`}
+              border={`1px solid  ${Theme.basicTheme_C}`}
+            >
+              <Image src={`#`} alt={`logo`} />
+            </Wrapper>
+          </CouponWrapper>
+
+          <CouponWrapper>
+            <Wrapper width={`85%`} padding={`20px`} al={`flex-start`}>
+              <Text fontSize={`1.3rem`} fontWeight={`700`}>
+                쿠폰이름
+              </Text>
+              <Text fontSize={`0.8rem`} color={Theme.grey_C}>
+                2021년 02월 10일 ~ 2022년 02월 10일
+              </Text>
+
+              <Text fontSize={`2rem`} bold={true} margin={`10px 0 0`}>
+                10% 할인
+              </Text>
+            </Wrapper>
+            <Wrapper
+              width={`15%`}
+              height={`100%`}
+              radius={`0 20px 20px 0`}
+              bgColor={Theme.basicTheme_C}
+              ju={`flex-end`}
+              al={`flex-start`}
+              padding={`10px 5px`}
+              border={`1px solid  ${Theme.basicTheme_C}`}
+            >
+              <Image src={`#`} alt={`logo`} />
+            </Wrapper>
+          </CouponWrapper>
+
           {/* 쿠폰이 없을 때 */}
-          {/* <Wrapper height={`calc(100% - 135px)`}>
+          {/* <Wrapper height={`calc(100vh - 300px)`}>
             <Image src={`#`} alt={`image`} width={`auto`} />
             <Text color={Theme.grey_C} fontSize={`1.2rem`} margin={`10px 0 0`}>
               사용 가능한 쿠폰이 없습니다.
