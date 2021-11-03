@@ -1,4 +1,4 @@
-import React, { useCallback, useState } from "react";
+import React, { useCallback, useEffect, useState } from "react";
 import Theme from "../../../components/Theme";
 import {
   Wrapper,
@@ -16,7 +16,7 @@ import { CloseOutlined, DownOutlined, UpOutlined } from "@ant-design/icons";
 import { useRouter } from "next/dist/client/router";
 
 const FocusInput = styled(TextInput)`
-  width: calc(100% / 4);
+  width: ${(props) => props.width || `calc(100% / 4)`};
   height: 40px;
   padding: 10px;
   border: none !important;
@@ -28,18 +28,30 @@ const Index = () => {
 
   ////// HOOKS //////
   const [tab, setTab] = useState(false);
-  const [input, setInput] = useState(false);
+
+  const [cardInput, setCardInput] = useState(false);
+  const [dayInput, setDayInput] = useState(false);
 
   ////// REDUX //////
 
   ////// USEEFFECT //////
 
   ////// TOGGLE ///////
-  const inputToggle = useCallback(() => {
-    setInput(true);
-  }, [input]);
+  const cardInputToggle = useCallback(() => {
+    setCardInput(true);
+  }, [cardInput]);
+
+  const dayInputToggle = useCallback(() => {
+    setDayInput(true);
+  }, [dayInput]);
 
   ///// HANDLER //////
+
+  const blurHandler = useCallback(() => {
+    setCardInput(false);
+    setDayInput(false);
+  }, [cardInput]);
+
   const moveBackHandler = useCallback(() => {
     router.back();
   }, []);
@@ -95,17 +107,83 @@ const Index = () => {
               <Wrapper
                 dr={`row`}
                 border={
-                  input === true
+                  cardInput === true
                     ? `1px solid ${Theme.basicTheme_C}`
                     : `1px solid ${Theme.grey_C}`
                 }
                 margin={`10px 0 0`}
               >
-                <FocusInput onClick={inputToggle} />
-                <FocusInput onClick={inputToggle} />
-                <FocusInput onClick={inputToggle} />
-                <FocusInput onClick={inputToggle} />
+                <FocusInput
+                  onBlur={blurHandler}
+                  onClick={cardInputToggle}
+                  placeholder="0000"
+                />
+                <FocusInput
+                  onBlur={blurHandler}
+                  onClick={cardInputToggle}
+                  placeholder="0000"
+                />
+                <FocusInput
+                  onBlur={blurHandler}
+                  onClick={cardInputToggle}
+                  placeholder="0000"
+                />
+                <FocusInput
+                  onBlur={blurHandler}
+                  onClick={cardInputToggle}
+                  placeholder="0000"
+                />
               </Wrapper>
+            </Wrapper>
+
+            <Wrapper al={`flex-start`} margin={`30px 0 0`}>
+              <Text>유효기간</Text>
+              <Wrapper
+                dr={`row`}
+                border={
+                  dayInput === true
+                    ? `1px solid ${Theme.basicTheme_C}`
+                    : `1px solid ${Theme.grey_C}`
+                }
+                margin={`10px 0 0`}
+                ju={`flex-start`}
+              >
+                <FocusInput
+                  width={`calc(100% / 6)`}
+                  onBlur={blurHandler}
+                  onClick={dayInputToggle}
+                  placeholder="MM"
+                />
+                <Text>/</Text>
+                <FocusInput
+                  width={`calc(100% / 6)`}
+                  onBlur={blurHandler}
+                  onClick={dayInputToggle}
+                  placeholder="YY"
+                />
+              </Wrapper>
+            </Wrapper>
+
+            <Wrapper al={`flex-start`} margin={`30px 0 0`}>
+              <Text>주민번호 앞 6자리 (또는 사업자번호 10자리)</Text>
+
+              <TextInput
+                width={`100%`}
+                margin={`10px 0 0`}
+                border={`1px solid ${Theme.grey_C}`}
+                placeholder="주민번호 또는 사업자번호"
+              />
+            </Wrapper>
+
+            <Wrapper al={`flex-start`} margin={`30px 0 0`}>
+              <Text>비밀번호 앞 2자리</Text>
+
+              <TextInput
+                width={`100%`}
+                margin={`10px 0 0`}
+                border={`1px solid ${Theme.grey_C}`}
+                placeholder="00"
+              />
             </Wrapper>
           </Wrapper>
 
