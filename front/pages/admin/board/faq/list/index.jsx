@@ -1,7 +1,7 @@
 import React, { useCallback, useEffect, useRef, useState } from "react";
-import AdminLayout from "../../../components/AdminLayout";
-import PageHeader from "../../../components/admin/PageHeader";
-import AdminTop from "../../../components/admin/AdminTop";
+import AdminLayout from "../../../../../components/AdminLayout";
+import PageHeader from "../../../../../components/admin/PageHeader";
+import AdminTop from "../../../../../components/admin/AdminTop";
 import styled from "styled-components";
 import { useDispatch, useSelector } from "react-redux";
 import {
@@ -20,8 +20,8 @@ import {
 import { END } from "redux-saga";
 import axios from "axios";
 import { useRouter } from "next/router";
-import { LOAD_MY_INFO_REQUEST } from "../../../reducers/user";
-import wrapper from "../../../store/configureStore";
+import { LOAD_MY_INFO_REQUEST } from "../../../../../reducers/user";
+import wrapper from "../../../../../store/configureStore";
 import {
   MODAL_CLOSE_REQUEST,
   MODAL_OPEN_REQUEST,
@@ -31,13 +31,13 @@ import {
   FAQ_UPDATE_REQUEST,
   FAQ_UPLOAD_REQUEST,
   UPDATE_FAQ_PATH,
-} from "../../../reducers/faq";
-import useInput from "../../../hooks/useInput";
+} from "../../../../../reducers/faq";
+import useInput from "../../../../../hooks/useInput";
 import {
   ColWrapper,
   RowWrapper,
   Wrapper,
-} from "../../../components/commonComponents";
+} from "../../../../../components/commonComponents";
 import { SearchOutlined } from "@ant-design/icons";
 
 const AdminContent = styled.div`
@@ -58,7 +58,7 @@ const Filename = styled.span`
 `;
 
 const ImageWrapper = styled.div`
-  width: 100%;
+  width: 500px;
 
   display: flex;
   flex-direction: column;
@@ -112,8 +112,8 @@ const LoadNotification = (msg, content) => {
 const Index = () => {
   const _WIDTH = `400`;
   const _HEIGHT = `400`;
-  //   // LOAD CURRENT INFO AREA /////////////////////////////////////////////
-  //   const { me, st_loadMyInfoDone } = useSelector((state) => state.user);
+  // LOAD CURRENT INFO AREA /////////////////////////////////////////////
+  const { me, st_loadMyInfoDone } = useSelector((state) => state.user);
 
   const router = useRouter();
 
@@ -121,14 +121,14 @@ const Index = () => {
     router.push(link);
   }, []);
 
-  //   useEffect(() => {
-  //     if (st_loadMyInfoDone) {
-  //       if (!me || parseInt(me.level) < 3) {
-  //         moveLinkHandler(`/admin`);
-  //       }
-  //     }
-  //   }, [st_loadMyInfoDone]);
-  //   /////////////////////////////////////////////////////////////////////////
+  useEffect(() => {
+    if (st_loadMyInfoDone) {
+      if (!me || parseInt(me.level) < 3) {
+        moveLinkHandler(`/admin`);
+      }
+    }
+  }, [st_loadMyInfoDone]);
+  /////////////////////////////////////////////////////////////////////////
 
   ////// HOOKS //////
   const dispatch = useDispatch();
@@ -304,10 +304,10 @@ const Index = () => {
       dispatch({
         type: FAQ_CREATE_REQUEST,
         data: {
-          hint: value.hint,
-          title: value.content,
-          answer: value.answer,
-          outLink: "-",
+          title: value.quesition,
+          type: value.type,
+          content: value.answer,
+          imagePath: uploadFaqPath,
         },
       });
     },
@@ -320,10 +320,10 @@ const Index = () => {
         type: FAQ_UPDATE_REQUEST,
         data: {
           id: updateData.id,
-          hint: value.hint,
-          title: value.content,
-          answer: value.answer,
-          outLink: "-",
+          title: value.quesition,
+          type: value.type,
+          content: value.answer,
+          imagePath: uploadFaqPath,
         },
       });
     },
@@ -405,15 +405,15 @@ const Index = () => {
 
   const onFill = useCallback((data) => {
     formRef.current.setFieldsValue({
-      hint: data.hint,
-      content: data.title,
-      answer: data.answer,
+      quesition: data.title,
+      type: data.type,
+      answer: data.content,
     });
 
-    // dispatch({
-    //   type: UPDATE_FAQ_PATH,
-    //   data: data.ima,
-    // });
+    dispatch({
+      type: UPDATE_FAQ_PATH,
+      data: data.imagePath,
+    });
   }, []);
   ////// DATAVIEW //////
 
@@ -464,9 +464,9 @@ const Index = () => {
   return (
     <AdminLayout>
       <PageHeader
-        breadcrumbs={["참가자 관리", "참가자 리스트"]}
-        title={`참가자 리스트`}
-        subTitle={`참가자 리스트를 관리할 수 있습니다.`}
+        breadcrumbs={["게시판 관리", "자주 묻는 질문 리스트"]}
+        title={`자주 묻는 질문 리스트`}
+        subTitle={`자주 묻는 질문 리스트를 관리할 수 있습니다.`}
       />
 
       <AdminTop createButton={true} createButtonAction={modalOpen} />
@@ -514,14 +514,14 @@ const Index = () => {
 
       <Modal
         visible={modal}
-        width={`600px`}
-        title={`매입 관리`}
+        width={`1100px`}
+        title={`자주 묻는 질문 관리`}
         size="small"
         onCancel={modalClose}
         onOk={createModalOk}
       >
         <Wrapper padding={`10px`}>
-          {/* <ImageWrapper>
+          <ImageWrapper>
             <GuideWrapper>
               <GuideText>
                 이미지 사이즈는 가로 {_WIDTH}px 과 세로
@@ -541,9 +541,7 @@ const Index = () => {
               }
               alt="main_GALLEY_image"
             />
-            <Guide>
-              {uploadFaqPath && `이미지 미리보기 입니다.`}
-            </Guide>
+            <Guide>{uploadFaqPath && `이미지 미리보기 입니다.`}</Guide>
 
             <UploadWrapper>
               <input
@@ -564,44 +562,37 @@ const Index = () => {
                 UPLOAD
               </Button>
             </UploadWrapper>
-          </ImageWrapper> */}
+          </ImageWrapper>
 
           <Form
-            style={{ width: `80%` }}
+            style={{ width: `50%` }}
             onFinish={updateData ? onSubmitUpdate : onSubmit}
             ref={formRef}
           >
             <Form.Item
-              name={"content"}
-              label="문제"
+              name={"quesition"}
+              label="질문"
+              rules={[{ required: true }]}
+            >
+              <Input allowClear size="small" placeholder="Quesition..." />
+            </Form.Item>
+
+            <Form.Item name={"type"} label="유형" rules={[{ required: true }]}>
+              <Select>
+                <Select.Option>asd</Select.Option>
+              </Select>
+            </Form.Item>
+
+            <Form.Item
+              name={"answer"}
+              label="답변"
               rules={[{ required: true }]}
             >
               <Input.TextArea
                 allowClear
                 size="small"
-                autoSize={{ minRows: 10, maxRows: 10 }}
-                placeholder="Content..."
-              />
-            </Form.Item>
-
-            <Form.Item
-              name={"hint"}
-              label="힌트 링크"
-              rules={[{ required: true }]}
-            >
-              <Input allowClear size="small" placeholder="Hint..." />
-            </Form.Item>
-
-            <Form.Item
-              name={"answer"}
-              label="정답"
-              rules={[{ required: true }]}
-            >
-              <Input
-                allowClear
-                size="small"
+                autoSize={{ minRows: 14, maxRows: 14 }}
                 placeholder="Answer..."
-                type="number"
               />
             </Form.Item>
           </Form>

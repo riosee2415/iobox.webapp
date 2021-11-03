@@ -11,6 +11,7 @@ import accept from "./accept";
 import box from "./box";
 import event from "./event";
 import faq from "./faq";
+import info from "./info";
 
 const rootReducer = (state, action) => {
   switch (action.type) {
@@ -31,6 +32,7 @@ const rootReducer = (state, action) => {
           box,
           event,
           faq,
+          info,
         });
         return combinedReducer(state, action);
       }

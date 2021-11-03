@@ -1,7 +1,7 @@
 import React, { useCallback, useEffect, useRef, useState } from "react";
-import AdminLayout from "../../../components/AdminLayout";
-import PageHeader from "../../../components/admin/PageHeader";
-import AdminTop from "../../../components/admin/AdminTop";
+import AdminLayout from "../../../../components/AdminLayout";
+import PageHeader from "../../../../components/admin/PageHeader";
+import AdminTop from "../../../../components/admin/AdminTop";
 import styled from "styled-components";
 import { useDispatch, useSelector } from "react-redux";
 import {
@@ -20,8 +20,8 @@ import {
 import { END } from "redux-saga";
 import axios from "axios";
 import { useRouter } from "next/router";
-import { LOAD_MY_INFO_REQUEST } from "../../../reducers/user";
-import wrapper from "../../../store/configureStore";
+import { LOAD_MY_INFO_REQUEST } from "../../../../reducers/user";
+import wrapper from "../../../../store/configureStore";
 import {
   MODAL_CLOSE_REQUEST,
   MODAL_OPEN_REQUEST,
@@ -31,13 +31,13 @@ import {
   EVENT_UPDATE_REQUEST,
   EVENT_UPLOAD_REQUEST,
   UPDATE_EVENT_PATH,
-} from "../../../reducers/event";
-import useInput from "../../../hooks/useInput";
+} from "../../../../reducers/event";
+import useInput from "../../../../hooks/useInput";
 import {
   ColWrapper,
   RowWrapper,
   Wrapper,
-} from "../../../components/commonComponents";
+} from "../../../../components/commonComponents";
 import { SearchOutlined } from "@ant-design/icons";
 
 const AdminContent = styled.div`
@@ -304,10 +304,8 @@ const Index = () => {
       dispatch({
         type: EVENT_CREATE_REQUEST,
         data: {
-          hint: value.hint,
-          title: value.content,
-          answer: value.answer,
-          outLink: "-",
+          title: value.title,
+          imagePath: uploadEventPath,
         },
       });
     },
@@ -320,10 +318,8 @@ const Index = () => {
         type: EVENT_UPDATE_REQUEST,
         data: {
           id: updateData.id,
-          hint: value.hint,
-          title: value.content,
-          answer: value.answer,
-          outLink: "-",
+          title: value.title,
+          imagePath: uploadEventPath,
         },
       });
     },
@@ -405,9 +401,7 @@ const Index = () => {
 
   const onFill = useCallback((data) => {
     formRef.current.setFieldsValue({
-      hint: data.hint,
-      content: data.title,
-      answer: data.answer,
+      title: data.title,
     });
 
     // dispatch({
@@ -464,9 +458,9 @@ const Index = () => {
   return (
     <AdminLayout>
       <PageHeader
-        breadcrumbs={["참가자 관리", "참가자 리스트"]}
-        title={`참가자 리스트`}
-        subTitle={`참가자 리스트를 관리할 수 있습니다.`}
+        breadcrumbs={["게시판 관리", "이벤트 리스트"]}
+        title={`이벤트 리스트`}
+        subTitle={`이벤트 리스트를 관리할 수 있습니다.`}
       />
 
       <AdminTop createButton={true} createButtonAction={modalOpen} />
@@ -515,13 +509,13 @@ const Index = () => {
       <Modal
         visible={modal}
         width={`600px`}
-        title={`매입 관리`}
+        title={`이벤트 관리`}
         size="small"
         onCancel={modalClose}
         onOk={createModalOk}
       >
         <Wrapper padding={`10px`}>
-          {/* <ImageWrapper>
+          <ImageWrapper>
             <GuideWrapper>
               <GuideText>
                 이미지 사이즈는 가로 {_WIDTH}px 과 세로
@@ -541,9 +535,7 @@ const Index = () => {
               }
               alt="main_GALLEY_image"
             />
-            <Guide>
-              {uploadEventPath && `이미지 미리보기 입니다.`}
-            </Guide>
+            <Guide>{uploadEventPath && `이미지 미리보기 입니다.`}</Guide>
 
             <UploadWrapper>
               <input
@@ -564,45 +556,15 @@ const Index = () => {
                 UPLOAD
               </Button>
             </UploadWrapper>
-          </ImageWrapper> */}
+          </ImageWrapper>
 
           <Form
             style={{ width: `80%` }}
             onFinish={updateData ? onSubmitUpdate : onSubmit}
             ref={formRef}
           >
-            <Form.Item
-              name={"content"}
-              label="문제"
-              rules={[{ required: true }]}
-            >
-              <Input.TextArea
-                allowClear
-                size="small"
-                autoSize={{ minRows: 10, maxRows: 10 }}
-                placeholder="Content..."
-              />
-            </Form.Item>
-
-            <Form.Item
-              name={"hint"}
-              label="힌트 링크"
-              rules={[{ required: true }]}
-            >
-              <Input allowClear size="small" placeholder="Hint..." />
-            </Form.Item>
-
-            <Form.Item
-              name={"answer"}
-              label="정답"
-              rules={[{ required: true }]}
-            >
-              <Input
-                allowClear
-                size="small"
-                placeholder="Answer..."
-                type="number"
-              />
+            <Form.Item name={"title"} label="제목" rules={[{ required: true }]}>
+              <Input allowClear size="small" placeholder="Title..." />
             </Form.Item>
           </Form>
         </Wrapper>
