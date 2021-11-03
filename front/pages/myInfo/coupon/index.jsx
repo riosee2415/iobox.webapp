@@ -96,6 +96,8 @@ const Index = () => {
             </Text>
           </Wrapper>
 
+          
+
           {/* 쿠폰이 없을 때 */}
           {/* <Wrapper height={`calc(100% - 135px)`}>
             <Image src={`#`} alt={`image`} width={`auto`} />
