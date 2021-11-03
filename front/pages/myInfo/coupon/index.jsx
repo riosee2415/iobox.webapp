@@ -243,7 +243,7 @@ const Index = () => {
           </CouponWrapper>
 
           {/* 쿠폰이 없을 때 */}
-          {/* <Wrapper height={`calc(100% - 135px)`}>
+          {/* <Wrapper height={`calc(100vh - 300px)`}>
             <Image src={`#`} alt={`image`} width={`auto`} />
             <Text color={Theme.grey_C} fontSize={`1.2rem`} margin={`10px 0 0`}>
               사용 가능한 쿠폰이 없습니다.
