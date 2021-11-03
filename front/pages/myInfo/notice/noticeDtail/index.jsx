@@ -1,5 +1,5 @@
 import React, { useCallback, useState } from "react";
-import Theme from "../../../components/Theme";
+import Theme from "../../../../components/Theme";
 import {
   Wrapper,
   WholeWrapper,
@@ -7,12 +7,25 @@ import {
   Text,
   Image,
   CommonButton,
-} from "../../../components/commonComponents";
+  TextInput,
+} from "../../../../components/commonComponents";
 import styled from "styled-components";
-import ClientLayout from "../../../components/ClientLayout";
-import useWidth from "../../../hooks/useWidth";
+import ClientLayout from "../../../../components/ClientLayout";
+import useWidth from "../../../../hooks/useWidth";
 import { CloseOutlined, DownOutlined, UpOutlined } from "@ant-design/icons";
 import { useRouter } from "next/dist/client/router";
+import { NotificationOutlined } from "@ant-design/icons";
+
+const TableWrapper = styled(Wrapper)`
+  border-bottom: 1px solid ${Theme.lightGrey_C};
+  padding: 10px 0;
+  flex-direction: row;
+  cursor: pointer;
+
+  &:hover {
+    border-bottom: 1px solid ${Theme.basicTheme_C};
+  }
+`;
 
 const Index = () => {
   const width = useWidth();
@@ -52,27 +65,38 @@ const Index = () => {
         ju={`flex-start`}
         position={`relative`}
       >
-        <Wrapper
-          padding={`5px`}
-          width={`auto`}
-          position={`absolute`}
-          top={`30px`}
-          right={`30px`}
-          fontSize={`20px`}
-          cursor={`pointer`}
-          onClick={moveBackHandler}
-          zIndex={`100`}
-        >
-          <CloseOutlined />
-        </Wrapper>
         <RsWrapper
-          height={`100%`}
-          ju={`flex-start`}
+          ju={`space-between`}
           position={`relative`}
           al={`flex-start`}
           padding={`30px 0`}
           bgColor={Theme.white_C}
-        ></RsWrapper>
+          minHeight={`100vh`}
+        >
+          <Wrapper al={`flex-start`}>
+            <Text bold={true} fontSize={`2rem`} margin={`0 0 10px`}>
+              공지사항
+            </Text>
+
+            <Wrapper padding={`10px 0`} al={`flex-start`} ju={`flex-start`}>
+              내용이 들어올 곳 입니다.
+            </Wrapper>
+          </Wrapper>
+
+          <Wrapper dr={`row`} ju={`space-between`}>
+            <CommonButton
+              width={`calc(100% / 2 - 10px)`}
+              height={`50px`}
+              kindOf={`white`}
+              onClick={moveBackHandler}
+            >
+              이전
+            </CommonButton>
+            <CommonButton width={`calc(100% / 2 - 10px)`} height={`50px`}>
+              다음
+            </CommonButton>
+          </Wrapper>
+        </RsWrapper>
       </Wrapper>
     </WholeWrapper>
   );

@@ -14,7 +14,7 @@ import ClientLayout from "../../../components/ClientLayout";
 import useWidth from "../../../hooks/useWidth";
 import { CloseOutlined, DownOutlined, UpOutlined } from "@ant-design/icons";
 import { useRouter } from "next/dist/client/router";
-import { NotificationOutlined } from "@ant-design/icons";
+import { QuestionCircleOutlined } from "@ant-design/icons";
 
 const TableWrapper = styled(Wrapper)`
   border-bottom: 1px solid ${Theme.lightGrey_C};
@@ -84,43 +84,89 @@ const Index = () => {
           al={`flex-start`}
           padding={`30px 0`}
           bgColor={Theme.white_C}
+          minHeight={`100vh`}
         >
           <Wrapper al={`flex-start`}>
             <Text bold={true} fontSize={`2rem`} margin={`0 0 10px`}>
-              이용안내
+              자주 묻는 질문
             </Text>
 
             <TableWrapper>
-              <Wrapper al={`flex-start`}>
-                <Text fontSize={`0.7rem`}>타입</Text>
+              <Wrapper
+                width={`50px`}
+                color={Theme.basicTheme_C}
+                fontSize={`25px`}
+              >
+                <QuestionCircleOutlined />
+              </Wrapper>
+              <Wrapper width={`calc(100% - 50px)`} al={`flex-start`}>
+                <Text fontSize={`0.7rem`} color={Theme.grey_C}>
+                  [타입]
+                </Text>
                 <Text>내용이 들어올 곳 입니다.</Text>
               </Wrapper>
             </TableWrapper>
 
             <TableWrapper>
-              <Wrapper al={`flex-start`}>
-                <Text fontSize={`0.7rem`}>타입</Text>
+              <Wrapper
+                width={`50px`}
+                color={Theme.basicTheme_C}
+                fontSize={`25px`}
+              >
+                <QuestionCircleOutlined />
+              </Wrapper>
+              <Wrapper width={`calc(100% - 50px)`} al={`flex-start`}>
+                <Text fontSize={`0.7rem`} color={Theme.grey_C}>
+                  [타입]
+                </Text>
                 <Text>내용이 들어올 곳 입니다.</Text>
               </Wrapper>
             </TableWrapper>
 
             <TableWrapper>
-              <Wrapper al={`flex-start`}>
-                <Text fontSize={`0.7rem`}>타입</Text>
+              <Wrapper
+                width={`50px`}
+                color={Theme.basicTheme_C}
+                fontSize={`25px`}
+              >
+                <QuestionCircleOutlined />
+              </Wrapper>
+              <Wrapper width={`calc(100% - 50px)`} al={`flex-start`}>
+                <Text fontSize={`0.7rem`} color={Theme.grey_C}>
+                  [타입]
+                </Text>
                 <Text>내용이 들어올 곳 입니다.</Text>
               </Wrapper>
             </TableWrapper>
 
             <TableWrapper>
-              <Wrapper al={`flex-start`}>
-                <Text fontSize={`0.7rem`}>타입</Text>
+              <Wrapper
+                width={`50px`}
+                color={Theme.basicTheme_C}
+                fontSize={`25px`}
+              >
+                <QuestionCircleOutlined />
+              </Wrapper>
+              <Wrapper width={`calc(100% - 50px)`} al={`flex-start`}>
+                <Text fontSize={`0.7rem`} color={Theme.grey_C}>
+                  [타입]
+                </Text>
                 <Text>내용이 들어올 곳 입니다.</Text>
               </Wrapper>
             </TableWrapper>
 
             <TableWrapper>
-              <Wrapper al={`flex-start`}>
-                <Text fontSize={`0.7rem`}>타입</Text>
+              <Wrapper
+                width={`50px`}
+                color={Theme.basicTheme_C}
+                fontSize={`25px`}
+              >
+                <QuestionCircleOutlined />
+              </Wrapper>
+              <Wrapper width={`calc(100% - 50px)`} al={`flex-start`}>
+                <Text fontSize={`0.7rem`} color={Theme.grey_C}>
+                  [타입]
+                </Text>
                 <Text>내용이 들어올 곳 입니다.</Text>
               </Wrapper>
             </TableWrapper>

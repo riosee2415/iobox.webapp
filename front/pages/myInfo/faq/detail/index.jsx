@@ -1,5 +1,5 @@
 import React, { useCallback, useState } from "react";
-import Theme from "../../../components/Theme";
+import Theme from "../../../../components/Theme";
 import {
   Wrapper,
   WholeWrapper,
@@ -8,10 +8,10 @@ import {
   Image,
   CommonButton,
   TextInput,
-} from "../../../components/commonComponents";
+} from "../../../../components/commonComponents";
 import styled from "styled-components";
-import ClientLayout from "../../../components/ClientLayout";
-import useWidth from "../../../hooks/useWidth";
+import ClientLayout from "../../../../components/ClientLayout";
+import useWidth from "../../../../hooks/useWidth";
 import { CloseOutlined, DownOutlined, UpOutlined } from "@ant-design/icons";
 import { useRouter } from "next/dist/client/router";
 import { NotificationOutlined } from "@ant-design/icons";
@@ -65,65 +65,36 @@ const Index = () => {
         ju={`flex-start`}
         position={`relative`}
       >
-        <Wrapper
-          padding={`5px`}
-          width={`auto`}
-          position={`absolute`}
-          top={`30px`}
-          right={`30px`}
-          fontSize={`20px`}
-          cursor={`pointer`}
-          onClick={moveBackHandler}
-          zIndex={`100`}
-        >
-          <CloseOutlined />
-        </Wrapper>
         <RsWrapper
           ju={`space-between`}
           position={`relative`}
           al={`flex-start`}
           padding={`30px 0`}
           bgColor={Theme.white_C}
+          minHeight={`100vh`}
         >
           <Wrapper al={`flex-start`}>
             <Text bold={true} fontSize={`2rem`} margin={`0 0 10px`}>
-              이용안내
+              자주 묻는 질문
             </Text>
 
-            <TableWrapper>
-              <Wrapper al={`flex-start`}>
-                <Text fontSize={`0.7rem`}>타입</Text>
-                <Text>내용이 들어올 곳 입니다.</Text>
-              </Wrapper>
-            </TableWrapper>
+            <Wrapper padding={`10px 0`} al={`flex-start`} ju={`flex-start`}>
+              내용이 들어올 곳 입니다.
+            </Wrapper>
+          </Wrapper>
 
-            <TableWrapper>
-              <Wrapper al={`flex-start`}>
-                <Text fontSize={`0.7rem`}>타입</Text>
-                <Text>내용이 들어올 곳 입니다.</Text>
-              </Wrapper>
-            </TableWrapper>
-
-            <TableWrapper>
-              <Wrapper al={`flex-start`}>
-                <Text fontSize={`0.7rem`}>타입</Text>
-                <Text>내용이 들어올 곳 입니다.</Text>
-              </Wrapper>
-            </TableWrapper>
-
-            <TableWrapper>
-              <Wrapper al={`flex-start`}>
-                <Text fontSize={`0.7rem`}>타입</Text>
-                <Text>내용이 들어올 곳 입니다.</Text>
-              </Wrapper>
-            </TableWrapper>
-
-            <TableWrapper>
-              <Wrapper al={`flex-start`}>
-                <Text fontSize={`0.7rem`}>타입</Text>
-                <Text>내용이 들어올 곳 입니다.</Text>
-              </Wrapper>
-            </TableWrapper>
+          <Wrapper dr={`row`} ju={`space-between`}>
+            <CommonButton
+              width={`calc(100% / 2 - 10px)`}
+              height={`50px`}
+              kindOf={`white`}
+              onClick={moveBackHandler}
+            >
+              이전
+            </CommonButton>
+            <CommonButton width={`calc(100% / 2 - 10px)`} height={`50px`}>
+              다음
+            </CommonButton>
           </Wrapper>
         </RsWrapper>
       </Wrapper>

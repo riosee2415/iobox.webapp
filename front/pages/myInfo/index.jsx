@@ -16,6 +16,24 @@ import { useRouter } from "next/dist/client/router";
 import { RightOutlined } from "@ant-design/icons";
 import { Switch } from "antd";
 
+const TableWrapper = styled(Wrapper)`
+  flex-direction: row;
+  justify-content: space-between;
+  padding: ${(props) => props.padding || `15px 0`};
+  border-bottom: ${(props) =>
+    props.borderBottom || `1px solid ${Theme.grey_C}`};
+  transition: 0.5s;
+  cursor: pointer;
+
+  &:hover {
+    border-bottom: 1px solid ${Theme.basicTheme_C};
+
+    &:last-child {
+      border: none;
+    }
+  }
+`;
+
 const Index = () => {
   const width = useWidth();
   const router = useRouter();
@@ -80,11 +98,11 @@ const Index = () => {
               내 정보
             </Text>
 
-            <Wrapper
-              dr={`row`}
-              ju={`space-between`}
+            <TableWrapper
               padding={`0 0 15px`}
-              borderBottom={`1px solid ${Theme.grey_C}`}
+              onClick={() => {
+                moveLinkHandler("myInfo/name");
+              }}
             >
               <Wrapper width={`auto`} al={`flex-start`}>
                 <Text>김우현</Text>
@@ -96,13 +114,12 @@ const Index = () => {
               <Wrapper width={`auto`} color={Theme.darkGrey_C}>
                 <RightOutlined />
               </Wrapper>
-            </Wrapper>
+            </TableWrapper>
 
-            <Wrapper
-              dr={`row`}
-              ju={`space-between`}
-              padding={`15px 0`}
-              borderBottom={`1px solid ${Theme.grey_C}`}
+            <TableWrapper
+              onClick={() => {
+                moveLinkHandler("myInfo/phone");
+              }}
             >
               <Text>전화번호</Text>
 
@@ -118,13 +135,12 @@ const Index = () => {
                   <RightOutlined />
                 </Wrapper>
               </Wrapper>
-            </Wrapper>
+            </TableWrapper>
 
-            <Wrapper
-              dr={`row`}
-              ju={`space-between`}
-              padding={`15px 0`}
-              borderBottom={`1px solid ${Theme.grey_C}`}
+            <TableWrapper
+              onClick={() => {
+                moveLinkHandler("myInfo/card");
+              }}
             >
               <Text>결제카드</Text>
 
@@ -140,13 +156,12 @@ const Index = () => {
                   <RightOutlined />
                 </Wrapper>
               </Wrapper>
-            </Wrapper>
+            </TableWrapper>
 
-            <Wrapper
-              dr={`row`}
-              ju={`space-between`}
-              padding={`15px 0`}
-              borderBottom={`1px solid ${Theme.grey_C}`}
+            <TableWrapper
+              onClick={() => {
+                moveLinkHandler("myInfo/membership");
+              }}
             >
               <Text>멤버십</Text>
 
@@ -162,13 +177,12 @@ const Index = () => {
                   <RightOutlined />
                 </Wrapper>
               </Wrapper>
-            </Wrapper>
+            </TableWrapper>
 
-            <Wrapper
-              dr={`row`}
-              ju={`space-between`}
-              padding={`15px 0`}
-              borderBottom={`1px solid ${Theme.grey_C}`}
+            <TableWrapper
+              onClick={() => {
+                moveLinkHandler("myInfo/coupon");
+              }}
             >
               <Text>쿠폰</Text>
 
@@ -184,13 +198,12 @@ const Index = () => {
                   <RightOutlined />
                 </Wrapper>
               </Wrapper>
-            </Wrapper>
+            </TableWrapper>
 
-            <Wrapper
-              dr={`row`}
-              ju={`space-between`}
-              padding={`15px 0`}
-              borderBottom={`1px solid ${Theme.grey_C}`}
+            <TableWrapper
+              onClick={() => {
+                moveLinkHandler("myInfo/newNotice");
+              }}
             >
               <Text>알림</Text>
 
@@ -203,7 +216,7 @@ const Index = () => {
                   1개
                 </Text>
               </Wrapper>
-            </Wrapper>
+            </TableWrapper>
 
             <Wrapper dr={`row`} ju={`space-between`} padding={`15px 0 0`}>
               <Wrapper width={`auto`} al={`flex-start`}>
@@ -228,45 +241,46 @@ const Index = () => {
           </Wrapper>
 
           <RsWrapper height={`auto`}>
-            <Wrapper
-              dr={`row`}
-              ju={`space-between`}
-              padding={`15px 0`}
-              borderBottom={`1px solid ${Theme.grey_C}`}
+            <TableWrapper
+              onClick={() => {
+                moveLinkHandler("myInfo/contact");
+              }}
             >
               <Text>1:1 상담</Text>
-            </Wrapper>
+            </TableWrapper>
 
-            <Wrapper
-              dr={`row`}
-              ju={`space-between`}
-              padding={`15px 0`}
-              borderBottom={`1px solid ${Theme.grey_C}`}
+            <TableWrapper
+              onClick={() => {
+                moveLinkHandler("myInfo/notice");
+              }}
             >
               <Text>공지사항</Text>
-            </Wrapper>
+            </TableWrapper>
 
-            <Wrapper
-              dr={`row`}
-              ju={`space-between`}
-              padding={`15px 0`}
-              borderBottom={`1px solid ${Theme.grey_C}`}
+            <TableWrapper
+              onClick={() => {
+                moveLinkHandler("myInfo/information");
+              }}
             >
               <Text>이용안내</Text>
-            </Wrapper>
+            </TableWrapper>
 
-            <Wrapper
-              dr={`row`}
-              ju={`space-between`}
-              padding={`15px 0`}
-              borderBottom={`1px solid ${Theme.grey_C}`}
+            <TableWrapper
+              onClick={() => {
+                moveLinkHandler("myInfo/faq");
+              }}
             >
               <Text>자주 묻는 질문</Text>
-            </Wrapper>
+            </TableWrapper>
 
-            <Wrapper dr={`row`} ju={`space-between`} padding={`15px 0`}>
+            <TableWrapper
+              borderBottom={`none`}
+              onClick={() => {
+                moveLinkHandler("myInfo/event");
+              }}
+            >
               <Text>이벤트</Text>
-            </Wrapper>
+            </TableWrapper>
           </RsWrapper>
 
           <Wrapper height={`10px`} bgColor={Theme.lightGrey_C}></Wrapper>
