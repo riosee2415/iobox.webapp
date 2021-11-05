@@ -1,35 +1,75 @@
-import React, { useCallback, useEffect, useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
-import { LOAD_MY_INFO_REQUEST, LOGIN_REQUEST } from "../reducers/user";
-import useInput from "../hooks/useInput";
-import ClientLayout from "../components/ClientLayout";
-import axios from "axios";
-import wrapper from "../store/configureStore";
-import { END } from "redux-saga";
+import React, { useCallback, useState } from "react";
+import Theme from "../../components/Theme";
 import {
-  Image,
+  Wrapper,
   WholeWrapper,
   RsWrapper,
-  Wrapper,
   Text,
-} from "../components/commonComponents";
-import useWidth from "../hooks/useWidth";
-import Theme from "../components/Theme";
+  Image,
+  CommonButton,
+} from "../../components/commonComponents";
+import styled from "styled-components";
+import ClientLayout from "../../components/ClientLayout";
+import useWidth from "../../hooks/useWidth";
+import { CloseOutlined, DownOutlined, UpOutlined } from "@ant-design/icons";
 import { useRouter } from "next/dist/client/router";
+import { MinusOutlined, PlusOutlined } from "@ant-design/icons";
+import BoxSlider from "../../components/slide/BoxSlider";
 
-const Home = ({}) => {
+const PayButtton = styled(Wrapper)`
+  color: ${Theme.basicTheme_C};
+  width: auto;
+  font-size: 1.2rem;
+  position: relative;
+
+  &:before {
+    content: "";
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: 1px;
+    background: ${Theme.basicTheme_C};
+  }
+
+  &:hover {
+    font-weight: 700;
+  }
+`;
+
+const TextButton = styled(Wrapper)`
+  color: ${Theme.blue_C};
+  width: auto;
+  position: relative;
+  padding: 0 0 2px;
+  cursor: pointer;
+
+  &:before {
+    content: "";
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 0;
+    height: 1px;
+    background: ${Theme.blue_C};
+    transition: 0.5s;
+  }
+
+  &:hover {
+    font-weight: 700;
+    &:before {
+      width: 100%;
+    }
+  }
+`;
+
+const Index = () => {
   const width = useWidth();
   const router = useRouter();
 
-  const [main, setMain] = useState(true);
-
   ////// HOOKS //////
-
-  useEffect(() => {
-    setTimeout(() => {
-      setMain(false);
-    }, [1000]);
-  }, [main]);
+  const [tab, setTab] = useState(false);
+  const [number, setNumber] = useState(0);
 
   ////// REDUX //////
 
@@ -38,182 +78,176 @@ const Home = ({}) => {
   ////// TOGGLE ///////
 
   ///// HANDLER //////
+  const minusNumberHandler = useCallback(() => {
+    setNumber(number - 1);
+
+    if (number === 0) {
+      setNumber(0);
+    }
+  }, [number]);
+
+  const plusNumberHandler = useCallback(() => {
+    setNumber(number + 1);
+  }, [number]);
+
+  const moveBackHandler = useCallback(() => {
+    router.back();
+  }, []);
+
   const moveLinkHandler = useCallback((link) => {
     router.push(link);
   }, []);
 
+  const tabToggle = useCallback(() => {
+    setTab(!tab);
+  }, [tab]);
+
   ////// DATAVIEW //////
   return (
     <>
-      {main ? (
+      <WholeWrapper bgColor={width < 700 ? Theme.white_C : Theme.lightGrey_C}>
         <Wrapper
-          positon={`fixed`}
-          height={`100vh`}
-          top={`0`}
-          left={`0`}
-          bgColor={Theme.basicTheme_C}
-          transition={`0.5s`}
+          width={width < 700 ? `100%` : `500px`}
+          height={`100%`}
+          shadow={`0px 0px 10px ${Theme.grey_C}`}
+          bgColor={Theme.white_C}
+          overflowX={`hidden`}
+          al={`flex-start`}
+          ju={`flex-start`}
+          position={`relative`}
         >
-          <Image src={`#`} />
-        </Wrapper>
-      ) : (
-        <ClientLayout>
-          <WholeWrapper
-            height={`100vh`}
-            bgColor={width < 700 ? Theme.white_C : Theme.lightGrey_C}
+          <Wrapper
+            padding={`5px`}
+            width={`auto`}
+            position={`absolute`}
+            top={`30px`}
+            right={`30px`}
+            fontSize={`20px`}
+            cursor={`pointer`}
+            onClick={moveBackHandler}
+            zIndex={`100`}
           >
-            <Wrapper
-              width={width < 700 ? `100%` : `500px`}
-              height={`100%`}
-              shadow={`0px 0px 10px ${Theme.grey_C}`}
+            <CloseOutlined />
+          </Wrapper>
+          <Wrapper>
+            <RsWrapper
+              ju={`flex-start`}
+              position={`relative`}
+              al={`flex-start`}
+              padding={`30px 0`}
+              bgColor={Theme.white_C}
+              minHeight={`100vh`}
             >
+              <Text bold={true} fontSize={`2rem`}>
+                io박스
+              </Text>
+              <Wrapper al={`flex-start`} margin={`10px 0 0`}>
+                <Text>배송&#38;보관박스 크기</Text>
+                <Text fontWeight={`700`}>W55 x H35 x D30 (CM)</Text>
+              </Wrapper>
+
+              <Wrapper width={`auto`} al={`flex-end`}>
+                <Text
+                  color={Theme.grey_C}
+                  bold={true}
+                  fontSize={`1.5rem`}
+                  margin={`30px 0 0`}
+                >
+                  iO 베이직 월 9,000원
+                </Text>
+                <TextButton>자세히 보기</TextButton>
+              </Wrapper>
+
+              <Wrapper minHeight={`300px`} margin={`10px 0`}>
+                <BoxSlider datum={("1", "2", "3")} line={1} row={1} />
+              </Wrapper>
+
+              <Wrapper ju={`flex-end`} dr={`row`}>
+                <Wrapper
+                  width={`30px`}
+                  height={`30px`}
+                  radius={`50%`}
+                  border={`1px solid ${Theme.darkGrey2_C}`}
+                  onClick={minusNumberHandler}
+                  cursor={`pointer`}
+                >
+                  <MinusOutlined />
+                </Wrapper>
+                <Text fontWeight={`700`} margin={`0 20px`}>
+                  {number}
+                </Text>
+                <Wrapper
+                  width={`30px`}
+                  height={`30px`}
+                  radius={`50%`}
+                  border={`1px solid ${Theme.darkGrey2_C}`}
+                  onClick={plusNumberHandler}
+                  cursor={`pointer`}
+                >
+                  <PlusOutlined />
+                </Wrapper>
+              </Wrapper>
+
               <Wrapper
-                height={`45%`}
-                bgColor={Theme.basicTheme_C}
-                ju={`flex-start`}
+                dr={`row`}
+                ju={`space-between`}
+                margin={`20px 0 0`}
+                opacity={number === 0 ? `0` : `1`}
+                trnansition={`0.5s`}
               >
-                <RsWrapper ju={`flex-start`} position={`relative`}>
-                  <Wrapper padding={`10px 0`}>
-                    <Image src={`#`} alt={`logo`} width={`40px`} />
-                  </Wrapper>
+                <Text fontSize={`1.1rem`}>iO 박스 W55 x H35 x D30 (CM)</Text>
 
-                  <Text
-                    bold={true}
-                    color={Theme.white_C}
-                    fontSize={`3rem`}
-                    margin={`30px 0 0`}
-                  >
-                    맡아줘 내 짐!
+                <Wrapper dr={`row`} width={`auto`}>
+                  <Text fontSize={`1.1rem`} fontWeight={`700`}>
+                    {number}개
                   </Text>
-                  <Wrapper al={`flex-start`} margin={`45px 0 0`}>
-                    <Text bold={true} color={Theme.white_C}>
-                      원할 때 맡겨!
-                    </Text>
-                  </Wrapper>
 
-                  <Wrapper al={`flex-end`} margin={`35px 0 0`}>
-                    <Text bold={true} color={Theme.white_C}>
-                      원할 때 찾고!
-                    </Text>
+                  <Wrapper
+                    width={`18px`}
+                    height={`18px`}
+                    bgColor={Theme.black2_C}
+                    radius={`50%`}
+                    margin={`0 0 0 5px`}
+                    color={Theme.white_C}
+                    onClick={() => {
+                      setNumber(0);
+                    }}
+                  >
+                    <CloseOutlined />
                   </Wrapper>
-
-                  <Image
-                    src={`https://4leaf-s3.s3.ap-northeast-2.amazonaws.com/iobox/assets/images/main/woman.png`}
-                    position={`absolute`}
-                    bottom={`0`}
-                    left={`50%`}
-                    width={`130px`}
-                    zIndex={`2`}
-                    margin={`0 0 0 -65px`}
-                  />
-                </RsWrapper>
+                </Wrapper>
               </Wrapper>
-              <Wrapper height={`55%`} bgColor={Theme.white_C}>
-                <RsWrapper ju={`flex-start`}>
-                  <Wrapper al={`flex-start`} margin={`50px 0 0`}>
-                    <Text>3초 만에 내가 맡길 짐 가격 알아보기</Text>
+            </RsWrapper>
+          </Wrapper>
+        </Wrapper>
+      </WholeWrapper>
 
-                    <Wrapper
-                      height={`50px`}
-                      padding={`10px`}
-                      border={`4px solid ${Theme.grey_C}`}
-                      radius={`10px`}
-                      margin={`10px 0 0s`}
-                      ju={`space-between`}
-                      dr={`row`}
-                      onClick={() => {
-                        moveLinkHandler("/calculate");
-                      }}
-                      cursor={`pointer`}
-                    >
-                      <Text fontSize={`1.2rem`} bold={true}>
-                        내 짐 맡기면 얼마일까 ?
-                      </Text>
-
-                      <Image
-                        src={`https://4leaf-s3.s3.ap-northeast-2.amazonaws.com/iobox/assets/images/main/search.png`}
-                        width={`20px`}
-                        margin={`0 0 3px`}
-                      />
-                    </Wrapper>
-                  </Wrapper>
-
-                  <Text margin={`40px 0 0`}>보관중인 고객님의 소중한 물건</Text>
-
-                  <Wrapper dr={`row`} margin={`5px 0 0`}>
-                    <Text
-                      padding={`0 5px`}
-                      bgColor={Theme.grey_C}
-                      fontWeight={`700`}
-                      fontSize={`1.3rem`}
-                    >
-                      1
-                    </Text>
-                    <Text
-                      padding={`0 5px`}
-                      bgColor={Theme.grey_C}
-                      fontWeight={`700`}
-                      fontSize={`1.3rem`}
-                      margin={`0 3px`}
-                    >
-                      5
-                    </Text>
-                    <Text
-                      padding={`0 5px`}
-                      bgColor={Theme.grey_C}
-                      fontWeight={`700`}
-                      fontSize={`1.3rem`}
-                    >
-                      7
-                    </Text>
-                    <Text
-                      padding={`0 5px`}
-                      bgColor={Theme.grey_C}
-                      fontWeight={`700`}
-                      fontSize={`1.3rem`}
-                      margin={`0 0 0 3px`}
-                    >
-                      8
-                    </Text>
-                    <Text
-                      padding={`0 5px`}
-                      bgColor={Theme.grey_C}
-                      fontWeight={`700`}
-                      fontSize={`1.3rem`}
-                      margin={`0 0 0 3px`}
-                    >
-                      개
-                    </Text>
-                  </Wrapper>
-                </RsWrapper>
-              </Wrapper>
-            </Wrapper>
-          </WholeWrapper>
-        </ClientLayout>
-      )}
+      <Wrapper
+        position={`fixed`}
+        bottom={`0`}
+        left={width < 700 ? `0` : `50%`}
+        margin={width < 700 ? `0` : `0 0 0 -250px`}
+        padding={`20px 0`}
+        borderTop={`1px solid ${Theme.grey_C}`}
+        bgColor={Theme.white_C}
+        width={width < 700 ? `100%` : `500px`}
+      >
+        <RsWrapper dr={`row`} ju={`space-between`}>
+          <Wrapper width={`auto`} al={`flex-start`}>
+            <Text bold={true} fontSize={`1.2rem`}>
+              월 9,000
+            </Text>
+            <PayButtton bold={true} fontSize={`1.2rem`}>
+              예상금액 상세
+            </PayButtton>
+          </Wrapper>
+          <CommonButton width={`130px`} height={`50px`}>
+            다음
+          </CommonButton>
+        </RsWrapper>
+      </Wrapper>
     </>
   );
 };
 
-export const getServerSideProps = wrapper.getServerSideProps(
-  async (context) => {
-    // SSR Cookie Settings For Data Load/////////////////////////////////////
-    const cookie = context.req ? context.req.headers.cookie : "";
-    axios.defaults.headers.Cookie = "";
-    if (context.req && cookie) {
-      axios.defaults.headers.Cookie = cookie;
-    }
-    ////////////////////////////////////////////////////////////////////////
-    // 구현부
-
-    context.store.dispatch({
-      type: LOAD_MY_INFO_REQUEST,
-    });
-
-    // 구현부 종료
-    context.store.dispatch(END);
-    console.log("🍀 SERVER SIDE PROPS END");
-    await context.store.sagaTask.toPromise();
-  }
-);
-export default Home;
+export default Index;

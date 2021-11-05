@@ -87,6 +87,7 @@ const Index = () => {
             al={`flex-start`}
             padding={`30px 0`}
             bgColor={Theme.white_C}
+            minHeight={`100vh`}
           >
             <Image src={`#`} width={`auto`} alt={`LOGO`} />
 
