@@ -14,6 +14,8 @@ export default {
   naver_C: "#68CC6A",
   naver2_C: "#01EA48",
 
+  //red
+  red_C: "#FF0000",
   // white
   white_C: "#ffffff",
   // black

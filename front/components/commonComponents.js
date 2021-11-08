@@ -154,6 +154,7 @@ export const Wrapper = styled.div`
 export const RsWrapper = styled.article`
   width: 100%;
   height: ${(props) => props.height || `100%`};
+  min-height: ${(props) => props.minHeight};
   color: ${(props) => props.color};
   display: ${(props) => props.display || `flex`};
   background: ${(props) => props.bgColor};
@@ -184,15 +185,20 @@ export const CommonButton = styled(Button)`
   font-weight: ${(props) => props.fontWeight};
   color: ${(props) => props.color || props.theme.subTheme2_C};
   border-radius: ${(props) => props.radius || `7px`};
+  background: ${(props) => props.bgColor};
 
   ${(props) => !props.kindOf && `background : ${props.theme.basicTheme_C};`}
   ${(props) => !props.kindOf && `color : ${props.theme.white_C};`}
+  ${(props) =>
+    !props.kindOf && `border :  1px solid ${props.theme.basicTheme_C};`}
 
   ${(props) =>
-    props.kindOf === `white` && `background : ${props.theme.basicTheme_C};`}
-  ${(props) => props.kindOf === `white` && `color : ${props.theme.subTheme_C};`}
+    props.kindOf === `white` && `background : ${props.theme.white_C};`}
+  ${(props) =>
+    props.kindOf === `white` && `color : ${props.theme.basicTheme_C};`}
       ${(props) =>
-    props.kindOf === `white` && `border : 1px solid ${props.theme.subTheme_C};`}
+    props.kindOf === `white` &&
+    `border : 1px solid ${props.theme.basicTheme_C};`}
      ${(props) =>
     props.kindOf === `black` && `background : ${props.theme.black_C};`}
   ${(props) => props.kindOf === `black` && `color : ${props.theme.white_C};`}
@@ -215,6 +221,9 @@ export const CommonButton = styled(Button)`
       props.kindOf === `white` && `background ${props.theme.basicTheme_C};`}
          ${(props) =>
       props.kindOf === `white` && `color ${props.theme.white_C};`}
+         ${(props) =>
+      props.kindOf === `white` &&
+      `border : 1px solid ${props.theme.basicTheme_C};`}
 ${(props) => props.kindOf === `black` && `background : ${props.theme.white_C};`}
   ${(props) => props.kindOf === `black` && `color : ${props.theme.black_C};`}
   ${(props) =>
@@ -363,6 +372,67 @@ export const ATag = styled.a`
   flex-wrap: ${(props) => props.wrap || `wrap`};
   background: ${(props) => props.bgColor};
   color: ${(props) => props.color};
+`;
+
+export const TextInput = styled.input`
+  width: ${(props) => props.width};
+  height: ${(props) => props.height || `40px`};
+  border: ${(props) => props.border};
+  border-bottom: ${(props) => props.borderBottom};
+  border-right: ${(props) => props.borderRight};
+  border-left: ${(props) => props.borderLeft};
+  padding: ${(props) => props.padding || `10px`};
+  transition: ${(props) => props.transition || props.theme.transition};
+  margin: ${(props) => props.margin};
+  background-color: ${(props) => props.bgColor};
+  border-radius: ${(props) => props.radius};
+  font-size: ${(props) => props.fontSize};
+  cursor: ${(props) => props.cursor};
+  border-radius: ${(props) => props.radius};
+
+  &:focus {
+    box-shadow: ${(props) => props.focusShadow};
+    background-color: ${(props) => props.theme.white_C};
+    border: 1px solid ${(props) => props.theme.basicTheme_C};
+    outline: none;
+  }
+
+  &:read-only {
+    background-color: ${(props) => props.theme.lightGrey_C};
+    cursor: auto;
+  }
+
+  &:read-only:focus {
+    box-shadow: none;
+  }
+
+  &::placeholder {
+    font-size: 14px;
+    line-height: 1.6;
+    color: ${(props) => props.theme.grey_C};
+  }
+`;
+
+export const TextArea = styled.textarea`
+  width: ${(props) => props.width};
+  height: ${(props) => props.height || `100px`};
+  padding: ${(props) => props.padding || `10px`};
+  border: ${(props) => props.border || `1px solid ${props.theme.grey_C}`};
+  /* border-radius: ${(props) => props.theme.radius}; */
+  transition: ${(props) => props.transition || props.theme.transition};
+  margin: ${(props) => props.margin};
+  resize: none;
+  border-radius: ${(props) => props.radius || `10px`};
+
+  &:focus {
+    box-shadow: ${(props) => props.theme.boxShadow};
+    outline: none;
+  }
+
+  &::placeholder {
+    font-size: 14px;
+    line-height: 1.6;
+  }
 `;
 
 ////////////////////////////////////////////////////////////////////////////

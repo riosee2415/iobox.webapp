@@ -7,6 +7,7 @@ import {
   Text,
   Image,
   CommonButton,
+  TextInput,
 } from "../../../components/commonComponents";
 import styled from "styled-components";
 import ClientLayout from "../../../components/ClientLayout";
@@ -42,7 +43,13 @@ const Index = () => {
 
   ////// DATAVIEW //////
   return (
-    <WholeWrapper bgColor={width < 700 ? Theme.white_C : Theme.lightGrey_C}>
+    <WholeWrapper
+      bgColor={
+        width < 700
+          ? `linear-gradient(90deg,rgb(249, 2, 80),rgb(247, 141, 150),rgb(242, 146, 98),rgb(241, 115, 80))`
+          : Theme.lightGrey_C
+      }
+    >
       <Wrapper
         width={width < 700 ? `100%` : `500px`}
         minHeight={`100vh`}
@@ -62,17 +69,112 @@ const Index = () => {
           cursor={`pointer`}
           onClick={moveBackHandler}
           zIndex={`100`}
+          color={Theme.white_C}
         >
           <CloseOutlined />
         </Wrapper>
         <RsWrapper
-          height={`100%`}
+          height={`100vh`}
           ju={`flex-start`}
           position={`relative`}
           al={`flex-start`}
           padding={`30px 0`}
-          bgColor={Theme.white_C}
-        ></RsWrapper>
+          bgColor={`linear-gradient(160deg,rgb(249, 2, 80),rgb(247, 141, 150),rgb(242, 146, 98),rgb(241, 115, 80))`}
+        >
+          <Image src={`#`} alt={`logo`} />
+          <Text color={Theme.white_C}>상담 가능 시간</Text>
+          <Text fontSize={`0.7rem`} color={Theme.white_C}>
+            평일 오전 10:00시 ~ 오후 18:00시 (토,일,공휴일 휴무)
+          </Text>
+
+          <Wrapper
+            radius={`20px`}
+            bgColor={Theme.white_C}
+            margin={`50px 0 30px`}
+            padding={`20px`}
+          >
+            <Wrapper dr={`row`} al={`flex-start`}>
+              <Wrapper width={`18%`}>
+                <Image src={`#`} alt={`logo`} />
+              </Wrapper>
+              <Wrapper
+                width={`78%`}
+                al={`flex-start`}
+                color={Theme.basicTheme_C}
+              >
+                <Text
+                  fontWeight={`700`}
+                  fontSize={`0.9rem`}
+                  margin={`0 0 30px`}
+                >
+                  아이오 박스
+                </Text>
+                <Text fontWeight={`700`} fontSize={`0.9rem`}>
+                  주거 공간을 넓게!
+                </Text>
+                <Text fontWeight={`700`} fontSize={`0.9rem`}>
+                  미니멀리즘 라이프 스타일을
+                </Text>
+                <Text fontWeight={`700`} fontSize={`0.9rem`}>
+                  실현하는 서비스 아이오박스 입니다.
+                </Text>
+                <Text fontWeight={`700`} fontSize={`0.9rem`}>
+                  무엇을 도와드릴까요 ?
+                </Text>
+              </Wrapper>
+            </Wrapper>
+
+            <Wrapper dr={`row`} al={`flex-start`} margin={`20px 0 0`}>
+              <Wrapper width={`18%`}>
+                <Image src={`#`} alt={`logo`} />
+              </Wrapper>
+              <Wrapper
+                width={`78%`}
+                al={`flex-start`}
+                color={Theme.basicTheme_C}
+              >
+                <Text fontWeight={`700`} fontSize={`0.9rem`}>
+                  상담원과 빠른 상담을 원하시면
+                </Text>
+                <Text fontWeight={`700`} fontSize={`0.9rem`}>
+                  실시간 상담 버튼을 눌러주세요.
+                </Text>
+              </Wrapper>
+            </Wrapper>
+
+            <CommonButton
+              width={`140px`}
+              height={`50px`}
+              radius={`30px`}
+              margin={`30px 0 0`}
+            >
+              실시간 상담
+            </CommonButton>
+          </Wrapper>
+
+          <Wrapper dr={`row`}>
+            <Wrapper
+              width={`50px`}
+              height={`50px`}
+              radius={`50%`}
+              bgColor={Theme.kakao_C}
+            ></Wrapper>
+            <Wrapper
+              width={`50px`}
+              height={`50px`}
+              radius={`50%`}
+              bgColor={Theme.white_C}
+              margin={`0 10px`}
+            ></Wrapper>
+
+            <Wrapper
+              width={`50px`}
+              height={`50px`}
+              radius={`50%`}
+              bgColor={Theme.white_C}
+            ></Wrapper>
+          </Wrapper>
+        </RsWrapper>
       </Wrapper>
     </WholeWrapper>
   );

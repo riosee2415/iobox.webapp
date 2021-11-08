@@ -5,7 +5,6 @@ import {
   Text,
   GradientText,
   WholeWrapper,
-  RsWrapper,
 } from "./commonComponents";
 import Theme from "./Theme";
 import styled from "styled-components";
@@ -353,6 +352,7 @@ const AppFooter = () => {
                 visible={true}
                 getContainer={false}
               >
+<<<<<<< HEAD
                 <Wrapper
                   height={`100vh`}
                   ju={`space-between`}
@@ -457,6 +457,62 @@ const AppFooter = () => {
                       </Text>
                     </Wrapper>
                   </Wrapper>
+=======
+
+                <Image
+                  src={`https://via.placeholder.com/100x100`}
+                  margin={`50px 0 100px 40px`}
+                  width={`100px`}
+                  alt={`logo`}
+                />
+                <Wrapper padding={`0 0 0 30px`} al={`flex-start`}>
+                  <Wrapper al={`flex-start`}>
+                    <Text fontSize={`1.4rem`} margin={`0 0 40px`}>
+                      아이오 박스란?
+                    </Text>
+                  </Wrapper>
+                  <Wrapper al={`flex-start`}>
+                    <Text fontSize={`1.4rem`} margin={`0 0 40px`}>
+                      서비스 이용방법
+                    </Text>
+                  </Wrapper>
+                  <Wrapper al={`flex-start`}>
+                    <Text fontSize={`1.4rem`} margin={`0 0 40px`}>
+                      서비스 이용료
+                    </Text>
+                  </Wrapper>
+                  <Wrapper al={`flex-start`}>
+                    <Text fontSize={`1.4rem`} margin={`0 0 40px`}>
+                      IO박스 보관센터
+                    </Text>
+                  </Wrapper>
+                  <Wrapper al={`flex-start`}>
+                    <Text fontSize={`1.4rem`} margin={`0 0 40px`}>
+                      배송현황
+                    </Text>
+                  </Wrapper>
+                  <Wrapper al={`flex-start`}>
+                    <Text fontSize={`1.4rem`} margin={`0 0 40px`}>
+                      내 물건 찾기
+                    </Text>
+                  </Wrapper>
+                </Wrapper>
+                <Wrapper al={`flex-start`}>
+                  <Wrapper height={`30px`} bgColor={Theme.lightGrey_C}>
+                    1
+                  </Wrapper>
+                  <Wrapper height={`30px`} bgColor={Theme.lightGrey_C}>
+                    2
+                  </Wrapper>
+                  <Wrapper height={`30px`} bgColor={Theme.lightGrey_C}>
+                    3
+                  </Wrapper>
+                </Wrapper>
+
+                <Wrapper dr={`row`}>
+                  <Text display={`flex`}>로그인</Text>
+                  <Text>고객센터</Text>
+>>>>>>> 1f07c031f5972bce323441cbd2f2a718dfbd39e0
                 </Wrapper>
               </Drawer>
             )}
