@@ -354,10 +354,9 @@ const AppFooter = () => {
                 getContainer={false}
               >
                 <Wrapper
-                  dr={`column`}
                   height={`100vh`}
+                  ju={`space-between`}
                   al={`flex-start`}
-                  ju={`flex-start`}
                 >
                   <RsWrapper
                     height={`auto`}
@@ -403,20 +402,60 @@ const AppFooter = () => {
                       </Wrapper>
                     </Wrapper>
                   </RsWrapper>
-                  <Wrapper al={`flex-start`}>
-                    <Wrapper height={`30px`} bgColor={Theme.lightGrey_C}>
-                      1
+                  <Wrapper margin={`0 0 20px 0`}>
+                    <Wrapper al={`flex-start`} margin={`0 0 20px 0`}>
+                      <Wrapper
+                        height={`30px`}
+                        bgColor={Theme.lightGrey_C}
+                        ju={`space-between`}
+                        padding={`0 30px`}
+                        height={`70px`}
+                        margin={`0 0 5px 0`}
+                        dr={`row`}
+                      >
+                        <Text fontSize={`1.3rem`}>io박스 이벤트 보기</Text>
+                        <Image src={`#`} alt={`icon`} width={`auto`} />
+                      </Wrapper>
+                      <Wrapper
+                        height={`30px`}
+                        bgColor={Theme.lightGrey_C}
+                        ju={`space-between`}
+                        padding={`0 30px`}
+                        height={`70px`}
+                        margin={`0 0 5px 0`}
+                        dr={`row`}
+                      >
+                        <Text fontSize={`1.3rem`}>
+                          1초 만에 보관료 계산하기{" "}
+                        </Text>
+                        <Image src={`#`} alt={`icon`} width={`auto`} />
+                      </Wrapper>
+                      <Wrapper
+                        height={`30px`}
+                        bgColor={Theme.lightGrey_C}
+                        ju={`space-between`}
+                        padding={`0 30px`}
+                        height={`70px`}
+                        margin={`0 0 5px 0`}
+                        dr={`row`}
+                      >
+                        <Text fontSize={`1.3rem`}>실시간 카톡문의</Text>
+                        <Image src={`#`} alt={`icon`} width={`auto`} />
+                      </Wrapper>
                     </Wrapper>
-                    <Wrapper height={`30px`} bgColor={Theme.lightGrey_C}>
-                      2
+                    <Wrapper dr={`row`} ju={`flex-end`} padding={`0 30px 0 0`}>
+                      <Text
+                        display={`flex`}
+                        fontSize={`1.2rem`}
+                        margin={`0 10px 0 0`}
+                        fontWeight={`600`}
+                      >
+                        로그인
+                      </Text>
+                      <Text fontSize={`1.2rem`} fontWeight={`600`}>
+                        고객센터
+                      </Text>
                     </Wrapper>
-                    <Wrapper height={`30px`} bgColor={Theme.lightGrey_C}>
-                      3
-                    </Wrapper>
-                  </Wrapper>
-                  <Wrapper dr={`row`}>
-                    <Text display={`flex`}>로그인</Text>
-                    <Text>고객센터</Text>
                   </Wrapper>
                 </Wrapper>
               </Drawer>
