@@ -20,6 +20,9 @@ const acceptRouter = require("./routers/acceptRouter");
 const noticeRouter = require("./routers/noticeRouter");
 const galleryRouter = require("./routers/galleryRouter");
 const questionRouter = require("./routers/questionRouter");
+const faqRouter = require("./routers/faqRouter");
+const guideRouter = require("./routers/guideRouter");
+const eventRouter = require("./routers/eventRouter");
 
 // Config Settings
 db.sequelize
@@ -94,6 +97,9 @@ app.use("/api/accept", acceptRouter);
 app.use("/api/notice", noticeRouter);
 app.use("/api/gallery", galleryRouter);
 app.use("/api/question", questionRouter);
+app.use("/api/faq", faqRouter);
+app.use("/api/guide", guideRouter);
+app.use("/api/event", eventRouter);
 
 // second minute hour day-of-month month day-of-week
 const task = cron.schedule(
