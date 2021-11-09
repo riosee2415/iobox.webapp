@@ -10,34 +10,9 @@ module.exports = class Notice extends Model {
           type: DataTypes.STRING(300), // STRING, TEXT, BOOLEAN, INTEGER, FLOAT, DATETIME
           allowNull: false, // 필수
         },
-        type: {
-          // ["공지사항", "새소식"]
-          type: DataTypes.STRING(30), // STRING, TEXT, BOOLEAN, INTEGER, FLOAT, DATETIME
-          allowNull: false, // 필수
-          defaultValue: "공지사항",
-        },
-        isTop: {
-          type: DataTypes.BOOLEAN,
-          allowNull: false,
-          defaultValue: false,
-        },
         content: {
           type: DataTypes.TEXT,
           allowNull: false, // 필수
-        },
-        author: {
-          type: DataTypes.STRING(30),
-          allowNull: false,
-          defaultValue: "관리자",
-        },
-        hit: {
-          type: DataTypes.INTEGER,
-          allowNull: false,
-          defaultValue: 0,
-        },
-        file: {
-          type: DataTypes.STRING(600), // STRING, TEXT, BOOLEAN, INTEGER, FLOAT, DATETIME
-          allowNull: true,
         },
         isDelete: {
           type: DataTypes.BOOLEAN,
