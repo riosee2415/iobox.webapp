@@ -8,6 +8,11 @@ const notice = require("./notice");
 const gallary = require("./gallary");
 const question = require("./question");
 const questiontype = require("./questiontype");
+const faq = require("./faq");
+const faqtype = require("./faqtype");
+const guide = require("./guide");
+const guidetype = require("./guidetype");
+const event = require("./event");
 
 const env = process.env.NODE_ENV || "development";
 const config = require("../config/config")[env];
@@ -29,6 +34,11 @@ db.Notice = notice;
 db.Gallary = gallary;
 db.Question = question;
 db.QuestionType = questiontype;
+db.Faq = faq;
+db.FaqType = faqtype;
+db.Guide = guide;
+db.GuideType = guidetype;
+db.Event = event;
 
 Object.keys(db).forEach((modelName) => {
   db[modelName].init(sequelize);
