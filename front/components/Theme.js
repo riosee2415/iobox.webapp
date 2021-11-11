@@ -4,6 +4,8 @@ export default {
   subTheme_C: "#F78DB4",
   subTheme2_C: "#F29262",
   subTheme3_C: "#F17350",
+  subTheme4_C: "#F90050",
+  subTheme5_C: "#F30001",
 
   //kakao
   kakao_C: "#F6E04B",
@@ -28,4 +30,5 @@ export default {
   lightGrey_C: "#F5F3F3",
   darkGrey_C: "#B2ADAD",
   darkGrey2_C: "#585858",
+  darkGrey3_C: "#5F5F5F",
 };

@@ -104,10 +104,22 @@ const GlobalStyles = createGlobalStyle`
     margin : 0 0 0 -250px;
 
     @media (max-width : 700px) {
-      right : 0 !important;
+      left : 0 !important;
       margin : 0;
     }
   }
+
+  .ant-picker-suffix{
+    display:none;
+  }
+
+  .ant-picker, .ant-picker:hover, .ant-picker-focused{
+    border:none;
+    box-shadow:none;
+  }
+
+  
+
 
   a {
         color : inherit;

@@ -108,6 +108,7 @@ export const Wrapper = styled.div`
   min-width: ${(props) => props.minWidth};
   height: ${(props) => props.height};
   min-height: ${(props) => props.minHeight};
+  max-height: ${(props) => props.maxHeight};
   display: ${(props) => props.display || `flex`};
   flex-direction: ${(props) => props.dr || `column`};
   align-items: ${(props) => props.al || `center`};
@@ -199,6 +200,13 @@ export const CommonButton = styled(Button)`
       ${(props) =>
     props.kindOf === `white` &&
     `border : 1px solid ${props.theme.basicTheme_C};`}
+  
+  ${(props) => props.kindOf === `grey` && `background : ${props.theme.grey_C};`}
+  ${(props) => props.kindOf === `grey` && `color : ${props.theme.white_C};`}
+      ${(props) =>
+    props.kindOf === `grey` && `border : 1px solid ${props.theme.grey_C};`}
+
+
      ${(props) =>
     props.kindOf === `black` && `background : ${props.theme.black_C};`}
   ${(props) => props.kindOf === `black` && `color : ${props.theme.white_C};`}
@@ -217,6 +225,7 @@ export const CommonButton = styled(Button)`
     color: ${(props) => props.theme.basicTheme_C};
     ${(props) =>
       !props.kindOf && `border :1px solid ${props.theme.basicTheme_C};`}
+
     ${(props) =>
       props.kindOf === `white` && `background ${props.theme.basicTheme_C};`}
          ${(props) =>
@@ -224,6 +233,14 @@ export const CommonButton = styled(Button)`
          ${(props) =>
       props.kindOf === `white` &&
       `border : 1px solid ${props.theme.basicTheme_C};`}
+    
+    ${(props) =>
+      props.kindOf === `grey` && `background ${props.theme.white_C};`}
+         ${(props) => props.kindOf === `grey` && `color ${props.theme.grey_C};`}
+         ${(props) =>
+      props.kindOf === `grey` && `border : 1px solid ${props.theme.grey_C};`}
+
+
 ${(props) => props.kindOf === `black` && `background : ${props.theme.white_C};`}
   ${(props) => props.kindOf === `black` && `color : ${props.theme.black_C};`}
   ${(props) =>
@@ -410,6 +427,20 @@ export const TextInput = styled.input`
     font-size: 14px;
     line-height: 1.6;
     color: ${(props) => props.theme.grey_C};
+  }
+
+  &.bulletInput {
+    &:focus {
+      box-shadow: ${(props) => props.focusShadow};
+      background-color: ${(props) => props.theme.white_C};
+      border: none;
+      outline: none;
+    }
+    &::placeholder {
+      font-size: 1.3rem;
+      line-height: 1.6;
+      color: ${(props) => props.theme.grey_C};
+    }
   }
 `;
 

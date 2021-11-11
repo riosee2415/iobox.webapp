@@ -5,6 +5,7 @@ import {
   Text,
   GradientText,
   WholeWrapper,
+  RsWrapper,
 } from "./commonComponents";
 import Theme from "./Theme";
 import styled from "styled-components";
@@ -352,167 +353,135 @@ const AppFooter = () => {
                 visible={true}
                 getContainer={false}
               >
-<<<<<<< HEAD
+                <Image
+                  src={`https://via.placeholder.com/100x100`}
+                  margin={
+                    width < 700 ? `30px 0 60px 40px` : `50px 0 100px 40px`
+                  }
+                  width={width < 700 ? `80px` : `100px`}
+                  alt={`logo`}
+                />
                 <Wrapper
-                  height={`100vh`}
+                  height={
+                    width < 700 ? `calc(100vh - 170px)` : `calc(100vh - 250px)`
+                  }
                   ju={`space-between`}
-                  al={`flex-start`}
                 >
                   <RsWrapper
-                    height={`auto`}
                     ju={`flex-start`}
                     al={`flex-start`}
+                    height={width < 700 ? `100px` : `450px`}
                   >
-                    <Image
-                      src={`https://via.placeholder.com/100x100`}
-                      margin={`50px 0 100px 0`}
-                      width={`100px`}
-                      alt={`logo`}
-                    />
-                    <Wrapper al={`flex-start`} ju={`flex-start`}>
+                    <Wrapper ju={`flex-start`} al={`flex-start`}>
                       <Wrapper al={`flex-start`}>
-                        <Text fontSize={`1.4rem`} margin={`0 0 40px`}>
+                        <Text
+                          fontSize={width < 700 ? `1rem` : `1.4rem`}
+                          margin={width < 700 ? `0 0 20px 0` : `0 0 40px`}
+                        >
                           아이오 박스란?
                         </Text>
                       </Wrapper>
                       <Wrapper al={`flex-start`}>
-                        <Text fontSize={`1.4rem`} margin={`0 0 40px`}>
+                        <Text
+                          fontSize={width < 700 ? `1rem` : `1.4rem`}
+                          margin={width < 700 ? `0 0 20px 0` : `0 0 40px`}
+                        >
                           서비스 이용방법
                         </Text>
                       </Wrapper>
                       <Wrapper al={`flex-start`}>
-                        <Text fontSize={`1.4rem`} margin={`0 0 40px`}>
+                        <Text
+                          fontSize={width < 700 ? `1rem` : `1.4rem`}
+                          margin={width < 700 ? `0 0 20px 0` : `0 0 40px`}
+                        >
                           서비스 이용료
                         </Text>
                       </Wrapper>
                       <Wrapper al={`flex-start`}>
-                        <Text fontSize={`1.4rem`} margin={`0 0 40px`}>
+                        <Text
+                          fontSize={width < 700 ? `1rem` : `1.4rem`}
+                          margin={width < 700 ? `0 0 20px 0` : `0 0 40px`}
+                        >
                           IO박스 보관센터
                         </Text>
                       </Wrapper>
                       <Wrapper al={`flex-start`}>
-                        <Text fontSize={`1.4rem`} margin={`0 0 40px`}>
+                        <Text
+                          fontSize={width < 700 ? `1rem` : `1.4rem`}
+                          margin={width < 700 ? `0 0 20px 0` : `0 0 40px`}
+                        >
                           배송현황
                         </Text>
                       </Wrapper>
                       <Wrapper al={`flex-start`}>
-                        <Text fontSize={`1.4rem`} margin={`0 0 40px`}>
+                        <Text
+                          fontSize={width < 700 ? `1rem` : `1.4rem`}
+                          margin={width < 700 ? `0 0 20px 0` : `0 0 40px`}
+                        >
                           내 물건 찾기
                         </Text>
                       </Wrapper>
                     </Wrapper>
                   </RsWrapper>
-                  <Wrapper margin={`0 0 20px 0`}>
-                    <Wrapper al={`flex-start`} margin={`0 0 20px 0`}>
+
+                  <Wrapper height={`calc()`}>
+                    <Wrapper al={`flex-start`}>
                       <Wrapper
-                        height={`30px`}
-                        bgColor={Theme.lightGrey_C}
-                        ju={`space-between`}
                         padding={`0 30px`}
-                        height={`70px`}
-                        margin={`0 0 5px 0`}
                         dr={`row`}
+                        ju={`space-between`}
+                        height={width < 700 ? `50px` : `70px`}
+                        margin={`0 0 5px`}
+                        bgColor={Theme.lightGrey_C}
                       >
-                        <Text fontSize={`1.3rem`}>io박스 이벤트 보기</Text>
-                        <Image src={`#`} alt={`icon`} width={`auto`} />
+                        <Text>io박스 이벤트 보기</Text>
+                        <Image
+                          width={width < 700 ? `30px` : `40px`}
+                          src={`https://4leaf-s3.s3.ap-northeast-2.amazonaws.com/iobox/assets/images/sidemenu/event.png`}
+                          alt={`event_image`}
+                        />
                       </Wrapper>
                       <Wrapper
-                        height={`30px`}
-                        bgColor={Theme.lightGrey_C}
-                        ju={`space-between`}
                         padding={`0 30px`}
-                        height={`70px`}
-                        margin={`0 0 5px 0`}
                         dr={`row`}
+                        ju={`space-between`}
+                        height={width < 700 ? `50px` : `70px`}
+                        margin={`0 0 5px`}
+                        bgColor={Theme.lightGrey_C}
                       >
-                        <Text fontSize={`1.3rem`}>
-                          1초 만에 보관료 계산하기{" "}
-                        </Text>
-                        <Image src={`#`} alt={`icon`} width={`auto`} />
+                        <Text>1초만에 보관료 계산하기</Text>
+                        <Image
+                          width={width < 700 ? `30px` : `40px`}
+                          src={`https://4leaf-s3.s3.ap-northeast-2.amazonaws.com/iobox/assets/images/sidemenu/calculator.png`}
+                          alt={`calculate_image`}
+                        />
                       </Wrapper>
                       <Wrapper
-                        height={`30px`}
-                        bgColor={Theme.lightGrey_C}
-                        ju={`space-between`}
                         padding={`0 30px`}
-                        height={`70px`}
-                        margin={`0 0 5px 0`}
                         dr={`row`}
+                        ju={`space-between`}
+                        height={width < 700 ? `50px` : `70px`}
+                        margin={`0 0 5px`}
+                        bgColor={Theme.lightGrey_C}
                       >
-                        <Text fontSize={`1.3rem`}>실시간 카톡문의</Text>
-                        <Image src={`#`} alt={`icon`} width={`auto`} />
+                        <Text>실시간 카톡문의</Text>
+                        <Image
+                          width={width < 700 ? `30px` : `40px`}
+                          src={`https://4leaf-s3.s3.ap-northeast-2.amazonaws.com/iobox/assets/images/sidemenu/kakao.png`}
+                          alt={`kakao_image`}
+                        />
                       </Wrapper>
                     </Wrapper>
-                    <Wrapper dr={`row`} ju={`flex-end`} padding={`0 30px 0 0`}>
-                      <Text
-                        display={`flex`}
-                        fontSize={`1.2rem`}
-                        margin={`0 10px 0 0`}
-                        fontWeight={`600`}
-                      >
+
+                    <Wrapper dr={`row`} ju={`flex-end`} padding={`10px`}>
+                      {/* { !asdf && */}
+                      <Text display={`flex`} margin={`0 10px 0 0`}>
                         로그인
                       </Text>
-                      <Text fontSize={`1.2rem`} fontWeight={`600`}>
-                        고객센터
-                      </Text>
+                      {/* } */}
+                      <Text>고객센터</Text>
                     </Wrapper>
                   </Wrapper>
-=======
-
-                <Image
-                  src={`https://via.placeholder.com/100x100`}
-                  margin={`50px 0 100px 40px`}
-                  width={`100px`}
-                  alt={`logo`}
-                />
-                <Wrapper padding={`0 0 0 30px`} al={`flex-start`}>
-                  <Wrapper al={`flex-start`}>
-                    <Text fontSize={`1.4rem`} margin={`0 0 40px`}>
-                      아이오 박스란?
-                    </Text>
-                  </Wrapper>
-                  <Wrapper al={`flex-start`}>
-                    <Text fontSize={`1.4rem`} margin={`0 0 40px`}>
-                      서비스 이용방법
-                    </Text>
-                  </Wrapper>
-                  <Wrapper al={`flex-start`}>
-                    <Text fontSize={`1.4rem`} margin={`0 0 40px`}>
-                      서비스 이용료
-                    </Text>
-                  </Wrapper>
-                  <Wrapper al={`flex-start`}>
-                    <Text fontSize={`1.4rem`} margin={`0 0 40px`}>
-                      IO박스 보관센터
-                    </Text>
-                  </Wrapper>
-                  <Wrapper al={`flex-start`}>
-                    <Text fontSize={`1.4rem`} margin={`0 0 40px`}>
-                      배송현황
-                    </Text>
-                  </Wrapper>
-                  <Wrapper al={`flex-start`}>
-                    <Text fontSize={`1.4rem`} margin={`0 0 40px`}>
-                      내 물건 찾기
-                    </Text>
-                  </Wrapper>
-                </Wrapper>
-                <Wrapper al={`flex-start`}>
-                  <Wrapper height={`30px`} bgColor={Theme.lightGrey_C}>
-                    1
-                  </Wrapper>
-                  <Wrapper height={`30px`} bgColor={Theme.lightGrey_C}>
-                    2
-                  </Wrapper>
-                  <Wrapper height={`30px`} bgColor={Theme.lightGrey_C}>
-                    3
-                  </Wrapper>
-                </Wrapper>
-
-                <Wrapper dr={`row`}>
-                  <Text display={`flex`}>로그인</Text>
-                  <Text>고객센터</Text>
->>>>>>> 1f07c031f5972bce323441cbd2f2a718dfbd39e0
                 </Wrapper>
               </Drawer>
             )}
