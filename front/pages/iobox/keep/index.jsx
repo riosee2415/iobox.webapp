@@ -323,7 +323,12 @@ const Index = () => {
         >
           <RsWrapper>
             <Wrapper width={`auto`} al={`flex-start`}>
-              <PayButtton bold={true} fontSize={`1.2rem`} margin={`0 0 10px`}>
+              <PayButtton
+                bold={true}
+                fontSize={`1.2rem`}
+                margin={`0 0 10px`}
+                cursor={`pointer`}
+              >
                 예상금액 상세
               </PayButtton>
             </Wrapper>

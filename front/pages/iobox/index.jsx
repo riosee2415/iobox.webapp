@@ -301,11 +301,17 @@ const Index = () => {
               <Text bold={true} fontSize={`1.2rem`}>
                 월 9,000
               </Text>
-              <PayButtton bold={true} fontSize={`1.2rem`}>
+              <PayButtton bold={true} fontSize={`1.2rem`} cursor={`pointer`}>
                 예상금액 상세
               </PayButtton>
             </Wrapper>
-            <CommonButton width={`130px`} height={`50px`}>
+            <CommonButton
+              width={`130px`}
+              height={`50px`}
+              onClick={() => {
+                moveLinkHandler("/iobox/service");
+              }}
+            >
               다음
             </CommonButton>
           </RsWrapper>
