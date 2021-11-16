@@ -98,9 +98,15 @@ const GlobalStyles = createGlobalStyle`
   .ant-drawer-body{
     padding:0;
   }
+
+  .ant-radio-input:focus {
+    box-shadow : 0px 0px 10px ${(props) => props.theme.grey_C} !important;
+  }
+
   .ant-radio-inner {
     width: 30px;
     height: 30px;
+    border-color: ${(props) => props.theme.grey_C} !important;
   }
 
   .ant-radio-inner::after {
@@ -109,8 +115,8 @@ const GlobalStyles = createGlobalStyle`
     width: 22px;
     height: 22px;
     border-radius: 50%;
-    background-color: ${Theme.subTheme4_C};
-    border-color: ${Theme.grey_C};
+    background-color: ${(props) => props.theme.subTheme4_C};
+    border-color: ${(props) => props.theme.grey_C} !important;
   }
   .ant-radio-checked .ant-radio-inner {
     border-color: ${Theme.grey_C};

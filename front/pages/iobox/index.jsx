@@ -226,7 +226,7 @@ const Index = () => {
                 </Wrapper>
               </Wrapper>
 
-              <Wrapper dr={`row`} ju={`space-between`} margin={`30px 0 0`}>
+              <Wrapper dr={`row`} ju={`space-between`} margin={`50px 0 0`}>
                 <Wrapper width={`auto`} dr={`row`}>
                   <Image src={`#`} alt={`icon`} width={`30px`} />
                   <Text bold={true} fontSize={`1.2rem`}>
@@ -240,44 +240,76 @@ const Index = () => {
                   radius={`50%`}
                   border={`1px solid ${Theme.grey_C}`}
                   color={Theme.grey_C}
+                  cursor={`pointer`}
                 >
-                  ?
+                  <Text margin={`1px 0 0 2px`}>?</Text>
                 </Wrapper>
               </Wrapper>
 
-              <Wrapper padding={`10px 0`} dr={`row`} ju={`flex-start`}>
+              <Wrapper
+                padding={`20px 0`}
+                dr={`row`}
+                ju={`flex-start`}
+                al={`flex-start`}
+                borderBottom={`1px solid ${Theme.grey_C}`}
+              >
                 <Radio />
-                <Text>단기</Text>
+                <Wrapper width={`auto`} al={`flex-start`}>
+                  <Text>단기</Text>
+                  <Text color={Theme.grey_C} fontSize={`0.8rem`}>
+                    월 단위
+                  </Text>
+                </Wrapper>
               </Wrapper>
-              <Wrapper padding={`10px 0`}></Wrapper>
+
+              <Wrapper
+                padding={`20px 0`}
+                dr={`row`}
+                ju={`flex-start`}
+                al={`flex-start`}
+                borderBottom={`1px solid ${Theme.grey_C}`}
+              >
+                <Radio />
+                <Wrapper width={`auto`} al={`flex-start`}>
+                  <Text>장기약정</Text>
+                  <Text color={Theme.grey_C} fontSize={`0.8rem`}>
+                    6개월 이상, 선 결제 30% 할인
+                  </Text>
+                </Wrapper>
+              </Wrapper>
             </RsWrapper>
           </Wrapper>
         </Wrapper>
       </WholeWrapper>
 
       <Wrapper
-        position={`fixed`}
+        position={`sticky`}
         bottom={`0`}
         left={width < 700 ? `0` : `50%`}
         margin={width < 700 ? `0` : `0 0 0 -250px`}
-        padding={`20px 0`}
-        borderTop={`1px solid ${Theme.grey_C}`}
-        bgColor={Theme.white_C}
-        width={width < 700 ? `100%` : `500px`}
+        bgColor={Theme.lightGrey_C}
+        zIndex={`1000`}
       >
-        <RsWrapper dr={`row`} ju={`space-between`}>
-          <Wrapper width={`auto`} al={`flex-start`}>
-            <Text bold={true} fontSize={`1.2rem`}>
-              월 9,000
-            </Text>
-            <PayButtton bold={true} fontSize={`1.2rem`}>
-              예상금액 상세
-            </PayButtton>
-          </Wrapper>
-          <CommonButton width={`130px`} height={`50px`}>
-            다음
-          </CommonButton>
-        </RsWrapper>
+        <Wrapper
+          width={width < 700 ? `100%` : `500px`}
+          bgColor={Theme.white_C}
+          borderTop={`1px solid ${Theme.grey_C}`}
+          padding={`20px 0`}
+        >
+          <RsWrapper dr={`row`} ju={`space-between`}>
+            <Wrapper width={`auto`} al={`flex-start`}>
+              <Text bold={true} fontSize={`1.2rem`}>
+                월 9,000
+              </Text>
+              <PayButtton bold={true} fontSize={`1.2rem`}>
+                예상금액 상세
+              </PayButtton>
+            </Wrapper>
+            <CommonButton width={`130px`} height={`50px`}>
+              다음
+            </CommonButton>
+          </RsWrapper>
+        </Wrapper>
       </Wrapper>
 
       {moreTab && (
