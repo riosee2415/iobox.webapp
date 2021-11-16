@@ -8,6 +8,7 @@ import {
   Image,
   CommonButton,
   TextInput,
+  TextArea,
 } from "../../../components/commonComponents";
 import styled from "styled-components";
 import ClientLayout from "../../../components/ClientLayout";
@@ -15,6 +16,7 @@ import useWidth from "../../../hooks/useWidth";
 import { CloseOutlined, DownOutlined, UpOutlined } from "@ant-design/icons";
 import { useRouter } from "next/dist/client/router";
 import { Radio } from "antd";
+import { CloseCircleOutlined, SearchOutlined } from "@ant-design/icons";
 
 const PayButtton = styled(Wrapper)`
   color: ${Theme.basicTheme_C};
@@ -176,14 +178,16 @@ const Index = () => {
                   placeholder="전화번호를 적어주세요."
                 />
 
-                <Image
-                  src={`#`}
-                  alt={`icon`}
-                  width={`20px`}
+                <Wrapper
+                  width={`auto`}
                   position={`absolute`}
-                  top={`10px`}
+                  top={`15px`}
                   right={`10px`}
-                />
+                  fontSize={`20px`}
+                  cursor={`pointer`}
+                >
+                  <CloseCircleOutlined />
+                </Wrapper>
               </Wrapper>
             </Wrapper>
 
@@ -196,14 +200,16 @@ const Index = () => {
                   placeholder="전화번호를 적어주세요."
                 />
 
-                <Image
-                  src={`#`}
-                  alt={`icon`}
-                  width={`20px`}
+                <Wrapper
+                  width={`auto`}
                   position={`absolute`}
-                  top={`10px`}
+                  top={`15px`}
                   right={`10px`}
-                />
+                  fontSize={`20px`}
+                  cursor={`pointer`}
+                >
+                  <CloseCircleOutlined />
+                </Wrapper>
               </Wrapper>
             </Wrapper>
 
@@ -218,14 +224,16 @@ const Index = () => {
                     placeholder="전화번호를 적어주세요."
                   />
 
-                  <Image
-                    src={`#`}
-                    alt={`icon`}
-                    width={`20px`}
+                  <Wrapper
+                    width={`auto`}
                     position={`absolute`}
-                    top={`10px`}
+                    top={`15px`}
                     right={`10px`}
-                  />
+                    fontSize={`20px`}
+                    cursor={`pointer`}
+                  >
+                    <SearchOutlined />
+                  </Wrapper>
                 </Wrapper>
                 <Wrapper position={`relative`}>
                   <TextInput
@@ -235,23 +243,73 @@ const Index = () => {
                     borderTop={`none`}
                   />
 
-                  <Image
-                    src={`#`}
-                    alt={`icon`}
-                    width={`20px`}
+                  <Wrapper
+                    width={`auto`}
                     position={`absolute`}
-                    top={`10px`}
+                    top={`15px`}
                     right={`10px`}
-                  />
+                    fontSize={`20px`}
+                    cursor={`pointer`}
+                  >
+                    <CloseCircleOutlined />
+                  </Wrapper>
                 </Wrapper>
               </Wrapper>
+            </Wrapper>
+
+            <Wrapper al={`flex-start`} margin={`0 0 20px`}>
+              <Text margin={`0 0 5px`}>특이사항</Text>
+              <TextArea
+                width={`100%`}
+                radius={`0`}
+                placeholder="특정시간 방문 요청 불가"
+              />
+            </Wrapper>
+
+            <Wrapper bgColor={Theme.lightGrey_C} height={`10px`}></Wrapper>
+
+            <Wrapper dr={`row`} ju={`flex-start`} margin={`20px 0`}>
+              <Image src={`#`} width={`30px`} />
+              <Text bold={true} fontSize={`1.5rem`} bold={true}>
+                결제 카드
+              </Text>
+            </Wrapper>
+
+            <Wrapper
+              padding={`20px`}
+              dr={`row`}
+              border={`1px solid ${Theme.grey_C}`}
+              ju={`space-between`}
+            >
+              <Text>413*********</Text>
+              <CommonButton width={`60px`} height={`30px`}>
+                변경
+              </CommonButton>
+            </Wrapper>
+
+            <Wrapper
+              bgColor={Theme.lightGrey_C}
+              height={`10px`}
+              margin={`20px 0`}
+            ></Wrapper>
+
+            <Wrapper dr={`row`} ju={`flex-start`}>
+              <Image src={`#`} width={`30px`} />
+              <Text bold={true} fontSize={`1.5rem`} bold={true}>
+                결제 카드
+              </Text>
+            </Wrapper>
+
+            <Wrapper dr={`row`} ju={`space-between`} margin={`20px 0 0`}>
+              <Text>서비스 이용 필수 동의</Text>
+              <Radio />
             </Wrapper>
           </RsWrapper>
         </Wrapper>
       </WholeWrapper>
 
       <Wrapper
-        position={`fixed`}
+        position={`sticky`}
         bottom={`0`}
         left={`0`}
         bgColor={Theme.lightGrey_C}
