@@ -7,6 +7,8 @@ export default {
   subTheme4_C: "#F90050",
   subTheme5_C: "#F30001",
 
+  lightBaiscTheme_C: "#FFEBF1",
+
   //kakao
   kakao_C: "#F6E04B",
   kakao2_C: "#FFF16F",
