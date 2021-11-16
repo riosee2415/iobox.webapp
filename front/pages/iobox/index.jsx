@@ -7,6 +7,7 @@ import {
   Text,
   Image,
   CommonButton,
+  GradientText,
 } from "../../components/commonComponents";
 import styled from "styled-components";
 import ClientLayout from "../../components/ClientLayout";
@@ -71,11 +72,17 @@ const Index = () => {
   const [tab, setTab] = useState(false);
   const [number, setNumber] = useState(0);
 
+  const [moreTab, setMoreTab] = useState(false);
+
   ////// REDUX //////
 
   ////// USEEFFECT //////
 
   ////// TOGGLE ///////
+
+  const moreTabToggle = useCallback(() => {
+    setMoreTab(!moreTab);
+  }, [moreTab]);
 
   ///// HANDLER //////
   const minusNumberHandler = useCallback(() => {
@@ -155,11 +162,11 @@ const Index = () => {
                 >
                   iO 베이직 월 9,000원
                 </Text>
-                <TextButton>자세히 보기</TextButton>
+                <TextButton onClick={moreTabToggle}>자세히 보기</TextButton>
               </Wrapper>
 
-              <Wrapper minHeight={`300px`} margin={`10px 0`}>
-                <BoxSlider datum={("1", "2", "3")} line={1} row={1} />
+              <Wrapper minHeight={`300px`} margin={`10px 0`} zIndex={`1`}>
+                <BoxSlider datum={[1, 2, 3, 4]} line={1} row={1} />
               </Wrapper>
 
               <Wrapper ju={`flex-end`} dr={`row`}>
@@ -246,6 +253,108 @@ const Index = () => {
           </CommonButton>
         </RsWrapper>
       </Wrapper>
+
+      {moreTab && (
+        <Wrapper
+          bgColor={`rgba(0,0,0,0.8)`}
+          height={`100vh`}
+          width={width < 700 ? `100%` : `500px`}
+          position={`fixed`}
+          top={`0`}
+          left={width < 700 ? `0` : `50%`}
+          margin={width < 700 ? `0` : `0 0 0 -250px`}
+          zIndex={`1000`}
+        >
+          <Wrapper
+            padding={`5px`}
+            width={`auto`}
+            position={`absolute`}
+            top={`30px`}
+            right={`30px`}
+            fontSize={`20px`}
+            cursor={`pointer`}
+            onClick={moreTabToggle}
+            color={Theme.white_C}
+            zIndex={`100`}
+          >
+            <CloseOutlined />
+          </Wrapper>
+
+          <Wrapper width={`auto`} al={`flex-start`}>
+            <Image src={`#`} width={`60px`} margin={`0 0 10px`} />
+
+            <GradientText bold={true} fontSize={`2.2rem`}>
+              종이박스 배송
+            </GradientText>
+            <Text color={Theme.white_C} bold={true} fontSize={`1.4rem`}>
+              의류,물건,서류,책
+            </Text>
+            <Text color={Theme.white_C} bold={true} fontSize={`1.4rem`}>
+              각종 내 방안의 집
+            </Text>
+            <Text color={Theme.white_C} bold={true} fontSize={`1.4rem`}>
+              원할 때 맡기고 원할 때 찾기
+            </Text>
+
+            <Text
+              margin={`30px 0 0`}
+              color={Theme.basicTheme_C}
+              bold={true}
+              fontSize={`1.5rem`}
+            >
+              한 박스 기준
+            </Text>
+
+            <Wrapper width={`auto`} dr={`row`}>
+              <Text color={Theme.white_C} fontSize={`1.2rem`} bold={true}>
+                보관료
+              </Text>
+              <Text
+                color={Theme.white_C}
+                fontSize={`1.2rem`}
+                bold={true}
+                margin={`0 0 0 20px`}
+              >
+                월 8,900원
+              </Text>
+            </Wrapper>
+            <Wrapper width={`auto`} dr={`row`}>
+              <Text color={Theme.white_C} fontSize={`1.2rem`} bold={true}>
+                배송비
+              </Text>
+              <Text
+                color={Theme.white_C}
+                fontSize={`1.2rem`}
+                bold={true}
+                margin={`0 0 0 20px`}
+              >
+                월 5,000원
+              </Text>
+            </Wrapper>
+
+            <Wrapper dr={`row`} width={`auto`}>
+              <Image
+                src={`#`}
+                alt={`arrow`}
+                width={`50px`}
+                margin={`0 10px 0 30px`}
+              />
+              <Text fontSize={`1.2rem`} bold={true} color={Theme.basicTheme_C}>
+                to. 8,900원
+              </Text>
+            </Wrapper>
+
+            <Text
+              color={Theme.white_C}
+              bold={true}
+              margin={`50px 0 0`}
+              fontSize={`1.2rem`}
+            >
+              약정없이 해지도 쿨하게!
+            </Text>
+          </Wrapper>
+        </Wrapper>
+      )}
     </>
   );
 };

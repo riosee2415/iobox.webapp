@@ -582,6 +582,7 @@ const Index = () => {
                         defaultValue={moment("2015-01-01")}
                         placeholder={`123`}
                       />
+
                       <RightOutlinedAbsol style={{ color: Theme.grey_C }} />
                     </Wrapper>
                   </Wrapper>

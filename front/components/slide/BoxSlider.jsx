@@ -5,6 +5,7 @@ import Theme from "../Theme";
 import styled from "styled-components";
 import { LeftOutlined, RightOutlined } from "@ant-design/icons";
 import useWidth from "../../hooks/useWidth";
+import { current } from "immer";
 
 const BoxWrapper = styled(Wrapper)`
   width: calc(100% / 4);
@@ -51,7 +52,7 @@ const ReviewSlider = ({
   isMix = false, // Row 슬라이드 가로 (false) 세로 (true) 정렬
   //
   row = 1,
-  line = 1, // Row 슬라이드 행 수
+  line = 5, // Row 슬라이드 행 수
 }) => {
   const width = useWidth();
 
@@ -162,10 +163,9 @@ const ReviewSlider = ({
 
       <Carousel
         effect={effect}
-        centerMode={true}
-        slidesToShow={1}
-        centerPadding={width < 700 ? `30px` : `0`}
         dots={false}
+        slidesToShow={1}
+        vertical={true}
         ref={slideRef}
         autoplay={autoplay}
         className={`slide-0`}
@@ -173,13 +173,44 @@ const ReviewSlider = ({
         {slideDatum.map((slide, idx) => {
           return (
             <Wrapper display={`flex !important`} dr={`row`} key={idx}>
-              <Wrapper>
-                <Image src={`#`} width={`80%`} />
-              </Wrapper>
-
-              {/* {slide.map((info, idx) => {
-                  return <Wrapper>{idx}</Wrapper>;
-                })} */}
+              {console.log(slider)}
+              {idx === 0 ? (
+                <Wrapper
+                  width={`80%`}
+                  height={`150px`}
+                  bgColor={Theme.subTheme2_C}
+                  key={idx}
+                >
+                  {slide}
+                </Wrapper>
+              ) : idx === 1 ? (
+                <Wrapper
+                  width={`80%`}
+                  height={`150px`}
+                  bgColor={Theme.subTheme2_C}
+                  key={idx}
+                >
+                  {slide}
+                </Wrapper>
+              ) : idx === 2 ? (
+                <Wrapper
+                  width={`80%`}
+                  height={`150px`}
+                  bgColor={Theme.subTheme2_C}
+                  key={idx}
+                >
+                  {slide}
+                </Wrapper>
+              ) : (
+                <Wrapper
+                  width={`80%`}
+                  height={`150px`}
+                  bgColor={Theme.subTheme2_C}
+                  key={idx}
+                >
+                  {slide}
+                </Wrapper>
+              )}
             </Wrapper>
           );
         })}
