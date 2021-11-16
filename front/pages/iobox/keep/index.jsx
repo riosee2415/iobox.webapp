@@ -97,142 +97,153 @@ const Index = () => {
             padding={`30px 0`}
           >
             <Wrapper dr={`row`} ju={`flex-start`}>
-              <Image src={`#`} width={`30px`} alt={`icon`} />
-              <Text bold={true} fontSize={`1.5rem`} margin={`0 0 0 5px`}>
-                io박스 무료 서비스
+              <Image src={`#`} width={`30px`} />
+              <Text bold={true} fontSize={`1.5rem`} bold={true}>
+                예약 내역
               </Text>
             </Wrapper>
 
-            <Wrapper dr={`row`} ju={`space-between`} margin={`20px 0`}>
-              <Wrapper width={`auto`} dr={`row`}>
-                <Radio />
-                <Wrapper width={`auto`} al={`flex-start`}>
-                  <Text>상자 보관 물건 촬영</Text>
-                  <Text color={Theme.basicTheme_C} fontWeight={`700`}>
-                    무료
-                  </Text>
-                </Wrapper>
-              </Wrapper>
-              <Wrapper
-                width={`20px`}
-                height={`20px`}
-                radius={`50%`}
-                border={`1px solid ${Theme.grey_C}`}
-                color={Theme.grey_C}
-                cursor={`pointer`}
-              >
-                <Text margin={`1px 0 0 2px`}>?</Text>
-              </Wrapper>
-            </Wrapper>
-
-            <Wrapper bgColor={Theme.lightGrey_C} height={`10px`}></Wrapper>
-
-            <Wrapper dr={`row`} ju={`space-between`} margin={`20px 0 0`}>
-              <Wrapper dr={`row`} width={`auto`}>
-                <Image src={`#`} width={`30px`} alt={`icon`} />
-                <Text bold={true} fontSize={`1.5rem`} margin={`0 0 0 5px`}>
-                  픽업 방식
-                </Text>
-              </Wrapper>
-
-              <Wrapper
-                width={`20px`}
-                height={`20px`}
-                radius={`50%`}
-                border={`1px solid ${Theme.grey_C}`}
-                color={Theme.grey_C}
-                cursor={`pointer`}
-              >
-                <Text margin={`1px 0 0 2px`}>?</Text>
-              </Wrapper>
-            </Wrapper>
-
             <Wrapper
               dr={`row`}
-              ju={`flex-start`}
-              padding={`20px 0`}
-              al={`flex-start`}
+              ju={`space-between`}
+              margin={`30px 0 0`}
+              padding={`10px 0`}
               borderBottom={`1px solid ${Theme.grey_C}`}
             >
-              <Radio />
-              <Wrapper width={`auto`} al={`flex-start`}>
-                <Text>방문택배</Text>
-                <Text>(21년 11월 03일 ~ 21년 11월 05일 방문)</Text>
-                <Text color={Theme.grey_C} fontSize={`0.8rem`}>
-                  5,000원 (보관함 1개당)
-                </Text>
-              </Wrapper>
+              <Text fontSize={`1.2rem`} fontWeight={`700`}>
+                보관함
+              </Text>
+              <Text>상자 1</Text>
             </Wrapper>
 
-            <Wrapper
-              dr={`row`}
-              ju={`flex-start`}
-              padding={`20px 0`}
-              al={`flex-start`}
-              borderBottom={`1px solid ${Theme.grey_C}`}
-            >
-              <Radio />
-              <Wrapper width={`auto`} al={`flex-start`}>
-                <Text>예약방문 - 서울 (방문일 지정)</Text>
-                <Text color={Theme.grey_C} fontSize={`0.8rem`}>
-                  7,000원 (보관함 1개당)
-                </Text>
-              </Wrapper>
+            <Wrapper dr={`row`} ju={`space-between`} padding={`10px 0`}>
+              <Text fontSize={`1.2rem`} fontWeight={`700`}>
+                팍업방식
+              </Text>
+              <Text>방문택배</Text>
             </Wrapper>
 
             <Wrapper
               dr={`row`}
               ju={`space-between`}
-              padding={`20px 0`}
+              padding={`10px 0`}
               borderBottom={`1px solid ${Theme.grey_C}`}
             >
-              <Wrapper dr={`row`} width={`auto`} al={`flex-start`}>
-                <Radio />
-                <Wrapper width={`auto`} al={`flex-start`}>
-                  <Text>편의점 셀프 접수</Text>
-                  <Text color={Theme.grey_C} fontSize={`0.8rem`}>
-                    5,000원 (보관함 1개당)
-                  </Text>
+              <Text fontSize={`1.2rem`} fontWeight={`700`}>
+                쿠폰할인
+              </Text>
+              <Text fontSize={`1.5rem`} fontWeight={`700`}>
+                0원
+              </Text>
+            </Wrapper>
+
+            <Wrapper dr={`row`} ju={`space-between`} padding={`10px 0`}>
+              <Wrapper dr={`row`} width={`auto`} ju={`flex-start`}>
+                <Text fontSize={`1.2rem`} fontWeight={`700`}>
+                  예상금액
+                </Text>
+
+                <Wrapper
+                  width={`20px`}
+                  height={`20px`}
+                  radius={`50%`}
+                  border={`1px solid ${Theme.grey_C}`}
+                  color={Theme.grey_C}
+                  cursor={`pointer`}
+                  margin={`0 0 0 10px`}
+                >
+                  <Text margin={`1px 0 0 2px`}>?</Text>
                 </Wrapper>
               </Wrapper>
+              <Text fontSize={`1.5rem`} fontWeight={`700`}>
+                38,600원
+              </Text>
+            </Wrapper>
 
-              <Wrapper
-                padding={`5px 10px`}
-                radius={`20px`}
-                fontSize={`0.7rem`}
-                bgColor={Theme.lightBaiscTheme_C}
-                color={Theme.basicTheme_C}
-                width={`auto`}
-              >
-                빠른접수
+            <Wrapper dr={`row`} ju={`flex-start`} margin={`20px 0`}>
+              <Image src={`#`} width={`30px`} />
+              <Text bold={true} fontSize={`1.5rem`} bold={true}>
+                예약자 정보
+              </Text>
+            </Wrapper>
+
+            <Wrapper al={`flex-start`} margin={`0 0 20px`}>
+              <Text margin={`0 0 5px`}>이름</Text>
+              <Wrapper position={`relative`}>
+                <TextInput
+                  width={`100%`}
+                  height={`50px`}
+                  placeholder="전화번호를 적어주세요."
+                />
+
+                <Image
+                  src={`#`}
+                  alt={`icon`}
+                  width={`20px`}
+                  position={`absolute`}
+                  top={`10px`}
+                  right={`10px`}
+                />
               </Wrapper>
             </Wrapper>
 
-            <Wrapper
-              dr={`row`}
-              ju={`space-between`}
-              padding={`20px 0`}
-              borderBottom={`1px solid ${Theme.grey_C}`}
-            >
-              <Wrapper dr={`row`} width={`auto`} al={`flex-start`}>
-                <Radio />
-                <Wrapper width={`auto`} al={`flex-start`}>
-                  <Text>무인택배함 셀프 접수</Text>
-                  <Text color={Theme.grey_C} fontSize={`0.8rem`}>
-                    3,000원 (보관함 1개당)
-                  </Text>
-                </Wrapper>
-              </Wrapper>
+            <Wrapper al={`flex-start`} margin={`0 0 20px`}>
+              <Text margin={`0 0 5px`}>전화번호</Text>
+              <Wrapper position={`relative`}>
+                <TextInput
+                  width={`100%`}
+                  height={`50px`}
+                  placeholder="전화번호를 적어주세요."
+                />
 
-              <Wrapper
-                padding={`5px 10px`}
-                radius={`20px`}
-                fontSize={`0.7rem`}
-                bgColor={Theme.lightBaiscTheme_C}
-                color={Theme.basicTheme_C}
-                width={`auto`}
-              >
-                빠른접수
+                <Image
+                  src={`#`}
+                  alt={`icon`}
+                  width={`20px`}
+                  position={`absolute`}
+                  top={`10px`}
+                  right={`10px`}
+                />
+              </Wrapper>
+            </Wrapper>
+
+            <Wrapper al={`flex-start`} margin={`0 0 20px`}>
+              <Text margin={`0 0 5px`}>주소</Text>
+
+              <Wrapper>
+                <Wrapper position={`relative`}>
+                  <TextInput
+                    width={`100%`}
+                    height={`50px`}
+                    placeholder="전화번호를 적어주세요."
+                  />
+
+                  <Image
+                    src={`#`}
+                    alt={`icon`}
+                    width={`20px`}
+                    position={`absolute`}
+                    top={`10px`}
+                    right={`10px`}
+                  />
+                </Wrapper>
+                <Wrapper position={`relative`}>
+                  <TextInput
+                    width={`100%`}
+                    height={`50px`}
+                    placeholder="전화번호를 적어주세요."
+                    borderTop={`none`}
+                  />
+
+                  <Image
+                    src={`#`}
+                    alt={`icon`}
+                    width={`20px`}
+                    position={`absolute`}
+                    top={`10px`}
+                    right={`10px`}
+                  />
+                </Wrapper>
               </Wrapper>
             </Wrapper>
           </RsWrapper>
@@ -252,17 +263,14 @@ const Index = () => {
           borderTop={`1px solid ${Theme.grey_C}`}
           padding={`20px 0`}
         >
-          <RsWrapper dr={`row`} ju={`space-between`}>
+          <RsWrapper>
             <Wrapper width={`auto`} al={`flex-start`}>
-              <Text bold={true} fontSize={`1.2rem`}>
-                월 9,000
-              </Text>
-              <PayButtton bold={true} fontSize={`1.2rem`}>
+              <PayButtton bold={true} fontSize={`1.2rem`} margin={`0 0 10px`}>
                 예상금액 상세
               </PayButtton>
             </Wrapper>
-            <CommonButton width={`130px`} height={`50px`}>
-              다음
+            <CommonButton width={`100%`} height={`50px`}>
+              00,000원 결제하기
             </CommonButton>
           </RsWrapper>
         </Wrapper>
