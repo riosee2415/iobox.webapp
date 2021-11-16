@@ -125,6 +125,10 @@ const Index = () => {
   const [endDate, setEndDate] = useState(null);
   const [floorModal, setFloorModal] = useState(false);
 
+  const [datePickerOpen1, setDatePickerOpen1] = useState(false);
+  const [datePickerOpen2, setDatePickerOpen2] = useState(false);
+  // const [floorModal, setFloorModal] = useState(false);
+
   ////// REDUX //////
 
   ////// USEEFFECT //////
@@ -576,14 +580,17 @@ const Index = () => {
                   <Wrapper width={`auto`} dr={`row`}>
                     <Wrapper position={`relative`} width={`auto`}>
                       <DatePicker
-                        inputReadOnly={true}
+                        open={datePickerOpen1}
+                        onClick={() => setDatePickerOpen1((prev) => !prev)}
                         onChange={onChange1}
                         format="YYYY-MM-DD"
                         defaultValue={moment("2015-01-01")}
                         placeholder={`123`}
                       />
-
-                      <RightOutlinedAbsol style={{ color: Theme.grey_C }} />
+                      <RightOutlinedAbsol
+                        style={{ color: Theme.grey_C }}
+                        onClick={() => setDatePickerOpen1((prev) => !prev)}
+                      />
                     </Wrapper>
                   </Wrapper>
                 </Wrapper>
@@ -598,11 +605,16 @@ const Index = () => {
                   </Text>
                   <Wrapper width={`auto`} dr={`row`}>
                     <DatePicker
+                      onClick={() => setDatePickerOpen2((prev) => !prev)}
+                      open={datePickerOpen2}
                       onChange={onChange2}
                       format="YYYY-MM-DD"
                       placeholder={`123`}
                     />
-                    <RightOutlined style={{ color: Theme.grey_C }} />
+                    <RightOutlined
+                      style={{ color: Theme.grey_C }}
+                      onClick={() => setDatePickerOpen2((prev) => !prev)}
+                    />
                   </Wrapper>
                 </Wrapper>
               </Wrapper>
@@ -612,7 +624,6 @@ const Index = () => {
                 <Text fontSize={`1.3rem`}>도착지 주소</Text>
                 <QuestionCircleOutlined />
               </Wrapper>
-
               <Wrapper
                 dr={`row`}
                 ju={`space-between`}
