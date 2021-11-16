@@ -6,6 +6,7 @@ import styled from "styled-components";
 import { LeftOutlined, RightOutlined } from "@ant-design/icons";
 import useWidth from "../../hooks/useWidth";
 import { current } from "immer";
+import { useRouter } from "next/dist/client/router";
 
 const BoxWrapper = styled(Wrapper)`
   width: calc(100% / 4);
@@ -28,7 +29,6 @@ const BoxWrapper = styled(Wrapper)`
 const ArrowWrapper = styled(Wrapper)`
   width: 35px;
   height: 35px;
-  background: rgba(255, 255, 255, 0.8);
   border-radius: 20px;
   margin: ${(props) => props.margin || `-15px 0 0 -35px`};
   transition: 0.5s;
@@ -39,7 +39,7 @@ const ArrowWrapper = styled(Wrapper)`
   }
 `;
 
-const ReviewSlider = ({
+const BoxSlider = ({
   datum,
   //
   dots = false,
@@ -140,6 +140,7 @@ const ReviewSlider = ({
           ju={`space-between`}
           padding={`0 20px`}
           zIndex={`9999`}
+          cursor={`pointer`}
         >
           <Wrapper width={`auto`}>
             <ArrowWrapper
@@ -173,7 +174,6 @@ const ReviewSlider = ({
         {slideDatum.map((slide, idx) => {
           return (
             <Wrapper display={`flex !important`} dr={`row`} key={idx}>
-              {console.log(slider)}
               {idx === 0 ? (
                 <Wrapper
                   width={`80%`}
@@ -244,4 +244,4 @@ const ReviewSlider = ({
   );
 };
 
-export default React.memo(ReviewSlider);
+export default React.memo(BoxSlider);

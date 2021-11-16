@@ -16,6 +16,7 @@ import { CloseOutlined, DownOutlined, UpOutlined } from "@ant-design/icons";
 import { useRouter } from "next/dist/client/router";
 import { MinusOutlined, PlusOutlined } from "@ant-design/icons";
 import BoxSlider from "../../components/slide/BoxSlider";
+import { Checkbox, Radio } from "antd";
 
 const PayButtton = styled(Wrapper)`
   color: ${Theme.basicTheme_C};
@@ -224,6 +225,31 @@ const Index = () => {
                   </Wrapper>
                 </Wrapper>
               </Wrapper>
+
+              <Wrapper dr={`row`} ju={`space-between`} margin={`30px 0 0`}>
+                <Wrapper width={`auto`} dr={`row`}>
+                  <Image src={`#`} alt={`icon`} width={`30px`} />
+                  <Text bold={true} fontSize={`1.2rem`}>
+                    보관기간
+                  </Text>
+                </Wrapper>
+
+                <Wrapper
+                  width={`20px`}
+                  height={`20px`}
+                  radius={`50%`}
+                  border={`1px solid ${Theme.grey_C}`}
+                  color={Theme.grey_C}
+                >
+                  ?
+                </Wrapper>
+              </Wrapper>
+
+              <Wrapper padding={`10px 0`} dr={`row`} ju={`flex-start`}>
+                <Radio />
+                <Text>단기</Text>
+              </Wrapper>
+              <Wrapper padding={`10px 0`}></Wrapper>
             </RsWrapper>
           </Wrapper>
         </Wrapper>

@@ -98,6 +98,31 @@ const GlobalStyles = createGlobalStyle`
   .ant-drawer-body{
     padding:0;
   }
+  .ant-radio-inner {
+    width: 30px;
+    height: 30px;
+  }
+
+  .ant-radio-inner::after {
+    top: 3px;
+    left: 3px;
+    width: 22px;
+    height: 22px;
+    border-radius: 50%;
+    background-color: ${Theme.subTheme4_C};
+    border-color: ${Theme.grey_C};
+  }
+  .ant-radio-checked .ant-radio-inner {
+    border-color: ${Theme.grey_C};
+  }
+
+  .ant-radio-wrapper:hover .ant-radio,
+  .ant-radio:hover .ant-radio-inner,
+  .ant-radio-input:focus,
+  .ant-radio-inner {
+    border-color: ${Theme.grey_C};
+  }
+
 
   .ant-drawer-left{
     left : 50% !important;

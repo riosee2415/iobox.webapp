@@ -76,31 +76,6 @@ const FocusInput = styled(TextInput)`
 
 const CustomRadio = styled(Radio)`
   margin: ${(props) => props.margin};
-  & .ant-radio-inner {
-    width: 30px;
-    height: 30px;
-  }
-
-  & .ant-radio-inner::after {
-    top: 3px;
-    left: 3px;
-    width: 22px;
-    height: 22px;
-    border-radius: 50%;
-    background-color: ${Theme.subTheme4_C};
-    border-color: ${Theme.grey_C};
-  }
-
-  & .ant-radio-checked .ant-radio-inner {
-    border-color: ${Theme.grey_C};
-  }
-
-  & .ant-radio-wrapper:hover .ant-radio,
-  .ant-radio:hover .ant-radio-inner,
-  .ant-radio-input:focus,
-  .ant-radio-inner {
-    border-color: ${Theme.grey_C};
-  }
 `;
 const CustomRadioGroup = styled(Radio.Group)`
   width: 100%;
@@ -540,7 +515,7 @@ const Index = () => {
                     borderBottom={`2px solid ${Theme.lightGrey_C}`}
                     padding={`0 0 35px 0`}
                   >
-                    <CustomRadio value="0" margin={`0 20px 0 0`}></CustomRadio>
+                    <Radio />
                     <Wrapper width={`auto`} al={`flex-start`}>
                       <Text fontSize={`1.5rem`} fontWeight={`700`}>
                         선 결재 방식

@@ -67,6 +67,7 @@ const ButtonWrapper = styled(Wrapper)`
 const TextWrapper = styled(Wrapper)`
   width: auto;
   cursor: pointer;
+  transition: 0.5s;
 
   & h2 {
     color: ${Theme.darkGrey_C} !important;
