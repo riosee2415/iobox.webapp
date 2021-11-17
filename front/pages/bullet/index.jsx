@@ -58,6 +58,10 @@ const CustomCheckbox = styled(Checkbox)`
   }
 `;
 
+const GreyCheckbox = styled(Checkbox)`
+  width: 22px;
+`;
+
 const RightOutlinedAbsol = styled(RightOutlined)`
   & .ant-picker-input > input {
     font-size: 20px;
@@ -282,7 +286,9 @@ const Index = () => {
               <Text fontSize={`1.4rem`} fontWeight={`700`}>
                 월 00,000원
               </Text>
-              <QuestionCircleOutlined width={`30px`} />
+              <QuestionCircleOutlined
+                style={{ fontSize: "1.6rem", color: Theme.darkGrey3_C }}
+              />
             </Wrapper>
 
             <Wrapper
@@ -444,7 +450,9 @@ const Index = () => {
               </Wrapper>
               <Wrapper dr={`row`} ju={`space-between`} margin={`0 0 20px 0`}>
                 <Text fontSize={`1.3rem`}>출발지 주소</Text>
-                <QuestionCircleOutlined />
+                <QuestionCircleOutlined
+                  style={{ fontSize: "1.6rem", color: Theme.darkGrey3_C }}
+                />
               </Wrapper>
               <Wrapper
                 dr={`row`}
@@ -483,7 +491,7 @@ const Index = () => {
               <Wrapper dr={`row`} ju={`space-between`} margin={`0 0 30px`}>
                 <Text fontSize={`1.2rem`}>층</Text>
                 <Wrapper dr={`row`} width={`auto`} ju={`space-between`}>
-                  <Checkbox />
+                  <GreyCheckbox />
                   <Text margin={`0 0 0 10px`} fontSize={`1.2rem`}>
                     엘리베이터 있음
                   </Text>
@@ -505,7 +513,9 @@ const Index = () => {
                 borderBottom={`2px solid ${Theme.lightGrey_C}`}
               >
                 <Text fontSize={`1.3rem`}>보관 기간</Text>
-                <QuestionCircleOutlined />
+                <QuestionCircleOutlined
+                  style={{ fontSize: "1.6rem", color: Theme.darkGrey3_C }}
+                />
               </Wrapper>
               <Wrapper al={`flex-start`} margin={`35px 0 0 0`}>
                 <CustomRadioGroup>
@@ -516,11 +526,21 @@ const Index = () => {
                     padding={`0 0 35px 0`}
                   >
                     <Radio />
-                    <Wrapper width={`auto`} al={`flex-start`}>
-                      <Text fontSize={`1.5rem`} fontWeight={`700`}>
+                    <Wrapper
+                      width={`auto`}
+                      al={`flex-start`}
+                      margin={width < 700 ? `0 0 0 10px` : `0 0 0 20px`}
+                    >
+                      <Text
+                        fontSize={width < 700 ? `1.3rem` : `1.5rem`}
+                        fontWeight={`700`}
+                      >
                         선 결재 방식
                       </Text>
-                      <Text fontSize={`1.5rem`} fontWeight={`700`}>
+                      <Text
+                        fontSize={width < 700 ? `1.1rem` : `1.5rem`}
+                        fontWeight={`700`}
+                      >
                         (기간을 정해놓고 보관할래요)
                       </Text>
                     </Wrapper>
@@ -531,12 +551,22 @@ const Index = () => {
                     height={`130px`}
                     margin={`0 0 50px 0`}
                   >
-                    <CustomRadio value="1" margin={`0 20px 0 0`}></CustomRadio>
-                    <Wrapper width={`auto`} al={`flex-start`}>
-                      <Text fontSize={`1.6rem`} fontWeight={`700`}>
+                    <Radio />
+                    <Wrapper
+                      width={`auto`}
+                      al={`flex-start`}
+                      margin={width < 700 ? `0 0 0 10px` : `0 0 0 20px`}
+                    >
+                      <Text
+                        fontSize={width < 700 ? `1.3rem` : `1.5rem`}
+                        fontWeight={`700`}
+                      >
                         매월 결재 방식
                       </Text>
-                      <Text fontSize={`1.6rem`} fontWeight={`700`}>
+                      <Text
+                        fontSize={width < 700 ? `1.1rem` : `1.5rem`}
+                        fontWeight={`700`}
+                      >
                         (얼마나 보관할지 잘 모르겠어요)
                       </Text>
                     </Wrapper>
@@ -553,20 +583,17 @@ const Index = () => {
                     보관 시작
                   </Text>
                   <Wrapper width={`auto`} dr={`row`}>
-                    <Wrapper position={`relative`} width={`auto`}>
-                      <DatePicker
-                        open={datePickerOpen1}
-                        onClick={() => setDatePickerOpen1((prev) => !prev)}
-                        onChange={onChange1}
-                        format="YYYY-MM-DD"
-                        defaultValue={moment("2015-01-01")}
-                        placeholder={`123`}
-                      />
-                      <RightOutlinedAbsol
-                        style={{ color: Theme.grey_C }}
-                        onClick={() => setDatePickerOpen1((prev) => !prev)}
-                      />
-                    </Wrapper>
+                    <DatePicker
+                      onClick={() => setDatePickerOpen1((prev) => !prev)}
+                      open={datePickerOpen1}
+                      onChange={onChange1}
+                      format="YYYY-MM-DD"
+                      placeholder={`123`}
+                    />
+                    <RightOutlined
+                      style={{ color: Theme.grey_C }}
+                      onClick={() => setDatePickerOpen1((prev) => !prev)}
+                    />
                   </Wrapper>
                 </Wrapper>
 
@@ -597,7 +624,9 @@ const Index = () => {
             <Wrapper>
               <Wrapper dr={`row`} ju={`space-between`} margin={`0 0 20px `}>
                 <Text fontSize={`1.3rem`}>도착지 주소</Text>
-                <QuestionCircleOutlined />
+                <QuestionCircleOutlined
+                  style={{ fontSize: "1.6rem", color: Theme.darkGrey3_C }}
+                />
               </Wrapper>
               <Wrapper
                 dr={`row`}
@@ -671,8 +700,12 @@ const Index = () => {
       >
         <RsWrapper dr={`row`} ju={`space-between`}>
           <Wrapper width={`auto`}>
-            <Text color={Theme.basicTheme_C} cursor={`pointer`}>
-              <u>견적 상세 보기</u>
+            <Text
+              color={Theme.basicTheme_C}
+              cursor={`pointer`}
+              borderBottom={`1px solid ${Theme.basicTheme_C}`}
+            >
+              견적 상세 보기
             </Text>
           </Wrapper>
           <CommonButton
@@ -692,39 +725,49 @@ const Index = () => {
             overflow={`auto`}
             width={`30%`}
             maxHeight={`300px`}
-            bgColor={`red`}
             ju={`flex-start`}
+            position={`relative`}
           >
+            <Wrapper
+              height={`1px`}
+              position={`absolute`}
+              bgColor={Theme.black_C}
+            ></Wrapper>
+            <Wrapper
+              height={`1px`}
+              position={`absolute`}
+              bgColor={Theme.black_C}
+            ></Wrapper>
             <Wrapper height={`auto`}>
               <Wrapper ju={`center`}>
-                <Wrapper height={`90px`} bgColor={`blue`} margin={`0 0 10px`}>
-                  -4층
+                <Wrapper height={`90px`} margin={`0 0 10px`}>
+                  지하 4층
                 </Wrapper>
-                <Wrapper height={`90px`} bgColor={`blue`} margin={`0 0 10px`}>
-                  -3층
+                <Wrapper height={`90px`} margin={`0 0 10px`}>
+                  지하 3층
                 </Wrapper>
-                <Wrapper height={`90px`} bgColor={`blue`} margin={`0 0 10px`}>
-                  -2층
+                <Wrapper height={`90px`} margin={`0 0 10px`}>
+                  지하 2층
                 </Wrapper>
-                <Wrapper height={`90px`} bgColor={`blue`} margin={`0 0 10px`}>
-                  -1층
+                <Wrapper height={`90px`} margin={`0 0 10px`}>
+                  지하 1층
                 </Wrapper>
-                <Wrapper height={`90px`} bgColor={`blue`} margin={`0 0 10px`}>
+                <Wrapper height={`90px`} margin={`0 0 10px`}>
                   1층
                 </Wrapper>
-                <Wrapper height={`90px`} bgColor={`blue`} margin={`0 0 10px`}>
+                <Wrapper height={`90px`} margin={`0 0 10px`}>
                   2층
                 </Wrapper>
-                <Wrapper height={`90px`} bgColor={`blue`} margin={`0 0 10px`}>
+                <Wrapper height={`90px`} margin={`0 0 10px`}>
                   3층
                 </Wrapper>
-                <Wrapper height={`90px`} bgColor={`blue`} margin={`0 0 10px`}>
+                <Wrapper height={`90px`} margin={`0 0 10px`}>
                   4층
                 </Wrapper>
-                <Wrapper height={`90px`} bgColor={`blue`} margin={`0 0 10px`}>
+                <Wrapper height={`90px`} margin={`0 0 10px`}>
                   5층
                 </Wrapper>
-                <Wrapper height={`90px`} bgColor={`blue`} margin={`0 0 10px`}>
+                <Wrapper height={`90px`} margin={`0 0 10px`}>
                   6층
                 </Wrapper>
               </Wrapper>
