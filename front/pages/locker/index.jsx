@@ -72,6 +72,7 @@ const Index = () => {
             al={`flex-start`}
             padding={`30px 0`}
             bgColor={Theme.white_C}
+            minHeight={`100vh`}
           >
             <Text fontSize={`2rem`} bold={true}>
               내 보관함
@@ -109,7 +110,14 @@ const Index = () => {
                   <Text>05466</Text>
                 </Wrapper>
 
-                <CommonButton radius={`30px`} width={`120px`} height={`40px`}>
+                <CommonButton
+                  radius={`30px`}
+                  width={`120px`}
+                  height={`40px`}
+                  onClick={() => {
+                    moveLinkHandler("/locker/mylocker");
+                  }}
+                >
                   내 보관함
                 </CommonButton>
               </Wrapper>
