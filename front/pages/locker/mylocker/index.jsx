@@ -1,4 +1,4 @@
-import React, { useCallback, useState } from "react";
+import React, { useCallback, useEffect, useState } from "react";
 import Theme from "../../../components/Theme";
 import {
   Wrapper,
@@ -11,14 +11,32 @@ import {
 import styled from "styled-components";
 import ClientLayout from "../../../components/ClientLayout";
 import useWidth from "../../../hooks/useWidth";
-import { CloseOutlined, DownOutlined, UpOutlined } from "@ant-design/icons";
+import {
+  CloseOutlined,
+  DownOutlined,
+  UpOutlined,
+  MinusCircleOutlined,
+} from "@ant-design/icons";
 import { useRouter } from "next/dist/client/router";
+import { Checkbox } from "antd";
+
+const ModalWrapper = styled(Wrapper)`
+  flex-direction: row;
+  justify-content: space-between;
+  cursor: pointer;
+  padding: 5px 20px;
+
+  &:hover {
+    background: ${Theme.lightGrey_C};
+  }
+`;
 
 const TextHover = styled(Wrapper)`
   width: auto;
   color: ${Theme.grey_C};
   font-size: 1.2rem;
   position: relative;
+  cursor: pointer;
 
   &:before {
     content: "";
@@ -70,9 +88,16 @@ const Index = () => {
 
   const [modal, setModal] = useState(false);
 
+  const [boxNum, setBoxNum] = useState(0);
+  const [hangNum, setHangNum] = useState(0);
+  const [tentNum, setTentNum] = useState(0);
+  const [bigNum, setBigNum] = useState(0);
+
   ////// REDUX //////
 
   ////// USEEFFECT //////
+
+  useEffect(() => {}, [boxNum, hangNum, tentNum, bigNum]);
 
   ////// TOGGLE ///////
 
@@ -81,6 +106,68 @@ const Index = () => {
   }, [modal]);
 
   ///// HANDLER //////
+
+  const resetHandler = useCallback(
+    (data) => {
+      if (data === "iobox") {
+        setBoxNum(0);
+      } else if (data === "hanger") {
+        setHangNum(0);
+      } else if (data === "tent") {
+        setTentNum(0);
+      } else {
+        setBigNum(0);
+      }
+    },
+    [boxNum, hangNum, tentNum, bigNum]
+  );
+
+  // iobox
+  const numPlusHandler = useCallback(
+    (data) => {
+      if (data === "iobox") {
+        setBoxNum(boxNum + 1);
+      } else if (data === "hanger") {
+        setHangNum(hangNum + 1);
+      } else if (data === "tent") {
+        setTentNum(tentNum + 1);
+      } else {
+        setBigNum(bigNum + 1);
+      }
+    },
+    [boxNum, hangNum, tentNum, bigNum]
+  );
+
+  const numMiunsHandler = useCallback(
+    (data) => {
+      if (data === "iobox") {
+        setBoxNum(boxNum - 1);
+        if (boxNum === 0) {
+          setBoxNum(0);
+        }
+      } else if (data === "hanger") {
+        setHangNum(hangNum - 1);
+
+        if (hangNum === 0) {
+          setHangNum(0);
+        }
+      } else if (data === "tent") {
+        setTentNum(tentNum - 1);
+
+        if (tentNum === 0) {
+          setTentNum(0);
+        }
+      } else {
+        setBigNum(bigNum - 1);
+
+        if (tentNum === 0) {
+          setBigNum(0);
+        }
+      }
+    },
+    [boxNum, hangNum, tentNum, bigNum]
+  );
+
   const moveBackHandler = useCallback(() => {
     router.back();
   }, []);
@@ -160,7 +247,15 @@ const Index = () => {
 
               <Wrapper minHeight={`calc(100vh - 250px)`} ju={`space-between`}>
                 <Wrapper>
-                  <Wrapper dr={`row`} margin={`10px 0 0`}>
+                  <Wrapper
+                    dr={`row`}
+                    margin={`10px 0 0`}
+                    display={
+                      (boxNum || hangNum || tentNum || bigNum) > 0
+                        ? `none`
+                        : `flex`
+                    }
+                  >
                     <Text margin={`0 10px 0 0`} fontSize={`1.2rem`}>
                       보관함을 선택 해주세요.
                     </Text>
@@ -172,9 +267,164 @@ const Index = () => {
                       <DownOutlined />
                     </Wrapper>
                   </Wrapper>
+
+                  <Wrapper>
+                    <Wrapper
+                      dr={`row`}
+                      margin={`10px 0 0`}
+                      display={
+                        (boxNum || hangNum || tentNum || bigNum) === 0
+                          ? `none`
+                          : `flex`
+                      }
+                    >
+                      <Wrapper dr={`row`}>
+                        <Text bold={true}>iobox {boxNum}개 </Text>
+
+                        <Wrapper
+                          width={`auto`}
+                          cursor={`pointer`}
+                          onClick={() => {
+                            resetHandler("iobox");
+                          }}
+                          display={boxNum === 0 ? `none` : `flex`}
+                        >
+                          <CloseOutlined />
+                        </Wrapper>
+                      </Wrapper>
+                    </Wrapper>
+                  </Wrapper>
+
+                  <Wrapper
+                    dr={`row`}
+                    ju={`space-between`}
+                    padding={`20px 0 10px`}
+                    borderBottom={`1px solid ${Theme.grey_C}`}
+                  >
+                    <Text bold={true} fontSize={`1.3rem`}>
+                      행거박스 A-1
+                    </Text>
+                    <Checkbox />
+                  </Wrapper>
+
+                  <Wrapper
+                    dr={`row`}
+                    ju={`space-between`}
+                    height={`100px`}
+                    borderBottom={`1px solid ${Theme.grey_C}`}
+                  >
+                    <Image src={`#`} alt={`image`} width={`30%`} />
+
+                    <Wrapper width={`auto`}>
+                      <Checkbox />
+                    </Wrapper>
+                  </Wrapper>
+
+                  <Wrapper
+                    dr={`row`}
+                    ju={`space-between`}
+                    height={`100px`}
+                    borderBottom={`1px solid ${Theme.grey_C}`}
+                  >
+                    <Image src={`#`} alt={`image`} width={`30%`} />
+
+                    <Wrapper width={`auto`}>
+                      <Checkbox />
+                    </Wrapper>
+                  </Wrapper>
+
+                  <Wrapper
+                    dr={`row`}
+                    ju={`space-between`}
+                    height={`100px`}
+                    borderBottom={`1px solid ${Theme.grey_C}`}
+                  >
+                    <Image src={`#`} alt={`image`} width={`30%`} />
+
+                    <Wrapper width={`auto`}>
+                      <Checkbox />
+                    </Wrapper>
+                  </Wrapper>
+
+                  <Wrapper
+                    dr={`row`}
+                    ju={`space-between`}
+                    height={`100px`}
+                    borderBottom={`1px solid ${Theme.grey_C}`}
+                  >
+                    <Image src={`#`} alt={`image`} width={`30%`} />
+
+                    <Wrapper width={`auto`}>
+                      <Checkbox />
+                    </Wrapper>
+                  </Wrapper>
+
+                  <Wrapper
+                    dr={`row`}
+                    ju={`space-between`}
+                    padding={`50px 0 10px`}
+                    borderBottom={`1px solid ${Theme.grey_C}`}
+                  >
+                    <Text bold={true} fontSize={`1.3rem`}>
+                      행거박스 A-2
+                    </Text>
+                    <Checkbox />
+                  </Wrapper>
+
+                  <Wrapper
+                    dr={`row`}
+                    ju={`space-between`}
+                    height={`100px`}
+                    borderBottom={`1px solid ${Theme.grey_C}`}
+                  >
+                    <Image src={`#`} alt={`image`} width={`30%`} />
+
+                    <Wrapper width={`auto`}>
+                      <Checkbox />
+                    </Wrapper>
+                  </Wrapper>
+
+                  <Wrapper
+                    dr={`row`}
+                    ju={`space-between`}
+                    height={`100px`}
+                    borderBottom={`1px solid ${Theme.grey_C}`}
+                  >
+                    <Image src={`#`} alt={`image`} width={`30%`} />
+
+                    <Wrapper width={`auto`}>
+                      <Checkbox />
+                    </Wrapper>
+                  </Wrapper>
+
+                  <Wrapper
+                    dr={`row`}
+                    ju={`space-between`}
+                    height={`100px`}
+                    borderBottom={`1px solid ${Theme.grey_C}`}
+                  >
+                    <Image src={`#`} alt={`image`} width={`30%`} />
+
+                    <Wrapper width={`auto`}>
+                      <Checkbox />
+                    </Wrapper>
+                  </Wrapper>
+
+                  <Wrapper
+                    dr={`row`}
+                    ju={`space-between`}
+                    height={`100px`}
+                    borderBottom={`1px solid ${Theme.grey_C}`}
+                  >
+                    <Image src={`#`} alt={`image`} width={`30%`} />
+
+                    <Wrapper width={`auto`}>
+                      <Checkbox />
+                    </Wrapper>
+                  </Wrapper>
                 </Wrapper>
 
-                <Wrapper dr={`row`} ju={`space-around`}>
+                <Wrapper dr={`row`} ju={`space-around`} margin={`50px 0 0`}>
                   <TextHover bold={true}>부분 찾기</TextHover>
                   <TextHover bold={true}>전체 찾기</TextHover>
                 </Wrapper>
@@ -185,7 +435,7 @@ const Index = () => {
       </WholeWrapper>
 
       <Wrapper
-        position={`fixed`}
+        position={`sticky`}
         bottom={`0`}
         left={`0`}
         bgColor={Theme.lightGrey_C}
@@ -215,11 +465,131 @@ const Index = () => {
           left={`0`}
           height={`100vh`}
           bgColor={`rgba(0,0,0,0.4)`}
+          zIndex={`10000`}
         >
-          <Wrapper padding={`30px`} radius={`20px`} bgColor={Theme.white_C}>
-            <Wrapper al={`flex-end`}>
+          <Wrapper radius={`20px`} bgColor={Theme.white_C} width={`220px`}>
+            <Wrapper
+              al={`flex-end`}
+              cursor={`pointer`}
+              onClick={modalToggle}
+              padding={`20px 20px 10px`}
+            >
               <CloseOutlined />
             </Wrapper>
+
+            <ModalWrapper dr={`row`} ju={`space-between`} cursor={`pointer`}>
+              <Text
+                fontSize={`1.2rem`}
+                bold={true}
+                onClick={() => {
+                  numPlusHandler("iobox");
+                }}
+              >
+                io박스
+              </Text>
+
+              <Wrapper dr={`row`} width={`auto`}>
+                <Wrapper
+                  width={`auto`}
+                  display={boxNum === 0 ? `none` : `flex`}
+                  onClick={() => {
+                    numMiunsHandler("iobox");
+                  }}
+                >
+                  <MinusCircleOutlined />
+                </Wrapper>
+                <Text fontSize={`1.2rem`} margin={`0 0 0 3px`}>
+                  {boxNum}개
+                </Text>
+              </Wrapper>
+            </ModalWrapper>
+
+            <ModalWrapper dr={`row`} ju={`space-between`}>
+              <Text
+                fontSize={`1.2rem`}
+                bold={true}
+                onClick={() => {
+                  numPlusHandler("hanger");
+                }}
+              >
+                행거박스
+              </Text>
+              <Wrapper dr={`row`} width={`auto`}>
+                <Wrapper
+                  width={`auto`}
+                  display={hangNum === 0 ? `none` : `flex`}
+                  onClick={() => {
+                    numMiunsHandler("hanger");
+                  }}
+                >
+                  <MinusCircleOutlined />
+                </Wrapper>
+                <Text fontSize={`1.2rem`} margin={`0 0 0 3px`}>
+                  {hangNum}개
+                </Text>
+              </Wrapper>
+            </ModalWrapper>
+
+            <ModalWrapper dr={`row`} ju={`space-between`}>
+              <Text
+                fontSize={`1.2rem`}
+                bold={true}
+                onClick={() => {
+                  numPlusHandler("tent");
+                }}
+              >
+                텐트박스
+              </Text>
+              <Wrapper dr={`row`} width={`auto`}>
+                <Wrapper
+                  width={`auto`}
+                  display={tentNum === 0 ? `none` : `flex`}
+                  onClick={() => {
+                    numMiunsHandler("tent");
+                  }}
+                >
+                  <MinusCircleOutlined />
+                </Wrapper>
+                <Text fontSize={`1.2rem`} margin={`0 0 0 3px`}>
+                  {tentNum}개
+                </Text>
+              </Wrapper>
+            </ModalWrapper>
+
+            <ModalWrapper dr={`row`} ju={`space-between`}>
+              <Text
+                fontSize={`1.2rem`}
+                bold={true}
+                onClick={() => {
+                  numPlusHandler("big");
+                }}
+              >
+                대용량보관함
+              </Text>
+              <Wrapper dr={`row`} width={`auto`}>
+                <Wrapper
+                  width={`auto`}
+                  display={bigNum === 0 ? `none` : `flex`}
+                  onClick={() => {
+                    numMiunsHandler("big");
+                  }}
+                >
+                  <MinusCircleOutlined />
+                </Wrapper>
+                <Text fontSize={`1.2rem`} margin={`0 0 0 3px`}>
+                  {bigNum}개
+                </Text>
+              </Wrapper>
+            </ModalWrapper>
+
+            <CommonButton
+              width={`80%`}
+              margin={`10px 0 0`}
+              onClick={modalToggle}
+              margin={`0 0 20px`}
+            >
+              확인
+            </CommonButton>
           </Wrapper>
         </Wrapper>
       )}

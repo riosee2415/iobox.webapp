@@ -103,6 +103,12 @@ const GlobalStyles = createGlobalStyle`
     box-shadow : 0px 0px 10px ${(props) => props.theme.grey_C} !important;
   }
 
+  .ant-checkbox-checked .ant-checkbox-inner{
+    background : ${(props) => props.theme.basicTheme_C};
+    border-color : ${(props) => props.theme.basicTheme_C};
+  }
+  
+
   .ant-radio-inner {
     width: 30px;
     height: 30px;
@@ -122,11 +128,21 @@ const GlobalStyles = createGlobalStyle`
     border-color: ${Theme.grey_C};
   }
 
+  .ant-checkbox-checked::after{
+    border : 1px solid ${(props) => props.theme.basicTheme_C} !important;
+  }
+
+  .ant-checkbox-wrapper:hover .ant-checkbox-inner, .ant-checkbox:hover .ant-checkbox-inner, .ant-checkbox-input:focus + .ant-checkbox-inner{
+    border-color :${(props) => props.theme.basicTheme_C};
+  }
+
   .ant-radio-wrapper:hover .ant-radio,
   .ant-radio:hover .ant-radio-inner,
   .ant-radio-input:focus,
   .ant-radio-inner {
-    border-color: ${Theme.grey_C};
+    border-color: ${(props) => {
+      props.theme.grey_C;
+    }};
   }
 
 
@@ -162,6 +178,10 @@ const GlobalStyles = createGlobalStyle`
   
   a:hover {
   color : inherit;
+  }
+
+  html{
+    --antd-wave-shadow-color: none;
   }
   
   @media (max-width : 576px) {
