@@ -255,7 +255,7 @@ router.post("/create", upload.single("image"), async (req, res, next) => {
   }
 });
 
-router.patch("/udpate", upload.single("image"), async (req, res, next) => {
+router.patch("/update", upload.single("image"), async (req, res, next) => {
   const {
     id,
     type,
