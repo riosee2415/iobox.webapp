@@ -16,6 +16,8 @@ import {
 import useWidth from "../hooks/useWidth";
 import Theme from "../components/Theme";
 import { useRouter } from "next/dist/client/router";
+import { KEEPBOX_LIST_REQUEST } from "../reducers/keepBox";
+import { useCountUp } from "use-count-up";
 
 const Home = ({}) => {
   const width = useWidth();
@@ -25,14 +27,32 @@ const Home = ({}) => {
 
   ////// HOOKS //////
 
+  const dispatch = useDispatch();
+
   useEffect(() => {
     setTimeout(() => {
       setMain(false);
     }, [1000]);
   }, [main]);
 
-  ////// REDUX //////
+  useEffect(() => {
+    dispatch({
+      type: KEEPBOX_LIST_REQUEST,
+      data: { qs: "" },
+    });
+  }, []);
 
+  const { value, reset } = useCountUp({
+    isCounting: true,
+    start: 0,
+    end: 300,
+    duration: 5,
+  });
+
+  const { keepBoxes } = useSelector((state) => state.keepBox);
+
+  ////// REDUX //////
+  // console.log(keepBoxes.boxList.length)
   ////// USEEFFECT //////
 
   ////// TOGGLE ///////
@@ -41,6 +61,19 @@ const Home = ({}) => {
   const moveLinkHandler = useCallback((link) => {
     router.push(link);
   }, []);
+
+  // useEffect(() => {
+  //   if (keepBoxes.boxList.toString.length > 4) {
+  //     setLengthData4(0);
+  //   } else if (keepBoxes.boxList.toString.length === 3) {
+  //     setLengthData3(0);
+  //   } else if (keepBoxes.boxList.toString.length === 2) {
+  //     setLengthData2(0);
+  //   } else if (keepBoxes.boxList.toString.length === 1) {
+  //     setLengthData1(0);
+  //   }
+  //   console.log(lengthData1, lengthData2, lengthData3, lengthData4);
+  // }, [keepBoxes]);
 
   ////// DATAVIEW //////
   return (
@@ -147,7 +180,7 @@ const Home = ({}) => {
                       fontWeight={`700`}
                       fontSize={`1.3rem`}
                     >
-                      1
+                      {new String(value)[0]}
                     </Text>
                     <Text
                       padding={`0 5px`}
@@ -156,7 +189,7 @@ const Home = ({}) => {
                       fontSize={`1.3rem`}
                       margin={`0 3px`}
                     >
-                      5
+                      {new String(value)[1]}
                     </Text>
                     <Text
                       padding={`0 5px`}
@@ -164,7 +197,7 @@ const Home = ({}) => {
                       fontWeight={`700`}
                       fontSize={`1.3rem`}
                     >
-                      7
+                      {new String(value)[2]}
                     </Text>
                     <Text
                       padding={`0 5px`}
@@ -173,7 +206,7 @@ const Home = ({}) => {
                       fontSize={`1.3rem`}
                       margin={`0 0 0 3px`}
                     >
-                      8
+                      {new String(value)[3]}
                     </Text>
                     <Text
                       padding={`0 5px`}

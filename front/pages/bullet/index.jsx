@@ -41,14 +41,30 @@ import locale from "antd/lib/locale/zh_CN";
 
 const CustomInput = styled(Input)`
   width: 100%;
-  height: 100%;
+  & .ant-input-affix-wrapper > input.ant-input {
+    height: auto;
+  }
+
+  height: ${(props) => props.height} !important;
+
   border: none;
   outline: none;
   height: 80px;
   padding: 10px 20px;
-  & .ant-input::placeholder {
+  & .ant-input {
+    &::placeholder {
+      font-size: 1.3rem;
+      color: ${(props) => props.theme.grey_C};
+      @media (max-width: 700px) {
+        font-size: 1rem;
+      }
+      line-height: 1.6;
+      color: ${(props) => props.theme.grey_C};
+    }
     font-size: 1.3rem;
-    color: ${(props) => props.theme.grey_C};
+    @media (max-width: 700px) {
+      font-size: 1rem;
+    }
   }
 `;
 
@@ -636,7 +652,7 @@ const Index = () => {
                     <TextInput
                       className={`bulletInput`}
                       width={`calc(100% - 2rem )`}
-                      height={`80px`}
+                      height={width < 700 ? `50px` : `80px`}
                       placeholder={`기본 주소`}
                       border={`none`}
                     />
@@ -650,7 +666,7 @@ const Index = () => {
                     <CustomInput
                       width={`calc(100% - 2rem )`}
                       className={`bulletInput`}
-                      height={`80px`}
+                      height={width < 700 ? `50px` : `80px`}
                       placeholder={`상세 주소 입력(필수/20자이내)`}
                       border={`none`}
                       allowClear={true}
@@ -670,7 +686,7 @@ const Index = () => {
                   </Wrapper>
                   <Wrapper
                     width={`95%`}
-                    height={`70px`}
+                    height={width < 700 ? `50px` : `70px`}
                     border={`2px solid ${Theme.lightGrey_C}`}
                     onClick={() => setFloorModal(true)}
                   ></Wrapper>
@@ -846,7 +862,7 @@ const Index = () => {
                     <TextInput
                       className={`bulletInput`}
                       width={`calc(100% - 2rem )`}
-                      height={`80px`}
+                      height={width < 700 ? `50px` : `80px`}
                       placeholder={`기본 주소`}
                       border={`none`}
                     />
@@ -862,7 +878,7 @@ const Index = () => {
                     <CustomInput
                       width={`calc(100% - 2rem )`}
                       className={`bulletInput`}
-                      height={`80px`}
+                      height={width < 700 ? `50px` : `80px`}
                       placeholder={`상세 주소 입력(필수/20자이내)`}
                       border={`none`}
                       allowClear={true}
@@ -889,11 +905,11 @@ const Index = () => {
                         </Text>
                       </Wrapper>
                     </Wrapper>
-                    <TextInput
+                    <Wrapper
                       width={`95%`}
-                      height={`70px`}
+                      height={width < 700 ? `50px` : `70px`}
                       border={`2px solid ${Theme.lightGrey_C}`}
-                    />
+                    ></Wrapper>
                   </Wrapper>
                 </Wrapper>
               </Wrapper>

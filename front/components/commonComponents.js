@@ -439,8 +439,15 @@ export const TextInput = styled.input`
     }
     &::placeholder {
       font-size: 1.3rem;
+      @media (max-width: 700px) {
+        font-size: 1rem;
+      }
       line-height: 1.6;
       color: ${(props) => props.theme.grey_C};
+    }
+    font-size: 1.3rem;
+    @media (max-width: 700px) {
+      font-size: 1rem;
     }
   }
 `;
