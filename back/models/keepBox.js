@@ -74,6 +74,5 @@ module.exports = class KeepBox extends Model {
   static associate(db) {
     db.KeepBox.hasMany(db.BoxImage);
     db.KeepBox.belongsTo(db.BoxType);
-    db.KeepBox.belongsTo(db.User);
   }
 };
