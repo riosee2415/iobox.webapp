@@ -33,17 +33,17 @@ const ModalWrapper = styled(Wrapper)`
 
 const TextHover = styled(Wrapper)`
   width: auto;
-  color: ${Theme.grey_C};
   font-size: 1.2rem;
   position: relative;
   cursor: pointer;
+  color: ${(props) => props.color || Theme.grey_C};
 
   &:before {
     content: "";
     position: absolute;
     bottom: 0;
     left: 0;
-    width: 0;
+    width: ${(props) => props.beforeWidth || `0`};
     height: 1px;
     background: ${Theme.basicTheme_C};
     transition: 0.5s;
@@ -84,7 +84,7 @@ const Index = () => {
   const router = useRouter();
 
   ////// HOOKS //////
-  const [tab, setTab] = useState(false);
+  const [tab, setTab] = useState(1);
 
   const [modal, setModal] = useState(false);
 
@@ -97,8 +97,6 @@ const Index = () => {
 
   ////// USEEFFECT //////
 
-  useEffect(() => {}, [boxNum, hangNum, tentNum, bigNum]);
-
   ////// TOGGLE ///////
 
   const modalToggle = useCallback(() => {
@@ -106,21 +104,6 @@ const Index = () => {
   }, [modal]);
 
   ///// HANDLER //////
-
-  const resetHandler = useCallback(
-    (data) => {
-      if (data === "iobox") {
-        setBoxNum(0);
-      } else if (data === "hanger") {
-        setHangNum(0);
-      } else if (data === "tent") {
-        setTentNum(0);
-      } else {
-        setBigNum(0);
-      }
-    },
-    [boxNum, hangNum, tentNum, bigNum]
-  );
 
   // iobox
   const numPlusHandler = useCallback(
@@ -175,10 +158,6 @@ const Index = () => {
   const moveLinkHandler = useCallback((link) => {
     router.push(link);
   }, []);
-
-  const tabToggle = useCallback(() => {
-    setTab(!tab);
-  }, [tab]);
 
   ////// DATAVIEW //////
   return (
@@ -271,25 +250,90 @@ const Index = () => {
                   <Wrapper>
                     <Wrapper
                       dr={`row`}
-                      margin={`10px 0 0`}
+                      margin={`10px 0`}
                       display={
                         (boxNum || hangNum || tentNum || bigNum) === 0
                           ? `none`
                           : `flex`
                       }
                     >
-                      <Wrapper dr={`row`}>
-                        <Text bold={true}>iobox {boxNum}개 </Text>
+                      <Wrapper
+                        dr={`row`}
+                        ju={`space-between`}
+                        margin={`10px 0 0`}
+                        display={boxNum === 0 ? `none` : `flex`}
+                      >
+                        <Text fontSize={`1.5rem`} bold={true}>
+                          iobox {boxNum}개
+                        </Text>
 
                         <Wrapper
                           width={`auto`}
                           cursor={`pointer`}
-                          onClick={() => {
-                            resetHandler("iobox");
-                          }}
+                          onClick={modalToggle}
                           display={boxNum === 0 ? `none` : `flex`}
                         >
-                          <CloseOutlined />
+                          <DownOutlined />
+                        </Wrapper>
+                      </Wrapper>
+
+                      <Wrapper
+                        dr={`row`}
+                        ju={`space-between`}
+                        margin={`10px 0 0`}
+                        display={hangNum === 0 ? `none` : `flex`}
+                      >
+                        <Text fontSize={`1.5rem`} bold={true}>
+                          행거박스 {hangNum}개
+                        </Text>
+
+                        <Wrapper
+                          width={`auto`}
+                          cursor={`pointer`}
+                          onClick={modalToggle}
+                          display={hangNum === 0 ? `none` : `flex`}
+                        >
+                          <DownOutlined />
+                        </Wrapper>
+                      </Wrapper>
+
+                      <Wrapper
+                        dr={`row`}
+                        ju={`space-between`}
+                        margin={`10px 0 0`}
+                        display={tentNum === 0 ? `none` : `flex`}
+                      >
+                        <Text fontSize={`1.5rem`} bold={true}>
+                          텐트박스 {tentNum}개
+                        </Text>
+
+                        <Wrapper
+                          width={`auto`}
+                          cursor={`pointer`}
+                          onClick={modalToggle}
+                          display={tentNum === 0 ? `none` : `flex`}
+                        >
+                          <DownOutlined />
+                        </Wrapper>
+                      </Wrapper>
+
+                      <Wrapper
+                        dr={`row`}
+                        ju={`space-between`}
+                        margin={`10px 0 0`}
+                        display={bigNum === 0 ? `none` : `flex`}
+                      >
+                        <Text fontSize={`1.5rem`} bold={true}>
+                          대용량보관함 {bigNum}개
+                        </Text>
+
+                        <Wrapper
+                          width={`auto`}
+                          cursor={`pointer`}
+                          onClick={modalToggle}
+                          display={bigNum === 0 ? `none` : `flex`}
+                        >
+                          <DownOutlined />
                         </Wrapper>
                       </Wrapper>
                     </Wrapper>
@@ -304,18 +348,11 @@ const Index = () => {
                     <Text bold={true} fontSize={`1.3rem`}>
                       행거박스 A-1
                     </Text>
-                    <Checkbox />
-                  </Wrapper>
 
-                  <Wrapper
-                    dr={`row`}
-                    ju={`space-between`}
-                    height={`100px`}
-                    borderBottom={`1px solid ${Theme.grey_C}`}
-                  >
-                    <Image src={`#`} alt={`image`} width={`30%`} />
-
-                    <Wrapper width={`auto`}>
+                    <Wrapper
+                      width={`auto`}
+                      display={tab === 1 ? `flex` : `none`}
+                    >
                       <Checkbox />
                     </Wrapper>
                   </Wrapper>
@@ -328,7 +365,10 @@ const Index = () => {
                   >
                     <Image src={`#`} alt={`image`} width={`30%`} />
 
-                    <Wrapper width={`auto`}>
+                    <Wrapper
+                      width={`auto`}
+                      display={tab === 0 ? `flex` : `none`}
+                    >
                       <Checkbox />
                     </Wrapper>
                   </Wrapper>
@@ -341,7 +381,10 @@ const Index = () => {
                   >
                     <Image src={`#`} alt={`image`} width={`30%`} />
 
-                    <Wrapper width={`auto`}>
+                    <Wrapper
+                      width={`auto`}
+                      display={tab === 0 ? `flex` : `none`}
+                    >
                       <Checkbox />
                     </Wrapper>
                   </Wrapper>
@@ -354,7 +397,26 @@ const Index = () => {
                   >
                     <Image src={`#`} alt={`image`} width={`30%`} />
 
-                    <Wrapper width={`auto`}>
+                    <Wrapper
+                      width={`auto`}
+                      display={tab === 0 ? `flex` : `none`}
+                    >
+                      <Checkbox />
+                    </Wrapper>
+                  </Wrapper>
+
+                  <Wrapper
+                    dr={`row`}
+                    ju={`space-between`}
+                    height={`100px`}
+                    borderBottom={`1px solid ${Theme.grey_C}`}
+                  >
+                    <Image src={`#`} alt={`image`} width={`30%`} />
+
+                    <Wrapper
+                      width={`auto`}
+                      display={tab === 0 ? `flex` : `none`}
+                    >
                       <Checkbox />
                     </Wrapper>
                   </Wrapper>
@@ -368,18 +430,10 @@ const Index = () => {
                     <Text bold={true} fontSize={`1.3rem`}>
                       행거박스 A-2
                     </Text>
-                    <Checkbox />
-                  </Wrapper>
-
-                  <Wrapper
-                    dr={`row`}
-                    ju={`space-between`}
-                    height={`100px`}
-                    borderBottom={`1px solid ${Theme.grey_C}`}
-                  >
-                    <Image src={`#`} alt={`image`} width={`30%`} />
-
-                    <Wrapper width={`auto`}>
+                    <Wrapper
+                      width={`auto`}
+                      display={tab === 1 ? `flex` : `none`}
+                    >
                       <Checkbox />
                     </Wrapper>
                   </Wrapper>
@@ -392,7 +446,10 @@ const Index = () => {
                   >
                     <Image src={`#`} alt={`image`} width={`30%`} />
 
-                    <Wrapper width={`auto`}>
+                    <Wrapper
+                      width={`auto`}
+                      display={tab === 0 ? `flex` : `none`}
+                    >
                       <Checkbox />
                     </Wrapper>
                   </Wrapper>
@@ -405,7 +462,10 @@ const Index = () => {
                   >
                     <Image src={`#`} alt={`image`} width={`30%`} />
 
-                    <Wrapper width={`auto`}>
+                    <Wrapper
+                      width={`auto`}
+                      display={tab === 0 ? `flex` : `none`}
+                    >
                       <Checkbox />
                     </Wrapper>
                   </Wrapper>
@@ -418,15 +478,52 @@ const Index = () => {
                   >
                     <Image src={`#`} alt={`image`} width={`30%`} />
 
-                    <Wrapper width={`auto`}>
+                    <Wrapper
+                      width={`auto`}
+                      display={tab === 0 ? `flex` : `none`}
+                    >
+                      <Checkbox />
+                    </Wrapper>
+                  </Wrapper>
+
+                  <Wrapper
+                    dr={`row`}
+                    ju={`space-between`}
+                    height={`100px`}
+                    borderBottom={`1px solid ${Theme.grey_C}`}
+                  >
+                    <Image src={`#`} alt={`image`} width={`30%`} />
+
+                    <Wrapper
+                      width={`auto`}
+                      display={tab === 0 ? `flex` : `none`}
+                    >
                       <Checkbox />
                     </Wrapper>
                   </Wrapper>
                 </Wrapper>
 
                 <Wrapper dr={`row`} ju={`space-around`} margin={`50px 0 0`}>
-                  <TextHover bold={true}>부분 찾기</TextHover>
-                  <TextHover bold={true}>전체 찾기</TextHover>
+                  <TextHover
+                    onClick={() => {
+                      setTab(0);
+                    }}
+                    bold={true}
+                    color={tab === 0 ? Theme.basicTheme_C : Theme.grey_C}
+                    beforeWidth={tab === 0 ? `100%` : `0`}
+                  >
+                    부분 찾기
+                  </TextHover>
+                  <TextHover
+                    onClick={() => {
+                      setTab(1);
+                    }}
+                    bold={true}
+                    color={tab === 1 ? Theme.basicTheme_C : Theme.grey_C}
+                    beforeWidth={tab === 1 ? `100%` : `0`}
+                  >
+                    전체 찾기
+                  </TextHover>
                 </Wrapper>
               </Wrapper>
             </RsWrapper>
