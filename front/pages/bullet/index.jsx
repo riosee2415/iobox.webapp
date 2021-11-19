@@ -708,12 +708,18 @@ const Index = () => {
                           <Text
                             fontSize={width < 700 ? `1.3rem` : `1.5rem`}
                             fontWeight={`700`}
+                            color={
+                              radioValue === 0 ? Theme.black_C : Theme.grey_C
+                            }
                           >
                             선 결재 방식
                           </Text>
                           <Text
                             fontSize={width < 700 ? `1.1rem` : `1.5rem`}
                             fontWeight={`700`}
+                            color={
+                              radioValue === 0 ? Theme.black_C : Theme.grey_C
+                            }
                           >
                             (기간을 정해놓고 보관할래요)
                           </Text>
@@ -734,12 +740,18 @@ const Index = () => {
                           <Text
                             fontSize={width < 700 ? `1.3rem` : `1.5rem`}
                             fontWeight={`700`}
+                            color={
+                              radioValue === 1 ? Theme.black_C : Theme.grey_C
+                            }
                           >
                             매월 결재 방식
                           </Text>
                           <Text
                             fontSize={width < 700 ? `1.1rem` : `1.5rem`}
                             fontWeight={`700`}
+                            color={
+                              radioValue === 1 ? Theme.black_C : Theme.grey_C
+                            }
                           >
                             (얼마나 보관할지 잘 모르겠어요)
                           </Text>
