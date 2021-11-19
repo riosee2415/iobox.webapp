@@ -191,6 +191,28 @@ router.get("/list", async (req, res, next) => {
   }
 });
 
+router.get("/list/:boxId", async (req, res, next) => {
+  const { boxId } = req.params;
+  try {
+    const exBox = await KeepBox.findOne({
+      where: { id: parseInt(boxId) },
+      include: [
+        {
+          model: BoxType,
+        },
+        {
+          model: BoxImage,
+        },
+      ],
+    });
+
+    return res.status(200).json(exBox ? exBox : []);
+  } catch (error) {
+    console.error(error);
+    return res.status(401).send("데이터를 불러올 수 없습니다.");
+  }
+});
+
 router.post("/create", upload.single("image"), async (req, res, next) => {
   const {
     type,
