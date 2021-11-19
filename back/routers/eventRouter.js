@@ -1,6 +1,7 @@
 const express = require("express");
 const isAdminCheck = require("../middlewares/isAdminCheck");
 const { Event } = require("../models");
+const { Op } = require("sequelize");
 const fs = require("fs");
 const multer = require("multer");
 const path = require("path");
