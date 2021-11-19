@@ -13,6 +13,9 @@ const faqtype = require("./faqtype");
 const guide = require("./guide");
 const guidetype = require("./guidetype");
 const event = require("./event");
+const keepBox = require("./keepBox");
+const boxImage = require("./boxImage");
+const boxtype = require("./boxtype");
 
 const env = process.env.NODE_ENV || "development";
 const config = require("../config/config")[env];
@@ -39,6 +42,9 @@ db.FaqType = faqtype;
 db.Guide = guide;
 db.GuideType = guidetype;
 db.Event = event;
+db.KeepBox = keepBox;
+db.BoxImage = boxImage;
+db.BoxType = boxtype;
 
 Object.keys(db).forEach((modelName) => {
   db[modelName].init(sequelize);

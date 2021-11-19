@@ -41,12 +41,43 @@ const upload = multer({
 });
 
 router.get("/list", async (req, res, next) => {
+  const { page, search } = req.query;
+
+  const LIMIT = 10;
+
+  const _page = page ? page : 1;
+  const _search = search ? search : "";
+
+  const __page = _page - 1;
+  const OFFSET = __page * 10;
+
   try {
-    const lists = await Event.findAll({
-      where: { isDelete: false },
+    const totalEvents = await Event.findAll({
+      where: {
+        title: {
+          [Op.like]: `%${_search}%`,
+        },
+        isDelete: false,
+      },
     });
 
-    return res.status(200).json(lists);
+    const eventLen = totalEvents.length;
+
+    const lastPage =
+      eventLen % LIMIT > 0 ? eventLen / LIMIT + 1 : eventLen / LIMIT;
+
+    const lists = await Event.findAll({
+      offset: OFFSET,
+      limit: LIMIT,
+      where: {
+        title: {
+          [Op.like]: `%${_search}%`,
+        },
+        isDelete: false,
+      },
+    });
+
+    return res.status(200).json({ lists, lastPage: parseInt(lastPage) });
   } catch (error) {
     console.error(error);
     return res.status(401).send("이벤트 목록을 불러올 수 없습니다.");

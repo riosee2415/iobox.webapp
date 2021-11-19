@@ -56,5 +56,6 @@ module.exports = class User extends Model {
   }
   static associate(db) {
     db.User.hasMany(db.Question);
+    db.User.hasMany(db.KeepBox);
   }
 };

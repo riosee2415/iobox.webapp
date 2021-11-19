@@ -141,12 +141,43 @@ router.delete(
 //GUIDE
 
 router.get("/list", async (req, res, next) => {
+  const { page, search } = req.query;
+
+  const LIMIT = 10;
+
+  const _page = page ? page : 1;
+  const _search = search ? search : "";
+
+  const __page = _page - 1;
+  const OFFSET = __page * 10;
+
   try {
-    const lists = await Guide.findAll({
-      where: { isDelete: false },
+    const totalGuide = await Guide.findAll({
+      where: {
+        title: {
+          [Op.like]: `%${_search}%`,
+        },
+        isDelete: false,
+      },
     });
 
-    return res.status(200).json(lists);
+    const guideLen = totalGuide.length;
+
+    const lastPage =
+      guideLen % LIMIT > 0 ? guideLen / LIMIT + 1 : guideLen / LIMIT;
+
+    const lists = await Guide.findAll({
+      offset: OFFSET,
+      limit: LIMIT,
+      where: {
+        title: {
+          [Op.like]: `%${_search}%`,
+        },
+        isDelete: false,
+      },
+    });
+
+    return res.status(200).json({ lists, lastPage: parseInt(lastPage) });
   } catch (error) {
     console.error(error);
     return res.status(401).send("이용안내 목록을 불러올 수 없습니다.");
