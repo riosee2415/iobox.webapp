@@ -151,6 +151,10 @@ const GlobalStyles = createGlobalStyle`
 
   
 
+  .anticon.ant-input-clear-icon > svg{
+    font-size:1.25rem;
+  }
+
 
   a {
         color : inherit;

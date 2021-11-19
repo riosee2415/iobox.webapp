@@ -356,22 +356,20 @@ const AppFooter = () => {
               >
                 <Image
                   src={`https://via.placeholder.com/100x100`}
-                  margin={
-                    width < 700 ? `30px 0 60px 40px` : `50px 0 100px 40px`
-                  }
+                  margin={width < 700 ? `30px 0 60px 40px` : `50px 0 80px 40px`}
                   width={width < 700 ? `80px` : `100px`}
                   alt={`logo`}
                 />
                 <Wrapper
                   height={
-                    width < 700 ? `calc(100vh - 170px)` : `calc(100vh - 250px)`
+                    width < 700 ? `calc(100vh - 170px)` : `calc(100vh - 230px)`
                   }
                   ju={`space-between`}
                 >
                   <RsWrapper
                     ju={`flex-start`}
                     al={`flex-start`}
-                    height={width < 700 ? `100px` : `450px`}
+                    height={width < 700 ? `100px` : `auto`}
                   >
                     <Wrapper ju={`flex-start`} al={`flex-start`}>
                       <Wrapper al={`flex-start`}>
@@ -417,7 +415,7 @@ const AppFooter = () => {
                       <Wrapper al={`flex-start`}>
                         <Text
                           fontSize={width < 700 ? `1rem` : `1.4rem`}
-                          margin={width < 700 ? `0 0 20px 0` : `0 0 40px`}
+                          margin={width < 700 ? `0 0 20px 0` : `0`}
                         >
                           내 물건 찾기
                         </Text>
