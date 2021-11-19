@@ -356,13 +356,15 @@ const AppFooter = () => {
               >
                 <Image
                   src={`https://via.placeholder.com/100x100`}
-                  margin={width < 700 ? `30px 0 60px 40px` : `50px 0 80px 40px`}
-                  width={width < 700 ? `80px` : `100px`}
+                  margin={
+                    width < 1350 ? `30px 0 60px 40px` : `50px 0 60px 40px`
+                  }
+                  width={width < 1350 ? `80px` : `100px`}
                   alt={`logo`}
                 />
                 <Wrapper
                   height={
-                    width < 700 ? `calc(100vh - 170px)` : `calc(100vh - 230px)`
+                    width < 1350 ? `calc(100vh - 170px)` : `calc(100vh - 210px)`
                   }
                   ju={`space-between`}
                 >
@@ -374,47 +376,113 @@ const AppFooter = () => {
                     <Wrapper ju={`flex-start`} al={`flex-start`}>
                       <Wrapper al={`flex-start`}>
                         <Text
-                          fontSize={width < 700 ? `1rem` : `1.4rem`}
-                          margin={width < 700 ? `0 0 20px 0` : `0 0 40px`}
+                          fontSize={
+                            width < 1350
+                              ? width < 700
+                                ? `1rem`
+                                : `1.2rem`
+                              : `1.4rem`
+                          }
+                          margin={
+                            width < 1350
+                              ? width < 700
+                                ? `0 0 20px 0`
+                                : `0 0 25px`
+                              : `0 0 35px`
+                          }
                         >
                           아이오 박스란?
                         </Text>
                       </Wrapper>
                       <Wrapper al={`flex-start`}>
                         <Text
-                          fontSize={width < 700 ? `1rem` : `1.4rem`}
-                          margin={width < 700 ? `0 0 20px 0` : `0 0 40px`}
+                          fontSize={
+                            width < 1350
+                              ? width < 700
+                                ? `1rem`
+                                : `1.2rem`
+                              : `1.4rem`
+                          }
+                          margin={
+                            width < 1350
+                              ? width < 700
+                                ? `0 0 20px 0`
+                                : `0 0 25px`
+                              : `0 0 35px`
+                          }
                         >
                           서비스 이용방법
                         </Text>
                       </Wrapper>
                       <Wrapper al={`flex-start`}>
                         <Text
-                          fontSize={width < 700 ? `1rem` : `1.4rem`}
-                          margin={width < 700 ? `0 0 20px 0` : `0 0 40px`}
+                          fontSize={
+                            width < 1350
+                              ? width < 700
+                                ? `1rem`
+                                : `1.2rem`
+                              : `1.4rem`
+                          }
+                          margin={
+                            width < 1350
+                              ? width < 700
+                                ? `0 0 20px 0`
+                                : `0 0 25px`
+                              : `0 0 35px`
+                          }
                         >
                           서비스 이용료
                         </Text>
                       </Wrapper>
                       <Wrapper al={`flex-start`}>
                         <Text
-                          fontSize={width < 700 ? `1rem` : `1.4rem`}
-                          margin={width < 700 ? `0 0 20px 0` : `0 0 40px`}
+                          fontSize={
+                            width < 1350
+                              ? width < 700
+                                ? `1rem`
+                                : `1.2rem`
+                              : `1.4rem`
+                          }
+                          margin={
+                            width < 1350
+                              ? width < 700
+                                ? `0 0 20px 0`
+                                : `0 0 25px`
+                              : `0 0 35px`
+                          }
                         >
                           IO박스 보관센터
                         </Text>
                       </Wrapper>
                       <Wrapper al={`flex-start`}>
                         <Text
-                          fontSize={width < 700 ? `1rem` : `1.4rem`}
-                          margin={width < 700 ? `0 0 20px 0` : `0 0 40px`}
+                          fontSize={
+                            width < 1350
+                              ? width < 700
+                                ? `1rem`
+                                : `1.2rem`
+                              : `1.4rem`
+                          }
+                          margin={
+                            width < 1350
+                              ? width < 700
+                                ? `0 0 20px 0`
+                                : `0 0 25px`
+                              : `0 0 35px`
+                          }
                         >
                           배송현황
                         </Text>
                       </Wrapper>
                       <Wrapper al={`flex-start`}>
                         <Text
-                          fontSize={width < 700 ? `1rem` : `1.4rem`}
+                          fontSize={
+                            width < 1350
+                              ? width < 700
+                                ? `1rem`
+                                : `1.2rem`
+                              : `1.4rem`
+                          }
                           margin={width < 700 ? `0 0 20px 0` : `0`}
                         >
                           내 물건 찾기

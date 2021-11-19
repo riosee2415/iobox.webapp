@@ -46,6 +46,10 @@ const CustomInput = styled(Input)`
   outline: none;
   height: 80px;
   padding: 10px 20px;
+  & .ant-input::placeholder {
+    font-size: 1.3rem;
+    color: ${(props) => props.theme.grey_C};
+  }
 `;
 
 const GreyCheckbox = styled(Checkbox)`
@@ -131,6 +135,8 @@ const Index = () => {
 
   const [datePickerOpen1, setDatePickerOpen1] = useState(false);
   const [datePickerOpen2, setDatePickerOpen2] = useState(false);
+
+  const [radioValue, setRadioValue] = useState(0);
   // const [floorModal, setFloorModal] = useState(false);
 
   const [currentTab, setCurrentTab] = useState(0);
@@ -227,6 +233,10 @@ const Index = () => {
   const onChange2 = (date, dateString) => {
     setEndDate(dateString);
   };
+
+  const radioChangeHandler = useCallback((e) => {
+    setRadioValue(e.target.value);
+  }, []);
 
   const blurHandler = useCallback(() => {
     setCardInput(false);
@@ -432,22 +442,32 @@ const Index = () => {
                     상자 총{" "}
                     {currentHanger + currentIo + currentBig + currentTent}개
                   </Text>
-                  <Wrapper width={`auto`}>
+                  <Wrapper width={`auto`} dr={`row`}>
                     <Text
                       color={Theme.red_C}
                       onClick={deleteAllBoxHandler}
                       cursor={`pointer`}
+                      margin={`0 10px 0 0`}
                     >
                       전체삭제
                     </Text>
-                    <Image src={``} alt={``} width={`30px`} />
+                    <Image
+                      src={`https://via.placeholder.com/100x100`}
+                      alt={``}
+                      width={`1.5rem`}
+                    />
                   </Wrapper>
                 </Wrapper>
 
                 <Wrapper>
                   <Wrapper dr={`row`} ju={`space-between`} margin={`0 0 40px`}>
                     <Wrapper dr={`row`} width={`auto`}>
-                      <Image src={``} alt={`hanger_image`} width={`30px`} />
+                      <Image
+                        src={`https://via.placeholder.com/100x100`}
+                        alt={`hanger_image`}
+                        width={width < 700 ? `40px` : `60px`}
+                        margin={width < 700 ? `0 15px 0 0` : `0 30px 0 0`}
+                      />
                       <Text fontSize={`1,2rem`}>행거박스(의류용)</Text>
                     </Wrapper>
                     <Wrapper
@@ -456,6 +476,7 @@ const Index = () => {
                       radius={`35px`}
                       padding={`0 15px`}
                       dr={`row`}
+                      촘
                       ju={`space-between`}
                       bgColor={Theme.lightGrey_C}
                     >
@@ -479,7 +500,12 @@ const Index = () => {
                   </Wrapper>
                   <Wrapper dr={`row`} ju={`space-between`} margin={`0 0 40px`}>
                     <Wrapper dr={`row`} width={`auto`}>
-                      <Image src={``} alt={`iobox_image`} width={`30px`} />
+                      <Image
+                        src={`https://via.placeholder.com/100x100`}
+                        alt={`iobox_image`}
+                        width={width < 700 ? `40px` : `60px`}
+                        margin={width < 700 ? `0 15px 0 0` : `0 30px 0 0`}
+                      />
                       <Text fontSize={`1,2rem`}>io박스</Text>
                     </Wrapper>
                     <Wrapper
@@ -511,7 +537,12 @@ const Index = () => {
                   </Wrapper>
                   <Wrapper dr={`row`} ju={`space-between`} margin={`0 0 40px`}>
                     <Wrapper dr={`row`} width={`auto`}>
-                      <Image src={``} alt={`bigbox_image`} width={`30px`} />
+                      <Image
+                        src={`https://via.placeholder.com/100x100`}
+                        alt={`bigbox_image`}
+                        width={width < 700 ? `40px` : `60px`}
+                        margin={width < 700 ? `0 15px 0 0` : `0 30px 0 0`}
+                      />
                       <Text fontSize={`1,2rem`}>대형박스</Text>
                     </Wrapper>
                     <Wrapper
@@ -543,7 +574,12 @@ const Index = () => {
                   </Wrapper>
                   <Wrapper dr={`row`} ju={`space-between`} margin={`0 0 40px`}>
                     <Wrapper dr={`row`} width={`auto`}>
-                      <Image src={``} alt={`tentbox_image`} width={`30px`} />
+                      <Image
+                        src={`https://via.placeholder.com/100x100`}
+                        alt={`tentbox_image`}
+                        width={width < 700 ? `40px` : `60px`}
+                        margin={width < 700 ? `0 15px 0 0` : `0 30px 0 0`}
+                      />
                       <Text fontSize={`1,2rem`}>텐트박스(캠핑용품)</Text>
                     </Wrapper>
                     <Wrapper
@@ -653,14 +689,17 @@ const Index = () => {
                     />
                   </Wrapper>
                   <Wrapper al={`flex-start`} margin={`35px 0 0 0`}>
-                    <CustomRadioGroup>
+                    <CustomRadioGroup
+                      value={radioValue}
+                      onChange={radioChangeHandler}
+                    >
                       <Wrapper
                         dr={`row`}
                         ju={`flex-start`}
                         borderBottom={`2px solid ${Theme.lightGrey_C}`}
                         padding={`0 0 35px 0`}
                       >
-                        <Radio />
+                        <Radio value={0} />
                         <Wrapper
                           width={`auto`}
                           al={`flex-start`}
@@ -686,7 +725,7 @@ const Index = () => {
                         height={`130px`}
                         margin={`0 0 50px 0`}
                       >
-                        <Radio />
+                        <Radio value={1} />
                         <Wrapper
                           width={`auto`}
                           al={`flex-start`}
@@ -708,7 +747,10 @@ const Index = () => {
                       </Wrapper>
                     </CustomRadioGroup>
                   </Wrapper>
-                  <Wrapper margin={`0 0 50px`}>
+                  <Wrapper
+                    margin={`0 0 50px`}
+                    opacity={radioValue === 1 ? `0.3` : `1`}
+                  >
                     <Wrapper dr={`row`} ju={`space-between`} height={`70px`}>
                       <Text
                         color={Theme.subTheme5_C}
@@ -719,15 +761,24 @@ const Index = () => {
                       </Text>
                       <Wrapper width={`auto`} dr={`row`}>
                         <DatePicker
-                          onClick={() => setDatePickerOpen1((prev) => !prev)}
-                          open={datePickerOpen1}
+                          onClick={() =>
+                            radioValue === 0
+                              ? setDatePickerOpen1((prev) => !prev)
+                              : {}
+                          }
+                          open={radioValue === 1 ? false : datePickerOpen1}
                           onChange={onChange1}
                           format="YYYY-MM-DD"
                           placeholder={`123`}
+                          inputReadOnly={radioValue === 1 ? true : false}
                         />
                         <RightOutlined
                           style={{ color: Theme.grey_C }}
-                          onClick={() => setDatePickerOpen1((prev) => !prev)}
+                          onClick={() =>
+                            radioValue === 0
+                              ? setDatePickerOpen1((prev) => !prev)
+                              : {}
+                          }
                         />
                       </Wrapper>
                     </Wrapper>
@@ -742,15 +793,24 @@ const Index = () => {
                       </Text>
                       <Wrapper width={`auto`} dr={`row`}>
                         <DatePicker
-                          onClick={() => setDatePickerOpen2((prev) => !prev)}
-                          open={datePickerOpen2}
+                          onClick={() =>
+                            radioValue === 0
+                              ? setDatePickerOpen2((prev) => !prev)
+                              : {}
+                          }
+                          open={radioValue === 1 ? false : datePickerOpen2}
                           onChange={onChange2}
                           format="YYYY-MM-DD"
                           placeholder={`123`}
+                          inputReadOnly={radioValue === 1 ? true : false}
                         />
                         <RightOutlined
                           style={{ color: Theme.grey_C }}
-                          onClick={() => setDatePickerOpen2((prev) => !prev)}
+                          onClick={() =>
+                            radioValue === 0
+                              ? setDatePickerOpen2((prev) => !prev)
+                              : {}
+                          }
                         />
                       </Wrapper>
                     </Wrapper>
@@ -778,6 +838,7 @@ const Index = () => {
                       placeholder={`기본 주소`}
                       border={`none`}
                     />
+
                     <SearchOutlined style={{ fontSize: `2rem` }} />
                   </Wrapper>
 
@@ -879,18 +940,6 @@ const Index = () => {
             ></Wrapper>
             <Wrapper height={`auto`}>
               <Wrapper ju={`center`}>
-                <Wrapper height={`90px`} margin={`0 0 10px`}>
-                  지하 4층
-                </Wrapper>
-                <Wrapper height={`90px`} margin={`0 0 10px`}>
-                  지하 3층
-                </Wrapper>
-                <Wrapper height={`90px`} margin={`0 0 10px`}>
-                  지하 2층
-                </Wrapper>
-                <Wrapper height={`90px`} margin={`0 0 10px`}>
-                  지하 1층
-                </Wrapper>
                 <Wrapper height={`90px`} margin={`0 0 10px`}>
                   1층
                 </Wrapper>

@@ -88,11 +88,11 @@ const Home = ({}) => {
               alt={`logo_Image`}
             />
             <CustomButton
-              width={`300px`}
+              width={width < 700 ? `100%` : `300px`}
               height={`60px`}
               radius={`10px`}
               className={`kakao`}
-              margin={`20px`}
+              margin={`20px 0`}
             >
               <Image
                 width={`37px`}
@@ -103,7 +103,7 @@ const Home = ({}) => {
               카카오로 로그인
             </CustomButton>
             <CustomButton
-              width={`300px`}
+              width={width < 700 ? `100%` : `300px`}
               height={`60px`}
               radius={`10px`}
               className={`naver`}
