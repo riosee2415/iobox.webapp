@@ -1020,6 +1020,7 @@ const Index = () => {
                       width={`95%`}
                       height={width < 700 ? `50px` : `70px`}
                       border={`2px solid ${Theme.lightGrey_C}`}
+                      onClick={() => setFloorModal(true)}
                     ></Wrapper>
                   </Wrapper>
                 </Wrapper>
