@@ -591,6 +591,7 @@ const AppFooter = () => {
                         cursor={`pointer`}
                         display={`flex`}
                         margin={`0 10px 0 0`}
+                        onClick={() => moveLinkHandler(`/login`)}
                       >
                         로그인
                       </Text>
@@ -608,7 +609,12 @@ const AppFooter = () => {
                       </Text> */}
 
                       {/* 공통 */}
-                      <Text cursor={`pointer`}>고객센터</Text>
+                      <Text
+                        cursor={`pointer`}
+                        // onClick={() => moveLinkHandler(`/`)}
+                      >
+                        고객센터
+                      </Text>
                     </Wrapper>
                   </Wrapper>
                 </Wrapper>
