@@ -76,11 +76,33 @@ const GlobalStyles = createGlobalStyle`
   }
 
   .ant-modal-content{
-    border:5px solid ${(props) => props.theme.basicTheme_C};
+    width : 400px;
+
+    @media(max-width : 700px) {
+      width : 90%;
+    }
+  }
+
+  .ant-modal{
+    display : flex;
+    align-items: center;
+    justify-content: center;
+    height : 80%;
   }
 
   .ant-modal-body{
     padding:0;
+  }
+
+  .slick-list{
+    padding : 0;
+  }
+
+
+  .slick-active {
+    font-size : 20px !important;
+    border-bottom : 1px solid ${(props) => props.theme.basicTheme_C} !important;
+
   }
 
   .ant-drawer-content-wrapper{

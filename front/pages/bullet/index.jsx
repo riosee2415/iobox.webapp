@@ -38,6 +38,18 @@ import {
   Input,
 } from "antd";
 import locale from "antd/lib/locale/zh_CN";
+import ElevatorSlider from "../../components/slide/ElevatorSlider";
+
+const TextHover = styled(Wrapper)`
+  width: 80px;
+  color: ${Theme.basicTheme_C};
+  font-size: 1.2rem;
+  cursor: pointer;
+
+  &:hover {
+    color: ${Theme.subTheme3_C};
+  }
+`;
 
 const RangePicker = styled(DatePicker.RangePicker)`
   & .ant-picker-range-separator {
@@ -416,7 +428,7 @@ const Index = () => {
                 </Wrapper>
                 <CommonButton
                   width={`100%`}
-                  height={width < 700 ? `60px` : `75px`}
+                  height={`60px`}
                   radius={`12px`}
                   onClick={() => setCurrentTab(1)}
                 >
@@ -462,7 +474,7 @@ const Index = () => {
                 dr={`row`}
                 al={`flex-start`}
                 ju={`flex-start`}
-                margin={`20px 0`}
+                margin={`0 0 20px`}
               >
                 <Image
                   src={`https://4leaf-s3.s3.ap-northeast-2.amazonaws.com/iobox/assets/images/bullet/bullet.png`}
@@ -475,6 +487,7 @@ const Index = () => {
                     fontSize={`2rem`}
                     lineHeight={`1`}
                     margin={`0 0 10px`}
+                    padding={`10px 0 0`}
                   >
                     총알배송
                   </GradientText>
@@ -689,9 +702,18 @@ const Index = () => {
                     margin={`0 0 20px 0`}
                   >
                     <Text fontSize={`1.3rem`}>출발지 주소</Text>
-                    <QuestionCircleOutlined
-                      style={{ fontSize: "1.6rem", color: Theme.darkGrey3_C }}
-                    />
+
+                    <Wrapper
+                      width={`20px`}
+                      height={`20px`}
+                      radius={`50%`}
+                      border={`1px solid ${Theme.grey_C}`}
+                      color={Theme.grey_C}
+                      cursor={`pointer`}
+                      margin={`0 0 0 10px`}
+                    >
+                      <Text margin={`1px 0 0 2px`}>?</Text>
+                    </Wrapper>
                   </Wrapper>
                   <Wrapper
                     dr={`row`}
@@ -753,9 +775,17 @@ const Index = () => {
                   >
                     <Text fontSize={`1.3rem`}>보관 기간</Text>
 
-                    <QuestionCircleOutlined
-                      style={{ fontSize: "1.6rem", color: Theme.darkGrey3_C }}
-                    />
+                    <Wrapper
+                      width={`20px`}
+                      height={`20px`}
+                      radius={`50%`}
+                      border={`1px solid ${Theme.grey_C}`}
+                      color={Theme.grey_C}
+                      cursor={`pointer`}
+                      margin={`0 0 0 10px`}
+                    >
+                      <Text margin={`1px 0 0 2px`}>?</Text>
+                    </Wrapper>
                   </Wrapper>
                   <Wrapper al={`flex-start`} margin={`35px 0 0 0`}>
                     <CustomRadioGroup
@@ -919,9 +949,18 @@ const Index = () => {
                 <Wrapper>
                   <Wrapper dr={`row`} ju={`space-between`} margin={`0 0 20px `}>
                     <Text fontSize={`1.3rem`}>도착지 주소</Text>
-                    <QuestionCircleOutlined
-                      style={{ fontSize: "1.6rem", color: Theme.darkGrey3_C }}
-                    />
+
+                    <Wrapper
+                      width={`20px`}
+                      height={`20px`}
+                      radius={`50%`}
+                      border={`1px solid ${Theme.grey_C}`}
+                      color={Theme.grey_C}
+                      cursor={`pointer`}
+                      margin={`0 0 0 10px`}
+                    >
+                      <Text margin={`1px 0 0 2px`}>?</Text>
+                    </Wrapper>
                   </Wrapper>
                   <Wrapper
                     dr={`row`}
@@ -1021,49 +1060,12 @@ const Index = () => {
       )}
       <Modal visible={floorModal} closable={false} footer={null}>
         <Wrapper>
-          <Wrapper
-            overflow={`auto`}
-            width={`30%`}
-            maxHeight={`300px`}
-            ju={`flex-start`}
-            position={`relative`}
-          >
-            <Wrapper
-              height={`1px`}
-              position={`absolute`}
-              bgColor={Theme.black_C}
-            ></Wrapper>
-            <Wrapper
-              height={`1px`}
-              position={`absolute`}
-              bgColor={Theme.black_C}
-            ></Wrapper>
-            <Wrapper height={`auto`}>
-              <Wrapper ju={`center`}>
-                <Wrapper height={`90px`} margin={`0 0 10px`}>
-                  1층
-                </Wrapper>
-                <Wrapper height={`90px`} margin={`0 0 10px`}>
-                  2층
-                </Wrapper>
-                <Wrapper height={`90px`} margin={`0 0 10px`}>
-                  3층
-                </Wrapper>
-                <Wrapper height={`90px`} margin={`0 0 10px`}>
-                  4층
-                </Wrapper>
-                <Wrapper height={`90px`} margin={`0 0 10px`}>
-                  5층
-                </Wrapper>
-                <Wrapper height={`90px`} margin={`0 0 10px`}>
-                  6층
-                </Wrapper>
-              </Wrapper>
-            </Wrapper>
+          <Wrapper width={`30%`} ju={`flex-start`}>
+            <ElevatorSlider />
           </Wrapper>
-          <Wrapper dr={`row`}>
-            <Text onClick={() => setFloorModal(false)}>취소</Text>
-            <Text onClick={() => setFloorModal(false)}>확인</Text>
+          <Wrapper dr={`row`} ju={`flex-end`} padding={`30px 0`}>
+            <TextHover onClick={() => setFloorModal(false)}>취소</TextHover>
+            <TextHover onClick={() => setFloorModal(false)}>확인</TextHover>
           </Wrapper>
         </Wrapper>
       </Modal>
