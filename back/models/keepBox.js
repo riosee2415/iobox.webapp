@@ -14,6 +14,10 @@ module.exports = class KeepBox extends Model {
           defaultValue: false,
           allowNull: false,
         },
+        pickWay: {
+          type: DataTypes.STRING(300),
+          allowNull: false,
+        },
         coupon: {
           type: DataTypes.INTEGER,
           allowNull: false,
