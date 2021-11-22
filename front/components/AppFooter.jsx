@@ -199,7 +199,13 @@ const AppFooter = () => {
                         alt={`icon`}
                         width={`40px`}
                       />
-                      <Text>아이오 박스</Text>
+                      <Text
+                        onClick={() => {
+                          moveLinkHandler(`/iobox?type=iobox`);
+                        }}
+                      >
+                        아이오 박스
+                      </Text>
                     </IconBox>
                   </Wrapper>
                   <Wrapper
@@ -214,7 +220,13 @@ const AppFooter = () => {
                         alt={`icon`}
                         width={`40px`}
                       />
-                      <Text>행거박스</Text>
+                      <Text
+                        onClick={() => {
+                          moveLinkHandler(`/locker`);
+                        }}
+                      >
+                        배송현황
+                      </Text>
                     </IconBox>
                     <IconBox>
                       <Image
@@ -222,7 +234,13 @@ const AppFooter = () => {
                         alt={`icon`}
                         width={`40px`}
                       />
-                      <Text>아이오 박스</Text>
+                      <Text
+                        onClick={() => {
+                          moveLinkHandler(`/iobox?type=hangerBox`);
+                        }}
+                      >
+                        행거박스
+                      </Text>
                     </IconBox>
                   </Wrapper>
 
@@ -237,7 +255,13 @@ const AppFooter = () => {
                         alt={`icon`}
                         width={`40px`}
                       />
-                      <Text>총알배송</Text>
+                      <Text
+                        onClick={() => {
+                          moveLinkHandler("/bullet");
+                        }}
+                      >
+                        총알배송
+                      </Text>
                     </IconBox>
                     <IconBox>
                       <Image
@@ -245,7 +269,13 @@ const AppFooter = () => {
                         alt={`icon`}
                         width={`40px`}
                       />
-                      <Text>대용량 박스</Text>
+                      <Text
+                        onClick={() => {
+                          moveLinkHandler(`/iobox?type=bigBox`);
+                        }}
+                      >
+                        대용량 박스
+                      </Text>
                     </IconBox>
                   </Wrapper>
                   <Wrapper height={`calc(100% / 4)`} margin={`-20px 0 0`}>
@@ -255,7 +285,13 @@ const AppFooter = () => {
                         alt={`icon`}
                         width={`40px`}
                       />
-                      <Text>텐트보관 박스</Text>
+                      <Text
+                        onClick={() => {
+                          moveLinkHandler(`/iobox?type=tentBox`);
+                        }}
+                      >
+                        텐트보관 박스
+                      </Text>
                     </IconBox>
                   </Wrapper>
                 </Wrapper>
@@ -470,6 +506,9 @@ const AppFooter = () => {
                                 : `0 0 25px`
                               : `0 0 35px`
                           }
+                          onClick={() => {
+                            moveLinkHandler(`/locker`);
+                          }}
                         >
                           배송현황
                         </Text>
@@ -500,6 +539,8 @@ const AppFooter = () => {
                         height={width < 700 ? `50px` : `70px`}
                         margin={`0 0 5px`}
                         bgColor={Theme.lightGrey_C}
+                        cursor={`pointer`}
+                        onClick={() => moveLinkHandler(`/center/event`)}
                       >
                         <Text>io박스 이벤트 보기</Text>
                         <Image
@@ -515,6 +556,8 @@ const AppFooter = () => {
                         height={width < 700 ? `50px` : `70px`}
                         margin={`0 0 5px`}
                         bgColor={Theme.lightGrey_C}
+                        onClick={() => moveLinkHandler(`/calculate`)}
+                        cursor={`pointer`}
                       >
                         <Text>1초만에 보관료 계산하기</Text>
                         <Image
@@ -530,6 +573,7 @@ const AppFooter = () => {
                         height={width < 700 ? `50px` : `70px`}
                         margin={`0 0 5px`}
                         bgColor={Theme.lightGrey_C}
+                        cursor={`pointer`}
                       >
                         <Text>실시간 카톡문의</Text>
                         <Image
@@ -541,12 +585,29 @@ const AppFooter = () => {
                     </Wrapper>
 
                     <Wrapper dr={`row`} ju={`flex-end`} padding={`10px`}>
-                      {/* { !asdf && */}
-                      <Text display={`flex`} margin={`0 10px 0 0`}>
+                      {/* 로그인 안되있을 때 */}
+                      <Text
+                        cursor={`pointer`}
+                        display={`flex`}
+                        margin={`0 10px 0 0`}
+                      >
                         로그인
                       </Text>
-                      {/* } */}
-                      <Text>고객센터</Text>
+
+                      {/* 로그인 되어 있을 때 */}
+                      {/* <Text
+                        cursor={`pointer`}
+                        margin={`0 10px 0 0`}
+                        onClick={() => moveLinkHandler(`/myInfo`)}
+                      >
+                        내 정보
+                      </Text>
+                      <Text cursor={`pointer`} margin={`0 10px 0 0`}>
+                        로그아웃
+                      </Text> */}
+
+                      {/* 공통 */}
+                      <Text cursor={`pointer`}>고객센터</Text>
                     </Wrapper>
                   </Wrapper>
                 </Wrapper>
