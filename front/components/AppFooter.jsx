@@ -486,6 +486,7 @@ const AppFooter = () => {
                                 : `0 0 25px`
                               : `0 0 35px`
                           }
+                          // onClick={() => moveLinkHandler(``)}
                         >
                           IO박스 보관센터
                         </Text>
