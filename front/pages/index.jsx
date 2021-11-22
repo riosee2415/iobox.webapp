@@ -25,6 +25,11 @@ const Home = ({}) => {
 
   const [main, setMain] = useState(true);
 
+  const [lengthData1, setLengthData1] = useState(0);
+  const [lengthData2, setLengthData2] = useState(0);
+  const [lengthData3, setLengthData3] = useState(0);
+  const [lengthData4, setLengthData4] = useState(0);
+
   ////// HOOKS //////
 
   const dispatch = useDispatch();
@@ -45,8 +50,8 @@ const Home = ({}) => {
   const { value, reset } = useCountUp({
     isCounting: true,
     start: 0,
-    end: 300,
-    duration: 5,
+    end: 3000,
+    duration: 10,
   });
 
   const { keepBoxes } = useSelector((state) => state.keepBox);
@@ -62,18 +67,24 @@ const Home = ({}) => {
     router.push(link);
   }, []);
 
-  // useEffect(() => {
-  //   if (keepBoxes.boxList.toString.length > 4) {
-  //     setLengthData4(0);
-  //   } else if (keepBoxes.boxList.toString.length === 3) {
-  //     setLengthData3(0);
-  //   } else if (keepBoxes.boxList.toString.length === 2) {
-  //     setLengthData2(0);
-  //   } else if (keepBoxes.boxList.toString.length === 1) {
-  //     setLengthData1(0);
-  //   }
-  //   console.log(lengthData1, lengthData2, lengthData3, lengthData4);
-  // }, [keepBoxes]);
+  useEffect(() => {
+    if (String(value).length === 4) {
+      setLengthData4(String(value)[0]);
+      setLengthData3(String(value)[1]);
+      setLengthData2(String(value)[2]);
+      setLengthData1(String(value)[3]);
+    } else if (String(value).length === 3) {
+      setLengthData3(String(value)[0]);
+      setLengthData2(String(value)[1]);
+      setLengthData1(String(value)[2]);
+    } else if (String(value).length === 2) {
+      setLengthData2(String(value)[0]);
+      setLengthData1(String(value)[1]);
+      setLengthData2(0);
+    } else if (String(value).length === 1) {
+      setLengthData1(String(value)[0]);
+    }
+  }, [value]);
 
   ////// DATAVIEW //////
   return (
@@ -180,7 +191,7 @@ const Home = ({}) => {
                       fontWeight={`700`}
                       fontSize={`1.3rem`}
                     >
-                      {new String(value)[0]}
+                      {lengthData4}
                     </Text>
                     <Text
                       padding={`0 5px`}
@@ -189,7 +200,7 @@ const Home = ({}) => {
                       fontSize={`1.3rem`}
                       margin={`0 3px`}
                     >
-                      {new String(value)[1]}
+                      {lengthData3}
                     </Text>
                     <Text
                       padding={`0 5px`}
@@ -197,7 +208,7 @@ const Home = ({}) => {
                       fontWeight={`700`}
                       fontSize={`1.3rem`}
                     >
-                      {new String(value)[2]}
+                      {lengthData2}
                     </Text>
                     <Text
                       padding={`0 5px`}
@@ -206,7 +217,7 @@ const Home = ({}) => {
                       fontSize={`1.3rem`}
                       margin={`0 0 0 3px`}
                     >
-                      {new String(value)[3]}
+                      {lengthData1}
                     </Text>
                     <Text
                       padding={`0 5px`}

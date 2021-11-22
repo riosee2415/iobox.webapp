@@ -39,6 +39,16 @@ import {
 } from "antd";
 import locale from "antd/lib/locale/zh_CN";
 
+const RangePicker = styled(DatePicker.RangePicker)`
+  & .ant-picker-range-separator {
+    display: none;
+  }
+  & .ant-picker-range {
+    display: flex !important;
+    flex-direction: column !important;
+  }
+`;
+
 const CustomInput = styled(Input)`
   width: 100%;
   & .ant-input-affix-wrapper > input.ant-input {
@@ -700,6 +710,7 @@ const Index = () => {
                     borderBottom={`2px solid ${Theme.lightGrey_C}`}
                   >
                     <Text fontSize={`1.3rem`}>보관 기간</Text>
+
                     <QuestionCircleOutlined
                       style={{ fontSize: "1.6rem", color: Theme.darkGrey3_C }}
                     />
@@ -810,6 +821,7 @@ const Index = () => {
                         />
                       </Wrapper>
                     </Wrapper>
+                    <RangePicker separator={true} />
 
                     <Wrapper dr={`row`} ju={`space-between`} height={`70px`}>
                       <Text
