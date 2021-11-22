@@ -43,9 +43,24 @@ const RangePicker = styled(DatePicker.RangePicker)`
   & .ant-picker-range-separator {
     display: none;
   }
-  & .ant-picker-range {
+  &.ant-picker-range {
     display: flex !important;
     flex-direction: column !important;
+    padding: 0;
+    height: 140px;
+  }
+  & .ant-picker-input {
+    height: 70px;
+  }
+  & .ant-picker-panels {
+    display: flex !important;
+    flex-direction: column !important;
+  }
+
+  & .ant-picker-active-bar,
+  & .ant-picker-suffix,
+  & .ant-picker-clear {
+    display: none;
   }
 `;
 
@@ -171,17 +186,41 @@ const Index = () => {
 
   ////// USEEFFECT //////
 
+  useEffect(() => {
+    const now = new Date();
+    const oneWeekLater = new Date(
+      now.getFullYear(),
+      now.getMonth(),
+      now.getDate() + 7
+    ); //일주일 후
+
+    const oneMonthLater = new Date(
+      now.getFullYear(),
+      now.getMonth() + 1,
+      now.getDate()
+    ); //한달 후
+
+    setStartDate(moment(now).format(`YYYY-MM-DD`)); //현재
+
+    if (radioValue === 0) {
+      setEndDate(moment(oneWeekLater).format("YYYY-MM-DD"));
+      console.log(startDate, radioValue);
+      console.log(endDate, radioValue);
+      console.log();
+    } else {
+      setEndDate(moment(oneMonthLater).format("YYYY-MM-DD"));
+      console.log(startDate, radioValue);
+      console.log(endDate, radioValue);
+    }
+  }, [radioValue, router.query]);
+
   ////// DATE //////////
   const now = new Date();
-  const currentDate = new Date().toISOString();
-  const oneWeekLater = new Date(now.setDate(now.getDate() + 1)).toISOString(); //일주일 후
-  const oneMonthLater = new Date(
-    now.setMonth(now.getMonth() + 1)
-  ).toISOString(); //한달 후
+  const currentDate = new Date();
+  //일주일 후
+  //한달 후
 
   ////// TOGGLE ///////
-
-  console.log();
 
   const currentHangerHandler = useCallback(
     (pm) => {
@@ -253,16 +292,19 @@ const Index = () => {
 
   ///// HANDLER //////
 
-  const onChange1 = (date, dateString) => {
-    setStartDate(dateString);
-  };
-  const onChange2 = (date, dateString) => {
-    setEndDate(dateString);
-  };
+  // const onChange1 = (date, dateString) => {
+  //   setStartDate(dateString);
+  // };
+  // const onChange2 = (date, dateString) => {
+  //   setEndDate(dateString);
+  // };
 
-  const radioChangeHandler = useCallback((e) => {
-    setRadioValue(e.target.value);
-  }, []);
+  const radioChangeHandler = useCallback(
+    (e) => {
+      setRadioValue(e.target.value);
+    },
+    [radioValue, startDate, endDate]
+  );
 
   const blurHandler = useCallback(() => {
     setCardInput(false);
@@ -420,7 +462,7 @@ const Index = () => {
                 dr={`row`}
                 al={`flex-start`}
                 ju={`flex-start`}
-                margin={`60px 0 110px`}
+                margin={`20px 0`}
               >
                 <Image
                   src={`https://4leaf-s3.s3.ap-northeast-2.amazonaws.com/iobox/assets/images/bullet/bullet.png`}
@@ -430,13 +472,13 @@ const Index = () => {
                 />
                 <Wrapper width={`auto`} al={`flex-start`}>
                   <GradientText
-                    fontSize={`2.4rem`}
+                    fontSize={`2rem`}
                     lineHeight={`1`}
                     margin={`0 0 10px`}
                   >
                     총알배송
                   </GradientText>
-                  <Text fontSize={`1.3rem`} fontWeight={`700`}>
+                  <Text fontSize={`1.1rem`} fontWeight={`700`}>
                     요청완료시 다음날 도착
                   </Text>
                 </Wrapper>
@@ -789,49 +831,38 @@ const Index = () => {
                   <Wrapper
                     margin={`0 0 50px`}
                     opacity={radioValue === 1 ? `0.3` : `1`}
+                    dr={`row`}
+                    ju={`space-between`}
                   >
-                    <Wrapper dr={`row`} ju={`space-between`} height={`70px`}>
-                      <Text
+                    <Wrapper height={`140px`} width={`auto`}>
+                      <Wrapper
+                        width={`auto`}
                         color={Theme.subTheme5_C}
                         fontSize={`1.2rem`}
                         fontWeight={`700`}
+                        ju={`center`}
+                        height={`70px`}
                       >
                         보관 시작
-                      </Text>
-                      <Wrapper width={`auto`} dr={`row`}>
-                        <DatePicker
-                          onClick={() =>
-                            radioValue === 0
-                              ? setDatePickerOpen1((prev) => !prev)
-                              : {}
-                          }
-                          open={radioValue === 1 ? false : datePickerOpen1}
-                          onChange={onChange1}
-                          format="YYYY-MM-DD"
-                          placeholder={`123`}
-                          inputReadOnly={radioValue === 1 ? true : false}
-                        />
-                        <RightOutlined
-                          style={{ color: Theme.grey_C }}
-                          onClick={() =>
-                            radioValue === 0
-                              ? setDatePickerOpen1((prev) => !prev)
-                              : {}
-                          }
-                        />
                       </Wrapper>
-                    </Wrapper>
-                    {/* <RangePicker separator={true} /> */}
-
-                    <Wrapper dr={`row`} ju={`space-between`} height={`70px`}>
-                      <Text
+                      <Wrapper
+                        width={`auto`}
                         color={Theme.subTheme5_C}
                         fontSize={`1.2rem`}
                         fontWeight={`700`}
+                        ju={`center`}
+                        height={`70px`}
                       >
                         보관 종료
-                      </Text>
-                      <Wrapper width={`auto`} dr={`row`}>
+                      </Wrapper>
+                    </Wrapper>
+
+                    <Wrapper
+                      ju={`space-between`}
+                      height={`140px`}
+                      width={`auto`}
+                    >
+                      {/* <Wrapper width={`auto`} dr={`row`}>
                         <DatePicker
                           onClick={() =>
                             radioValue === 0
@@ -852,7 +883,36 @@ const Index = () => {
                               : {}
                           }
                         />
-                      </Wrapper>
+                      </Wrapper> */}
+                      {/* <Wrapper width={`auto`} dr={`row`}>
+                        <DatePicker
+                          onClick={() =>
+                            radioValue === 0
+                              ? setDatePickerOpen1((prev) => !prev)
+                              : {}
+                          }
+                          open={radioValue === 1 ? false : datePickerOpen1}
+                          onChange={onChange1}
+                          format="YYYY-MM-DD"
+                          placeholder={`123`}
+                          inputReadOnly={radioValue === 1 ? true : false}
+                        />
+                        <RightOutlined
+                          style={{ color: Theme.grey_C }}
+                          onClick={() =>
+                            radioValue === 0
+                              ? setDatePickerOpen1((prev) => !prev)
+                              : {}
+                          }
+                        />
+                      </Wrapper> */}
+                      <RangePicker
+                        separator={true}
+                        value={[
+                          moment(startDate, "YYYY-MM-DD"),
+                          moment(endDate, "YYYY-MM-DD"),
+                        ]}
+                      />
                     </Wrapper>
                   </Wrapper>
                 </Wrapper>

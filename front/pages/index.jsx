@@ -51,7 +51,7 @@ const Home = ({}) => {
     isCounting: true,
     start: 0,
     end: 3000,
-    duration: 10,
+    duration: 5,
   });
 
   const { keepBoxes } = useSelector((state) => state.keepBox);
@@ -69,18 +69,17 @@ const Home = ({}) => {
 
   useEffect(() => {
     if (String(value).length === 4) {
-      setLengthData4(String(value)[0]);
-      setLengthData3(String(value)[1]);
-      setLengthData2(String(value)[2]);
-      setLengthData1(String(value)[3]);
-    } else if (String(value).length === 3) {
-      setLengthData3(String(value)[0]);
+      setLengthData1(String(value)[0]);
       setLengthData2(String(value)[1]);
-      setLengthData1(String(value)[2]);
+      setLengthData3(String(value)[2]);
+      setLengthData4(String(value)[3]);
+    } else if (String(value).length === 3) {
+      setLengthData1(String(value)[0]);
+      setLengthData2(String(value)[1]);
+      setLengthData3(String(value)[2]);
     } else if (String(value).length === 2) {
-      setLengthData2(String(value)[0]);
-      setLengthData1(String(value)[1]);
-      setLengthData2(0);
+      setLengthData1(String(value)[0]);
+      setLengthData2(String(value)[1]);
     } else if (String(value).length === 1) {
       setLengthData1(String(value)[0]);
     }
@@ -191,7 +190,7 @@ const Home = ({}) => {
                       fontWeight={`700`}
                       fontSize={`1.3rem`}
                     >
-                      {lengthData4}
+                      {lengthData1}
                     </Text>
                     <Text
                       padding={`0 5px`}
@@ -200,7 +199,7 @@ const Home = ({}) => {
                       fontSize={`1.3rem`}
                       margin={`0 3px`}
                     >
-                      {lengthData3}
+                      {lengthData2}
                     </Text>
                     <Text
                       padding={`0 5px`}
@@ -208,7 +207,7 @@ const Home = ({}) => {
                       fontWeight={`700`}
                       fontSize={`1.3rem`}
                     >
-                      {lengthData2}
+                      {lengthData3}
                     </Text>
                     <Text
                       padding={`0 5px`}
@@ -217,7 +216,7 @@ const Home = ({}) => {
                       fontSize={`1.3rem`}
                       margin={`0 0 0 3px`}
                     >
-                      {lengthData1}
+                      {lengthData4}
                     </Text>
                     <Text
                       padding={`0 5px`}

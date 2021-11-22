@@ -165,12 +165,23 @@ const GlobalStyles = createGlobalStyle`
     box-shadow:none;
   }
 
-  
+  .ant-picker-dropdown-range {
+    padding: 0 !important;
+  }
 
+  .ant-picker-panel-container .ant-picker-panels{
+    display: flex !important;
+    @media(max-width: 700px){
+      flex-direction:column !important;
+    }
+
+  }
   .anticon.ant-input-clear-icon > svg{
     font-size:1.25rem;
   }
 
+
+  
 
   a {
         color : inherit;
@@ -187,6 +198,8 @@ const GlobalStyles = createGlobalStyle`
   html{
     --antd-wave-shadow-color: none;
   }
+
+  
   
   @media (max-width : 576px) {
     html { 
