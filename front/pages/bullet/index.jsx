@@ -821,7 +821,7 @@ const Index = () => {
                         />
                       </Wrapper>
                     </Wrapper>
-                    <RangePicker separator={true} />
+                    {/* <RangePicker separator={true} /> */}
 
                     <Wrapper dr={`row`} ju={`space-between`} height={`70px`}>
                       <Text
