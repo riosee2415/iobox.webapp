@@ -282,7 +282,6 @@ const Index = () => {
     },
     [currentTent]
   );
-
   const deleteAllBoxHandler = useCallback(() => {
     setCurrentHanger(0);
     setCurrentIo(0);
