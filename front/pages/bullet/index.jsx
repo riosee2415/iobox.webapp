@@ -198,30 +198,6 @@ const Index = () => {
 
   ////// USEEFFECT //////
 
-  useEffect(() => {
-    const now = new Date();
-    const oneWeekLater = new Date(
-      now.getFullYear(),
-      now.getMonth(),
-      now.getDate() + 7
-    ); //일주일 후
-
-    const oneMonthLater = new Date(
-      now.getFullYear(),
-      now.getMonth() + 1,
-      now.getDate()
-    ); //한달 후
-
-    setStartDate(moment(now).format(`YYYY-MM-DD`)); //현재
-    setEndDate(moment(oneWeekLater).format("YYYY-MM-DD"));
-
-    if (radioValue === 1) {
-      setEndDate(moment(oneMonthLater).format("YYYY-MM-DD"));
-      console.log(startDate, radioValue);
-      console.log(endDate, radioValue);
-    }
-  }, [radioValue, router.query]);
-
   ////// DATE //////////
   const now = new Date();
   const currentDate = new Date();
@@ -958,6 +934,8 @@ const Index = () => {
                       {radioValue === 1 && (
                         <RangePicker
                           // onChange={dateChangeHandler}
+                          open={false}
+                          readOnly={true}
                           separator={true}
                           defaultValue={
                             radioValue === 0 && [
