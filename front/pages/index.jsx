@@ -61,10 +61,9 @@ const Home = ({}) => {
   });
 
   const { keepBoxes } = useSelector((state) => state.keepBox);
-  // console.log(reset1);
 
   ////// REDUX //////
-  // console.log(keepBoxes.boxList.length)
+
   ////// USEEFFECT //////
 
   ////// TOGGLE ///////
@@ -75,7 +74,6 @@ const Home = ({}) => {
   }, []);
 
   useEffect(() => {
-    console.log(lengthData1);
     setLengthData1(0);
     setLengthData2(0);
     if (String(value).length === 1) {
