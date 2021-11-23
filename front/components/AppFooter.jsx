@@ -12,6 +12,7 @@ import styled from "styled-components";
 import { Drawer } from "antd";
 import useWidth from "../hooks/useWidth";
 import { useRouter } from "next/dist/client/router";
+import { Planet } from "react-planet";
 
 const IconBox = styled(Wrapper)`
   width: 200px;
@@ -50,7 +51,7 @@ const CircleWrapper = styled(Wrapper)`
 
 const ButtonWrapper = styled(Wrapper)`
   position: absolute;
-  top: -90px;
+  top: -300px;
   left: 50%;
   cursor: pointer;
   width: auto;
@@ -106,8 +107,6 @@ const AppFooter = () => {
   const router = useRouter();
   ////// HOOKS //////
 
-  const [tab, setTab] = useState(false);
-
   const [drawar, setDrawar] = useState(false);
 
   ////// REDUX //////
@@ -115,10 +114,6 @@ const AppFooter = () => {
   ////// USEEFFECT //////
 
   ////// TOGGLE ///////
-
-  const tabToggle = useCallback(() => {
-    setTab(!tab);
-  }, [tab]);
 
   const drawarToggle = useCallback(() => {
     setDrawar(!drawar);
@@ -132,429 +127,316 @@ const AppFooter = () => {
   ////// DATAVIEW //////
   return (
     <>
-      {tab ? (
+      <Wrapper
+        position={`absolute`}
+        bottom={`0`}
+        left={width < 700 ? `0` : `50%`}
+        margin={width < 700 ? `0` : `0 0 0 -250px`}
+        width={width < 700 ? `100%` : `500px`}
+      >
         <Wrapper
-          position={`absolute`}
-          bottom={`0`}
-          left={width < 700 ? `0` : `50%`}
-          margin={width < 700 ? `0` : `0 0 0 -250px`}
-          width={width < 700 ? `100%` : `500px`}
-          height={`100vh`}
-          zIndex={`1000`}
+          dr={`row`}
+          height={`100px`}
+          shadow={`0px -3px 10px ${Theme.grey_C}`}
+          position={`relative`}
         >
-          <Wrapper
-            bgColor={`rgba(0,0,0,0.7)`}
-            height={`100%`}
-            ju={`flex-end`}
-            overflow={`hidden`}
-          >
-            <Wrapper width={`auto`} al={`flex-start`}>
+          <ButtonWrapper>
+            <GradientText className="gradient" bold={true}>
+              내 물건 맡기기
+            </GradientText>
+
+            <Planet
+              orbitStyle={(defaultStyle) => ({
+                ...defaultStyle,
+                border: "none",
+                background: "rgba(255,255,255,0.7)",
+                zIndex: "10",
+              })}
+              centerContent={
+                <>
+                  <Wrapper
+                    width={`100px`}
+                    height={`100px`}
+                    radius={`50%`}
+                    zIndex={`1000`}
+                    bgColor={`linear-gradient(90deg,rgb(249, 2, 80),rgb(247, 141, 150),rgb(242, 146, 98),rgb(241, 115, 80))`}
+                  >
+                    <Wrapper
+                      width={`45px`}
+                      height={`45px`}
+                      radius={`50%`}
+                      bgColor={Theme.white_C}
+                      className="circle"
+                    ></Wrapper>
+                  </Wrapper>
+                </>
+              }
+              open
+              autoClose
+            >
+              <Wrapper
+                style={{
+                  height: 70,
+                  width: 70,
+                }}
+              ></Wrapper>
+              <Wrapper
+                style={{
+                  height: 70,
+                  width: 70,
+                }}
+              ></Wrapper>
+            </Planet>
+
+            {/* <Planet
+              open
+              autoClose
+              centerContent={
+  
+              }
+            ></Planet> */}
+          </ButtonWrapper>
+
+          <Wrapper dr={`row`} ju={`space-around`}>
+            <TextWrapper width={`auto`} onClick={drawarToggle}>
               <Image
-                width={`60px`}
-                src={`https://4leaf-s3.s3.ap-northeast-2.amazonaws.com/iobox/assets/images/circle7.png`}
+                src={`https://4leaf-s3.s3.ap-northeast-2.amazonaws.com/iobox/assets/images/menu_home.png`}
+                alt={`menuIcon`}
+                width={`30px`}
+                margin={`0 0 5px`}
               />
 
-              <GradientText bold={true} fontSize={`2rem`} margin={`10px 0 0`}>
-                종이박스 배송
+              <GradientText fontSize={`0.8rem`} bold={true} padding={`0`}>
+                메 뉴
               </GradientText>
-
-              <Text
-                color={Theme.white_C}
+            </TextWrapper>
+            <TextWrapper width={`auto`}>
+              <Image
+                src={`https://4leaf-s3.s3.ap-northeast-2.amazonaws.com/iobox/assets/images/menu_box.png`}
+                alt={`menuIcon`}
+                width={`30px`}
+                margin={`0 0 5px`}
+              />
+              <GradientText
+                fontSize={`0.8rem`}
                 bold={true}
-                fontSize={`1.5rem`}
-                margin={`15px 0`}
+                padding={`0`}
+                onClick={() => {
+                  moveLinkHandler("/locker");
+                }}
               >
-                의류,물건,서류,책
-              </Text>
-              <Text color={Theme.white_C} bold={true} fontSize={`1.5rem`}>
-                각종 내 방안의 짐
-              </Text>
-              <Text
-                color={Theme.white_C}
-                bold={true}
-                fontSize={`1.5rem`}
-                margin={`15px 0 0`}
-              >
-                원할 때 맡기고 원할 때 찾기
-              </Text>
-            </Wrapper>
-
-            <Wrapper padding={`0 10px`} margin={`40px 0 -5px`}>
-              <Wrapper
-                height={width < 700 ? `355px` : `480px`}
-                bgColor={`rgba(255,255,255,0.7)`}
-                radius={`50%`}
-                position={`relative`}
-              >
-                <Wrapper
-                  height={`100%`}
-                  position={`absolute`}
-                  top={`0`}
-                  left={`0`}
-                >
-                  <Wrapper width={`auto`} height={`calc(100% / 4)`}>
-                    <IconBox>
-                      <Image
-                        src={`https://4leaf-s3.s3.ap-northeast-2.amazonaws.com/iobox/assets/images/box.png`}
-                        alt={`icon`}
-                        width={`40px`}
-                      />
-                      <Text>아이오 박스</Text>
-                    </IconBox>
-                  </Wrapper>
-                  <Wrapper
-                    height={`calc(100% / 4)`}
-                    ju={`space-between`}
-                    dr={`row`}
-                    margin={`-20px 0 0`}
-                  >
-                    <IconBox>
-                      <Image
-                        src={`https://4leaf-s3.s3.ap-northeast-2.amazonaws.com/iobox/assets/images/truck.png`}
-                        alt={`icon`}
-                        width={`40px`}
-                      />
-                      <Text>행거박스</Text>
-                    </IconBox>
-                    <IconBox>
-                      <Image
-                        src={`https://4leaf-s3.s3.ap-northeast-2.amazonaws.com/iobox/assets/images/case.png`}
-                        alt={`icon`}
-                        width={`40px`}
-                      />
-                      <Text>아이오 박스</Text>
-                    </IconBox>
-                  </Wrapper>
-
-                  <Wrapper
-                    height={`calc(100% / 4)`}
-                    ju={`space-between`}
-                    dr={`row`}
-                  >
-                    <IconBox>
-                      <Image
-                        src={`https://4leaf-s3.s3.ap-northeast-2.amazonaws.com/iobox/assets/images/user.png`}
-                        alt={`icon`}
-                        width={`40px`}
-                      />
-                      <Text>총알배송</Text>
-                    </IconBox>
-                    <IconBox>
-                      <Image
-                        src={`https://4leaf-s3.s3.ap-northeast-2.amazonaws.com/iobox/assets/images/Locker.png`}
-                        alt={`icon`}
-                        width={`40px`}
-                      />
-                      <Text>대용량 박스</Text>
-                    </IconBox>
-                  </Wrapper>
-                  <Wrapper height={`calc(100% / 4)`} margin={`-20px 0 0`}>
-                    <IconBox>
-                      <Image
-                        src={`https://4leaf-s3.s3.ap-northeast-2.amazonaws.com/iobox/assets/images/likes.png`}
-                        alt={`icon`}
-                        width={`40px`}
-                      />
-                      <Text>텐트보관 박스</Text>
-                    </IconBox>
-                  </Wrapper>
-                </Wrapper>
-
-                <CircleWrapper
-                  onClick={tabToggle}
-                  bgColor={`linear-gradient(90deg,rgb(249, 2, 80),rgb(247, 141, 150),rgb(242, 146, 98),rgb(241, 115, 80))`}
-                >
-                  <Wrapper
-                    cursor={`pointer`}
-                    width={width < 700 ? `40px` : `60px`}
-                    height={width < 700 ? `40px` : `60px`}
-                    radius={`50%`}
-                    bgColor={Theme.white_C}
-                    className="circle"
-                  ></Wrapper>
-                </CircleWrapper>
-              </Wrapper>
-            </Wrapper>
+                내 보관함
+              </GradientText>
+            </TextWrapper>
           </Wrapper>
-        </Wrapper>
-      ) : (
-        <Wrapper
-          position={`absolute`}
-          bottom={`0`}
-          left={width < 700 ? `0` : `50%`}
-          margin={width < 700 ? `0` : `0 0 0 -250px`}
-          width={width < 700 ? `100%` : `500px`}
-        >
-          <Wrapper
-            dr={`row`}
-            height={`100px`}
-            shadow={`0px -3px 10px ${Theme.grey_C}`}
-            position={`relative`}
-          >
-            <ButtonWrapper onClick={tabToggle}>
-              <GradientText className="gradient" bold={true}>
-                내 물건 맡기기
-              </GradientText>
 
+          {drawar && (
+            <Drawer
+              placement="left"
+              closable={true}
+              onClose={drawarToggle}
+              // visible={drawarToggle}
+              visible={true}
+              getContainer={false}
+            >
+              <Image
+                src={`https://via.placeholder.com/100x100`}
+                margin={width < 1350 ? `30px 0 60px 40px` : `50px 0 60px 40px`}
+                width={width < 1350 ? `80px` : `100px`}
+                alt={`logo`}
+              />
               <Wrapper
-                width={`100px`}
-                height={`100px`}
-                radius={`50%`}
-                bgColor={`linear-gradient(90deg,rgb(249, 2, 80),rgb(247, 141, 150),rgb(242, 146, 98),rgb(241, 115, 80))`}
+                height={
+                  width < 1350 ? `calc(100vh - 170px)` : `calc(100vh - 210px)`
+                }
+                ju={`space-between`}
               >
-                <Wrapper
-                  width={`45px`}
-                  height={`45px`}
-                  radius={`50%`}
-                  bgColor={Theme.white_C}
-                  className="circle"
-                ></Wrapper>
-              </Wrapper>
-            </ButtonWrapper>
-
-            <Wrapper dr={`row`} ju={`space-around`}>
-              <TextWrapper width={`auto`} onClick={drawarToggle}>
-                <Image
-                  src={`https://4leaf-s3.s3.ap-northeast-2.amazonaws.com/iobox/assets/images/menu_home.png`}
-                  alt={`menuIcon`}
-                  width={`30px`}
-                  margin={`0 0 5px`}
-                />
-
-                <GradientText fontSize={`0.8rem`} bold={true} padding={`0`}>
-                  메 뉴
-                </GradientText>
-              </TextWrapper>
-              <TextWrapper width={`auto`}>
-                <Image
-                  src={`https://4leaf-s3.s3.ap-northeast-2.amazonaws.com/iobox/assets/images/menu_box.png`}
-                  alt={`menuIcon`}
-                  width={`30px`}
-                  margin={`0 0 5px`}
-                />
-                <GradientText
-                  fontSize={`0.8rem`}
-                  bold={true}
-                  padding={`0`}
-                  onClick={() => {
-                    moveLinkHandler("/locker");
-                  }}
+                <RsWrapper
+                  ju={`flex-start`}
+                  al={`flex-start`}
+                  height={width < 700 ? `100px` : `auto`}
                 >
-                  내 보관함
-                </GradientText>
-              </TextWrapper>
-            </Wrapper>
-
-            {drawar && (
-              <Drawer
-                placement="left"
-                closable={true}
-                onClose={drawarToggle}
-                // visible={drawarToggle}
-                visible={true}
-                getContainer={false}
-              >
-                <Image
-                  src={`https://via.placeholder.com/100x100`}
-                  margin={
-                    width < 1350 ? `30px 0 60px 40px` : `50px 0 60px 40px`
-                  }
-                  width={width < 1350 ? `80px` : `100px`}
-                  alt={`logo`}
-                />
-                <Wrapper
-                  height={
-                    width < 1350 ? `calc(100vh - 170px)` : `calc(100vh - 210px)`
-                  }
-                  ju={`space-between`}
-                >
-                  <RsWrapper
-                    ju={`flex-start`}
-                    al={`flex-start`}
-                    height={width < 700 ? `100px` : `auto`}
-                  >
-                    <Wrapper ju={`flex-start`} al={`flex-start`}>
-                      <Wrapper al={`flex-start`}>
-                        <Text
-                          fontSize={
-                            width < 1350
-                              ? width < 700
-                                ? `1rem`
-                                : `1.2rem`
-                              : `1.4rem`
-                          }
-                          margin={
-                            width < 1350
-                              ? width < 700
-                                ? `0 0 20px 0`
-                                : `0 0 25px`
-                              : `0 0 35px`
-                          }
-                        >
-                          아이오 박스란?
-                        </Text>
-                      </Wrapper>
-                      <Wrapper al={`flex-start`}>
-                        <Text
-                          fontSize={
-                            width < 1350
-                              ? width < 700
-                                ? `1rem`
-                                : `1.2rem`
-                              : `1.4rem`
-                          }
-                          margin={
-                            width < 1350
-                              ? width < 700
-                                ? `0 0 20px 0`
-                                : `0 0 25px`
-                              : `0 0 35px`
-                          }
-                        >
-                          서비스 이용방법
-                        </Text>
-                      </Wrapper>
-                      <Wrapper al={`flex-start`}>
-                        <Text
-                          fontSize={
-                            width < 1350
-                              ? width < 700
-                                ? `1rem`
-                                : `1.2rem`
-                              : `1.4rem`
-                          }
-                          margin={
-                            width < 1350
-                              ? width < 700
-                                ? `0 0 20px 0`
-                                : `0 0 25px`
-                              : `0 0 35px`
-                          }
-                        >
-                          서비스 이용료
-                        </Text>
-                      </Wrapper>
-                      <Wrapper al={`flex-start`}>
-                        <Text
-                          fontSize={
-                            width < 1350
-                              ? width < 700
-                                ? `1rem`
-                                : `1.2rem`
-                              : `1.4rem`
-                          }
-                          margin={
-                            width < 1350
-                              ? width < 700
-                                ? `0 0 20px 0`
-                                : `0 0 25px`
-                              : `0 0 35px`
-                          }
-                        >
-                          IO박스 보관센터
-                        </Text>
-                      </Wrapper>
-                      <Wrapper al={`flex-start`}>
-                        <Text
-                          fontSize={
-                            width < 1350
-                              ? width < 700
-                                ? `1rem`
-                                : `1.2rem`
-                              : `1.4rem`
-                          }
-                          margin={
-                            width < 1350
-                              ? width < 700
-                                ? `0 0 20px 0`
-                                : `0 0 25px`
-                              : `0 0 35px`
-                          }
-                        >
-                          배송현황
-                        </Text>
-                      </Wrapper>
-                      <Wrapper al={`flex-start`}>
-                        <Text
-                          fontSize={
-                            width < 1350
-                              ? width < 700
-                                ? `1rem`
-                                : `1.2rem`
-                              : `1.4rem`
-                          }
-                          margin={width < 700 ? `0 0 20px 0` : `0`}
-                        >
-                          내 물건 찾기
-                        </Text>
-                      </Wrapper>
-                    </Wrapper>
-                  </RsWrapper>
-
-                  <Wrapper height={`calc()`}>
+                  <Wrapper ju={`flex-start`} al={`flex-start`}>
                     <Wrapper al={`flex-start`}>
-                      <Wrapper
-                        padding={`0 30px`}
-                        dr={`row`}
-                        ju={`space-between`}
-                        height={width < 700 ? `50px` : `70px`}
-                        margin={`0 0 5px`}
-                        bgColor={Theme.lightGrey_C}
+                      <Text
+                        fontSize={
+                          width < 1350
+                            ? width < 700
+                              ? `1rem`
+                              : `1.2rem`
+                            : `1.4rem`
+                        }
+                        margin={
+                          width < 1350
+                            ? width < 700
+                              ? `0 0 20px 0`
+                              : `0 0 25px`
+                            : `0 0 35px`
+                        }
                       >
-                        <Text>io박스 이벤트 보기</Text>
-                        <Image
-                          width={width < 700 ? `30px` : `40px`}
-                          src={`https://4leaf-s3.s3.ap-northeast-2.amazonaws.com/iobox/assets/images/sidemenu/event.png`}
-                          alt={`event_image`}
-                        />
-                      </Wrapper>
-                      <Wrapper
-                        padding={`0 30px`}
-                        dr={`row`}
-                        ju={`space-between`}
-                        height={width < 700 ? `50px` : `70px`}
-                        margin={`0 0 5px`}
-                        bgColor={Theme.lightGrey_C}
-                      >
-                        <Text>1초만에 보관료 계산하기</Text>
-                        <Image
-                          width={width < 700 ? `30px` : `40px`}
-                          src={`https://4leaf-s3.s3.ap-northeast-2.amazonaws.com/iobox/assets/images/sidemenu/calculator.png`}
-                          alt={`calculate_image`}
-                        />
-                      </Wrapper>
-                      <Wrapper
-                        padding={`0 30px`}
-                        dr={`row`}
-                        ju={`space-between`}
-                        height={width < 700 ? `50px` : `70px`}
-                        margin={`0 0 5px`}
-                        bgColor={Theme.lightGrey_C}
-                      >
-                        <Text>실시간 카톡문의</Text>
-                        <Image
-                          width={width < 700 ? `30px` : `40px`}
-                          src={`https://4leaf-s3.s3.ap-northeast-2.amazonaws.com/iobox/assets/images/sidemenu/kakao.png`}
-                          alt={`kakao_image`}
-                        />
-                      </Wrapper>
-                    </Wrapper>
-
-                    <Wrapper dr={`row`} ju={`flex-end`} padding={`10px`}>
-                      {/* { !asdf && */}
-                      <Text display={`flex`} margin={`0 10px 0 0`}>
-                        로그인
+                        아이오 박스란?
                       </Text>
-                      {/* } */}
-                      <Text>고객센터</Text>
+                    </Wrapper>
+                    <Wrapper al={`flex-start`}>
+                      <Text
+                        fontSize={
+                          width < 1350
+                            ? width < 700
+                              ? `1rem`
+                              : `1.2rem`
+                            : `1.4rem`
+                        }
+                        margin={
+                          width < 1350
+                            ? width < 700
+                              ? `0 0 20px 0`
+                              : `0 0 25px`
+                            : `0 0 35px`
+                        }
+                      >
+                        서비스 이용방법
+                      </Text>
+                    </Wrapper>
+                    <Wrapper al={`flex-start`}>
+                      <Text
+                        fontSize={
+                          width < 1350
+                            ? width < 700
+                              ? `1rem`
+                              : `1.2rem`
+                            : `1.4rem`
+                        }
+                        margin={
+                          width < 1350
+                            ? width < 700
+                              ? `0 0 20px 0`
+                              : `0 0 25px`
+                            : `0 0 35px`
+                        }
+                      >
+                        서비스 이용료
+                      </Text>
+                    </Wrapper>
+                    <Wrapper al={`flex-start`}>
+                      <Text
+                        fontSize={
+                          width < 1350
+                            ? width < 700
+                              ? `1rem`
+                              : `1.2rem`
+                            : `1.4rem`
+                        }
+                        margin={
+                          width < 1350
+                            ? width < 700
+                              ? `0 0 20px 0`
+                              : `0 0 25px`
+                            : `0 0 35px`
+                        }
+                      >
+                        IO박스 보관센터
+                      </Text>
+                    </Wrapper>
+                    <Wrapper al={`flex-start`}>
+                      <Text
+                        fontSize={
+                          width < 1350
+                            ? width < 700
+                              ? `1rem`
+                              : `1.2rem`
+                            : `1.4rem`
+                        }
+                        margin={
+                          width < 1350
+                            ? width < 700
+                              ? `0 0 20px 0`
+                              : `0 0 25px`
+                            : `0 0 35px`
+                        }
+                      >
+                        배송현황
+                      </Text>
+                    </Wrapper>
+                    <Wrapper al={`flex-start`}>
+                      <Text
+                        fontSize={
+                          width < 1350
+                            ? width < 700
+                              ? `1rem`
+                              : `1.2rem`
+                            : `1.4rem`
+                        }
+                        margin={width < 700 ? `0 0 20px 0` : `0`}
+                      >
+                        내 물건 찾기
+                      </Text>
                     </Wrapper>
                   </Wrapper>
+                </RsWrapper>
+
+                <Wrapper height={`calc()`}>
+                  <Wrapper al={`flex-start`}>
+                    <Wrapper
+                      padding={`0 30px`}
+                      dr={`row`}
+                      ju={`space-between`}
+                      height={width < 700 ? `50px` : `70px`}
+                      margin={`0 0 5px`}
+                      bgColor={Theme.lightGrey_C}
+                    >
+                      <Text>io박스 이벤트 보기</Text>
+                      <Image
+                        width={width < 700 ? `30px` : `40px`}
+                        src={`https://4leaf-s3.s3.ap-northeast-2.amazonaws.com/iobox/assets/images/sidemenu/event.png`}
+                        alt={`event_image`}
+                      />
+                    </Wrapper>
+                    <Wrapper
+                      padding={`0 30px`}
+                      dr={`row`}
+                      ju={`space-between`}
+                      height={width < 700 ? `50px` : `70px`}
+                      margin={`0 0 5px`}
+                      bgColor={Theme.lightGrey_C}
+                    >
+                      <Text>1초만에 보관료 계산하기</Text>
+                      <Image
+                        width={width < 700 ? `30px` : `40px`}
+                        src={`https://4leaf-s3.s3.ap-northeast-2.amazonaws.com/iobox/assets/images/sidemenu/calculator.png`}
+                        alt={`calculate_image`}
+                      />
+                    </Wrapper>
+                    <Wrapper
+                      padding={`0 30px`}
+                      dr={`row`}
+                      ju={`space-between`}
+                      height={width < 700 ? `50px` : `70px`}
+                      margin={`0 0 5px`}
+                      bgColor={Theme.lightGrey_C}
+                    >
+                      <Text>실시간 카톡문의</Text>
+                      <Image
+                        width={width < 700 ? `30px` : `40px`}
+                        src={`https://4leaf-s3.s3.ap-northeast-2.amazonaws.com/iobox/assets/images/sidemenu/kakao.png`}
+                        alt={`kakao_image`}
+                      />
+                    </Wrapper>
+                  </Wrapper>
+
+                  <Wrapper dr={`row`} ju={`flex-end`} padding={`10px`}>
+                    {/* { !asdf && */}
+                    <Text display={`flex`} margin={`0 10px 0 0`}>
+                      로그인
+                    </Text>
+                    {/* } */}
+                    <Text>고객센터</Text>
+                  </Wrapper>
                 </Wrapper>
-              </Drawer>
-            )}
-          </Wrapper>
+              </Wrapper>
+            </Drawer>
+          )}
         </Wrapper>
-      )}
+      </Wrapper>
     </>
   );
 };

@@ -167,6 +167,11 @@ const GlobalStyles = createGlobalStyle`
     }};
   }
 
+  .makeStyles-root-1{
+    margin : 0 0 0 -100px;
+  }
+
+
 
   .ant-drawer-left{
     left : 50% !important;
