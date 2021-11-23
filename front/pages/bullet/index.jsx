@@ -213,13 +213,9 @@ const Index = () => {
     ); //한달 후
 
     setStartDate(moment(now).format(`YYYY-MM-DD`)); //현재
+    setEndDate(moment(oneWeekLater).format("YYYY-MM-DD"));
 
-    if (radioValue === 0) {
-      setEndDate(moment(oneWeekLater).format("YYYY-MM-DD"));
-      console.log(startDate, radioValue);
-      console.log(endDate, radioValue);
-      console.log();
-    } else {
+    if (radioValue === 1) {
       setEndDate(moment(oneMonthLater).format("YYYY-MM-DD"));
       console.log(startDate, radioValue);
       console.log(endDate, radioValue);
@@ -320,7 +316,26 @@ const Index = () => {
 
   const radioChangeHandler = useCallback(
     (e) => {
+      const oneWeekLater = new Date(
+        now.getFullYear(),
+        now.getMonth(),
+        now.getDate() + 7
+      ); //일주일 후
+
+      const oneMonthLater = new Date(
+        now.getFullYear(),
+        now.getMonth() + 1,
+        now.getDate()
+      ); //한달 후
+
       setRadioValue(e.target.value);
+      if (radioValue === 0) {
+        setEndDate(moment(oneWeekLater).format("YYYY-MM-DD"));
+      } else if (radioValue === 1) {
+        setEndDate(moment(oneMonthLater).format("YYYY-MM-DD"));
+        console.log(startDate, radioValue);
+        console.log(endDate, radioValue);
+      }
     },
     [radioValue, startDate, endDate]
   );
@@ -946,19 +961,24 @@ const Index = () => {
                       <RangePicker
                         onChange={dateChangeHandler}
                         separator={true}
-                        value={[
-                          startDate ? moment(new Date(), "YYYY-MM-DD") : ``,
-                          startDate
-                            ? moment(
-                                new Date(
-                                  now.getFullYear(),
-                                  now.getMonth(),
-                                  now.getDate() + 7
+                        value={
+                          radioValue === 1
+                            ? [
+                                moment(new Date(), "YYYY-MM-DD"),
+                                moment(
+                                  new Date(
+                                    now.getFullYear(),
+                                    now.getMonth(),
+                                    now.getDate() + 7
+                                  ),
+                                  "YYYY-MM-DD"
                                 ),
-                                "YYYY-MM-DD"
-                              )
-                            : ``,
-                        ]}
+                              ]
+                            : [
+                                moment(`2021-03-24`, `YYYY-MM-DD`),
+                                moment(`2021-03-24`, `YYYY-MM-DD`),
+                              ]
+                        }
                       />
                     </Wrapper>
                   </Wrapper>
