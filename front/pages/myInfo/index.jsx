@@ -243,7 +243,7 @@ const Index = () => {
           <RsWrapper height={`auto`}>
             <TableWrapper
               onClick={() => {
-                moveLinkHandler("myInfo/contact");
+                moveLinkHandler("center/contact");
               }}
             >
               <Text>1:1 상담</Text>
@@ -251,7 +251,7 @@ const Index = () => {
 
             <TableWrapper
               onClick={() => {
-                moveLinkHandler("myInfo/notice");
+                moveLinkHandler("center/notice");
               }}
             >
               <Text>공지사항</Text>
@@ -259,7 +259,7 @@ const Index = () => {
 
             <TableWrapper
               onClick={() => {
-                moveLinkHandler("myInfo/information");
+                moveLinkHandler("center/information");
               }}
             >
               <Text>이용안내</Text>
@@ -267,7 +267,7 @@ const Index = () => {
 
             <TableWrapper
               onClick={() => {
-                moveLinkHandler("myInfo/faq");
+                moveLinkHandler("center/faq");
               }}
             >
               <Text>자주 묻는 질문</Text>
@@ -276,7 +276,7 @@ const Index = () => {
             <TableWrapper
               borderBottom={`none`}
               onClick={() => {
-                moveLinkHandler("myInfo/event");
+                moveLinkHandler("center/event");
               }}
             >
               <Text>이벤트</Text>

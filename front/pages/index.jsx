@@ -17,7 +17,7 @@ import useWidth from "../hooks/useWidth";
 import Theme from "../components/Theme";
 import { useRouter } from "next/dist/client/router";
 import { KEEPBOX_LIST_REQUEST } from "../reducers/keepBox";
-import { useCountUp } from "use-count-up";
+import { useCountUp, CountUp } from "use-count-up";
 
 const Home = ({}) => {
   const width = useWidth();
@@ -50,11 +50,12 @@ const Home = ({}) => {
   const { value, reset } = useCountUp({
     isCounting: true,
     start: 0,
-    end: 3000,
-    duration: 5,
+    end: 15,
+    duration: 3,
   });
 
   const { keepBoxes } = useSelector((state) => state.keepBox);
+  // console.log(reset1);
 
   ////// REDUX //////
   // console.log(keepBoxes.boxList.length)
@@ -68,22 +69,30 @@ const Home = ({}) => {
   }, []);
 
   useEffect(() => {
-    if (String(value).length === 4) {
-      setLengthData1(String(value)[0]);
-      setLengthData2(String(value)[1]);
-      setLengthData3(String(value)[2]);
-      setLengthData4(String(value)[3]);
-    } else if (String(value).length === 3) {
-      setLengthData1(String(value)[0]);
-      setLengthData2(String(value)[1]);
-      setLengthData3(String(value)[2]);
-    } else if (String(value).length === 2) {
-      setLengthData1(String(value)[0]);
-      setLengthData2(String(value)[1]);
-    } else if (String(value).length === 1) {
-      setLengthData1(String(value)[0]);
-    }
+    // if (String(value).length === 4) {
+    //   setLengthData1(String(value)[0]);
+    //   setLengthData2(String(value)[1]);
+    //   setLengthData3(String(value)[2]);
+    //   setLengthData4(String(value)[3]);
+    // } else if (String(value).length === 3) {
+    //   setLengthData1(String(value)[0]);
+    //   setLengthData2(String(value)[1]);
+    //   setLengthData3(String(value)[2]);
+    // } else if (String(value).length === 2) {
+    //   setLengthData1(String(value)[0]);
+    //   setLengthData2(String(value)[1]);
+    // } else if (String(value).length === 1) {
+    //   setLengthData1(String(value)[0]);
+    // }
+    setLengthData1(String(value.substring(0, 2))[0]);
+    setLengthData2(String(value.substring(0, 2))[1]);
   }, [value]);
+
+  useEffect(() => {
+    if (!main) {
+      reset();
+    }
+  }, [main]);
 
   ////// DATAVIEW //////
   return (
@@ -192,6 +201,7 @@ const Home = ({}) => {
                       fontSize={`1.3rem`}
                     >
                       {lengthData1}
+                      {/* <CountUp isCounting end={15} duration={3} /> */}
                     </Text>
                     <Text
                       padding={`0 5px`}
@@ -201,6 +211,7 @@ const Home = ({}) => {
                       margin={`0 3px`}
                     >
                       {lengthData2}
+                      {/* <CountUp isCounting end={89} duration={3} /> */}
                     </Text>
                     <Text
                       padding={`0 5px`}
@@ -208,7 +219,7 @@ const Home = ({}) => {
                       fontWeight={`700`}
                       fontSize={`1.3rem`}
                     >
-                      {lengthData3}
+                      <CountUp isCounting end={89} duration={2} />
                     </Text>
                     <Text
                       padding={`0 5px`}
@@ -217,7 +228,7 @@ const Home = ({}) => {
                       fontSize={`1.3rem`}
                       margin={`0 0 0 3px`}
                     >
-                      {lengthData4}
+                      {/* <CountUp isCounting end={9} duration={2} /> */}
                     </Text>
                     <Text
                       padding={`0 5px`}

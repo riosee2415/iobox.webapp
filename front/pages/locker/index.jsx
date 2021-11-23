@@ -79,21 +79,22 @@ const Index = () => {
             </Text>
             {/* 아무것도 없을 때 */}
             {/* <Wrapper height={`calc(100% - 44px)`}>
-            <Image src={`#`} width={`auto`} margin={`0 0 10px`} />
+              <Image src={`#`} width={`auto`} margin={`0 0 10px`} />
 
-            <Text color={Theme.darkGrey_C}>보관중인</Text>
-            <Text color={Theme.darkGrey_C}>물품이 없습니다.</Text>
+              <Text color={Theme.darkGrey_C}>보관중인</Text>
+              <Text color={Theme.darkGrey_C}>물품이 없습니다.</Text>
 
-            <CommonButton
-              radius={`20px`}
-              fontWeight={`700`}
-              width={`140px`}
-              height={`40px`}
-              margin={`10px 0 0`}
-            >
-              보관하기 시작
-            </CommonButton>
-          </Wrapper> */}
+              <CommonButton
+                radius={`20px`}
+                fontWeight={`700`}
+                width={`140px`}
+                height={`40px`}
+                margin={`10px 0 0`}
+                onClick={() => moveLinkHandler(`/login`)}
+              >
+                보관하기 시작
+              </CommonButton>
+            </Wrapper> */}
 
             <Wrapper ju={`flex-start`}>
               <Wrapper

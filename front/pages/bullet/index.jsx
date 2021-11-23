@@ -302,6 +302,13 @@ const Index = () => {
     setDayInput(true);
   }, [dayInput]);
 
+  const dateChangeHandler = useCallback(
+    (e) => {
+      console.log(e.target);
+    },
+    [startDate, endDate]
+  );
+
   ///// HANDLER //////
 
   // const onChange1 = (date, dateString) => {
@@ -937,10 +944,20 @@ const Index = () => {
                         />
                       </Wrapper> */}
                       <RangePicker
+                        onChange={dateChangeHandler}
                         separator={true}
                         value={[
-                          moment(startDate, "YYYY-MM-DD"),
-                          moment(endDate, "YYYY-MM-DD"),
+                          startDate ? moment(new Date(), "YYYY-MM-DD") : ``,
+                          startDate
+                            ? moment(
+                                new Date(
+                                  now.getFullYear(),
+                                  now.getMonth(),
+                                  now.getDate() + 7
+                                ),
+                                "YYYY-MM-DD"
+                              )
+                            : ``,
                         ]}
                       />
                     </Wrapper>
