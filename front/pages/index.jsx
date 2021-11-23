@@ -25,10 +25,10 @@ const Home = ({}) => {
 
   const [main, setMain] = useState(true);
 
-  const [lengthData1, setLengthData1] = useState(0);
-  const [lengthData2, setLengthData2] = useState(0);
-  const [lengthData3, setLengthData3] = useState(0);
-  const [lengthData4, setLengthData4] = useState(0);
+  const [lengthData1, setLengthData1] = useState(`0`);
+  const [lengthData2, setLengthData2] = useState(`0`);
+  const [lengthData3, setLengthData3] = useState(`0`);
+  const [lengthData4, setLengthData4] = useState(`0`);
 
   ////// HOOKS //////
 
@@ -53,6 +53,12 @@ const Home = ({}) => {
     end: 15,
     duration: 3,
   });
+  const { value: value2, reset: reset2 } = useCountUp({
+    isCounting: true,
+    start: 0,
+    end: 89,
+    duration: 3,
+  });
 
   const { keepBoxes } = useSelector((state) => state.keepBox);
   // console.log(reset1);
@@ -69,28 +75,30 @@ const Home = ({}) => {
   }, []);
 
   useEffect(() => {
-    // if (String(value).length === 4) {
-    //   setLengthData1(String(value)[0]);
-    //   setLengthData2(String(value)[1]);
-    //   setLengthData3(String(value)[2]);
-    //   setLengthData4(String(value)[3]);
-    // } else if (String(value).length === 3) {
-    //   setLengthData1(String(value)[0]);
-    //   setLengthData2(String(value)[1]);
-    //   setLengthData3(String(value)[2]);
-    // } else if (String(value).length === 2) {
-    //   setLengthData1(String(value)[0]);
-    //   setLengthData2(String(value)[1]);
-    // } else if (String(value).length === 1) {
-    //   setLengthData1(String(value)[0]);
-    // }
-    setLengthData1(String(value.substring(0, 2))[0]);
-    setLengthData2(String(value.substring(0, 2))[1]);
-  }, [value]);
+    console.log(lengthData1);
+    setLengthData1(0);
+    setLengthData2(0);
+    if (String(value).length === 1) {
+      setLengthData1(0);
+      setLengthData2(String(value)[0]);
+    } else if (String(value).length === 2) {
+      setLengthData1(new String(value.substring(0, 2))[0]);
+      setLengthData2(new String(value.substring(0, 2))[1]);
+    }
+
+    if (String(value2).length === 1) {
+      setLengthData3(0);
+      setLengthData4(String(value2)[0]);
+    } else if (String(value2).length === 2) {
+      setLengthData3(new String(value2.substring(0, 2))[0]);
+      setLengthData4(new String(value2.substring(0, 2))[1]);
+    }
+  }, [value, value2]);
 
   useEffect(() => {
     if (!main) {
       reset();
+      reset2();
     }
   }, [main]);
 
@@ -199,8 +207,7 @@ const Home = ({}) => {
                       fontWeight={`700`}
                       fontSize={`1.3rem`}
                     >
-                      {lengthData1}
-                      {/* <CountUp isCounting end={15} duration={3} /> */}
+                      {lengthData1 ? lengthData1 : `0`}
                     </Text>
                     <Text
                       padding={`0 5px`}
@@ -210,7 +217,6 @@ const Home = ({}) => {
                       margin={`0 3px`}
                     >
                       {lengthData2}
-                      {/* <CountUp isCounting end={89} duration={3} /> */}
                     </Text>
                     <Text
                       padding={`0 5px`}
@@ -218,17 +224,18 @@ const Home = ({}) => {
                       fontWeight={`700`}
                       fontSize={`1.3rem`}
                     >
-                      <CountUp isCounting end={89} duration={2} />
+                      {lengthData3}
                     </Text>
                     <Text
                       padding={`0 5px`}
                       bgColor={Theme.grey_C}
                       fontWeight={`700`}
                       fontSize={`1.3rem`}
-                      margin={`0 0 0 3px`}
+                      margin={`0 3px`}
                     >
-                      {/* <CountUp isCounting end={9} duration={2} /> */}
+                      {lengthData4}
                     </Text>
+
                     <Text
                       padding={`0 5px`}
                       bgColor={Theme.grey_C}
