@@ -133,8 +133,9 @@ router.delete("/type/delete/:typeId", isAdminCheck, async (req, res, next) => {
 });
 
 // BOX
-router.get("/list", async (req, res, next) => {
+router.get(["/list", "/list/:listType"], async (req, res, next) => {
   const { page, search } = req.query;
+  const { listType } = req.params;
 
   const LIMIT = 10;
 
@@ -144,55 +145,169 @@ router.get("/list", async (req, res, next) => {
   const __page = _page - 1;
   const OFFSET = __page * 10;
 
+  let nanFlag = isNaN(listType);
+
+  if (!listType) {
+    nanFlag = false;
+  }
+
+  if (nanFlag) {
+    return res.status(400).send("잘못된 요청 입니다.");
+  }
+
+  let _listType = Number(listType);
+
+  if (_listType > 3 || !listType) {
+    _listType = 3;
+  }
+
   try {
-    const totalBox = await KeepBox.findAll({
-      where: {
-        name: {
-          [Op.like]: `%${_search}%`,
-        },
-        isDelete: false,
-      },
-      include: [
-        {
-          model: BoxType,
-        },
-        {
-          model: BoxImage,
-        },
-      ],
-    });
+    let totalBox = [];
+    let boxes = [];
+    let lastPage = 0;
+    let boxLen = 0;
 
-    const boxLen = totalBox.length;
+    switch (_listType) {
+      case 1:
+        totalBox = await KeepBox.findAll({
+          where: {
+            name: {
+              [Op.like]: `%${_search}%`,
+            },
+            isDelete: false,
+          },
+          include: [
+            {
+              model: BoxType,
+            },
+            {
+              model: BoxImage,
+            },
+          ],
+        });
 
-    const lastPage = boxLen % LIMIT > 0 ? boxLen / LIMIT + 1 : boxLen / LIMIT;
+        boxLen = totalBox.length;
 
-    const boxList = await KeepBox.findAll({
-      offset: OFFSET,
-      limit: LIMIT,
-      where: {
-        name: {
-          [Op.like]: `%${_search}%`,
-        },
-        isDelete: false,
-      },
-      include: [
-        {
-          model: BoxType,
-        },
-        {
-          model: BoxImage,
-        },
-      ],
-    });
+        lastPage = boxLen % LIMIT > 0 ? boxLen / LIMIT + 1 : boxLen / LIMIT;
 
-    return res.status(200).json({ boxList, lastPage: parseInt(lastPage) });
+        boxes = await KeepBox.findAll({
+          offset: OFFSET,
+          limit: LIMIT,
+          where: {
+            name: {
+              [Op.like]: `%${_search}%`,
+            },
+            isDelete: false,
+            isComplete: false,
+          },
+          include: [
+            {
+              model: BoxType,
+            },
+            {
+              model: BoxImage,
+            },
+          ],
+        });
+        break;
+
+      case 2:
+        totalBox = await KeepBox.findAll({
+          where: {
+            name: {
+              [Op.like]: `%${_search}%`,
+            },
+            isDelete: false,
+          },
+          include: [
+            {
+              model: BoxType,
+            },
+            {
+              model: BoxImage,
+            },
+          ],
+        });
+
+        boxLen = totalBox.length;
+
+        lastPage = boxLen % LIMIT > 0 ? boxLen / LIMIT + 1 : boxLen / LIMIT;
+
+        boxes = await KeepBox.findAll({
+          offset: OFFSET,
+          limit: LIMIT,
+          where: {
+            name: {
+              [Op.like]: `%${_search}%`,
+            },
+            isDelete: false,
+            isComplete: true,
+          },
+          include: [
+            {
+              model: BoxType,
+            },
+            {
+              model: BoxImage,
+            },
+          ],
+        });
+        break;
+
+      case 3:
+        totalBox = await KeepBox.findAll({
+          where: {
+            name: {
+              [Op.like]: `%${_search}%`,
+            },
+            isDelete: false,
+          },
+          include: [
+            {
+              model: BoxType,
+            },
+            {
+              model: BoxImage,
+            },
+          ],
+        });
+
+        boxLen = totalBox.length;
+
+        lastPage = boxLen % LIMIT > 0 ? boxLen / LIMIT + 1 : boxLen / LIMIT;
+
+        boxes = await KeepBox.findAll({
+          offset: OFFSET,
+          limit: LIMIT,
+          where: {
+            name: {
+              [Op.like]: `%${_search}%`,
+            },
+            isDelete: false,
+          },
+          include: [
+            {
+              model: BoxType,
+            },
+            {
+              model: BoxImage,
+            },
+          ],
+        });
+        break;
+
+      default:
+        break;
+    }
+
+    return res.status(200).json({ boxes, lastPage: parseInt(lastPage) });
   } catch (error) {
     console.error(error);
     return res.status(401).send("목록을 불러올 수 없습니다.");
   }
 });
 
-router.get("/list/:boxId", async (req, res, next) => {
+router.get("/listOne/:boxId", async (req, res, next) => {
   const { boxId } = req.params;
   try {
     const exBox = await KeepBox.findOne({
@@ -462,6 +577,36 @@ router.delete("/image/delete/:imageId", async (req, res, next) => {
   } catch (error) {
     console.error(error);
     return res.status(401).send("이미지를 삭제할 수 없습니다.");
+  }
+});
+
+router.patch("/boxPermit", isAdminCheck, async (req, res, next) => {
+  const { boxId } = req.body;
+  try {
+    const exBox = await KeepBox.findOne({
+      where: { id: parseInt(boxId) },
+    });
+
+    if (!exBox) {
+      return res.status(401).send("존재하지 않는 박스입니다.");
+    }
+
+    const result = await KeepBox.update(
+      {
+        isComplete: true,
+      },
+      {
+        where: { id: parseInt(boxId) },
+      }
+    );
+
+    if (result[0] > 0) {
+      return res.status(200).json({ result: true });
+    } else {
+      return res.status(200).json({ result: false });
+    }
+  } catch (error) {
+    console.error(error);
   }
 });
 
