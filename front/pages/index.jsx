@@ -117,6 +117,7 @@ const Home = ({}) => {
       ) : (
         <ClientLayout>
           <WholeWrapper
+            overflow={`hidden`}
             height={`100vh`}
             bgColor={width < 700 ? Theme.white_C : Theme.lightGrey_C}
           >
