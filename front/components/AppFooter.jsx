@@ -1,4 +1,4 @@
-import React, { useCallback, useState } from "react";
+import React, { useCallback, useState, useEffect } from "react";
 import {
   Image,
   Wrapper,
@@ -15,7 +15,7 @@ import { useRouter } from "next/dist/client/router";
 import { Planet } from "react-planet";
 
 const IconBox = styled(Wrapper)`
-  width: 130px;
+  width: ${(props) => props.width || `130px`};
   cursor: pointer;
 
   ${Image} {
@@ -28,7 +28,7 @@ const IconBox = styled(Wrapper)`
   }
 
   @media (max-width: 700px) {
-    width: 130px;
+    width: auto;
   }
 `;
 
@@ -51,6 +51,7 @@ const CircleWrapper = styled(Wrapper)`
 
 const ButtonWrapper = styled(Wrapper)`
   position: absolute;
+
   left: 50%;
   cursor: pointer;
   width: auto;
@@ -112,7 +113,7 @@ const AppFooter = () => {
 
   const [tab, setTab] = useState(false);
 
-  console.log(tab);
+  const [top, setTop] = useState(0);
 
   const [drawar, setDrawar] = useState(false);
 
@@ -128,7 +129,7 @@ const AppFooter = () => {
 
   const drawarToggle = useCallback(() => {
     setDrawar(!drawar);
-  });
+  }, [drawar]);
   ///// HANDLER //////
 
   const moveLinkHandler = useCallback((link) => {
@@ -326,12 +327,16 @@ const AppFooter = () => {
         left={width < 700 ? `0` : `50%`}
         margin={width < 700 ? `0` : `0 0 0 -250px`}
         width={width < 700 ? `100%` : `500px`}
+        height={tab ? `100vh` : `auto`}
+        bgColor={tab ? `rgba(0,0,0,0.8)` : ``}
         zIndex={`1000`}
+        overflow={tab ? `hidden` : ``}
       >
         <Wrapper
           width={`auto`}
           al={`flex-start`}
           display={tab ? `flex` : `none`}
+          margin={`0 0 150px`}
         >
           <Image
             width={`60px`}
@@ -367,13 +372,12 @@ const AppFooter = () => {
           dr={`row`}
           height={`100px`}
           shadow={tab ? `none` : `0px -3px 10px ${Theme.grey_C}`}
-          position={`relative`}
         >
-          <ButtonWrapper top={`-90px`}>
+          <ButtonWrapper bottom={tab ? `300px` : `150px`} transition={`0.5s`}>
             <GradientText
               className="gradient"
               bold={true}
-              display={tab ? `none` : `flex`}
+              opacity={tab ? `0` : `1`}
             >
               내 물건 맡기기
             </GradientText>
@@ -410,13 +414,18 @@ const AppFooter = () => {
                 orbitRadius={width < 700 ? 170 : 200}
                 rotation={-30}
               >
-                <IconBox display={tab ? `flex` : `none`} margin={`-70px 0 0`}>
+                <IconBox
+                  display={tab ? `flex` : `none`}
+                  margin={`-70px 0 0`}
+                  width={width < 700 ? `100px !important` : `130px`}
+                >
                   <Image
                     src={`https://4leaf-s3.s3.ap-northeast-2.amazonaws.com/iobox/assets/images/main/box_dial.png`}
                     alt={`icon`}
-                    width={`70px`}
+                    width={width < 700 ? `60px` : `70px`}
                   />
                   <Text
+                    fontSize={width < 700 ? `0.8rem` : `1rem`}
                     onClick={() => {
                       moveLinkHandler(`/iobox?type=tentBox`);
                     }}
@@ -432,9 +441,10 @@ const AppFooter = () => {
                   <Image
                     src={`https://4leaf-s3.s3.ap-northeast-2.amazonaws.com/iobox/assets/images/main/bullet_dial.png`}
                     alt={`icon`}
-                    width={`70px`}
+                    width={width < 700 ? `60px` : `70px`}
                   />
                   <Text
+                    fontSize={width < 700 ? `0.8rem` : `1rem`}
                     onClick={() => {
                       moveLinkHandler("/bullet");
                     }}
@@ -450,9 +460,10 @@ const AppFooter = () => {
                   <Image
                     src={`https://4leaf-s3.s3.ap-northeast-2.amazonaws.com/iobox/assets/images/main/large_dial.png`}
                     alt={`icon`}
-                    width={`50px`}
+                    width={width < 700 ? `40px` : `50px`}
                   />
                   <Text
+                    fontSize={width < 700 ? `0.8rem` : `1rem`}
                     onClick={() => {
                       moveLinkHandler(`/locker`);
                     }}
@@ -461,13 +472,18 @@ const AppFooter = () => {
                   </Text>
                 </IconBox>
 
-                <IconBox display={tab ? `flex` : `none`} margin={`70px 0 0`}>
+                <IconBox
+                  display={tab ? `flex` : `none`}
+                  margin={`70px 0 0`}
+                  width={width < 700 ? `100px !important` : `130px`}
+                >
                   <Image
                     src={`https://4leaf-s3.s3.ap-northeast-2.amazonaws.com/iobox/assets/images/main/large_dial.png`}
                     alt={`icon`}
-                    width={`50px`}
+                    width={width < 700 ? `40px` : `50px`}
                   />
                   <Text
+                    fontSize={width < 700 ? `0.8rem` : `1rem`}
                     onClick={() => {
                       moveLinkHandler(`/iobox?type=iobox`);
                     }}
@@ -478,14 +494,15 @@ const AppFooter = () => {
 
                 <IconBox
                   display={tab ? `flex` : `none`}
-                  margin={`50px 100px 0 0`}
+                  margin={width < 700 ? `50px 0 0 -80px` : `50px 100px 0 0`}
                 >
                   <Image
                     src={`https://4leaf-s3.s3.ap-northeast-2.amazonaws.com/iobox/assets/images/main/large_dial.png`}
                     alt={`icon`}
-                    width={`50px`}
+                    width={width < 700 ? `40px` : `50px`}
                   />
                   <Text
+                    fontSize={width < 700 ? `0.8rem` : `1rem`}
                     onClick={() => {
                       moveLinkHandler(`/iobox?type=hangerBox`);
                     }}
@@ -496,14 +513,15 @@ const AppFooter = () => {
 
                 <IconBox
                   display={tab ? `flex` : `none`}
-                  margin={`-30px 100px 0 0`}
+                  margin={width < 700 ? `-30px 0 0 -80px` : `-30px 100px 0 0`}
                 >
                   <Image
                     src={`https://4leaf-s3.s3.ap-northeast-2.amazonaws.com/iobox/assets/images/main/large_dial.png`}
                     alt={`icon`}
-                    width={`50px`}
+                    width={width < 700 ? `40px` : `50px`}
                   />
                   <Text
+                    fontSize={width < 700 ? `0.8rem` : `1rem`}
                     onClick={() => {
                       moveLinkHandler(`/iobox?type=bigBox`);
                     }}

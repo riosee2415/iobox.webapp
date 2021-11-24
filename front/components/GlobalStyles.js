@@ -205,8 +205,9 @@ const GlobalStyles = createGlobalStyle`
     font-size:1.25rem;
   }
 
-
-  
+.makeStyles-root-5{
+  width : auto !important;
+}
 
   a {
         color : inherit;

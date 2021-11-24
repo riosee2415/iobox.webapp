@@ -103,7 +103,11 @@ const Index = () => {
 
             <Wrapper dr={`row`} ju={`space-between`}>
               <Wrapper width={`auto`} dr={`row`}>
-                <Image src={`#`} alt={`icon`} width={`auto`} />
+                <Image
+                  src={`https://4leaf-s3.s3.ap-northeast-2.amazonaws.com/iobox/assets/images/main/paperbox_dial.png`}
+                  alt={`icon`}
+                  width={`30px`}
+                />
                 <Text fontWeight={`700`} margin={`0 5px`} fontSize={`0.9rem`}>
                   박스
                 </Text>
@@ -131,7 +135,11 @@ const Index = () => {
               </Wrapper>
 
               <Wrapper width={`auto`} dr={`row`}>
-                <Image src={`#`} alt={`icon`} width={`auto`} />
+                <Image
+                  src={`https://4leaf-s3.s3.ap-northeast-2.amazonaws.com/iobox/assets/images/main/box_dial.png`}
+                  alt={`icon`}
+                  width={`30px`}
+                />
                 <Text fontWeight={`700`} margin={`0 5px`} fontSize={`0.9rem`}>
                   텐트박스
                 </Text>
@@ -524,10 +532,11 @@ const Index = () => {
 
             <Wrapper dr={`row`} ju={`flex-start`}>
               <Image
-                src={`#`}
+                src={`https://4leaf-s3.s3.ap-northeast-2.amazonaws.com/iobox/assets/images/main/paperbox.png`}
                 alt={`thumbnail`}
                 width={`auto`}
                 margin={`0 10px 0 0`}
+                width={`30px`}
               />
               <Text fontSize={`1.1rem`} fontWeight={`700`}>
                 박스
@@ -535,9 +544,9 @@ const Index = () => {
             </Wrapper>
             <Wrapper dr={`row`} ju={`flex-start`} margin={`10px 0`}>
               <Image
-                src={`#`}
+                src={`https://4leaf-s3.s3.ap-northeast-2.amazonaws.com/iobox/assets/images/main/hagner.png`}
                 alt={`thumbnail`}
-                width={`auto`}
+                width={`30px`}
                 margin={`0 10px 0 0`}
               />
               <Text fontSize={`1.1rem`} fontWeight={`700`}>

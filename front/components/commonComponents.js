@@ -493,6 +493,7 @@ export const GradientText = styled.h2`
   -webkit-text-fill-color: transparent !important;
   -webkit-background-clip: text !important;
   display: ${(props) => props.display};
+  opacity: ${(props) => props.opacity};
   background: ${(props) =>
     props.bgColor ||
     `linear-gradient(90deg,rgb(249, 2, 80),rgb(247, 141, 150),rgb(242, 146, 98),rgb(241, 115, 80))`};
