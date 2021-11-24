@@ -1,7 +1,7 @@
 import React, { useCallback, useEffect, useRef, useState } from "react";
-import AdminLayout from "../../../../../components/AdminLayout";
-import PageHeader from "../../../../../components/admin/PageHeader";
-import AdminTop from "../../../../../components/admin/AdminTop";
+import AdminLayout from "../../../components/AdminLayout";
+import PageHeader from "../../../components/admin/PageHeader";
+import AdminTop from "../../../components/admin/AdminTop";
 import styled from "styled-components";
 import { useDispatch, useSelector } from "react-redux";
 import {
@@ -20,24 +20,24 @@ import {
 import { END } from "redux-saga";
 import axios from "axios";
 import { useRouter } from "next/router";
-import { LOAD_MY_INFO_REQUEST } from "../../../../../reducers/user";
-import wrapper from "../../../../../store/configureStore";
+import { LOAD_MY_INFO_REQUEST } from "../../../reducers/user";
+import wrapper from "../../../store/configureStore";
 import {
   MODAL_CLOSE_REQUEST,
   MODAL_OPEN_REQUEST,
-  INFO_CREATE_REQUEST,
-  INFO_DELETE_REQUEST,
-  INFO_LIST_REQUEST,
-  INFO_UPDATE_REQUEST,
-  INFO_UPLOAD_REQUEST,
-  UPDATE_INFO_PATH,
-} from "../../../../../reducers/info";
-import useInput from "../../../../../hooks/useInput";
+  INFO_TYPE_CREATE_REQUEST,
+  INFO_TYPE_DELETE_REQUEST,
+  INFO_TYPE_LIST_REQUEST,
+  INFO_TYPE_UPDATE_REQUEST,
+  INFO_TYPE_UPLOAD_REQUEST,
+  UPDATE_INFO_TYPE_PATH,
+} from "../../../reducers/infoType";
+import useInput from "../../../hooks/useInput";
 import {
   ColWrapper,
   RowWrapper,
   Wrapper,
-} from "../../../../../components/commonComponents";
+} from "../../../components/commonComponents";
 import { SearchOutlined } from "@ant-design/icons";
 
 const AdminContent = styled.div`
@@ -58,7 +58,7 @@ const Filename = styled.span`
 `;
 
 const ImageWrapper = styled.div`
-  width: 500px;
+  width: 100%;
 
   display: flex;
   flex-direction: column;
@@ -146,28 +146,27 @@ const Index = () => {
   const [deleteId, setDeleteId] = useState(null);
 
   const {
-    infos,
-    uploadInfoPath,
+    infoTypes,
+    uploadInfoTypePath,
     maxPage,
     modal,
     //
-    st_infoListError,
-    st_infoCreateDone,
-    st_infoCreateError,
-    st_infoUpdateDone,
-    st_infoUpdateError,
-    st_infoDeleteDone,
-    st_infoDeleteError,
+    st_infoTypeListError,
+    st_infoTypeCreateDone,
+    st_infoTypeCreateError,
+    st_infoTypeUpdateDone,
+    st_infoTypeUpdateError,
+    st_infoTypeDeleteDone,
+    st_infoTypeDeleteError,
 
-    st_infoUploadLoading,
-  } = useSelector((state) => state.info);
+    st_infoTypeUploadLoading,
+  } = useSelector((state) => state.infoType);
 
   ////// USEEFFECT //////
   useEffect(() => {
-    console.log("???");
     const qs = getQs();
     dispatch({
-      type: INFO_LIST_REQUEST,
+      type: INFO_TYPE_LIST_REQUEST,
       data: {
         qs,
       },
@@ -175,10 +174,10 @@ const Index = () => {
   }, [router.query]);
 
   useEffect(() => {
-    if (st_infoCreateDone) {
+    if (st_infoTypeCreateDone) {
       const qs = getQs();
       dispatch({
-        type: INFO_LIST_REQUEST,
+        type: INFO_TYPE_LIST_REQUEST,
         data: {
           qs,
         },
@@ -188,13 +187,13 @@ const Index = () => {
         type: MODAL_CLOSE_REQUEST,
       });
     }
-  }, [st_infoCreateDone, router.query]);
+  }, [st_infoTypeCreateDone, router.query]);
 
   useEffect(() => {
-    if (st_infoUpdateDone) {
+    if (st_infoTypeUpdateDone) {
       const qs = getQs();
       dispatch({
-        type: INFO_LIST_REQUEST,
+        type: INFO_TYPE_LIST_REQUEST,
         data: {
           qs,
         },
@@ -204,13 +203,13 @@ const Index = () => {
         type: MODAL_CLOSE_REQUEST,
       });
     }
-  }, [st_infoUpdateDone, router.query]);
+  }, [st_infoTypeUpdateDone, router.query]);
 
   useEffect(() => {
-    if (st_infoDeleteDone) {
+    if (st_infoTypeDeleteDone) {
       const qs = getQs();
       dispatch({
-        type: INFO_LIST_REQUEST,
+        type: INFO_TYPE_LIST_REQUEST,
         data: {
           qs,
         },
@@ -220,38 +219,38 @@ const Index = () => {
         type: MODAL_CLOSE_REQUEST,
       });
     }
-  }, [st_infoDeleteDone, router.query]);
+  }, [st_infoTypeDeleteDone, router.query]);
 
   useEffect(() => {
-    if (st_infoListError) {
-      return message.error(st_infoListError);
+    if (st_infoTypeListError) {
+      return message.error(st_infoTypeListError);
     }
-  }, [st_infoListError]);
+  }, [st_infoTypeListError]);
 
   useEffect(() => {
-    if (st_infoCreateError) {
-      return message.error(st_infoCreateError);
+    if (st_infoTypeCreateError) {
+      return message.error(st_infoTypeCreateError);
     }
-  }, [st_infoCreateError]);
+  }, [st_infoTypeCreateError]);
 
   useEffect(() => {
-    if (st_infoUpdateError) {
-      return message.error(st_infoUpdateError);
+    if (st_infoTypeUpdateError) {
+      return message.error(st_infoTypeUpdateError);
     }
-  }, [st_infoUpdateError]);
+  }, [st_infoTypeUpdateError]);
 
   useEffect(() => {
-    if (st_infoDeleteError) {
-      return message.error(st_infoDeleteError);
+    if (st_infoTypeDeleteError) {
+      return message.error(st_infoTypeDeleteError);
     }
-  }, [st_infoDeleteError]);
+  }, [st_infoTypeDeleteError]);
 
   useEffect(() => {
     if (!modal && formRef.current) {
       formRef.current.resetFields();
 
       dispatch({
-        type: UPDATE_INFO_PATH,
+        type: UPDATE_INFO_TYPE_PATH,
         data: "",
       });
     }
@@ -303,32 +302,32 @@ const Index = () => {
   const onSubmit = useCallback(
     (value) => {
       dispatch({
-        type: INFO_CREATE_REQUEST,
+        type: INFO_TYPE_CREATE_REQUEST,
         data: {
-          title: value.quesition,
-          type: value.type,
-          content: value.answer,
-          imagePath: uploadInfoPath,
+          hint: value.hint,
+          title: value.content,
+          answer: value.answer,
+          outLink: "-",
         },
       });
     },
-    [uploadInfoPath]
+    [uploadInfoTypePath]
   );
 
   const onSubmitUpdate = useCallback(
     (value) => {
       dispatch({
-        type: INFO_UPDATE_REQUEST,
+        type: INFO_TYPE_UPDATE_REQUEST,
         data: {
           id: updateData.id,
-          title: value.quesition,
-          type: value.type,
-          content: value.answer,
-          imagePath: uploadInfoPath,
+          hint: value.hint,
+          title: value.content,
+          answer: value.answer,
+          outLink: "-",
         },
       });
     },
-    [uploadInfoPath, updateData]
+    [uploadInfoTypePath, updateData]
   );
 
   const onChangeImages = useCallback((e) => {
@@ -339,7 +338,7 @@ const Index = () => {
     });
 
     dispatch({
-      type: INFO_UPLOAD_REQUEST,
+      type: INFO_TYPE_UPLOAD_REQUEST,
       data: formData,
     });
   });
@@ -358,7 +357,7 @@ const Index = () => {
       const queryString = `?page=${changePage}&search=${searchValue}`;
 
       dispatch({
-        type: INFO_LIST_REQUEST,
+        type: INFO_TYPE_LIST_REQUEST,
         data: {
           qs: queryString || "",
         },
@@ -375,8 +374,8 @@ const Index = () => {
       );
     }
     dispatch({
-      type: INFO_DELETE_REQUEST,
-      data: { infoId: deleteId },
+      type: INFO_TYPE_DELETE_REQUEST,
+      data: { infoTypeId: deleteId },
     });
 
     setDeleteId(null);
@@ -406,15 +405,15 @@ const Index = () => {
 
   const onFill = useCallback((data) => {
     formRef.current.setFieldsValue({
-      quesition: data.title,
-      type: data.type,
-      answer: data.content,
+      hint: data.hint,
+      content: data.title,
+      answer: data.answer,
     });
 
-    dispatch({
-      type: UPDATE_INFO_PATH,
-      data: data.imagePath,
-    });
+    // dispatch({
+    //   type: UPDATE_INFO_TYPE_PATH,
+    //   data: data.ima,
+    // });
   }, []);
   ////// DATAVIEW //////
 
@@ -465,9 +464,9 @@ const Index = () => {
   return (
     <AdminLayout>
       <PageHeader
-        breadcrumbs={["게시판 관리", "이용 안내 리스트"]}
-        title={`이용 안내 리스트`}
-        subTitle={`이용 안내 리스트를 관리할 수 있습니다.`}
+        breadcrumbs={["참가자 관리", "참가자 리스트"]}
+        title={`참가자 리스트`}
+        subTitle={`참가자 리스트를 관리할 수 있습니다.`}
       />
 
       <AdminTop createButton={true} createButtonAction={modalOpen} />
@@ -478,7 +477,7 @@ const Index = () => {
             <Input
               style={{ width: "100%" }}
               placeholder="검색어"
-              // {...inputSearch}
+              {...inputSearch}
             />
           </Col>
 
@@ -486,7 +485,7 @@ const Index = () => {
             <Button
               onClick={() =>
                 moveLinkHandler(
-                  `/admin/info?page=${currentPage}&search=${inputSearch.value}`
+                  `/admin/infoType?page=${currentPage}&search=${inputSearch.value}`
                 )
               }
             >
@@ -498,7 +497,7 @@ const Index = () => {
         <Table
           rowKey="id"
           columns={columns}
-          dataSource={infos ? infos : []}
+          dataSource={infoTypes ? infoTypes : []}
           size="small"
           pagination={
             false
@@ -515,14 +514,14 @@ const Index = () => {
 
       <Modal
         visible={modal}
-        width={`1100px`}
-        title={`이용 안내 관리`}
+        width={`600px`}
+        title={`매입 관리`}
         size="small"
         onCancel={modalClose}
         onOk={createModalOk}
       >
-        <Wrapper padding={`10px`} dr={`row`}>
-          <ImageWrapper width={`500px`}>
+        <Wrapper padding={`10px`}>
+          {/* <ImageWrapper>
             <GuideWrapper>
               <GuideText>
                 이미지 사이즈는 가로 {_WIDTH}px 과 세로
@@ -536,13 +535,15 @@ const Index = () => {
 
             <UploadImage
               src={
-                uploadInfoPath
-                  ? `${uploadInfoPath}`
+                uploadInfoTypePath
+                  ? `${uploadInfoTypePath}`
                   : `https://via.placeholder.com/${_WIDTH}x${_HEIGHT}`
               }
               alt="main_GALLEY_image"
             />
-            <Guide>{uploadInfoPath && `이미지 미리보기 입니다.`}</Guide>
+            <Guide>
+              {uploadInfoTypePath && `이미지 미리보기 입니다.`}
+            </Guide>
 
             <UploadWrapper>
               <input
@@ -558,42 +559,49 @@ const Index = () => {
                 size="small"
                 type="primary"
                 onClick={clickImageUpload}
-                loading={st_infoUploadLoading}
+                loading={st_infoTypeUploadLoading}
               >
                 UPLOAD
               </Button>
             </UploadWrapper>
-          </ImageWrapper>
+          </ImageWrapper> */}
 
           <Form
-            style={{ width: `50%` }}
+            style={{ width: `80%` }}
             onFinish={updateData ? onSubmitUpdate : onSubmit}
             ref={formRef}
           >
             <Form.Item
-              name={"quesition"}
-              label="질문"
-              rules={[{ required: true }]}
-            >
-              <Input allowClear size="small" placeholder="Quesition..." />
-            </Form.Item>
-
-            <Form.Item name={"type"} label="유형" rules={[{ required: true }]}>
-              <Select>
-                <Select.Option>asd</Select.Option>
-              </Select>
-            </Form.Item>
-
-            <Form.Item
-              name={"answer"}
-              label="답변"
+              name={"content"}
+              label="문제"
               rules={[{ required: true }]}
             >
               <Input.TextArea
                 allowClear
                 size="small"
-                autoSize={{ minRows: 14, maxRows: 14 }}
+                autoSize={{ minRows: 10, maxRows: 10 }}
+                placeholder="Content..."
+              />
+            </Form.Item>
+
+            <Form.Item
+              name={"hint"}
+              label="힌트 링크"
+              rules={[{ required: true }]}
+            >
+              <Input allowClear size="small" placeholder="Hint..." />
+            </Form.Item>
+
+            <Form.Item
+              name={"answer"}
+              label="정답"
+              rules={[{ required: true }]}
+            >
+              <Input
+                allowClear
+                size="small"
                 placeholder="Answer..."
+                type="number"
               />
             </Form.Item>
           </Form>

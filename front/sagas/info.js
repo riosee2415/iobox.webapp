@@ -20,15 +20,37 @@ import {
   INFO_DELETE_REQUEST,
   INFO_DELETE_SUCCESS,
   INFO_DELETE_FAILURE,
+  //
+  INFO_TYPE_LIST_REQUEST,
+  INFO_TYPE_LIST_SUCCESS,
+  INFO_TYPE_LIST_FAILURE,
+  //
+  INFO_TYPE_UPLOAD_REQUEST,
+  INFO_TYPE_UPLOAD_SUCCESS,
+  INFO_TYPE_UPLOAD_FAILURE,
+  //
+  INFO_TYPE_CREATE_REQUEST,
+  INFO_TYPE_CREATE_SUCCESS,
+  INFO_TYPE_CREATE_FAILURE,
+  //
+  INFO_TYPE_UPDATE_REQUEST,
+  INFO_TYPE_UPDATE_SUCCESS,
+  INFO_TYPE_UPDATE_FAILURE,
+  //
+  INFO_TYPE_DELETE_REQUEST,
+  INFO_TYPE_DELETE_SUCCESS,
+  INFO_TYPE_DELETE_FAILURE,
 } from "../reducers/info";
 
 // SAGA AREA ********************************************************************************************************
 // ******************************************************************************************************************
 function infoListAPI(data) {
-  return axios.get(`/api/info/list/${data.qs}`, data);
+  console.log("?????");
+  return axios.get(`/api/guide/list/`, data);
 }
 
 function* infoList(action) {
+  console.log("????!!!");
   try {
     const result = yield call(infoListAPI, action.data);
 
@@ -52,7 +74,7 @@ function* infoList(action) {
 // SAGA AREA ********************************************************************************************************
 // ******************************************************************************************************************
 function infoThumbnailAPI(data) {
-  return axios.post(`/api/info/image`, data);
+  return axios.post(`/api/guide/image`, data);
 }
 
 function* infoThumbnail(action) {
@@ -79,7 +101,7 @@ function* infoThumbnail(action) {
 // SAGA AREA ********************************************************************************************************
 // ******************************************************************************************************************
 function infoCreateAPI(data) {
-  return axios.post(`/api/info/create`, data);
+  return axios.post(`/api/guide/create`, data);
 }
 
 function* infoCreate(action) {
@@ -106,7 +128,7 @@ function* infoCreate(action) {
 // SAGA AREA ********************************************************************************************************
 // ******************************************************************************************************************
 function infoUpdateAPI(data) {
-  return axios.patch(`/api/info/update`, data);
+  return axios.patch(`/api/guide/update`, data);
 }
 
 function* infoUpdate(action) {
@@ -133,7 +155,7 @@ function* infoUpdate(action) {
 // SAGA AREA ********************************************************************************************************
 // ******************************************************************************************************************
 function infoDeleteAPI(data) {
-  return axios.delete(`/api/info/delete/${data.infoId}`);
+  return axios.delete(`/api/guide/delete/${data.infoId}`);
 }
 
 function* infoDelete(action) {
@@ -148,6 +170,141 @@ function* infoDelete(action) {
     console.error(err);
     yield put({
       type: INFO_DELETE_FAILURE,
+      error: err.response.data,
+    });
+  }
+}
+
+// ******************************************************************************************************************
+// ******************************************************************************************************************
+// ******************************************************************************************************************
+
+// SAGA AREA ********************************************************************************************************
+// ******************************************************************************************************************
+function infoTypeListAPI(data) {
+  return axios.get(`/api/guide/type/list/`, data);
+}
+
+function* infoTypeList(action) {
+  try {
+    const result = yield call(infoTypeListAPI, action.data);
+
+    yield put({
+      type: INFO_TYPE_LIST_SUCCESS,
+      data: result.data,
+    });
+  } catch (err) {
+    console.error(err);
+    yield put({
+      type: INFO_TYPE_LIST_FAILURE,
+      error: err.response.data,
+    });
+  }
+}
+
+// ******************************************************************************************************************
+// ******************************************************************************************************************
+// ******************************************************************************************************************
+
+// SAGA AREA ********************************************************************************************************
+// ******************************************************************************************************************
+function infoTypeThumbnailAPI(data) {
+  return axios.post(`/api/guide/type/image`, data);
+}
+
+function* infoTypeThumbnail(action) {
+  try {
+    const result = yield call(infoTypeThumbnailAPI, action.data);
+
+    yield put({
+      type: INFO_TYPE_UPLOAD_SUCCESS,
+      data: result.data,
+    });
+  } catch (err) {
+    console.error(err);
+    yield put({
+      type: INFO_TYPE_UPLOAD_FAILURE,
+      error: err.response.data,
+    });
+  }
+}
+
+// ******************************************************************************************************************
+// ******************************************************************************************************************
+// ******************************************************************************************************************
+
+// SAGA AREA ********************************************************************************************************
+// ******************************************************************************************************************
+function infoTypeCreateAPI(data) {
+  return axios.post(`/api/guide/type/create`, data);
+}
+
+function* infoTypeCreate(action) {
+  try {
+    const result = yield call(infoTypeCreateAPI, action.data);
+
+    yield put({
+      type: INFO_TYPE_CREATE_SUCCESS,
+      data: result.data,
+    });
+  } catch (err) {
+    console.error(err);
+    yield put({
+      type: INFO_TYPE_CREATE_FAILURE,
+      error: err.response.data,
+    });
+  }
+}
+
+// ******************************************************************************************************************
+// ******************************************************************************************************************
+// ******************************************************************************************************************
+
+// SAGA AREA ********************************************************************************************************
+// ******************************************************************************************************************
+function infoTypeUpdateAPI(data) {
+  return axios.patch(`/api/guide/type/update`, data);
+}
+
+function* infoTypeUpdate(action) {
+  try {
+    const result = yield call(infoTypeUpdateAPI, action.data);
+
+    yield put({
+      type: INFO_TYPE_UPDATE_SUCCESS,
+      data: result.data,
+    });
+  } catch (err) {
+    console.error(err);
+    yield put({
+      type: INFO_TYPE_UPDATE_FAILURE,
+      error: err.response.data,
+    });
+  }
+}
+
+// ******************************************************************************************************************
+// ******************************************************************************************************************
+// ******************************************************************************************************************
+
+// SAGA AREA ********************************************************************************************************
+// ******************************************************************************************************************
+function infoTypeDeleteAPI(data) {
+  return axios.delete(`/api/guide/type/delete/${data.infoTypeId}`);
+}
+
+function* infoTypeDelete(action) {
+  try {
+    const result = yield call(infoTypeDeleteAPI, action.data);
+
+    yield put({
+      type: INFO_TYPE_DELETE_SUCCESS,
+      data: result.data,
+    });
+  } catch (err) {
+    console.error(err);
+    yield put({
+      type: INFO_TYPE_DELETE_FAILURE,
       error: err.response.data,
     });
   }
@@ -178,6 +335,26 @@ function* watchInfoDelete() {
   yield takeLatest(INFO_DELETE_REQUEST, infoDelete);
 }
 
+function* watchInfoTypeList() {
+  yield takeLatest(INFO_TYPE_LIST_REQUEST, infoTypeList);
+}
+
+function* watchInfoTypeUpload() {
+  yield takeLatest(INFO_TYPE_UPLOAD_REQUEST, infoTypeThumbnail);
+}
+
+function* watchInfoTypeCreate() {
+  yield takeLatest(INFO_TYPE_CREATE_REQUEST, infoTypeCreate);
+}
+
+function* watchInfoTypeUpdate() {
+  yield takeLatest(INFO_TYPE_UPDATE_REQUEST, infoTypeUpdate);
+}
+
+function* watchInfoTypeDelete() {
+  yield takeLatest(INFO_TYPE_DELETE_REQUEST, infoTypeDelete);
+}
+
 //////////////////////////////////////////////////////////////
 export default function* infoSaga() {
   yield all([
@@ -187,5 +364,10 @@ export default function* infoSaga() {
     fork(watchInfoUpdate),
     fork(watchInfoDelete),
     //
+    fork(watchInfoTypeList),
+    fork(watchInfoTypeUpload),
+    fork(watchInfoTypeCreate),
+    fork(watchInfoTypeUpdate),
+    fork(watchInfoTypeDelete),
   ]);
 }

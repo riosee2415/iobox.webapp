@@ -10,6 +10,7 @@ import acceptSaga from "./accept";
 import boxSaga from "./box";
 import eventSaga from "./event";
 import faqSaga from "./faq";
+import infoSaga from "./info";
 import keepBoxSaga from "./keepBox";
 //
 import axios from "axios";
@@ -31,6 +32,7 @@ export default function* rootSaga() {
     fork(boxSaga),
     fork(eventSaga),
     fork(faqSaga),
+    fork(infoSaga),
     fork(keepBoxSaga),
   ]);
 }
