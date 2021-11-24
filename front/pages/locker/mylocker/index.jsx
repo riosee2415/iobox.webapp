@@ -86,7 +86,6 @@ const PayButtton = styled(Wrapper)`
 const Index = () => {
   const width = useWidth();
   const router = useRouter();
-
   ////// HOOKS //////
   const [tab, setTab] = useState(1);
 
@@ -144,6 +143,10 @@ const Index = () => {
   }, [modal, boxNum, hangNum, tentNum, bigNum]);
 
   const modalToggle = useCallback(() => {
+    setBoxNum(boxNum);
+    setHangNum(hangNum);
+    setTentNum(tentNum);
+    setBigNum(bigNum);
     setModal(!modal);
   }, [modal]);
 
@@ -445,6 +448,7 @@ const Index = () => {
                       //  onChange={CheckBoxChangeHandler}
                       > */}
                       <Wrapper
+                        bgColor={checkA ? Theme.grey_C : ``}
                         dr={`row`}
                         ju={`space-between`}
                         padding={`20px 0 10px`}
@@ -570,6 +574,7 @@ const Index = () => {
                         ju={`space-between`}
                         padding={`50px 0 10px`}
                         borderBottom={`1px solid ${Theme.grey_C}`}
+                        bgColor={checkB ? Theme.grey_C : ``}
                       >
                         <Text bold={true} fontSize={`1.3rem`}>
                           행거박스 A-2

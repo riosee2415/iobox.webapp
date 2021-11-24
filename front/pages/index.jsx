@@ -33,7 +33,7 @@ const FirstDisplay = styled(Wrapper)`
   }
 `;
 
-const Home = ({}) => {
+const Home = () => {
   const width = useWidth();
   const router = useRouter();
 
@@ -45,6 +45,7 @@ const Home = ({}) => {
   const [lengthData2, setLengthData2] = useState(`0`);
   const [lengthData3, setLengthData3] = useState(`0`);
   const [lengthData4, setLengthData4] = useState(`0`);
+  const [firstRender, setFirstRender] = useState(`0`);
 
   ////// HOOKS //////
 
@@ -57,6 +58,10 @@ const Home = ({}) => {
       reset();
       reset2();
     }, [1000]);
+
+    setTimeout(() => {
+      sessionStorage.setItem("KJAKJ&&DJ%K#ASD", "true");
+    }, [2000]);
   }, [main]);
 
   useEffect(() => {
@@ -64,6 +69,7 @@ const Home = ({}) => {
       type: KEEPBOX_LIST_REQUEST,
       data: { qs: "" },
     });
+    setFirstRender(sessionStorage.getItem("KJAKJ&&DJ%K#ASD"));
   }, []);
 
   const { value, reset } = useCountUp({
@@ -121,6 +127,7 @@ const Home = ({}) => {
   return (
     <>
       <FirstWrapper
+        display={firstRender === "true" ? `none` : `flex`}
         position={`fixed`}
         className={main ? `main` : `notMain`}
         transition={`0.5s`}

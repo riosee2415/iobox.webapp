@@ -159,7 +159,7 @@ const AppFooter = () => {
         >
           <Image
             width={`60px`}
-            src={`https://4leaf-s3.s3.ap-northeast-2.amazonaws.com/iobox/assets/images/circle7.png`}
+            src={`https://4leaf-s3.s3.ap-northeast-2.amazonaws.com/iobox/assets/images/main/paperbox.png`}
           />
 
           <GradientText bold={true} fontSize={`2rem`} margin={`10px 0 0`}>
