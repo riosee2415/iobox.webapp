@@ -56,7 +56,7 @@ const Home = ({}) => {
   const { value: value2, reset: reset2 } = useCountUp({
     isCounting: true,
     start: 0,
-    end: 89,
+    end: 78,
     duration: 3,
   });
 
