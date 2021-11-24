@@ -12,6 +12,7 @@ import styled from "styled-components";
 import { Drawer } from "antd";
 import useWidth from "../hooks/useWidth";
 import { useRouter } from "next/dist/client/router";
+import { Planet } from "react-planet";
 
 const IconBox = styled(Wrapper)`
   width: 200px;
@@ -50,7 +51,7 @@ const CircleWrapper = styled(Wrapper)`
 
 const ButtonWrapper = styled(Wrapper)`
   position: absolute;
-  top: -90px;
+  top: -110px;
   left: 50%;
   cursor: pointer;
   width: auto;
@@ -61,6 +62,10 @@ const ButtonWrapper = styled(Wrapper)`
       width: 30px;
       height: 30px;
     }
+  }
+
+  @media (max-width: 700px) {
+    margin: 0 0 0 -60px;
   }
 `;
 
@@ -327,26 +332,65 @@ const AppFooter = () => {
             shadow={`0px -3px 10px ${Theme.grey_C}`}
             position={`relative`}
           >
-            <ButtonWrapper onClick={tabToggle}>
-              <GradientText className="gradient" bold={true}>
-                내 물건 맡기기
-              </GradientText>
+            <Wrapper width={`auto`} overflow={`hidden`}>
+              <ButtonWrapper>
+                <GradientText className="gradient" bold={true}>
+                  내 물건 맡기기
+                </GradientText>
 
-              <Wrapper
-                width={`100px`}
-                height={`100px`}
-                radius={`50%`}
-                bgColor={`linear-gradient(90deg,rgb(249, 2, 80),rgb(247, 141, 150),rgb(242, 146, 98),rgb(241, 115, 80))`}
-              >
                 <Wrapper
-                  width={`45px`}
-                  height={`45px`}
-                  radius={`50%`}
-                  bgColor={Theme.white_C}
-                  className="circle"
-                ></Wrapper>
-              </Wrapper>
-            </ButtonWrapper>
+                  margin={width < 700 ? `0 0 0 -110px` : `0 0 0 -100px`}
+                  zIndex={`100`}
+                >
+                  <Planet
+                    tension={200}
+                    centerContent={
+                      <Wrapper
+                        width={`100px`}
+                        height={`100px`}
+                        radius={`50%`}
+                        bgColor={`linear-gradient(90deg,rgb(249, 2, 80),rgb(247, 141, 150),rgb(242, 146, 98),rgb(241, 115, 80))`}
+                      >
+                        <Wrapper
+                          width={`45px`}
+                          height={`45px`}
+                          radius={`50%`}
+                          bgColor={Theme.white_C}
+                          className="circle"
+                        ></Wrapper>
+                      </Wrapper>
+                    }
+                    friction={0}
+                    orbitStyle={(defaultStyle) => ({
+                      ...defaultStyle,
+                      borderWidth: 0,
+                      background: "rgba(0,0,0,0.8)",
+                    })}
+                    open={tab}
+                    // onClick={tabToggle}
+                    autoClose
+                    orbitRadius={width < 700 ? 150 : 200}
+                  >
+                    <div
+                      style={{
+                        height: 70,
+                        width: 70,
+                        borderRadius: "50%",
+                        backgroundColor: "#9257ad",
+                      }}
+                    />
+                    <div
+                      style={{
+                        height: 70,
+                        width: 70,
+                        borderRadius: "50%",
+                        backgroundColor: "#9257ad",
+                      }}
+                    />
+                  </Planet>
+                </Wrapper>
+              </ButtonWrapper>
+            </Wrapper>
 
             <Wrapper dr={`row`} ju={`space-around`}>
               <TextWrapper width={`auto`} onClick={drawarToggle}>
