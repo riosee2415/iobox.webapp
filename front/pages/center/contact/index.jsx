@@ -126,7 +126,11 @@ const Index = () => {
 
             <Wrapper dr={`row`} al={`flex-start`} margin={`20px 0 0`}>
               <Wrapper width={`18%`}>
-                <Image src={`#`} alt={`logo`} />
+                <Image
+                  src={`https://4leaf-s3.s3.ap-northeast-2.amazonaws.com/iobox/assets/images/consulitng/emoji.png`}
+                  alt={`logo`}
+                  width={`25px`}
+                />
               </Wrapper>
               <Wrapper
                 width={`78%`}
@@ -158,21 +162,36 @@ const Index = () => {
               height={`50px`}
               radius={`50%`}
               bgColor={Theme.kakao_C}
-            ></Wrapper>
+            >
+              <Image
+                src={`https://4leaf-s3.s3.ap-northeast-2.amazonaws.com/iobox/assets/images/consulitng/kakao.png`}
+                alt={`kakao_image`}
+              />
+            </Wrapper>
             <Wrapper
               width={`50px`}
               height={`50px`}
               radius={`50%`}
               bgColor={Theme.white_C}
               margin={`0 10px`}
-            ></Wrapper>
+            >
+              <Image
+                src={`https://4leaf-s3.s3.ap-northeast-2.amazonaws.com/iobox/assets/images/consulitng/call.png`}
+                alt={`kakao_image`}
+              />
+            </Wrapper>
 
             <Wrapper
               width={`50px`}
               height={`50px`}
               radius={`50%`}
               bgColor={Theme.white_C}
-            ></Wrapper>
+            >
+              <Image
+                src={`https://4leaf-s3.s3.ap-northeast-2.amazonaws.com/iobox/assets/images/consulitng/link.png`}
+                alt={`kakao_image`}
+              />
+            </Wrapper>
           </Wrapper>
         </RsWrapper>
       </Wrapper>

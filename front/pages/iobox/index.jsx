@@ -228,7 +228,12 @@ const Index = () => {
 
               <Wrapper dr={`row`} ju={`space-between`} margin={`50px 0 0`}>
                 <Wrapper width={`auto`} dr={`row`}>
-                  <Image src={`#`} alt={`icon`} width={`30px`} />
+                  <Image
+                    src={`https://4leaf-s3.s3.ap-northeast-2.amazonaws.com/iobox/assets/images/payment/schedule.png`}
+                    alt={`icon`}
+                    width={`25px`}
+                    margin={`0 10px 0 0`}
+                  />
                   <Text bold={true} fontSize={`1.2rem`}>
                     보관기간
                   </Text>
@@ -345,7 +350,11 @@ const Index = () => {
           </Wrapper>
 
           <Wrapper width={`auto`} al={`flex-start`}>
-            <Image src={`#`} width={`60px`} margin={`0 0 10px`} />
+            <Image
+              src={`https://4leaf-s3.s3.ap-northeast-2.amazonaws.com/iobox/assets/images/main/paperbox.png`}
+              width={`60px`}
+              margin={`0 0 10px`}
+            />
 
             <GradientText bold={true} fontSize={`2.2rem`}>
               종이박스 배송
