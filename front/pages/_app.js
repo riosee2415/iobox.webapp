@@ -13,20 +13,20 @@ const Fourleaf = ({ Component }) => {
     <ThemeProvider theme={Theme}>
       <GlobalStyles />
       <Head>
-        <title>[[**4LEAF GEAR SAMPLE**]]</title>
+        <title>iobox</title>
 
-        <meta name="subject" content="[[**4LEAF GEAR SAMPLE**]]" />
-        <meta name="title" content="[[**4LEAF GEAR SAMPLE**]]" />
-        <meta name="author" content="[[**4LEAF GEAR SAMPLE**]]" />
-        <meta name="keywords" content="[[**4LEAF GEAR SAMPLE**]]" />
-        <meta name="description" content="[[**4LEAF GEAR SAMPLE**]]" />
+        <meta name="subject" content="iobox" />
+        <meta name="title" content="iobox" />
+        <meta name="author" content="iobox" />
+        <meta name="keywords" content="iobox" />
+        <meta name="description" content="iobox" />
         {/* <!-- OG tag  --> */}
         <meta property="og:type" content="website" />
-        <meta property="og:title" content="[[**4LEAF GEAR SAMPLE**]]" />
-        <meta property="og:site_name" content="[[**4LEAF GEAR SAMPLE**]]" />
+        <meta property="og:title" content="iobox" />
+        <meta property="og:site_name" content="iobox" />
         <meta property="og:url" content="https://www.sample.com/" />
-        <meta property="og:description" content="[[**4LEAF GEAR SAMPLE**]]" />
-        <meta property="og:keywords" content="[[**4LEAF GEAR SAMPLE**]]" />
+        <meta property="og:description" content="iobox" />
+        <meta property="og:keywords" content="iobox" />
         <meta property="og:image" content="/og_img.png" />
         <meta property="og:image:width" content="800" />
         <meta property="og:image:height" content="400" />

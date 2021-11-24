@@ -198,30 +198,6 @@ const Index = () => {
 
   ////// USEEFFECT //////
 
-  useEffect(() => {
-    const now = new Date();
-    const oneWeekLater = new Date(
-      now.getFullYear(),
-      now.getMonth(),
-      now.getDate() + 7
-    ); //일주일 후
-
-    const oneMonthLater = new Date(
-      now.getFullYear(),
-      now.getMonth() + 1,
-      now.getDate()
-    ); //한달 후
-
-    setStartDate(moment(now).format(`YYYY-MM-DD`)); //현재
-    setEndDate(moment(oneWeekLater).format("YYYY-MM-DD"));
-
-    if (radioValue === 1) {
-      setEndDate(moment(oneMonthLater).format("YYYY-MM-DD"));
-      console.log(startDate, radioValue);
-      console.log(endDate, radioValue);
-    }
-  }, [radioValue, router.query]);
-
   ////// DATE //////////
   const now = new Date();
   const currentDate = new Date();
@@ -282,7 +258,6 @@ const Index = () => {
     },
     [currentTent]
   );
-
   const deleteAllBoxHandler = useCallback(() => {
     setCurrentHanger(0);
     setCurrentIo(0);
@@ -300,7 +275,7 @@ const Index = () => {
 
   const dateChangeHandler = useCallback(
     (e) => {
-      console.log(e.target);
+      console.log(e);
     },
     [startDate, endDate]
   );
@@ -316,28 +291,9 @@ const Index = () => {
 
   const radioChangeHandler = useCallback(
     (e) => {
-      const oneWeekLater = new Date(
-        now.getFullYear(),
-        now.getMonth(),
-        now.getDate() + 7
-      ); //일주일 후
-
-      const oneMonthLater = new Date(
-        now.getFullYear(),
-        now.getMonth() + 1,
-        now.getDate()
-      ); //한달 후
-
       setRadioValue(e.target.value);
-      if (radioValue === 0) {
-        setEndDate(moment(oneWeekLater).format("YYYY-MM-DD"));
-      } else if (radioValue === 1) {
-        setEndDate(moment(oneMonthLater).format("YYYY-MM-DD"));
-        console.log(startDate, radioValue);
-        console.log(endDate, radioValue);
-      }
     },
-    [radioValue, startDate, endDate]
+    [radioValue]
   );
 
   const blurHandler = useCallback(() => {
@@ -958,28 +914,55 @@ const Index = () => {
                           }
                         />
                       </Wrapper> */}
-                      <RangePicker
-                        onChange={dateChangeHandler}
-                        separator={true}
-                        value={
-                          radioValue === 1
-                            ? [
-                                moment(new Date(), "YYYY-MM-DD"),
-                                moment(
-                                  new Date(
-                                    now.getFullYear(),
-                                    now.getMonth(),
-                                    now.getDate() + 7
-                                  ),
-                                  "YYYY-MM-DD"
+                      {radioValue === 0 && (
+                        <RangePicker
+                          onChange={dateChangeHandler}
+                          separator={true}
+                          defaultValue={[
+                            moment(new Date(), "YYYY-MM-DD"),
+                            moment(
+                              new Date(
+                                now.getFullYear(),
+                                now.getMonth(),
+                                now.getDate() + 7
+                              ),
+                              "YYYY-MM-DD"
+                            ),
+                          ]}
+                        />
+                      )}
+                      {radioValue === 1 && (
+                        <RangePicker
+                          // onChange={dateChangeHandler}
+                          open={false}
+                          readOnly={true}
+                          separator={true}
+                          defaultValue={
+                            radioValue === 0 && [
+                              moment(new Date(), "YYYY-MM-DD"),
+                              moment(
+                                new Date(
+                                  now.getFullYear(),
+                                  now.getMonth() + 1,
+                                  now.getDate()
                                 ),
-                              ]
-                            : [
-                                moment(`2021-03-24`, `YYYY-MM-DD`),
-                                moment(`2021-03-24`, `YYYY-MM-DD`),
-                              ]
-                        }
-                      />
+                                "YYYY-MM-DD"
+                              ),
+                            ]
+                          }
+                          value={[
+                            moment(new Date(), "YYYY-MM-DD"),
+                            moment(
+                              new Date(
+                                now.getFullYear(),
+                                now.getMonth() + 1,
+                                now.getDate()
+                              ),
+                              "YYYY-MM-DD"
+                            ),
+                          ]}
+                        />
+                      )}
                     </Wrapper>
                   </Wrapper>
                 </Wrapper>
