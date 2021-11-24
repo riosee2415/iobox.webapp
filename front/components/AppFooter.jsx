@@ -13,6 +13,7 @@ import { Drawer } from "antd";
 import useWidth from "../hooks/useWidth";
 import { useRouter } from "next/dist/client/router";
 import { Planet } from "react-planet";
+import { MenuOutlined } from "@ant-design/icons";
 
 const IconBox = styled(Wrapper)`
   width: ${(props) => props.width || `130px`};
@@ -275,7 +276,7 @@ const AppFooter = () => {
                   }}
                 >
                   <Image
-                    src={`https://4leaf-s3.s3.ap-northeast-2.amazonaws.com/iobox/assets/images/main/large_dial.png`}
+                    src={`https://4leaf-s3.s3.ap-northeast-2.amazonaws.com/iobox/assets/images/main/truck_dial.png`}
                     alt={`icon`}
                     width={width < 700 ? `40px` : `50px`}
                   />
@@ -293,7 +294,7 @@ const AppFooter = () => {
                   }}
                 >
                   <Image
-                    src={`https://4leaf-s3.s3.ap-northeast-2.amazonaws.com/iobox/assets/images/main/large_dial.png`}
+                    src={`https://4leaf-s3.s3.ap-northeast-2.amazonaws.com/iobox/assets/images/main/iobox_dial.png`}
                     alt={`icon`}
                     width={width < 700 ? `40px` : `50px`}
                   />
@@ -310,7 +311,7 @@ const AppFooter = () => {
                   }}
                 >
                   <Image
-                    src={`https://4leaf-s3.s3.ap-northeast-2.amazonaws.com/iobox/assets/images/main/large_dial.png`}
+                    src={`https://4leaf-s3.s3.ap-northeast-2.amazonaws.com/iobox/assets/images/main/hagner_dial.png`}
                     alt={`icon`}
                     width={width < 700 ? `40px` : `50px`}
                   />
@@ -347,32 +348,31 @@ const AppFooter = () => {
             display={tab ? `none` : `flex`}
           >
             <TextWrapper width={`auto`} onClick={drawarToggle}>
-              <Image
-                src={`https://4leaf-s3.s3.ap-northeast-2.amazonaws.com/iobox/assets/images/menu_home.png`}
-                alt={`menuIcon`}
-                width={`30px`}
-                margin={`0 0 5px`}
+              <MenuOutlined
+                style={{
+                  fontSize: `30px`,
+                  margin: `0 0 5px`,
+                  color: `rgb(224,222,222)`,
+                }}
               />
 
               <GradientText fontSize={`0.8rem`} bold={true} padding={`0`}>
                 메 뉴
               </GradientText>
             </TextWrapper>
-            <TextWrapper width={`auto`}>
+            <TextWrapper
+              width={`auto`}
+              onClick={() => {
+                moveLinkHandler("/locker");
+              }}
+            >
               <Image
-                src={`https://4leaf-s3.s3.ap-northeast-2.amazonaws.com/iobox/assets/images/menu_box.png`}
+                src={`https://4leaf-s3.s3.ap-northeast-2.amazonaws.com/iobox/assets/images/main/grey_box.png`}
                 alt={`menuIcon`}
                 width={`30px`}
                 margin={`0 0 5px`}
               />
-              <GradientText
-                fontSize={`0.8rem`}
-                bold={true}
-                padding={`0`}
-                onClick={() => {
-                  moveLinkHandler("/locker");
-                }}
-              >
+              <GradientText fontSize={`0.8rem`} bold={true} padding={`0`}>
                 내 보관함
               </GradientText>
             </TextWrapper>

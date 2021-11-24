@@ -115,6 +115,22 @@ const Index = () => {
   ////// REDUX //////
 
   ////// USEEFFECT //////
+  console.log(tab, "tab");
+  useEffect(() => {
+    if (tab === 0) {
+      setCheckA(false);
+      setCheckB(false);
+    } else if (tab === 1) {
+      setCheck1(false);
+      setCheck2(false);
+      setCheck3(false);
+      setCheck4(false);
+      setCheck5(false);
+      setCheck6(false);
+      setCheck7(false);
+      setCheck8(false);
+    }
+  }, [tab]);
 
   ////// TOGGLE ///////
 
@@ -137,39 +153,37 @@ const Index = () => {
     (e) => {
       console.log(check1, "check1");
       console.log(check2, "check2");
-      console.log(check3, "check3");
-      console.log(check4, "check4");
-      console.log(check5, "check5");
-      console.log(check6, "check6");
-      console.log(check7, "check7");
-      console.log(check8, "check8");
-      console.log(checkA, "checkA");
-      console.log(checkB, "checkB");
-      if (tab === 0) {
-        if (e.includes("1")) {
-          setCheck1(true);
-        } else if (e.includes("2")) {
-          setCheck2(true);
-        } else if (e.includes("3")) {
-          setCheck3(true);
-        } else if (e.includes("4")) {
-          setCheck4(true);
-        } else if (e.includes("5")) {
-          setCheck5(true);
-        } else if (e.includes("6")) {
-          setCheck6(true);
-        } else if (e.includes("7")) {
-          setCheck7(true);
-        } else if (e.includes("8")) {
-          setCheck8(true);
-        }
+      // console.log(check3, "check3");
+      // console.log(check4, "check4");
+      // console.log(check5, "check5");
+      // console.log(check6, "check6");
+      // console.log(check7, "check7");
+      // console.log(check8, "check8");
+      // console.log(checkA, "checkA");
+      // console.log(checkB, "checkB");
+
+      if (e.includes("1")) {
+        setCheck1(true);
+      } else if (e.includes("2")) {
+        setCheck2(true);
+      } else if (e.includes("3")) {
+        setCheck3(true);
+      } else if (e.includes("4")) {
+        setCheck4(true);
+      } else if (e.includes("5")) {
+        setCheck5(true);
+      } else if (e.includes("6")) {
+        setCheck6(true);
+      } else if (e.includes("7")) {
+        setCheck7(true);
+      } else if (e.includes("8")) {
+        setCheck8(true);
       }
-      if (tab === 1) {
-        if (e.includes("a")) {
-          setCheckA(true);
-        } else if (e.includes("b")) {
-          setCheckB(true);
-        }
+
+      if (e.includes("a")) {
+        setCheckA(true);
+      } else if (e.includes("b")) {
+        setCheckB(true);
       }
     },
     [
@@ -261,7 +275,7 @@ const Index = () => {
             right={`30px`}
             fontSize={`20px`}
             cursor={`pointer`}
-            onClick={moveBackHandler}
+            onClick={() => moveLinkHandler(`/`)}
             zIndex={`100`}
           >
             <CloseOutlined />
@@ -426,180 +440,249 @@ const Index = () => {
                   {(boxRealNum || hangRealNum || tentRealNum || bigRealNum) >
                     0 && (
                     <>
-                      <CheckboxGroup onChange={CheckBoxChangeHandler}>
-                        <Wrapper
-                          bgColor={checkA ? Theme.grey_C : ``}
-                          dr={`row`}
-                          ju={`space-between`}
-                          padding={`20px 0 10px`}
-                          borderBottom={`1px solid ${Theme.grey_C}`}
-                        >
-                          <Text bold={true} fontSize={`1.3rem`}>
-                            행거박스 A-1
-                          </Text>
+                      {/* <CheckboxGroup
 
-                          <Wrapper
-                            width={`auto`}
-                            display={tab === 1 ? `flex` : `none`}
-                          >
-                            <Checkbox value={`a`} />
-                          </Wrapper>
-                        </Wrapper>
+                      //  onChange={CheckBoxChangeHandler}
+                      > */}
+                      <Wrapper
+                        dr={`row`}
+                        ju={`space-between`}
+                        padding={`20px 0 10px`}
+                        borderBottom={`1px solid ${Theme.grey_C}`}
+                      >
+                        <Text bold={true} fontSize={`1.3rem`}>
+                          행거박스 A-1
+                        </Text>
 
                         <Wrapper
-                          bgColor={check1 ? Theme.grey_C : ``}
-                          dr={`row`}
-                          ju={`space-between`}
-                          height={`100px`}
-                          borderBottom={`1px solid ${Theme.grey_C}`}
+                          width={`auto`}
+                          display={tab === 1 ? `flex` : `none`}
                         >
-                          <Image src={`#`} alt={`image`} width={`30%`} />
+                          <Checkbox
+                            checked={checkA}
+                            onClick={() =>
+                              tab === 1 ? setCheckA((prev) => !prev) : {}
+                            }
+                          />
 
-                          <Wrapper
-                            width={`auto`}
-                            display={tab === 0 ? `flex` : `none`}
-                          >
-                            <Checkbox value={`1`} />
-                          </Wrapper>
+                          {console.log(checkA)}
                         </Wrapper>
+                      </Wrapper>
+
+                      <Wrapper
+                        bgColor={
+                          checkA ? Theme.grey_C : check1 ? Theme.grey_C : ``
+                        }
+                        dr={`row`}
+                        ju={`space-between`}
+                        height={`100px`}
+                        borderBottom={`1px solid ${Theme.grey_C}`}
+                      >
+                        <Image src={`#`} alt={`image`} width={`30%`} />
 
                         <Wrapper
-                          bgColor={check2 ? Theme.grey_C : ``}
-                          dr={`row`}
-                          ju={`space-between`}
-                          height={`100px`}
-                          borderBottom={`1px solid ${Theme.grey_C}`}
+                          width={`auto`}
+                          display={tab === 0 ? `flex` : `none`}
                         >
-                          <Image src={`#`} alt={`image`} width={`30%`} />
-
-                          <Wrapper
-                            width={`auto`}
-                            display={tab === 0 ? `flex` : `none`}
-                          >
-                            <Checkbox value={`2`} />
-                          </Wrapper>
+                          <Checkbox
+                            checked={check1}
+                            onClick={() =>
+                              tab === 0 ? setCheck1((prev) => !prev) : {}
+                            }
+                          />
                         </Wrapper>
+                      </Wrapper>
+
+                      <Wrapper
+                        bgColor={
+                          checkA ? Theme.grey_C : check2 ? Theme.grey_C : ``
+                        }
+                        dr={`row`}
+                        ju={`space-between`}
+                        height={`100px`}
+                        borderBottom={`1px solid ${Theme.grey_C}`}
+                      >
+                        <Image src={`#`} alt={`image`} width={`30%`} />
 
                         <Wrapper
-                          bgColor={check3 ? Theme.grey_C : ``}
-                          dr={`row`}
-                          ju={`space-between`}
-                          height={`100px`}
-                          borderBottom={`1px solid ${Theme.grey_C}`}
+                          width={`auto`}
+                          display={tab === 0 ? `flex` : `none`}
                         >
-                          <Image src={`#`} alt={`image`} width={`30%`} />
-
-                          <Wrapper
-                            width={`auto`}
-                            display={tab === 0 ? `flex` : `none`}
-                          >
-                            <Checkbox value={`3`} />
-                          </Wrapper>
+                          <Checkbox
+                            checked={check2}
+                            onClick={() =>
+                              tab === 0 ? setCheck2((prev) => !prev) : {}
+                            }
+                          />
                         </Wrapper>
+                      </Wrapper>
+
+                      <Wrapper
+                        bgColor={
+                          checkA ? Theme.grey_C : check3 ? Theme.grey_C : ``
+                        }
+                        dr={`row`}
+                        ju={`space-between`}
+                        height={`100px`}
+                        borderBottom={`1px solid ${Theme.grey_C}`}
+                      >
+                        <Image src={`#`} alt={`image`} width={`30%`} />
 
                         <Wrapper
-                          bgColor={check4 ? Theme.grey_C : ``}
-                          dr={`row`}
-                          ju={`space-between`}
-                          height={`100px`}
-                          borderBottom={`1px solid ${Theme.grey_C}`}
+                          width={`auto`}
+                          display={tab === 0 ? `flex` : `none`}
                         >
-                          <Image src={`#`} alt={`image`} width={`30%`} />
-
-                          <Wrapper
-                            width={`auto`}
-                            display={tab === 0 ? `flex` : `none`}
-                          >
-                            <Checkbox value={`4`} />
-                          </Wrapper>
+                          <Checkbox
+                            checked={check3}
+                            onClick={() =>
+                              tab === 0 ? setCheck3((prev) => !prev) : {}
+                            }
+                          />
                         </Wrapper>
+                      </Wrapper>
+
+                      <Wrapper
+                        bgColor={
+                          checkA ? Theme.grey_C : check4 ? Theme.grey_C : ``
+                        }
+                        dr={`row`}
+                        ju={`space-between`}
+                        height={`100px`}
+                        borderBottom={`1px solid ${Theme.grey_C}`}
+                      >
+                        <Image src={`#`} alt={`image`} width={`30%`} />
 
                         <Wrapper
-                          bgColor={checkB ? Theme.grey_C : ``}
-                          dr={`row`}
-                          ju={`space-between`}
-                          padding={`50px 0 10px`}
-                          borderBottom={`1px solid ${Theme.grey_C}`}
+                          width={`auto`}
+                          display={tab === 0 ? `flex` : `none`}
                         >
-                          <Text bold={true} fontSize={`1.3rem`}>
-                            행거박스 A-2
-                          </Text>
-                          <Wrapper
-                            width={`auto`}
-                            display={tab === 1 ? `flex` : `none`}
-                          >
-                            <Checkbox value={`b`} />
-                          </Wrapper>
+                          <Checkbox
+                            checked={check4}
+                            onClick={() =>
+                              tab === 0 ? setCheck4((prev) => !prev) : {}
+                            }
+                          />
                         </Wrapper>
+                      </Wrapper>
+
+                      <Wrapper
+                        dr={`row`}
+                        ju={`space-between`}
+                        padding={`50px 0 10px`}
+                        borderBottom={`1px solid ${Theme.grey_C}`}
+                      >
+                        <Text bold={true} fontSize={`1.3rem`}>
+                          행거박스 A-2
+                        </Text>
+                        <Wrapper
+                          width={`auto`}
+                          display={tab === 1 ? `flex` : `none`}
+                        >
+                          <Checkbox
+                            checked={checkB}
+                            onClick={() =>
+                              tab === 1 ? setCheckB((prev) => !prev) : {}
+                            }
+                          />
+                        </Wrapper>
+                      </Wrapper>
+
+                      <Wrapper
+                        bgColor={
+                          checkB ? Theme.grey_C : check5 ? Theme.grey_C : ``
+                        }
+                        dr={`row`}
+                        ju={`space-between`}
+                        height={`100px`}
+                        borderBottom={`1px solid ${Theme.grey_C}`}
+                      >
+                        <Image src={`#`} alt={`image`} width={`30%`} />
 
                         <Wrapper
-                          bgColor={check5 ? Theme.grey_C : ``}
-                          dr={`row`}
-                          ju={`space-between`}
-                          height={`100px`}
-                          borderBottom={`1px solid ${Theme.grey_C}`}
+                          width={`auto`}
+                          display={tab === 0 ? `flex` : `none`}
                         >
-                          <Image src={`#`} alt={`image`} width={`30%`} />
-
-                          <Wrapper
-                            width={`auto`}
-                            display={tab === 0 ? `flex` : `none`}
-                          >
-                            <Checkbox value={`5`} />
-                          </Wrapper>
+                          <Checkbox
+                            checked={check5}
+                            onClick={() =>
+                              tab === 0 ? setCheck5((prev) => !prev) : {}
+                            }
+                          />
                         </Wrapper>
+                      </Wrapper>
+
+                      <Wrapper
+                        bgColor={
+                          checkB ? Theme.grey_C : check6 ? Theme.grey_C : ``
+                        }
+                        dr={`row`}
+                        ju={`space-between`}
+                        height={`100px`}
+                        borderBottom={`1px solid ${Theme.grey_C}`}
+                      >
+                        <Image src={`#`} alt={`image`} width={`30%`} />
 
                         <Wrapper
-                          bgColor={check6 ? Theme.grey_C : ``}
-                          dr={`row`}
-                          ju={`space-between`}
-                          height={`100px`}
-                          borderBottom={`1px solid ${Theme.grey_C}`}
+                          width={`auto`}
+                          display={tab === 0 ? `flex` : `none`}
                         >
-                          <Image src={`#`} alt={`image`} width={`30%`} />
-
-                          <Wrapper
-                            width={`auto`}
-                            display={tab === 0 ? `flex` : `none`}
-                          >
-                            <Checkbox value={`6`} />
-                          </Wrapper>
+                          <Checkbox
+                            checked={check6}
+                            onClick={() =>
+                              tab === 0 ? setCheck6((prev) => !prev) : {}
+                            }
+                          />
                         </Wrapper>
+                      </Wrapper>
+
+                      <Wrapper
+                        bgColor={
+                          checkB ? Theme.grey_C : check7 ? Theme.grey_C : ``
+                        }
+                        dr={`row`}
+                        ju={`space-between`}
+                        height={`100px`}
+                        borderBottom={`1px solid ${Theme.grey_C}`}
+                      >
+                        <Image src={`#`} alt={`image`} width={`30%`} />
 
                         <Wrapper
-                          bgColor={check7 ? Theme.grey_C : ``}
-                          dr={`row`}
-                          ju={`space-between`}
-                          height={`100px`}
-                          borderBottom={`1px solid ${Theme.grey_C}`}
+                          width={`auto`}
+                          display={tab === 0 ? `flex` : `none`}
                         >
-                          <Image src={`#`} alt={`image`} width={`30%`} />
-
-                          <Wrapper
-                            width={`auto`}
-                            display={tab === 0 ? `flex` : `none`}
-                          >
-                            <Checkbox value={`7`} />
-                          </Wrapper>
+                          <Checkbox
+                            checked={check7}
+                            onClick={() =>
+                              tab === 0 ? setCheck7((prev) => !prev) : {}
+                            }
+                          />
                         </Wrapper>
+                      </Wrapper>
+
+                      <Wrapper
+                        bgColor={
+                          checkB ? Theme.grey_C : check8 ? Theme.grey_C : ``
+                        }
+                        dr={`row`}
+                        ju={`space-between`}
+                        height={`100px`}
+                        borderBottom={`1px solid ${Theme.grey_C}`}
+                      >
+                        <Image src={`#`} alt={`image`} width={`30%`} />
 
                         <Wrapper
-                          bgColor={check8 ? Theme.grey_C : ``}
-                          dr={`row`}
-                          ju={`space-between`}
-                          height={`100px`}
-                          borderBottom={`1px solid ${Theme.grey_C}`}
+                          width={`auto`}
+                          display={tab === 0 ? `flex` : `none`}
                         >
-                          <Image src={`#`} alt={`image`} width={`30%`} />
-
-                          <Wrapper
-                            width={`auto`}
-                            display={tab === 0 ? `flex` : `none`}
-                          >
-                            <Checkbox value={`8`} />
-                          </Wrapper>
+                          <Checkbox
+                            checked={check8}
+                            onClick={() =>
+                              tab === 0 ? setCheck8((prev) => !prev) : {}
+                            }
+                          />
                         </Wrapper>
-                      </CheckboxGroup>
+                      </Wrapper>
+                      {/* </CheckboxGroup> */}
                     </>
                   )}
                 </Wrapper>
