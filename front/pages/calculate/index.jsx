@@ -138,7 +138,7 @@ const Index = () => {
                 <Image
                   src={`https://4leaf-s3.s3.ap-northeast-2.amazonaws.com/iobox/assets/images/main/box_dial.png`}
                   alt={`icon`}
-                  width={`30px`}
+                  width={`45px`}
                 />
                 <Text fontWeight={`700`} margin={`0 5px`} fontSize={`0.9rem`}>
                   텐트박스
@@ -536,7 +536,7 @@ const Index = () => {
                 alt={`thumbnail`}
                 width={`auto`}
                 margin={`0 10px 0 0`}
-                width={`30px`}
+                width={`40px`}
               />
               <Text fontSize={`1.1rem`} fontWeight={`700`}>
                 박스
@@ -546,7 +546,7 @@ const Index = () => {
               <Image
                 src={`https://4leaf-s3.s3.ap-northeast-2.amazonaws.com/iobox/assets/images/main/hagner.png`}
                 alt={`thumbnail`}
-                width={`30px`}
+                width={`40px`}
                 margin={`0 10px 0 0`}
               />
               <Text fontSize={`1.1rem`} fontWeight={`700`}>
