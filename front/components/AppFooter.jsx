@@ -139,188 +139,6 @@ const AppFooter = () => {
   ////// DATAVIEW //////
   return (
     <>
-      {/* {tab ? (
-        <Wrapper
-          position={`absolute`}
-          bottom={`0`}
-          left={width < 700 ? `0` : `50%`}
-          margin={width < 700 ? `0` : `0 0 0 -250px`}
-          width={width < 700 ? `100%` : `500px`}
-          height={`100vh`}
-          zIndex={`1000`}
-        >
-          <Wrapper
-            bgColor={`rgba(0,0,0,0.7)`}
-            height={`100%`}
-            ju={`flex-end`}
-            overflow={`hidden`}
-          >
-            <Wrapper width={`auto`} al={`flex-start`}>
-              <Image
-                width={`60px`}
-                src={`https://4leaf-s3.s3.ap-northeast-2.amazonaws.com/iobox/assets/images/circle7.png`}
-              />
-
-              <GradientText bold={true} fontSize={`2rem`} margin={`10px 0 0`}>
-                종이박스 배송
-              </GradientText>
-
-              <Text
-                color={Theme.white_C}
-                bold={true}
-                fontSize={`1.5rem`}
-                margin={`15px 0`}
-              >
-                의류,물건,서류,책
-              </Text>
-              <Text color={Theme.white_C} bold={true} fontSize={`1.5rem`}>
-                각종 내 방안의 짐
-              </Text>
-              <Text
-                color={Theme.white_C}
-                bold={true}
-                fontSize={`1.5rem`}
-                margin={`15px 0 0`}
-              >
-                원할 때 맡기고 원할 때 찾기
-              </Text>
-            </Wrapper>
-
-            <Wrapper padding={`0 10px`} margin={`40px 0 -5px`}>
-              <Wrapper
-                height={width < 700 ? `355px` : `480px`}
-                bgColor={`rgba(255,255,255,0.7)`}
-                radius={`50%`}
-                position={`relative`}
-              >
-                <Wrapper
-                  height={`100%`}
-                  position={`absolute`}
-                  top={`0`}
-                  left={`0`}
-                >
-                  <Wrapper width={`auto`} height={`calc(100% / 4)`}>
-                    <IconBox>
-                      <Image
-                        src={`https://4leaf-s3.s3.ap-northeast-2.amazonaws.com/iobox/assets/images/box.png`}
-                        alt={`icon`}
-                        width={`40px`}
-                      />
-                      <Text
-                        onClick={() => {
-                          moveLinkHandler(`/iobox?type=iobox`);
-                        }}
-                      >
-                        아이오 박스
-                      </Text>
-                    </IconBox>
-                  </Wrapper>
-                  <Wrapper
-                    height={`calc(100% / 4)`}
-                    ju={`space-between`}
-                    dr={`row`}
-                    margin={`-20px 0 0`}
-                  >
-                    <IconBox>
-                      <Image
-                        src={`https://4leaf-s3.s3.ap-northeast-2.amazonaws.com/iobox/assets/images/truck.png`}
-                        alt={`icon`}
-                        width={`40px`}
-                      />
-                      <Text
-                        onClick={() => {
-                          moveLinkHandler(`/locker`);
-                        }}
-                      >
-                        배송현황
-                      </Text>
-                    </IconBox>
-                    <IconBox>
-                      <Image
-                        src={`https://4leaf-s3.s3.ap-northeast-2.amazonaws.com/iobox/assets/images/case.png`}
-                        alt={`icon`}
-                        width={`40px`}
-                      />
-                      <Text
-                        onClick={() => {
-                          moveLinkHandler(`/iobox?type=hangerBox`);
-                        }}
-                      >
-                        행거박스
-                      </Text>
-                    </IconBox>
-                  </Wrapper>
-
-                  <Wrapper
-                    height={`calc(100% / 4)`}
-                    ju={`space-between`}
-                    dr={`row`}
-                  >
-                    <IconBox>
-                      <Image
-                        src={`https://4leaf-s3.s3.ap-northeast-2.amazonaws.com/iobox/assets/images/user.png`}
-                        alt={`icon`}
-                        width={`40px`}
-                      />
-                      <Text
-                        onClick={() => {
-                          moveLinkHandler("/bullet");
-                        }}
-                      >
-                        총알배송
-                      </Text>
-                    </IconBox>
-                    <IconBox>
-                      <Image
-                        src={`https://4leaf-s3.s3.ap-northeast-2.amazonaws.com/iobox/assets/images/Locker.png`}
-                        alt={`icon`}
-                        width={`40px`}
-                      />
-                      <Text
-                        onClick={() => {
-                          moveLinkHandler(`/iobox?type=bigBox`);
-                        }}
-                      >
-                        대용량 박스
-                      </Text>
-                    </IconBox>
-                  </Wrapper>
-                  <Wrapper height={`calc(100% / 4)`} margin={`-20px 0 0`}>
-                    <IconBox>
-                      <Image
-                        src={`https://4leaf-s3.s3.ap-northeast-2.amazonaws.com/iobox/assets/images/likes.png`}
-                        alt={`icon`}
-                        width={`40px`}
-                      />
-                      <Text
-                        onClick={() => {
-                          moveLinkHandler(`/iobox?type=tentBox`);
-                        }}
-                      >
-                        텐트보관 박스
-                      </Text>
-                    </IconBox>
-                  </Wrapper>
-                </Wrapper>
-
-                <CircleWrapper
-                  onClick={tabToggle}
-                  bgColor={`linear-gradient(90deg,rgb(249, 2, 80),rgb(247, 141, 150),rgb(242, 146, 98),rgb(241, 115, 80))`}
-                >
-                  <Wrapper
-                    cursor={`pointer`}
-                    width={width < 700 ? `40px` : `60px`}
-                    height={width < 700 ? `40px` : `60px`}
-                    radius={`50%`}
-                    bgColor={Theme.white_C}
-                    className="circle"
-                  ></Wrapper>
-                </CircleWrapper>
-              </Wrapper>
-            </Wrapper>
-          </Wrapper>
-        </Wrapper>
-      ) : ( */}
       <Wrapper
         position={`absolute`}
         bottom={`0`}
@@ -418,18 +236,16 @@ const AppFooter = () => {
                   display={tab ? `flex` : `none`}
                   margin={`-70px 0 0`}
                   width={width < 700 ? `100px !important` : `130px`}
+                  onClick={() => {
+                    moveLinkHandler(`/iobox?type=tentBox`);
+                  }}
                 >
                   <Image
                     src={`https://4leaf-s3.s3.ap-northeast-2.amazonaws.com/iobox/assets/images/main/box_dial.png`}
                     alt={`icon`}
                     width={width < 700 ? `60px` : `70px`}
                   />
-                  <Text
-                    fontSize={width < 700 ? `0.8rem` : `1rem`}
-                    onClick={() => {
-                      moveLinkHandler(`/iobox?type=tentBox`);
-                    }}
-                  >
+                  <Text fontSize={width < 700 ? `0.8rem` : `1rem`}>
                     텐트보관 박스
                   </Text>
                 </IconBox>
@@ -437,18 +253,16 @@ const AppFooter = () => {
                 <IconBox
                   display={tab ? `flex` : `none`}
                   margin={`-30px 0 0 100px`}
+                  onClick={() => {
+                    moveLinkHandler("/bullet");
+                  }}
                 >
                   <Image
                     src={`https://4leaf-s3.s3.ap-northeast-2.amazonaws.com/iobox/assets/images/main/bullet_dial.png`}
                     alt={`icon`}
                     width={width < 700 ? `60px` : `70px`}
                   />
-                  <Text
-                    fontSize={width < 700 ? `0.8rem` : `1rem`}
-                    onClick={() => {
-                      moveLinkHandler("/bullet");
-                    }}
-                  >
+                  <Text fontSize={width < 700 ? `0.8rem` : `1rem`}>
                     총알배송
                   </Text>
                 </IconBox>
@@ -456,18 +270,16 @@ const AppFooter = () => {
                 <IconBox
                   display={tab ? `flex` : `none`}
                   margin={`50px 0 0 100px`}
+                  onClick={() => {
+                    moveLinkHandler(`/locker`);
+                  }}
                 >
                   <Image
                     src={`https://4leaf-s3.s3.ap-northeast-2.amazonaws.com/iobox/assets/images/main/large_dial.png`}
                     alt={`icon`}
                     width={width < 700 ? `40px` : `50px`}
                   />
-                  <Text
-                    fontSize={width < 700 ? `0.8rem` : `1rem`}
-                    onClick={() => {
-                      moveLinkHandler(`/locker`);
-                    }}
-                  >
+                  <Text fontSize={width < 700 ? `0.8rem` : `1rem`}>
                     배송현황
                   </Text>
                 </IconBox>
@@ -476,18 +288,16 @@ const AppFooter = () => {
                   display={tab ? `flex` : `none`}
                   margin={`70px 0 0`}
                   width={width < 700 ? `100px !important` : `130px`}
+                  onClick={() => {
+                    moveLinkHandler(`/iobox?type=iobox`);
+                  }}
                 >
                   <Image
                     src={`https://4leaf-s3.s3.ap-northeast-2.amazonaws.com/iobox/assets/images/main/large_dial.png`}
                     alt={`icon`}
                     width={width < 700 ? `40px` : `50px`}
                   />
-                  <Text
-                    fontSize={width < 700 ? `0.8rem` : `1rem`}
-                    onClick={() => {
-                      moveLinkHandler(`/iobox?type=iobox`);
-                    }}
-                  >
+                  <Text fontSize={width < 700 ? `0.8rem` : `1rem`}>
                     아이오 박스
                   </Text>
                 </IconBox>
@@ -495,18 +305,16 @@ const AppFooter = () => {
                 <IconBox
                   display={tab ? `flex` : `none`}
                   margin={width < 700 ? `50px 0 0 -80px` : `50px 100px 0 0`}
+                  onClick={() => {
+                    moveLinkHandler(`/iobox?type=hangerBox`);
+                  }}
                 >
                   <Image
                     src={`https://4leaf-s3.s3.ap-northeast-2.amazonaws.com/iobox/assets/images/main/large_dial.png`}
                     alt={`icon`}
                     width={width < 700 ? `40px` : `50px`}
                   />
-                  <Text
-                    fontSize={width < 700 ? `0.8rem` : `1rem`}
-                    onClick={() => {
-                      moveLinkHandler(`/iobox?type=hangerBox`);
-                    }}
-                  >
+                  <Text fontSize={width < 700 ? `0.8rem` : `1rem`}>
                     행거박스
                   </Text>
                 </IconBox>
@@ -718,7 +526,7 @@ const AppFooter = () => {
                   </Wrapper>
                 </RsWrapper>
 
-                <Wrapper height={`calc()`}>
+                <Wrapper>
                   <Wrapper al={`flex-start`}>
                     <Wrapper
                       padding={`0 30px`}
@@ -798,7 +606,7 @@ const AppFooter = () => {
                     {/* 공통 */}
                     <Text
                       cursor={`pointer`}
-                      // onClick={() => moveLinkHandler(`/`)}
+                      onClick={() => moveLinkHandler(`/center`)}
                     >
                       고객센터
                     </Text>

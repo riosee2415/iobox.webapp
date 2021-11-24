@@ -79,8 +79,6 @@ const Home = ({}) => {
     duration: 3,
   });
 
-  console.log(main);
-
   const { keepBoxes } = useSelector((state) => state.keepBox);
 
   ////// REDUX //////
@@ -130,7 +128,6 @@ const Home = ({}) => {
         zIndex={mainZIndex}
         height={`100vh`}
       >
-        {console.log(mainOpacity)}
         <FirstDisplay
           positon={``}
           top={`0`}
