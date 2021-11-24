@@ -361,21 +361,19 @@ const AppFooter = () => {
                   메 뉴
                 </GradientText>
               </TextWrapper>
-              <TextWrapper width={`auto`}>
+              <TextWrapper
+                width={`auto`}
+                onClick={() => {
+                  moveLinkHandler("/locker");
+                }}
+              >
                 <Image
                   src={`https://4leaf-s3.s3.ap-northeast-2.amazonaws.com/iobox/assets/images/menu_box.png`}
                   alt={`menuIcon`}
                   width={`30px`}
                   margin={`0 0 5px`}
                 />
-                <GradientText
-                  fontSize={`0.8rem`}
-                  bold={true}
-                  padding={`0`}
-                  onClick={() => {
-                    moveLinkHandler("/locker");
-                  }}
-                >
+                <GradientText fontSize={`0.8rem`} bold={true} padding={`0`}>
                   내 보관함
                 </GradientText>
               </TextWrapper>
@@ -524,6 +522,7 @@ const AppFooter = () => {
                               : `1.4rem`
                           }
                           margin={width < 700 ? `0 0 20px 0` : `0`}
+                          onClick={() => moveLinkHandler(`/locker/mylocker`)}
                         >
                           내 물건 찾기
                         </Text>

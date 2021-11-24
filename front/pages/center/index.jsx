@@ -1,5 +1,5 @@
 import React, { useCallback, useState } from "react";
-import Theme from "../../../components/Theme";
+import Theme from "../../components/Theme";
 import {
   Wrapper,
   WholeWrapper,
@@ -8,10 +8,10 @@ import {
   Image,
   CommonButton,
   TextInput,
-} from "../../../components/commonComponents";
+} from "../../components/commonComponents";
 import styled from "styled-components";
-import ClientLayout from "../../../components/ClientLayout";
-import useWidth from "../../../hooks/useWidth";
+import ClientLayout from "../../components/ClientLayout";
+import useWidth from "../../hooks/useWidth";
 import { CloseOutlined, DownOutlined, UpOutlined } from "@ant-design/icons";
 import { useRouter } from "next/dist/client/router";
 

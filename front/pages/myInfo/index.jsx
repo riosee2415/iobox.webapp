@@ -243,7 +243,7 @@ const Index = () => {
           <RsWrapper height={`auto`}>
             <TableWrapper
               onClick={() => {
-                moveLinkHandler("center/contact");
+                moveLinkHandler("center");
               }}
             >
               <Text>1:1 상담</Text>
