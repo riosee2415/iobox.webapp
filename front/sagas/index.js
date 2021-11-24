@@ -11,6 +11,7 @@ import boxSaga from "./box";
 import eventSaga from "./event";
 import faqSaga from "./faq";
 import infoSaga from "./info";
+import keepBoxSaga from "./keepBox";
 //
 import axios from "axios";
 import backURL from "../config/config";
@@ -32,5 +33,6 @@ export default function* rootSaga() {
     fork(eventSaga),
     fork(faqSaga),
     fork(infoSaga),
+    fork(keepBoxSaga),
   ]);
 }

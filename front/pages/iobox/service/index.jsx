@@ -97,7 +97,12 @@ const Index = () => {
             padding={`30px 0`}
           >
             <Wrapper dr={`row`} ju={`flex-start`}>
-              <Image src={`#`} width={`30px`} alt={`icon`} />
+              <Image
+                src={`https://4leaf-s3.s3.ap-northeast-2.amazonaws.com/iobox/assets/images/payment/present.png`}
+                width={`30px`}
+                margin={`0 10px 0 0`}
+                alt={`icon`}
+              />
               <Text bold={true} fontSize={`1.5rem`} margin={`0 0 0 5px`}>
                 io박스 무료 서비스
               </Text>
@@ -129,7 +134,12 @@ const Index = () => {
 
             <Wrapper dr={`row`} ju={`space-between`} margin={`20px 0 0`}>
               <Wrapper dr={`row`} width={`auto`}>
-                <Image src={`#`} width={`30px`} alt={`icon`} />
+                <Image
+                  src={`https://4leaf-s3.s3.ap-northeast-2.amazonaws.com/iobox/assets/images/payment/bullet.png`}
+                  width={`40px`}
+                  margin={`0 10px 0 0 `}
+                  alt={`icon`}
+                />
                 <Text bold={true} fontSize={`1.5rem`} margin={`0 0 0 5px`}>
                   픽업 방식
                 </Text>

@@ -38,17 +38,70 @@ import {
   Input,
 } from "antd";
 import locale from "antd/lib/locale/zh_CN";
+import ElevatorSlider from "../../components/slide/ElevatorSlider";
+
+const TextHover = styled(Wrapper)`
+  width: 80px;
+  color: ${Theme.basicTheme_C};
+  font-size: 1.2rem;
+  cursor: pointer;
+
+  &:hover {
+    color: ${Theme.subTheme3_C};
+  }
+`;
+
+const RangePicker = styled(DatePicker.RangePicker)`
+  & .ant-picker-range-separator {
+    display: none;
+  }
+  &.ant-picker-range {
+    display: flex !important;
+    flex-direction: column !important;
+    padding: 0;
+    height: 140px;
+  }
+  & .ant-picker-input {
+    height: 70px;
+  }
+  & .ant-picker-panels {
+    display: flex !important;
+    flex-direction: column !important;
+  }
+
+  & .ant-picker-active-bar,
+  & .ant-picker-suffix,
+  & .ant-picker-clear {
+    display: none;
+  }
+`;
 
 const CustomInput = styled(Input)`
   width: 100%;
-  height: 100%;
+  & .ant-input-affix-wrapper > input.ant-input {
+    height: auto;
+  }
+
+  height: ${(props) => props.height} !important;
+
   border: none;
   outline: none;
   height: 80px;
   padding: 10px 20px;
-  & .ant-input::placeholder {
+  & .ant-input {
+    &::placeholder {
+      font-size: 1.3rem;
+      color: ${(props) => props.theme.grey_C};
+      @media (max-width: 700px) {
+        font-size: 1rem;
+      }
+      line-height: 1.6;
+      color: ${(props) => props.theme.grey_C};
+    }
     font-size: 1.3rem;
-    color: ${(props) => props.theme.grey_C};
+    @media (max-width: 700px) {
+      font-size: 1rem;
+    }
   }
 `;
 
@@ -147,15 +200,11 @@ const Index = () => {
 
   ////// DATE //////////
   const now = new Date();
-  const currentDate = new Date().toISOString();
-  const oneWeekLater = new Date(now.setDate(now.getDate() + 1)).toISOString(); //일주일 후
-  const oneMonthLater = new Date(
-    now.setMonth(now.getMonth() + 1)
-  ).toISOString(); //한달 후
+  const currentDate = new Date();
+  //일주일 후
+  //한달 후
 
   ////// TOGGLE ///////
-
-  console.log();
 
   const currentHangerHandler = useCallback(
     (pm) => {
@@ -209,7 +258,6 @@ const Index = () => {
     },
     [currentTent]
   );
-
   const deleteAllBoxHandler = useCallback(() => {
     setCurrentHanger(0);
     setCurrentIo(0);
@@ -225,18 +273,28 @@ const Index = () => {
     setDayInput(true);
   }, [dayInput]);
 
+  const dateChangeHandler = useCallback(
+    (e) => {
+      console.log(e);
+    },
+    [startDate, endDate]
+  );
+
   ///// HANDLER //////
 
-  const onChange1 = (date, dateString) => {
-    setStartDate(dateString);
-  };
-  const onChange2 = (date, dateString) => {
-    setEndDate(dateString);
-  };
+  // const onChange1 = (date, dateString) => {
+  //   setStartDate(dateString);
+  // };
+  // const onChange2 = (date, dateString) => {
+  //   setEndDate(dateString);
+  // };
 
-  const radioChangeHandler = useCallback((e) => {
-    setRadioValue(e.target.value);
-  }, []);
+  const radioChangeHandler = useCallback(
+    (e) => {
+      setRadioValue(e.target.value);
+    },
+    [radioValue]
+  );
 
   const blurHandler = useCallback(() => {
     setCardInput(false);
@@ -348,7 +406,7 @@ const Index = () => {
                 </Wrapper>
                 <CommonButton
                   width={`100%`}
-                  height={width < 700 ? `60px` : `75px`}
+                  height={`60px`}
                   radius={`12px`}
                   onClick={() => setCurrentTab(1)}
                 >
@@ -394,7 +452,7 @@ const Index = () => {
                 dr={`row`}
                 al={`flex-start`}
                 ju={`flex-start`}
-                margin={`60px 0 110px`}
+                margin={`0 0 20px`}
               >
                 <Image
                   src={`https://4leaf-s3.s3.ap-northeast-2.amazonaws.com/iobox/assets/images/bullet/bullet.png`}
@@ -404,13 +462,14 @@ const Index = () => {
                 />
                 <Wrapper width={`auto`} al={`flex-start`}>
                   <GradientText
-                    fontSize={`2.4rem`}
+                    fontSize={`2rem`}
                     lineHeight={`1`}
                     margin={`0 0 10px`}
+                    padding={`10px 0 0`}
                   >
                     총알배송
                   </GradientText>
-                  <Text fontSize={`1.3rem`} fontWeight={`700`}>
+                  <Text fontSize={`1.1rem`} fontWeight={`700`}>
                     요청완료시 다음날 도착
                   </Text>
                 </Wrapper>
@@ -621,9 +680,18 @@ const Index = () => {
                     margin={`0 0 20px 0`}
                   >
                     <Text fontSize={`1.3rem`}>출발지 주소</Text>
-                    <QuestionCircleOutlined
-                      style={{ fontSize: "1.6rem", color: Theme.darkGrey3_C }}
-                    />
+
+                    <Wrapper
+                      width={`20px`}
+                      height={`20px`}
+                      radius={`50%`}
+                      border={`1px solid ${Theme.grey_C}`}
+                      color={Theme.grey_C}
+                      cursor={`pointer`}
+                      margin={`0 0 0 10px`}
+                    >
+                      <Text margin={`1px 0 0 2px`}>?</Text>
+                    </Wrapper>
                   </Wrapper>
                   <Wrapper
                     dr={`row`}
@@ -636,7 +704,7 @@ const Index = () => {
                     <TextInput
                       className={`bulletInput`}
                       width={`calc(100% - 2rem )`}
-                      height={`80px`}
+                      height={width < 700 ? `50px` : `80px`}
                       placeholder={`기본 주소`}
                       border={`none`}
                     />
@@ -650,7 +718,7 @@ const Index = () => {
                     <CustomInput
                       width={`calc(100% - 2rem )`}
                       className={`bulletInput`}
-                      height={`80px`}
+                      height={width < 700 ? `50px` : `80px`}
                       placeholder={`상세 주소 입력(필수/20자이내)`}
                       border={`none`}
                       allowClear={true}
@@ -670,7 +738,7 @@ const Index = () => {
                   </Wrapper>
                   <Wrapper
                     width={`95%`}
-                    height={`70px`}
+                    height={width < 700 ? `50px` : `70px`}
                     border={`2px solid ${Theme.lightGrey_C}`}
                     onClick={() => setFloorModal(true)}
                   ></Wrapper>
@@ -684,9 +752,18 @@ const Index = () => {
                     borderBottom={`2px solid ${Theme.lightGrey_C}`}
                   >
                     <Text fontSize={`1.3rem`}>보관 기간</Text>
-                    <QuestionCircleOutlined
-                      style={{ fontSize: "1.6rem", color: Theme.darkGrey3_C }}
-                    />
+
+                    <Wrapper
+                      width={`20px`}
+                      height={`20px`}
+                      radius={`50%`}
+                      border={`1px solid ${Theme.grey_C}`}
+                      color={Theme.grey_C}
+                      cursor={`pointer`}
+                      margin={`0 0 0 10px`}
+                    >
+                      <Text margin={`1px 0 0 2px`}>?</Text>
+                    </Wrapper>
                   </Wrapper>
                   <Wrapper al={`flex-start`} margin={`35px 0 0 0`}>
                     <CustomRadioGroup
@@ -762,48 +839,38 @@ const Index = () => {
                   <Wrapper
                     margin={`0 0 50px`}
                     opacity={radioValue === 1 ? `0.3` : `1`}
+                    dr={`row`}
+                    ju={`space-between`}
                   >
-                    <Wrapper dr={`row`} ju={`space-between`} height={`70px`}>
-                      <Text
+                    <Wrapper height={`140px`} width={`auto`}>
+                      <Wrapper
+                        width={`auto`}
                         color={Theme.subTheme5_C}
                         fontSize={`1.2rem`}
                         fontWeight={`700`}
+                        ju={`center`}
+                        height={`70px`}
                       >
                         보관 시작
-                      </Text>
-                      <Wrapper width={`auto`} dr={`row`}>
-                        <DatePicker
-                          onClick={() =>
-                            radioValue === 0
-                              ? setDatePickerOpen1((prev) => !prev)
-                              : {}
-                          }
-                          open={radioValue === 1 ? false : datePickerOpen1}
-                          onChange={onChange1}
-                          format="YYYY-MM-DD"
-                          placeholder={`123`}
-                          inputReadOnly={radioValue === 1 ? true : false}
-                        />
-                        <RightOutlined
-                          style={{ color: Theme.grey_C }}
-                          onClick={() =>
-                            radioValue === 0
-                              ? setDatePickerOpen1((prev) => !prev)
-                              : {}
-                          }
-                        />
+                      </Wrapper>
+                      <Wrapper
+                        width={`auto`}
+                        color={Theme.subTheme5_C}
+                        fontSize={`1.2rem`}
+                        fontWeight={`700`}
+                        ju={`center`}
+                        height={`70px`}
+                      >
+                        보관 종료
                       </Wrapper>
                     </Wrapper>
 
-                    <Wrapper dr={`row`} ju={`space-between`} height={`70px`}>
-                      <Text
-                        color={Theme.subTheme5_C}
-                        fontSize={`1.2rem`}
-                        fontWeight={`700`}
-                      >
-                        보관 종료
-                      </Text>
-                      <Wrapper width={`auto`} dr={`row`}>
+                    <Wrapper
+                      ju={`space-between`}
+                      height={`140px`}
+                      width={`auto`}
+                    >
+                      {/* <Wrapper width={`auto`} dr={`row`}>
                         <DatePicker
                           onClick={() =>
                             radioValue === 0
@@ -824,16 +891,96 @@ const Index = () => {
                               : {}
                           }
                         />
-                      </Wrapper>
+                      </Wrapper> */}
+                      {/* <Wrapper width={`auto`} dr={`row`}>
+                        <DatePicker
+                          onClick={() =>
+                            radioValue === 0
+                              ? setDatePickerOpen1((prev) => !prev)
+                              : {}
+                          }
+                          open={radioValue === 1 ? false : datePickerOpen1}
+                          onChange={onChange1}
+                          format="YYYY-MM-DD"
+                          placeholder={`123`}
+                          inputReadOnly={radioValue === 1 ? true : false}
+                        />
+                        <RightOutlined
+                          style={{ color: Theme.grey_C }}
+                          onClick={() =>
+                            radioValue === 0
+                              ? setDatePickerOpen1((prev) => !prev)
+                              : {}
+                          }
+                        />
+                      </Wrapper> */}
+                      {radioValue === 0 && (
+                        <RangePicker
+                          onChange={dateChangeHandler}
+                          separator={true}
+                          defaultValue={[
+                            moment(new Date(), "YYYY-MM-DD"),
+                            moment(
+                              new Date(
+                                now.getFullYear(),
+                                now.getMonth(),
+                                now.getDate() + 7
+                              ),
+                              "YYYY-MM-DD"
+                            ),
+                          ]}
+                        />
+                      )}
+                      {radioValue === 1 && (
+                        <RangePicker
+                          // onChange={dateChangeHandler}
+                          open={false}
+                          readOnly={true}
+                          separator={true}
+                          defaultValue={
+                            radioValue === 0 && [
+                              moment(new Date(), "YYYY-MM-DD"),
+                              moment(
+                                new Date(
+                                  now.getFullYear(),
+                                  now.getMonth() + 1,
+                                  now.getDate()
+                                ),
+                                "YYYY-MM-DD"
+                              ),
+                            ]
+                          }
+                          value={[
+                            moment(new Date(), "YYYY-MM-DD"),
+                            moment(
+                              new Date(
+                                now.getFullYear(),
+                                now.getMonth() + 1,
+                                now.getDate()
+                              ),
+                              "YYYY-MM-DD"
+                            ),
+                          ]}
+                        />
+                      )}
                     </Wrapper>
                   </Wrapper>
                 </Wrapper>
                 <Wrapper>
                   <Wrapper dr={`row`} ju={`space-between`} margin={`0 0 20px `}>
                     <Text fontSize={`1.3rem`}>도착지 주소</Text>
-                    <QuestionCircleOutlined
-                      style={{ fontSize: "1.6rem", color: Theme.darkGrey3_C }}
-                    />
+
+                    <Wrapper
+                      width={`20px`}
+                      height={`20px`}
+                      radius={`50%`}
+                      border={`1px solid ${Theme.grey_C}`}
+                      color={Theme.grey_C}
+                      cursor={`pointer`}
+                      margin={`0 0 0 10px`}
+                    >
+                      <Text margin={`1px 0 0 2px`}>?</Text>
+                    </Wrapper>
                   </Wrapper>
                   <Wrapper
                     dr={`row`}
@@ -846,7 +993,7 @@ const Index = () => {
                     <TextInput
                       className={`bulletInput`}
                       width={`calc(100% - 2rem )`}
-                      height={`80px`}
+                      height={width < 700 ? `50px` : `80px`}
                       placeholder={`기본 주소`}
                       border={`none`}
                     />
@@ -862,7 +1009,7 @@ const Index = () => {
                     <CustomInput
                       width={`calc(100% - 2rem )`}
                       className={`bulletInput`}
-                      height={`80px`}
+                      height={width < 700 ? `50px` : `80px`}
                       placeholder={`상세 주소 입력(필수/20자이내)`}
                       border={`none`}
                       allowClear={true}
@@ -889,11 +1036,12 @@ const Index = () => {
                         </Text>
                       </Wrapper>
                     </Wrapper>
-                    <TextInput
+                    <Wrapper
                       width={`95%`}
-                      height={`70px`}
+                      height={width < 700 ? `50px` : `70px`}
                       border={`2px solid ${Theme.lightGrey_C}`}
-                    />
+                      onClick={() => setFloorModal(true)}
+                    ></Wrapper>
                   </Wrapper>
                 </Wrapper>
               </Wrapper>
@@ -933,49 +1081,12 @@ const Index = () => {
       )}
       <Modal visible={floorModal} closable={false} footer={null}>
         <Wrapper>
-          <Wrapper
-            overflow={`auto`}
-            width={`30%`}
-            maxHeight={`300px`}
-            ju={`flex-start`}
-            position={`relative`}
-          >
-            <Wrapper
-              height={`1px`}
-              position={`absolute`}
-              bgColor={Theme.black_C}
-            ></Wrapper>
-            <Wrapper
-              height={`1px`}
-              position={`absolute`}
-              bgColor={Theme.black_C}
-            ></Wrapper>
-            <Wrapper height={`auto`}>
-              <Wrapper ju={`center`}>
-                <Wrapper height={`90px`} margin={`0 0 10px`}>
-                  1층
-                </Wrapper>
-                <Wrapper height={`90px`} margin={`0 0 10px`}>
-                  2층
-                </Wrapper>
-                <Wrapper height={`90px`} margin={`0 0 10px`}>
-                  3층
-                </Wrapper>
-                <Wrapper height={`90px`} margin={`0 0 10px`}>
-                  4층
-                </Wrapper>
-                <Wrapper height={`90px`} margin={`0 0 10px`}>
-                  5층
-                </Wrapper>
-                <Wrapper height={`90px`} margin={`0 0 10px`}>
-                  6층
-                </Wrapper>
-              </Wrapper>
-            </Wrapper>
+          <Wrapper width={`30%`} ju={`flex-start`}>
+            <ElevatorSlider />
           </Wrapper>
-          <Wrapper dr={`row`}>
-            <Text onClick={() => setFloorModal(false)}>취소</Text>
-            <Text onClick={() => setFloorModal(false)}>확인</Text>
+          <Wrapper dr={`row`} ju={`flex-end`} padding={`30px 0`}>
+            <TextHover onClick={() => setFloorModal(false)}>취소</TextHover>
+            <TextHover onClick={() => setFloorModal(false)}>확인</TextHover>
           </Wrapper>
         </Wrapper>
       </Modal>

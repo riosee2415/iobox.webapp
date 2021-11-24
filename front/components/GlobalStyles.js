@@ -76,11 +76,33 @@ const GlobalStyles = createGlobalStyle`
   }
 
   .ant-modal-content{
-    border:5px solid ${(props) => props.theme.basicTheme_C};
+    width : 400px;
+
+    @media(max-width : 700px) {
+      width : 90%;
+    }
+  }
+
+  .ant-modal{
+    display : flex;
+    align-items: center;
+    justify-content: center;
+    height : 80%;
   }
 
   .ant-modal-body{
     padding:0;
+  }
+
+  .slick-list{
+    padding : 0;
+  }
+
+
+  .slick-active {
+    font-size : 20px !important;
+    border-bottom : 1px solid ${(props) => props.theme.basicTheme_C} !important;
+
   }
 
   .ant-drawer-content-wrapper{
@@ -146,6 +168,9 @@ const GlobalStyles = createGlobalStyle`
   }
 
 
+
+
+
   .ant-drawer-left{
     left : 50% !important;
     margin : 0 0 0 -250px;
@@ -165,12 +190,24 @@ const GlobalStyles = createGlobalStyle`
     box-shadow:none;
   }
 
-  
+  .ant-picker-dropdown-range {
+    padding: 0 !important;
+  }
 
+  .ant-picker-panel-container .ant-picker-panels{
+    display: flex !important;
+    @media(max-width: 700px){
+      flex-direction:column !important;
+    }
+
+  }
   .anticon.ant-input-clear-icon > svg{
     font-size:1.25rem;
   }
 
+.makeStyles-root-5{
+  width : auto !important;
+}
 
   a {
         color : inherit;
@@ -187,6 +224,8 @@ const GlobalStyles = createGlobalStyle`
   html{
     --antd-wave-shadow-color: none;
   }
+
+  
   
   @media (max-width : 576px) {
     html { 

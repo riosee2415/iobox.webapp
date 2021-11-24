@@ -99,7 +99,11 @@ const Index = () => {
             padding={`30px 0`}
           >
             <Wrapper dr={`row`} ju={`flex-start`}>
-              <Image src={`#`} width={`30px`} />
+              <Image
+                src={`https://4leaf-s3.s3.ap-northeast-2.amazonaws.com/iobox/assets/images/payment/history.png`}
+                width={`20px`}
+                margin={`0 10px 0 0`}
+              />
               <Text bold={true} fontSize={`1.5rem`} bold={true}>
                 예약 내역
               </Text>
@@ -163,7 +167,11 @@ const Index = () => {
             </Wrapper>
 
             <Wrapper dr={`row`} ju={`flex-start`} margin={`20px 0`}>
-              <Image src={`#`} width={`30px`} />
+              <Image
+                src={`https://4leaf-s3.s3.ap-northeast-2.amazonaws.com/iobox/assets/images/payment/avatar.png`}
+                width={`25px`}
+                margin={`0 10px 0 0`}
+              />
               <Text bold={true} fontSize={`1.5rem`} bold={true}>
                 예약자 정보
               </Text>
@@ -269,7 +277,11 @@ const Index = () => {
             <Wrapper bgColor={Theme.lightGrey_C} height={`10px`}></Wrapper>
 
             <Wrapper dr={`row`} ju={`flex-start`} margin={`20px 0`}>
-              <Image src={`#`} width={`30px`} />
+              <Image
+                src={`https://4leaf-s3.s3.ap-northeast-2.amazonaws.com/iobox/assets/images/payment/pay.png`}
+                width={`30px`}
+                margin={`0 10px 0 0`}
+              />
               <Text bold={true} fontSize={`1.5rem`} bold={true}>
                 결제 카드
               </Text>
@@ -294,9 +306,13 @@ const Index = () => {
             ></Wrapper>
 
             <Wrapper dr={`row`} ju={`flex-start`}>
-              <Image src={`#`} width={`30px`} />
+              <Image
+                src={`https://4leaf-s3.s3.ap-northeast-2.amazonaws.com/iobox/assets/images/payment/check.png`}
+                width={`25px`}
+                margin={`0 10px 0 0`}
+              />
               <Text bold={true} fontSize={`1.5rem`} bold={true}>
-                결제 카드
+                이용 동의
               </Text>
             </Wrapper>
 

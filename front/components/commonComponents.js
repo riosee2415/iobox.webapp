@@ -439,8 +439,15 @@ export const TextInput = styled.input`
     }
     &::placeholder {
       font-size: 1.3rem;
+      @media (max-width: 700px) {
+        font-size: 1rem;
+      }
       line-height: 1.6;
       color: ${(props) => props.theme.grey_C};
+    }
+    font-size: 1.3rem;
+    @media (max-width: 700px) {
+      font-size: 1rem;
     }
   }
 `;
@@ -485,6 +492,8 @@ export const GradientText = styled.h2`
   padding: ${(props) => props.padding || `0 10px 0 0`};
   -webkit-text-fill-color: transparent !important;
   -webkit-background-clip: text !important;
+  display: ${(props) => props.display};
+  opacity: ${(props) => props.opacity};
   background: ${(props) =>
     props.bgColor ||
     `linear-gradient(90deg,rgb(249, 2, 80),rgb(247, 141, 150),rgb(242, 146, 98),rgb(241, 115, 80))`};
