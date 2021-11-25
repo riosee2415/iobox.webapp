@@ -25,7 +25,7 @@ const IconBox = styled(Wrapper)`
   }
 
   &:hover ${Image} {
-    width: 50px;
+    transform: scale(1.2);
   }
 
   @media (max-width: 700px) {
@@ -84,17 +84,31 @@ const TextWrapper = styled(Wrapper)`
     transition: 0.5s;
   }
 
-  &:hover h2 {
-    background: linear-gradient(
-      90deg,
-      rgb(249, 2, 80),
-      rgb(247, 141, 150),
-      rgb(242, 146, 98),
-      rgb(241, 115, 80)
-    );
+  .hoverIcon {
+    display: none;
+  }
 
-    -webkit-text-fill-color: transparent !important;
-    -webkit-background-clip: text !important;
+  &:hover {
+    .noHoverIcon {
+      display: none;
+    }
+
+    .hoverIcon {
+      display: flex;
+    }
+
+    h2 {
+      background: linear-gradient(
+        90deg,
+        rgb(249, 2, 80),
+        rgb(247, 141, 150),
+        rgb(242, 146, 98),
+        rgb(241, 115, 80)
+      );
+
+      -webkit-text-fill-color: transparent !important;
+      -webkit-background-clip: text !important;
+    }
   }
 `;
 
@@ -348,13 +362,15 @@ const AppFooter = () => {
             display={tab ? `none` : `flex`}
           >
             <TextWrapper width={`auto`} onClick={drawarToggle}>
-              <MenuOutlined
-                style={{
-                  fontSize: `30px`,
-                  margin: `0 0 5px`,
-                  color: `rgb(224,222,222)`,
-                }}
-              />
+              <Wrapper
+                fontSize={`30px`}
+                width={`auto`}
+                margin={`0 0 5px`}
+                color={`rgb(224,222,222)`}
+                height={`35px`}
+              >
+                <MenuOutlined />
+              </Wrapper>
 
               <GradientText fontSize={`0.8rem`} bold={true} padding={`0`}>
                 메 뉴
@@ -369,8 +385,18 @@ const AppFooter = () => {
               <Image
                 src={`https://4leaf-s3.s3.ap-northeast-2.amazonaws.com/iobox/assets/images/main/grey_box.png`}
                 alt={`menuIcon`}
-                width={`30px`}
-                margin={`0 0 5px`}
+                className="noHoverIcon"
+                height={`30px`}
+                width={`auto`}
+                margin={`0 0 11px`}
+              />
+              <Image
+                src={`https://4leaf-s3.s3.ap-northeast-2.amazonaws.com/iobox/assets/images/main/iobox_dial.png`}
+                alt={`menuIcon`}
+                className="hoverIcon"
+                height={`30px`}
+                width={`auto`}
+                margin={`0 0 11px`}
               />
               <GradientText fontSize={`0.8rem`} bold={true} padding={`0`}>
                 내 보관함

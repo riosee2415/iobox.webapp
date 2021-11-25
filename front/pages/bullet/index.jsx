@@ -485,9 +485,18 @@ const Index = () => {
                   <Text fontSize={`1.4rem`} fontWeight={`700`}>
                     월 00,000원
                   </Text>
-                  <QuestionCircleOutlined
-                    style={{ fontSize: "1.6rem", color: Theme.darkGrey3_C }}
-                  />
+
+                  <Wrapper
+                    width={`20px`}
+                    height={`20px`}
+                    radius={`50%`}
+                    border={`1px solid ${Theme.grey_C}`}
+                    color={Theme.grey_C}
+                    cursor={`pointer`}
+                    margin={`0 0 0 10px`}
+                  >
+                    <Text margin={`1px 0 0 2px`}>?</Text>
+                  </Wrapper>
                 </Wrapper>
 
                 <Wrapper
@@ -741,6 +750,7 @@ const Index = () => {
                     height={width < 700 ? `50px` : `70px`}
                     border={`2px solid ${Theme.lightGrey_C}`}
                     onClick={() => setFloorModal(true)}
+                    cursor={`pointer`}
                   ></Wrapper>
                 </Wrapper>
                 <Wrapper>
@@ -998,7 +1008,9 @@ const Index = () => {
                       border={`none`}
                     />
 
-                    <SearchOutlined style={{ fontSize: `2rem` }} />
+                    <Wrapper width={`auto`} fontSize={`2rem`}>
+                      <SearchOutlined />
+                    </Wrapper>
                   </Wrapper>
 
                   <Wrapper
@@ -1041,6 +1053,7 @@ const Index = () => {
                       height={width < 700 ? `50px` : `70px`}
                       border={`2px solid ${Theme.lightGrey_C}`}
                       onClick={() => setFloorModal(true)}
+                      cursor={`pointer`}
                     ></Wrapper>
                   </Wrapper>
                 </Wrapper>

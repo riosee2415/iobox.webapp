@@ -146,6 +146,16 @@ const ElevatorSlider = ({}) => {
             height={`50px`}
             className="active"
           >
+            직접 입력
+          </Wrapper>
+
+          <Wrapper
+            display={`flex !important`}
+            al={`center`}
+            cursor={`pointer`}
+            height={`50px`}
+            className="active"
+          >
             -
           </Wrapper>
 
