@@ -1,4 +1,4 @@
-import React, { useCallback, useState } from "react";
+import React, { useCallback, useEffect, useState } from "react";
 import Theme from "../../../components/Theme";
 import {
   Wrapper,
@@ -15,6 +15,10 @@ import useWidth from "../../../hooks/useWidth";
 import { CloseOutlined, DownOutlined, UpOutlined } from "@ant-design/icons";
 import { useRouter } from "next/dist/client/router";
 import { QuestionCircleOutlined } from "@ant-design/icons";
+import { useDispatch, useSelector } from "react-redux";
+import { EVENT_LIST_REQUEST } from "../../../reducers/event";
+import useInput from "../../../hooks/useInput";
+import { Pagination } from "antd";
 
 const ImageBox = styled(Wrapper)`
   height: 150px;
@@ -36,16 +40,69 @@ const Index = () => {
   const width = useWidth();
   const router = useRouter();
 
+  const dispatch = useDispatch();
+
   ////// HOOKS //////
   const [tab, setTab] = useState(false);
+  const [currentPage, setCurrentPage] = useState(1);
+  const inputSearch = useInput("");
+  const [searchValue, setSearchValue] = useState("");
+
+  const { events, uploadEventPath, maxPage } = useSelector(
+    (state) => state.event
+  );
+
+  console.log(events);
 
   ////// REDUX //////
 
   ////// USEEFFECT //////
 
+  useEffect(() => {
+    const qs = getQs();
+    dispatch({
+      type: EVENT_LIST_REQUEST,
+      data: {
+        qs,
+      },
+    });
+  }, [router.query]);
+
   ////// TOGGLE ///////
 
   ///// HANDLER //////
+
+  const otherPageCall = useCallback(
+    (changePage) => {
+      setCurrentPage(changePage);
+      const queryString = `?page=${changePage}`;
+
+      dispatch({
+        type: EVENT_LIST_REQUEST,
+        data: {
+          qs: queryString || "",
+        },
+      });
+    },
+    [searchValue]
+  );
+
+  const getQs = () => {
+    const qs = router.query;
+
+    let value = "";
+
+    if (!qs.page) {
+      setCurrentPage(1);
+      value = "?page=1";
+    } else {
+      setCurrentPage(qs.page);
+      value = `?page=${qs.page}`;
+    }
+
+    return value;
+  };
+
   const moveBackHandler = useCallback(() => {
     router.back();
   }, []);
@@ -96,37 +153,23 @@ const Index = () => {
               이벤트
             </Text>
 
-            <ImageBox>
-              <Image src={`#`} alt={`thumbnail`} />
-            </ImageBox>
-
-            <ImageBox>
-              <Image src={`#`} alt={`thumbnail`} />
-            </ImageBox>
-
-            <ImageBox>
-              <Image src={`#`} alt={`thumbnail`} />
-            </ImageBox>
-
-            <ImageBox>
-              <Image src={`#`} alt={`thumbnail`} />
-            </ImageBox>
-
-            <ImageBox>
-              <Image src={`#`} alt={`thumbnail`} />
-            </ImageBox>
-
-            <ImageBox>
-              <Image src={`#`} alt={`thumbnail`} />
-            </ImageBox>
-
-            <ImageBox>
-              <Image src={`#`} alt={`thumbnail`} />
-            </ImageBox>
-
-            <ImageBox>
-              <Image src={`#`} alt={`thumbnail`} />
-            </ImageBox>
+            {events &&
+              events.map((data) => {
+                return (
+                  <ImageBox
+                    key={data.id}
+                    onClick={() => moveLinkHandler(`/center/event/${data.id}`)}
+                  >
+                    <Image src={data.imagePath} alt={`thumbnail`} />
+                  </ImageBox>
+                );
+              })}
+            <Pagination
+              defaultCurrent={1}
+              current={parseInt(currentPage)}
+              total={maxPage * 10}
+              onChange={(page) => otherPageCall(page)}
+            />
           </Wrapper>
         </RsWrapper>
       </Wrapper>

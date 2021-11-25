@@ -6,6 +6,12 @@ export const initailState = {
   maxPage: 1,
   modal: false,
   //
+
+  nextData: null,
+  beforeData: null,
+  eventDetail: null,
+  //
+
   st_eventListLoading: false, // 후기 가져오기
   st_eventListDone: false,
   st_eventListError: null,
@@ -22,12 +28,35 @@ export const initailState = {
   st_eventDeleteDone: false,
   st_eventDeleteError: null,
   //
+  st_eventNextLoading: false, // 이벤트 다음글
+  st_eventNextDone: false,
+  st_eventNextError: null,
+  //
+  st_eventBeforeLoading: false, // 이벤트 이전글
+  st_eventBeforeDone: false,
+  st_eventBeforeError: null,
+  //
+  st_eventDetailLoading: false, // 이벤트 디테일
+  st_eventDetailDone: false,
+  st_eventDetailError: null,
 };
 
 export const EVENT_LIST_REQUEST = "EVENT_LIST_REQUEST";
 export const EVENT_LIST_SUCCESS = "EVENT_LIST_SUCCESS";
 export const EVENT_LIST_FAILURE = "EVENT_LIST_FAILURE";
 
+export const EVENT_DETAIL_REQUEST = "EVENT_DETAIL_REQUEST";
+export const EVENT_DETAIL_SUCCESS = "EVENT_DETAIL_SUCCESS";
+export const EVENT_DETAIL_FAILURE = "EVENT_DETAIL_FAILURE";
+//
+export const EVENT_NEXT_REQUEST = "EVENT_NEXT_REQUEST";
+export const EVENT_NEXT_SUCCESS = "EVENT_NEXT_SUCCESS";
+export const EVENT_NEXT_FAILURE = "EVENT_NEXT_FAILURE";
+//
+export const EVENT_BEFORE_REQUEST = "EVENT_BEFORE_REQUEST";
+export const EVENT_BEFORE_SUCCESS = "EVENT_BEFORE_SUCCESS";
+export const EVENT_BEFORE_FAILURE = "EVENT_BEFORE_FAILURE";
+//
 export const EVENT_UPLOAD_REQUEST = "EVENT_UPLOAD_REQUEST";
 export const EVENT_UPLOAD_SUCCESS = "EVENT_UPLOAD_SUCCESS";
 export const EVENT_UPLOAD_FAILURE = "EVENT_UPLOAD_FAILURE";
@@ -61,9 +90,9 @@ const reducer = (state = initailState, action) =>
       case EVENT_LIST_SUCCESS: {
         draft.st_eventListLoading = false;
         draft.st_eventListDone = true;
-        draft.events = action.data;
+        draft.events = action.data.lists;
         // draft.events = action.data.events;
-        // draft.maxPage = action.data.lastPage;
+        draft.maxPage = action.data.lastPage;
         break;
       }
       case EVENT_LIST_FAILURE: {
@@ -148,6 +177,67 @@ const reducer = (state = initailState, action) =>
         draft.st_eventDeleteError = action.error;
         break;
       }
+
+      ///////////////////////////////////////////////////////
+      case EVENT_NEXT_REQUEST: {
+        draft.st_eventNextLoading = true;
+        draft.st_eventNextDone = null;
+        draft.st_eventNextError = false;
+        break;
+      }
+      case EVENT_NEXT_SUCCESS: {
+        draft.st_eventNextLoading = false;
+        draft.st_eventNextDone = true;
+        draft.nextData = action.data;
+        break;
+      }
+      case EVENT_NEXT_FAILURE: {
+        draft.st_eventNextLoading = false;
+        draft.st_eventNextDone = false;
+        draft.st_eventNextError = action.error;
+        break;
+      }
+      ///////////////////////////////////////////////////////
+      case EVENT_BEFORE_REQUEST: {
+        draft.st_eventBeforeLoading = true;
+        draft.st_eventBeforeDone = null;
+        draft.st_eventBeforeError = false;
+        break;
+      }
+      case EVENT_BEFORE_SUCCESS: {
+        draft.st_eventBeforeLoading = false;
+        draft.st_eventBeforeDone = true;
+        draft.beforeData = action.data;
+        break;
+      }
+      case EVENT_BEFORE_FAILURE: {
+        draft.st_eventBeforeLoading = false;
+        draft.st_eventBeforeDone = false;
+        draft.st_eventBeforeError = action.error;
+        break;
+      }
+      ///////////////////////////////////////////////////////
+      case EVENT_DETAIL_REQUEST: {
+        draft.st_eventDetailLoading = true;
+        draft.st_eventDetailDone = null;
+        draft.st_eventDetailError = false;
+        break;
+      }
+      case EVENT_DETAIL_SUCCESS: {
+        draft.st_eventDetailLoading = false;
+        draft.st_eventDetailDone = true;
+        draft.eventDetail = action.data;
+        draft.beforeData = null;
+        draft.nextData = null;
+        break;
+      }
+      case EVENT_DETAIL_FAILURE: {
+        draft.st_eventDetailLoading = false;
+        draft.st_eventDetailDone = false;
+        draft.st_eventDetailError = action.error;
+        break;
+      }
+
       ///////////////////////////////////////////////////////
       ///////////////////////////////////////////////////////
       ///////////////////////////////////////////////////////

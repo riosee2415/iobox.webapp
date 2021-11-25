@@ -87,6 +87,15 @@ const Home = ({}) => {
               src={`https://via.placeholder.com/87x170`}
               alt={`logo_Image`}
             />
+
+            {/* <KakaoLogin
+              jsKey={process.env.SNS_KAKAO_KEY}
+              onSuccess={loginKakaoHandler}
+              onFailure={(error) => {
+                console.log(error);
+              }}
+              getProfile="true"
+              render={(props) => ( */}
             <CustomButton
               width={width < 700 ? `100%` : `300px`}
               height={`60px`}
@@ -102,6 +111,9 @@ const Home = ({}) => {
               />
               카카오로 로그인
             </CustomButton>
+            {/* )} */}
+            {/* /> */}
+
             <CustomButton
               width={width < 700 ? `100%` : `300px`}
               height={`60px`}

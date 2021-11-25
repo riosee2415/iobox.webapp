@@ -1,4 +1,4 @@
-import React, { useCallback, useState } from "react";
+import React, { useCallback, useEffect, useState } from "react";
 import Theme from "../../../../components/Theme";
 import {
   Wrapper,
@@ -15,6 +15,12 @@ import useWidth from "../../../../hooks/useWidth";
 import { CloseOutlined, DownOutlined, UpOutlined } from "@ant-design/icons";
 import { useRouter } from "next/dist/client/router";
 import { NotificationOutlined } from "@ant-design/icons";
+import { useDispatch, useSelector } from "react-redux";
+import {
+  FAQ_BEFORE_REQUEST,
+  FAQ_DETAIL_REQUEST,
+  FAQ_NEXT_REQUEST,
+} from "../../../../reducers/faq";
 
 const TableWrapper = styled(Wrapper)`
   border-bottom: 1px solid ${Theme.lightGrey_C};
@@ -30,13 +36,41 @@ const TableWrapper = styled(Wrapper)`
 const Index = () => {
   const width = useWidth();
   const router = useRouter();
+  const dispatch = useDispatch();
 
   ////// HOOKS //////
   const [tab, setTab] = useState(false);
+  const { faqDetail, beforeData, nextData } = useSelector((state) => state.faq);
 
   ////// REDUX //////
 
   ////// USEEFFECT //////
+
+  useEffect(() => {
+    dispatch({
+      type: FAQ_DETAIL_REQUEST,
+      data: {
+        faqId: router.query.id,
+      },
+    });
+  }, [router.query]);
+
+  useEffect(() => {
+    dispatch({
+      type: FAQ_NEXT_REQUEST,
+      data: {
+        faqId: router.query.id,
+      },
+    });
+  }, [router.query]);
+  useEffect(() => {
+    dispatch({
+      type: FAQ_BEFORE_REQUEST,
+      data: {
+        faqId: router.query.id,
+      },
+    });
+  }, [router.query]);
 
   ////// TOGGLE ///////
 
@@ -75,26 +109,46 @@ const Index = () => {
         >
           <Wrapper al={`flex-start`}>
             <Text bold={true} fontSize={`2rem`} margin={`0 0 10px`}>
-              공지사항
+              자주 묻는 질문
             </Text>
 
             <Wrapper padding={`10px 0`} al={`flex-start`} ju={`flex-start`}>
-              내용이 들어올 곳 입니다.
+              Q: {faqDetail && faqDetail.question}
+            </Wrapper>
+            <Wrapper padding={`10px 0`} al={`flex-start`} ju={`flex-start`}>
+              A: {faqDetail && faqDetail.question}
             </Wrapper>
           </Wrapper>
 
           <Wrapper dr={`row`} ju={`space-between`}>
             <CommonButton
-              width={`calc(100% / 2 - 10px)`}
+              width={`calc(100% / 3 - 10px)`}
               height={`50px`}
-              kindOf={`white`}
-              onClick={moveBackHandler}
+              onClick={() => moveLinkHandler(`/center/faq`)}
             >
-              이전
+              목록
             </CommonButton>
-            <CommonButton width={`calc(100% / 2 - 10px)`} height={`50px`}>
-              다음
-            </CommonButton>
+
+            {beforeData && (
+              <CommonButton
+                width={`calc(100% / 3 - 10px)`}
+                height={`50px`}
+                kindOf={`white`}
+                onClick={() => moveLinkHandler(`/center/faq/${beforeData.id}`)}
+              >
+                이전
+              </CommonButton>
+            )}
+
+            {nextData && (
+              <CommonButton
+                width={`calc(100% / 3 - 10px)`}
+                height={`50px`}
+                onClick={() => moveLinkHandler(`/center/faq/${nextData.id}`)}
+              >
+                다음
+              </CommonButton>
+            )}
           </Wrapper>
         </RsWrapper>
       </Wrapper>

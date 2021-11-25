@@ -3,8 +3,14 @@ import produce from "../util/produce";
 export const initailState = {
   notices: null,
   maxPage: 1,
+  //
+  nextData: null,
+  beforeData: null,
+  //
   createModal: false,
   detailModal: false,
+
+  noticeDetail: null,
   //
   st_noticeListLoading: false, // 공지사항 가져오기
   st_noticeListDone: false,
@@ -22,11 +28,34 @@ export const initailState = {
   st_noticeDeleteDone: false,
   st_noticeDeleteError: null,
   //
+  st_noticeNextLoading: false, // 공지사항 다음글
+  st_noticeNextDone: false,
+  st_noticeNextError: null,
+  //
+  st_noticeBeforeLoading: false, // 공지사항 이전글
+  st_noticeBeforeDone: false,
+  st_noticeBeforeError: null,
+  //
+  st_noticeDetailLoading: false, // 공지사항 디테일
+  st_noticeDetailDone: false,
+  st_noticeDetailError: null,
 };
 
 export const NOTICE_LIST_REQUEST = "NOTICE_LIST_REQUEST";
 export const NOTICE_LIST_SUCCESS = "NOTICE_LIST_SUCCESS";
 export const NOTICE_LIST_FAILURE = "NOTICE_LIST_FAILURE";
+//
+export const NOTICE_DETAIL_REQUEST = "NOTICE_DETAIL_REQUEST";
+export const NOTICE_DETAIL_SUCCESS = "NOTICE_DETAIL_SUCCESS";
+export const NOTICE_DETAIL_FAILURE = "NOTICE_DETAIL_FAILURE";
+//
+export const NOTICE_NEXT_REQUEST = "NOTICE_NEXT_REQUEST";
+export const NOTICE_NEXT_SUCCESS = "NOTICE_NEXT_SUCCESS";
+export const NOTICE_NEXT_FAILURE = "NOTICE_NEXT_FAILURE";
+//
+export const NOTICE_BEFORE_REQUEST = "NOTICE_BEFORE_REQUEST";
+export const NOTICE_BEFORE_SUCCESS = "NOTICE_BEFORE_SUCCESS";
+export const NOTICE_BEFORE_FAILURE = "NOTICE_BEFORE_FAILURE";
 //
 export const NOTICE_CREATE_REQUEST = "NOTICE_CREATE_REQUEST";
 export const NOTICE_CREATE_SUCCESS = "NOTICE_CREATE_SUCCESS";
@@ -122,6 +151,66 @@ const reducer = (state = initailState, action) =>
         draft.st_noticeDeleteError = action.error;
         break;
       }
+      ///////////////////////////////////////////////////////
+      case NOTICE_NEXT_REQUEST: {
+        draft.st_noticeNextLoading = true;
+        draft.st_noticeNextDone = null;
+        draft.st_noticeNextError = false;
+        break;
+      }
+      case NOTICE_NEXT_SUCCESS: {
+        draft.st_noticeNextLoading = false;
+        draft.st_noticeNextDone = true;
+        draft.nextData = action.data;
+        break;
+      }
+      case NOTICE_NEXT_FAILURE: {
+        draft.st_noticeNextLoading = false;
+        draft.st_noticeNextDone = false;
+        draft.st_noticeNextError = action.error;
+        break;
+      }
+      ///////////////////////////////////////////////////////
+      case NOTICE_BEFORE_REQUEST: {
+        draft.st_noticeBeforeLoading = true;
+        draft.st_noticeBeforeDone = null;
+        draft.st_noticeBeforeError = false;
+        break;
+      }
+      case NOTICE_BEFORE_SUCCESS: {
+        draft.st_noticeBeforeLoading = false;
+        draft.st_noticeBeforeDone = true;
+        draft.beforeData = action.data;
+        break;
+      }
+      case NOTICE_BEFORE_FAILURE: {
+        draft.st_noticeBeforeLoading = false;
+        draft.st_noticeBeforeDone = false;
+        draft.st_noticeBeforeError = action.error;
+        break;
+      }
+      ///////////////////////////////////////////////////////
+      case NOTICE_DETAIL_REQUEST: {
+        draft.st_noticeDetailLoading = true;
+        draft.st_noticeDetailDone = null;
+        draft.st_noticeDetailError = false;
+        break;
+      }
+      case NOTICE_DETAIL_SUCCESS: {
+        draft.st_noticeDetailLoading = false;
+        draft.st_noticeDetailDone = true;
+        draft.noticeDetail = action.data;
+        draft.beforeData = null;
+        draft.nextData = null;
+        break;
+      }
+      case NOTICE_DETAIL_FAILURE: {
+        draft.st_noticeDetailLoading = false;
+        draft.st_noticeDetailDone = false;
+        draft.st_noticeDetailError = action.error;
+        break;
+      }
+
       ///////////////////////////////////////////////////////
       ///////////////////////////////////////////////////////
       ///////////////////////////////////////////////////////
