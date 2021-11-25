@@ -185,6 +185,78 @@ router.get("/list", async (req, res, next) => {
   }
 });
 
+router.get("/list/:guideId", async (req, res, next) => {
+  const { guideId } = req.params;
+
+  try {
+    const exGuide = await Guide.findOne({
+      where: { id: parseInt(guideId) },
+    });
+
+    if (!exGuide) {
+      return res.status(401).send("존재하지 않는 이용안내 입니다.");
+    }
+
+    return res.status(200).json(exGuide);
+  } catch (error) {
+    console.error(error);
+    return res
+      .status(401)
+      .send("이용안내 정보를 불러올 수 없습니다. [CODE 107]");
+  }
+});
+
+router.get("/next/:guideId", async (req, res, next) => {
+  const { guideId } = req.params;
+
+  try {
+    const guides = await Guide.findAll({
+      where: {
+        id: {
+          [Op.gt]: parseInt(guideId),
+        },
+      },
+      limit: 1,
+    });
+
+    if (!guides[0]) {
+      return res.status(401).send("마지막 이용안내 입니다.");
+    }
+
+    return res.redirect(`/api/guide/list/${guides[0].id}`);
+  } catch (error) {
+    console.error(error);
+    return res
+      .status(401)
+      .send("이용안내 정보를 불러올 수 없습니다. [CODE 107]");
+  }
+});
+
+router.get("/prev/:guideId", async (req, res, next) => {
+  const { guideId } = req.params;
+
+  try {
+    const guides = await Guide.findAll({
+      where: {
+        id: {
+          [Op.lt]: parseInt(guideId),
+        },
+      },
+    });
+
+    if (!guides[0]) {
+      return res.status(401).send("첫번째 이용안내 입니다.");
+    }
+
+    return res.redirect(`/api/guide/list/${guides[guides.length - 1].id}`);
+  } catch (error) {
+    console.error(error);
+    return res
+      .status(401)
+      .send("이용안내 정보를 불러올 수 없습니다. [CODE 107]");
+  }
+});
+
 router.post(
   "/create",
   isAdminCheck,
