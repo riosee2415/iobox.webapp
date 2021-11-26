@@ -1,12 +1,12 @@
 import { Carousel } from "antd";
-import React, { useEffect, useRef, useState } from "react";
+import React, { useCallback, useEffect, useRef, useState } from "react";
 import { Wrapper, Text, Image } from "../commonComponents";
 import Theme from "../Theme";
 import styled from "styled-components";
 import { LeftOutlined, RightOutlined } from "@ant-design/icons";
 import useWidth from "../../hooks/useWidth";
 import { current } from "immer";
-import { useRouter } from "next/dist/client/router";
+import { useRouter } from "next/router";
 
 const BoxWrapper = styled(Wrapper)`
   width: calc(100% / 4);
@@ -59,6 +59,7 @@ const BoxSlider = ({
   const [slideDatum, setSlideDatum] = useState(null);
 
   const slideRef = useRef();
+  const router = useRouter();
 
   // if (!refDatum) {
   //   const tempRef = [];
@@ -72,12 +73,30 @@ const BoxSlider = ({
 
   const moveSlideHandler = (isNext) => {
     if (isNext) {
+      // if (router.query.type === "iobox") {
+      //   router.push(`/iobox?type=hangerBox`);
+      // }
+      // if (router.query.type === "hangerBox") {
+      //   router.push(`/iobox?type=bigBox`);
+      // }
+      // if (router.query.type === "bigBox") {
+      //   router.push(`/iobox?type=tentBox`);
+      // }
+      // if (router.query.type === "tentBox") {
+      //   router.push(`/iobox?type=hangerBox`);
+      // }
+
       for (let i = 0; i < slideDatum.length; i++) {
-        if (slideRef.current) slideRef.current.next();
+        // console.log(slideRef.current);
+        if (slideRef.current) {
+          slideRef.current.next();
+        }
       }
     } else {
       for (let i = 0; i < slideDatum.length; i++) {
-        if (slideRef.current) slideRef.current.prev();
+        if (slideRef.current) {
+          slideRef.current.prev();
+        }
       }
     }
   };
@@ -129,6 +148,10 @@ const BoxSlider = ({
     return null;
   }
 
+  // const change = useCallback(() => {
+  //   console.log("sss");
+  // }, []);
+
   return (
     <Wrapper display={`block`} position={`relative`}>
       {arrow && (
@@ -163,6 +186,7 @@ const BoxSlider = ({
       )}
 
       <Carousel
+        // onChange={change}
         effect={effect}
         dots={false}
         slidesToShow={1}
@@ -181,7 +205,7 @@ const BoxSlider = ({
                   bgColor={Theme.subTheme2_C}
                   key={idx}
                 >
-                  {slide}
+                  {slide}io
                 </Wrapper>
               ) : idx === 1 ? (
                 <Wrapper
@@ -190,7 +214,7 @@ const BoxSlider = ({
                   bgColor={Theme.subTheme2_C}
                   key={idx}
                 >
-                  {slide}
+                  {slide}han
                 </Wrapper>
               ) : idx === 2 ? (
                 <Wrapper
@@ -199,7 +223,7 @@ const BoxSlider = ({
                   bgColor={Theme.subTheme2_C}
                   key={idx}
                 >
-                  {slide}
+                  {slide}big
                 </Wrapper>
               ) : (
                 <Wrapper
@@ -208,7 +232,7 @@ const BoxSlider = ({
                   bgColor={Theme.subTheme2_C}
                   key={idx}
                 >
-                  {slide}
+                  {slide}tnt
                 </Wrapper>
               )}
             </Wrapper>

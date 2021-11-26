@@ -29,6 +29,18 @@ const Index = () => {
   ////// TOGGLE ///////
 
   ///// HANDLER //////
+
+  const clip = useCallback(() => {
+    let url = "";
+    const textarea = document.createElement("textarea");
+    document.body.appendChild(textarea);
+    url = window.document.location.href;
+    textarea.value = url;
+    textarea.select();
+    document.execCommand("copy");
+    document.body.removeChild(textarea);
+  }, []);
+
   const moveBackHandler = useCallback(() => {
     router.back();
   }, []);
@@ -190,6 +202,8 @@ const Index = () => {
               <Image
                 src={`https://4leaf-s3.s3.ap-northeast-2.amazonaws.com/iobox/assets/images/consulitng/link.png`}
                 alt={`kakao_image`}
+                onClick={clip}
+                cursor={`pointer`}
               />
             </Wrapper>
           </Wrapper>

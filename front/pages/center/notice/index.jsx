@@ -148,6 +148,7 @@ const Index = () => {
               notices.map((data) => {
                 return (
                   <TableWrapper
+                    key={data.id}
                     onClick={() => moveLinkHandler(`/center/notice/${data.id}`)}
                   >
                     <Wrapper

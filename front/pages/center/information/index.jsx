@@ -156,7 +156,7 @@ const Index = () => {
               infos.map((data) => {
                 return (
                   <TableWrapper
-                    key={data.length}
+                    key={data.id}
                     onClick={() =>
                       moveLinkHandler(`/center/information/${data.id}`)
                     }
