@@ -91,6 +91,10 @@ router.post(
   upload.single("image"),
   async (req, res, next) => {
     const { title } = req.body;
+
+    console.log(title);
+    console.log(req.file);
+
     try {
       const createResult = await Event.create({
         title,
