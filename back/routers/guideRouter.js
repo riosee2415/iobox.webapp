@@ -258,69 +258,68 @@ router.get("/prev/:guideId", async (req, res, next) => {
 });
 
 router.post(
-  "/create",
+  "/image",
   isAdminCheck,
   upload.single("image"),
   async (req, res, next) => {
-    const { type, title, content } = req.body;
-    try {
-      const createResult = await Guide.create({
+    return res.json({ path: req.file.location });
+  }
+);
+
+router.post("/create", isAdminCheck, async (req, res, next) => {
+  const { type, title, content, imagePath } = req.body;
+  try {
+    const createResult = await Guide.create({
+      GuideTypeId: parseInt(type),
+      title,
+      content,
+      imagePath,
+    });
+
+    if (!createResult) {
+      return res.status(401).send("처리중 문제가 발생하였습니다.");
+    }
+
+    return res.status(201).json({ result: true });
+  } catch (error) {
+    console.error(error);
+    return res.status(401).send("이용안내를 추가할 수 없습니다.");
+  }
+});
+
+router.patch("/update", isAdminCheck, async (req, res, next) => {
+  const { id, type, title, content, imagePath } = req.body;
+  try {
+    const exGuide = await Guide.findOne({
+      where: { id: parseInt(id) },
+    });
+
+    if (!exGuide) {
+      return res.status(401).send("존재하지 않는 이용안내입니다.");
+    }
+
+    const updateResult = await Guide.update(
+      {
         GuideTypeId: parseInt(type),
         title,
         content,
-        imagePath: req.file ? req.file.location : null,
-      });
-
-      if (!createResult) {
-        return res.status(401).send("처리중 문제가 발생하였습니다.");
-      }
-
-      return res.status(201).json({ result: true });
-    } catch (error) {
-      console.error(error);
-      return res.status(401).send("이용안내를 추가할 수 없습니다.");
-    }
-  }
-);
-
-router.patch(
-  "/update",
-  isAdminCheck,
-  upload.single("image"),
-  async (req, res, next) => {
-    const { id, type, title, content } = req.body;
-    try {
-      const exGuide = await Guide.findOne({
+        imagePath,
+      },
+      {
         where: { id: parseInt(id) },
-      });
-
-      if (!exGuide) {
-        return res.status(401).send("존재하지 않는 이용안내입니다.");
       }
+    );
 
-      const updateResult = await Guide.update(
-        {
-          GuideTypeId: parseInt(type),
-          title,
-          content,
-          imagePath: req.file ? req.file.location : null,
-        },
-        {
-          where: { id: parseInt(id) },
-        }
-      );
-
-      if (updateResult[0] > 0) {
-        return res.status(200).json({ result: true });
-      } else {
-        return res.status(200).json({ result: false });
-      }
-    } catch (error) {
-      console.error(error);
-      return res.status(401).send("이용안내를 수정할 수 없습니다.");
+    if (updateResult[0] > 0) {
+      return res.status(200).json({ result: true });
+    } else {
+      return res.status(200).json({ result: false });
     }
+  } catch (error) {
+    console.error(error);
+    return res.status(401).send("이용안내를 수정할 수 없습니다.");
   }
-);
+});
 
 router.delete("/delete/:guideId", isAdminCheck, async (req, res, next) => {
   const { guideId } = req.params;

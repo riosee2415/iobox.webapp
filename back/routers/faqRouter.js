@@ -260,69 +260,68 @@ router.get("/prev/:faqId", async (req, res, next) => {
 });
 
 router.post(
-  "/create",
+  "/image",
   isAdminCheck,
   upload.single("image"),
   async (req, res, next) => {
-    const { type, question, answer } = req.body;
-    try {
-      const createResult = await Faq.create({
+    return res.json({ path: req.file.location });
+  }
+);
+
+router.post("/create", isAdminCheck, async (req, res, next) => {
+  const { type, question, answer, imagePath } = req.body;
+  try {
+    const createResult = await Faq.create({
+      FaqTypeId: parseInt(type),
+      question,
+      answer,
+      imagePath,
+    });
+
+    if (!createResult) {
+      return res.status(401).send("처리중 문제가 발생하였습니다.");
+    }
+
+    return res.status(201).json({ result: true });
+  } catch (error) {
+    console.error(error);
+    return res.status(401).send("FAQ를 추가할 수 없습니다.");
+  }
+});
+
+router.patch("/update", isAdminCheck, async (req, res, next) => {
+  const { id, type, question, answer, imagePath } = req.body;
+  try {
+    const exFaq = await Faq.findOne({
+      where: { id: parseInt(id) },
+    });
+
+    if (!exFaq) {
+      return res.status(401).send("존재하지 않는 FAQ입니다.");
+    }
+
+    const updateResult = await Faq.update(
+      {
         FaqTypeId: parseInt(type),
         question,
         answer,
-        imagePath: req.file ? req.file.location : null,
-      });
-
-      if (!createResult) {
-        return res.status(401).send("처리중 문제가 발생하였습니다.");
-      }
-
-      return res.status(201).json({ result: true });
-    } catch (error) {
-      console.error(error);
-      return res.status(401).send("FAQ를 추가할 수 없습니다.");
-    }
-  }
-);
-
-router.patch(
-  "/update",
-  isAdminCheck,
-  upload.single("image"),
-  async (req, res, next) => {
-    const { id, type, question, answer } = req.body;
-    try {
-      const exFaq = await Faq.findOne({
+        imagePath,
+      },
+      {
         where: { id: parseInt(id) },
-      });
-
-      if (!exFaq) {
-        return res.status(401).send("존재하지 않는 FAQ입니다.");
       }
+    );
 
-      const updateResult = await Faq.update(
-        {
-          FaqTypeId: parseInt(type),
-          question,
-          answer,
-          imagePath: req.file ? req.file.location : null,
-        },
-        {
-          where: { id: parseInt(id) },
-        }
-      );
-
-      if (updateResult[0] > 0) {
-        return res.status(200).json({ result: true });
-      } else {
-        return res.status(200).json({ result: false });
-      }
-    } catch (error) {
-      console.error(error);
-      return res.status(401).send("FAQ를 수정할 수 없습니다.");
+    if (updateResult[0] > 0) {
+      return res.status(200).json({ result: true });
+    } else {
+      return res.status(200).json({ result: false });
     }
+  } catch (error) {
+    console.error(error);
+    return res.status(401).send("FAQ를 수정할 수 없습니다.");
   }
-);
+});
 
 router.delete("/delete/:faqId", isAdminCheck, async (req, res, next) => {
   const { faqId } = req.params;

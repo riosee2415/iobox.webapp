@@ -329,7 +329,16 @@ router.get("/listOne/:boxId", async (req, res, next) => {
   }
 });
 
-router.post("/create", upload.single("image"), async (req, res, next) => {
+router.post(
+  "/image",
+  isAdminCheck,
+  upload.single("image"),
+  async (req, res, next) => {
+    return res.json({ path: req.file.location });
+  }
+);
+
+router.post("/create", async (req, res, next) => {
   const {
     type,
     period,
@@ -343,6 +352,7 @@ router.post("/create", upload.single("image"), async (req, res, next) => {
     detailAddress,
     remark,
     isFilming,
+    imagePath,
   } = req.body;
   try {
     const createResult = await KeepBox.create({
@@ -358,7 +368,7 @@ router.post("/create", upload.single("image"), async (req, res, next) => {
       detailAddress,
       remark,
       isFilming,
-      imagePath: req.file ? req.file.location : null,
+      imagePath,
     });
 
     if (!createResult) {
@@ -372,7 +382,7 @@ router.post("/create", upload.single("image"), async (req, res, next) => {
   }
 });
 
-router.patch("/update", upload.single("image"), async (req, res, next) => {
+router.patch("/update", async (req, res, next) => {
   const {
     id,
     type,
@@ -387,6 +397,7 @@ router.patch("/update", upload.single("image"), async (req, res, next) => {
     detailAddress,
     remark,
     isFilming,
+    imagePath,
   } = req.body;
   try {
     const exBox = await KeepBox.findOne({
@@ -411,7 +422,7 @@ router.patch("/update", upload.single("image"), async (req, res, next) => {
         detailAddress,
         remark,
         isFilming,
-        imagePath: req.file ? req.file.location : null,
+        imagePath,
       },
       {
         where: { id: parseInt(id) },
@@ -482,8 +493,8 @@ router.get("/image/list", async (req, res, next) => {
   }
 });
 
-router.post("/image/create", upload.single("image"), async (req, res, next) => {
-  const { KeepBoxId } = req.body;
+router.post("/image/create", async (req, res, next) => {
+  const { KeepBoxId, imagePath } = req.body;
 
   if (isNaN(KeepBoxId)) {
     return res.status(401).send("잘못된 요청입니다.");
@@ -492,7 +503,7 @@ router.post("/image/create", upload.single("image"), async (req, res, next) => {
     const createResult = await BoxImage.create(
       {
         KeepBoxId: parseInt(KeepBoxId),
-        imagePath: req.file ? req.file.location : null,
+        imagePath,
       },
       {
         include: [
@@ -514,40 +525,36 @@ router.post("/image/create", upload.single("image"), async (req, res, next) => {
   }
 });
 
-router.patch(
-  "/image/update",
-  upload.single("image"),
-  async (req, res, next) => {
-    const { id } = req.body;
-    try {
-      const exImage = await BoxImage.findOne({
-        where: { id: parseInt(id) },
-      });
+router.patch("/image/update", async (req, res, next) => {
+  const { id, imagePath } = req.body;
+  try {
+    const exImage = await BoxImage.findOne({
+      where: { id: parseInt(id) },
+    });
 
-      if (!exImage) {
-        return res.status(401).send("존재하지 않는 이미지 입니다.");
-      }
-
-      const updateResult = await BoxImage.update(
-        {
-          imagePath: req.file ? req.file.location : null,
-        },
-        {
-          where: { id: parseInt(id) },
-        }
-      );
-
-      if (updateResult[0] > 0) {
-        return res.status(200).json({ result: true });
-      } else {
-        return res.status(200).json({ result: false });
-      }
-    } catch (error) {
-      console.error(error);
-      return res.status(401).send("이미지를 수정할 수 없습니다.");
+    if (!exImage) {
+      return res.status(401).send("존재하지 않는 이미지 입니다.");
     }
+
+    const updateResult = await BoxImage.update(
+      {
+        imagePath,
+      },
+      {
+        where: { id: parseInt(id) },
+      }
+    );
+
+    if (updateResult[0] > 0) {
+      return res.status(200).json({ result: true });
+    } else {
+      return res.status(200).json({ result: false });
+    }
+  } catch (error) {
+    console.error(error);
+    return res.status(401).send("이미지를 수정할 수 없습니다.");
   }
-);
+});
 
 router.delete("/image/delete/:imageId", async (req, res, next) => {
   const { imageId } = req.params;

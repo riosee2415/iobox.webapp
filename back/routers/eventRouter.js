@@ -152,69 +152,65 @@ router.get("/prev/:eventId", async (req, res, next) => {
 });
 
 router.post(
-  "/create",
+  "/image",
   isAdminCheck,
   upload.single("image"),
   async (req, res, next) => {
-    const { title } = req.body;
+    return res.json({ path: req.file.location });
+  }
+);
 
-    console.log(title);
-    console.log(req.file);
+router.post("/create", isAdminCheck, async (req, res, next) => {
+  const { title, imagePath } = req.body;
 
-    try {
-      const createResult = await Event.create({
+  try {
+    const createResult = await Event.create({
+      title,
+      imagePath,
+    });
+
+    if (!createResult) {
+      return res.status(401).send("처리중 문제가 발생하였습니다.");
+    }
+
+    return res.status(201).json({ result: true });
+  } catch (error) {
+    console.error(error);
+    return res.status(401).send("이벤트를 추가할 수 없습니다.");
+  }
+});
+
+router.patch("/update", isAdminCheck, async (req, res, next) => {
+  const { id, title, imagePath } = req.body;
+  try {
+    const exEvent = await Event.findOne({
+      where: { id: parseInt(id) },
+    });
+
+    if (!exEvent) {
+      return res.status(401).send("존재하지 않는 이벤트입니다.");
+    }
+
+    const updateResult = await Event.update(
+      {
         title,
-        imagePath: req.file ? req.file.location : null,
-      });
-
-      if (!createResult) {
-        return res.status(401).send("처리중 문제가 발생하였습니다.");
-      }
-
-      return res.status(201).json({ result: true });
-    } catch (error) {
-      console.error(error);
-      return res.status(401).send("이벤트를 추가할 수 없습니다.");
-    }
-  }
-);
-
-router.patch(
-  "/update",
-  isAdminCheck,
-  upload.single("image"),
-  async (req, res, next) => {
-    const { id, title } = req.body;
-    try {
-      const exEvent = await Event.findOne({
+        imagePath,
+      },
+      {
         where: { id: parseInt(id) },
-      });
-
-      if (!exEvent) {
-        return res.status(401).send("존재하지 않는 이벤트입니다.");
       }
+    );
 
-      const updateResult = await Event.update(
-        {
-          title,
-          imagePath: req.file ? req.file.location : null,
-        },
-        {
-          where: { id: parseInt(id) },
-        }
-      );
-
-      if (updateResult[0] > 0) {
-        return res.status(200).json({ result: true });
-      } else {
-        return res.status(200).json({ result: false });
-      }
-    } catch (error) {
-      console.error(error);
-      return res.status(401).send("이벤트를 수정할 수 없습니다.");
+    if (updateResult[0] > 0) {
+      return res.status(200).json({ result: true });
+    } else {
+      return res.status(200).json({ result: false });
     }
+  } catch (error) {
+    console.error(error);
+    return res.status(401).send("이벤트를 수정할 수 없습니다.");
   }
-);
+});
 
 router.delete("/delete/:eventId", isAdminCheck, async (req, res, next) => {
   const { eventId } = req.params;
