@@ -90,13 +90,8 @@ const reducer = (state = initailState, action) =>
       case EVENT_LIST_SUCCESS: {
         draft.st_eventListLoading = false;
         draft.st_eventListDone = true;
-<<<<<<< HEAD
-        // draft.events = action.data;
-        draft.events = action.data.events;
-=======
         draft.events = action.data.lists;
         // draft.events = action.data.events;
->>>>>>> 30a40c68225cf60fd13b8d60e33e4d987a75efbf
         draft.maxPage = action.data.lastPage;
         break;
       }
