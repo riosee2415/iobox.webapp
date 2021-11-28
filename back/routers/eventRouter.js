@@ -85,6 +85,72 @@ router.get("/list", async (req, res, next) => {
   }
 });
 
+router.get("/list/:eventId", async (req, res, next) => {
+  const { eventId } = req.params;
+
+  try {
+    const exEvent = await Event.findOne({
+      where: { id: parseInt(eventId) },
+    });
+
+    if (!exEvent) {
+      return res.status(401).send("존재하지 않는 이벤트 입니다.");
+    }
+
+    return res.status(200).json(exEvent);
+  } catch (error) {
+    console.error(error);
+    return res.status(401).send("이벤트 정보를 불러올 수 없습니다. [CODE 107]");
+  }
+});
+
+router.get("/next/:eventId", async (req, res, next) => {
+  const { eventId } = req.params;
+
+  try {
+    const events = await Event.findAll({
+      where: {
+        id: {
+          [Op.gt]: parseInt(eventId),
+        },
+      },
+      limit: 1,
+    });
+
+    if (!events[0]) {
+      return res.status(401).send("마지막 이벤트 입니다.");
+    }
+
+    return res.redirect(`/api/event/list/${events[0].id}`);
+  } catch (error) {
+    console.error(error);
+    return res.status(401).send("이벤트 정보를 불러올 수 없습니다. [CODE 107]");
+  }
+});
+
+router.get("/prev/:eventId", async (req, res, next) => {
+  const { eventId } = req.params;
+
+  try {
+    const events = await Event.findAll({
+      where: {
+        id: {
+          [Op.lt]: parseInt(eventId),
+        },
+      },
+    });
+
+    if (!events[0]) {
+      return res.status(401).send("첫번째 이벤트 입니다.");
+    }
+
+    return res.redirect(`/api/event/list/${events[events.length - 1].id}`);
+  } catch (error) {
+    console.error(error);
+    return res.status(401).send("이벤트 정보를 불러올 수 없습니다. [CODE 107]");
+  }
+});
+
 router.post(
   "/create",
   isAdminCheck,

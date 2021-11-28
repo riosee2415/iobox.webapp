@@ -1,4 +1,4 @@
-import React, { useCallback, useState } from "react";
+import React, { useCallback, useEffect, useState } from "react";
 import Theme from "../../../components/Theme";
 import {
   Wrapper,
@@ -15,6 +15,10 @@ import useWidth from "../../../hooks/useWidth";
 import { CloseOutlined, DownOutlined, UpOutlined } from "@ant-design/icons";
 import { useRouter } from "next/dist/client/router";
 import { QuestionCircleOutlined } from "@ant-design/icons";
+import { useDispatch, useSelector } from "react-redux";
+import { FAQ_LIST_REQUEST } from "../../../reducers/faq";
+import useInput from "../../../hooks/useInput";
+import { Pagination } from "antd";
 
 const TableWrapper = styled(Wrapper)`
   border-bottom: 1px solid ${Theme.lightGrey_C};
@@ -33,14 +37,65 @@ const Index = () => {
 
   ////// HOOKS //////
   const [tab, setTab] = useState(false);
+  const dispatch = useDispatch();
+  const { faqs, uploadFaqPath, maxPage } = useSelector((state) => state.faq);
+
+  const [currentPage, setCurrentPage] = useState(1);
+  const inputSearch = useInput("");
+  const [searchValue, setSearchValue] = useState("");
 
   ////// REDUX //////
-
+  // console.log(maxPage);
   ////// USEEFFECT //////
+  useEffect(() => {
+    const qs = getQs();
+    dispatch({
+      type: FAQ_LIST_REQUEST,
+      data: {
+        qs,
+      },
+    });
+  }, [router.query]);
 
   ////// TOGGLE ///////
 
   ///// HANDLER //////
+
+  const otherPageCall = useCallback(
+    (changePage) => {
+      setCurrentPage(changePage);
+      const queryString = `?page=${changePage}`;
+
+      dispatch({
+        type: FAQ_LIST_REQUEST,
+        data: {
+          qs: queryString || "",
+        },
+      });
+    },
+    [searchValue]
+  );
+
+  const getQs = () => {
+    const qs = router.query;
+
+    let value = "";
+
+    if (!qs.page) {
+      setCurrentPage(1);
+      value = "?page=1";
+    } else {
+      setCurrentPage(qs.page);
+      value = `?page=${qs.page}`;
+    }
+
+    if (qs.search) {
+      value += `&searchTitle=${qs.search}`;
+      setSearchValue(qs.search);
+    }
+
+    return value;
+  };
   const moveBackHandler = useCallback(() => {
     router.back();
   }, []);
@@ -91,85 +146,36 @@ const Index = () => {
               자주 묻는 질문
             </Text>
 
-            <TableWrapper>
-              <Wrapper
-                width={`50px`}
-                color={Theme.basicTheme_C}
-                fontSize={`25px`}
-              >
-                <QuestionCircleOutlined />
-              </Wrapper>
-              <Wrapper width={`calc(100% - 50px)`} al={`flex-start`}>
-                <Text fontSize={`0.7rem`} color={Theme.grey_C}>
-                  [타입]
-                </Text>
-                <Text>내용이 들어올 곳 입니다.</Text>
-              </Wrapper>
-            </TableWrapper>
+            {faqs &&
+              faqs.map((data) => {
+                return (
+                  <TableWrapper
+                    key={data.id}
+                    onClick={() => moveLinkHandler(`/center/faq/${data.id}`)}
+                  >
+                    <Wrapper
+                      width={`50px`}
+                      color={Theme.basicTheme_C}
+                      fontSize={`25px`}
+                    >
+                      <QuestionCircleOutlined />
+                    </Wrapper>
+                    <Wrapper width={`calc(100% - 50px)`} al={`flex-start`}>
+                      <Text fontSize={`0.7rem`} color={Theme.grey_C}>
+                        {data.FaqTypeId}
+                      </Text>
+                      <Text>{data.question}</Text>
+                    </Wrapper>
+                  </TableWrapper>
+                );
+              })}
 
-            <TableWrapper>
-              <Wrapper
-                width={`50px`}
-                color={Theme.basicTheme_C}
-                fontSize={`25px`}
-              >
-                <QuestionCircleOutlined />
-              </Wrapper>
-              <Wrapper width={`calc(100% - 50px)`} al={`flex-start`}>
-                <Text fontSize={`0.7rem`} color={Theme.grey_C}>
-                  [타입]
-                </Text>
-                <Text>내용이 들어올 곳 입니다.</Text>
-              </Wrapper>
-            </TableWrapper>
-
-            <TableWrapper>
-              <Wrapper
-                width={`50px`}
-                color={Theme.basicTheme_C}
-                fontSize={`25px`}
-              >
-                <QuestionCircleOutlined />
-              </Wrapper>
-              <Wrapper width={`calc(100% - 50px)`} al={`flex-start`}>
-                <Text fontSize={`0.7rem`} color={Theme.grey_C}>
-                  [타입]
-                </Text>
-                <Text>내용이 들어올 곳 입니다.</Text>
-              </Wrapper>
-            </TableWrapper>
-
-            <TableWrapper>
-              <Wrapper
-                width={`50px`}
-                color={Theme.basicTheme_C}
-                fontSize={`25px`}
-              >
-                <QuestionCircleOutlined />
-              </Wrapper>
-              <Wrapper width={`calc(100% - 50px)`} al={`flex-start`}>
-                <Text fontSize={`0.7rem`} color={Theme.grey_C}>
-                  [타입]
-                </Text>
-                <Text>내용이 들어올 곳 입니다.</Text>
-              </Wrapper>
-            </TableWrapper>
-
-            <TableWrapper>
-              <Wrapper
-                width={`50px`}
-                color={Theme.basicTheme_C}
-                fontSize={`25px`}
-              >
-                <QuestionCircleOutlined />
-              </Wrapper>
-              <Wrapper width={`calc(100% - 50px)`} al={`flex-start`}>
-                <Text fontSize={`0.7rem`} color={Theme.grey_C}>
-                  [타입]
-                </Text>
-                <Text>내용이 들어올 곳 입니다.</Text>
-              </Wrapper>
-            </TableWrapper>
+            <Pagination
+              defaultCurrent={1}
+              current={parseInt(currentPage)}
+              total={maxPage * 10}
+              onChange={(page) => otherPageCall(page)}
+            />
           </Wrapper>
         </RsWrapper>
       </Wrapper>

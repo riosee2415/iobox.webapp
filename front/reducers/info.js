@@ -6,6 +6,11 @@ export const initailState = {
   uploadInfoPath: "",
   maxPage: 1,
   modal: false,
+
+  nextData: null,
+  beforeData: null,
+  infoDetail: null,
+
   //
   st_infoListLoading: false, // 가이드 가져오기
   st_infoListDone: false,
@@ -39,12 +44,35 @@ export const initailState = {
   st_infoTypeDeleteDone: false,
   st_infoTypeDeleteError: null,
   //
+  st_informationNextLoading: false, // 공지사항 다음글
+  st_informationNextDone: false,
+  st_informationNextError: null,
+  //
+  st_informationBeforeLoading: false, // 공지사항 이전글
+  st_informationBeforeDone: false,
+  st_informationBeforeError: null,
+  //
+  st_informationDetailLoading: false, // 공지사항 디테일
+  st_informationDetailDone: false,
+  st_informationDetailError: null,
 };
 
 export const INFO_LIST_REQUEST = "INFO_LIST_REQUEST";
 export const INFO_LIST_SUCCESS = "INFO_LIST_SUCCESS";
 export const INFO_LIST_FAILURE = "INFO_LIST_FAILURE";
-
+//
+export const INFORMATION_DETAIL_REQUEST = "INFORMATION_DETAIL_REQUEST";
+export const INFORMATION_DETAIL_SUCCESS = "INFORMATION_DETAIL_SUCCESS";
+export const INFORMATION_DETAIL_FAILURE = "INFORMATION_DETAIL_FAILURE";
+//
+export const INFORMATION_NEXT_REQUEST = "INFORMATION_NEXT_REQUEST";
+export const INFORMATION_NEXT_SUCCESS = "INFORMATION_NEXT_SUCCESS";
+export const INFORMATION_NEXT_FAILURE = "INFORMATION_NEXT_FAILURE";
+//
+export const INFORMATION_BEFORE_REQUEST = "INFORMATION_BEFORE_REQUEST";
+export const INFORMATION_BEFORE_SUCCESS = "INFORMATION_BEFORE_SUCCESS";
+export const INFORMATION_BEFORE_FAILURE = "INFORMATION_BEFORE_FAILURE";
+//
 export const INFO_UPLOAD_REQUEST = "INFO_UPLOAD_REQUEST";
 export const INFO_UPLOAD_SUCCESS = "INFO_UPLOAD_SUCCESS";
 export const INFO_UPLOAD_FAILURE = "INFO_UPLOAD_FAILURE";
@@ -98,9 +126,9 @@ const reducer = (state = initailState, action) =>
       case INFO_LIST_SUCCESS: {
         draft.st_infoListLoading = false;
         draft.st_infoListDone = true;
-        draft.infos = action.data;
+        draft.infos = action.data.lists;
         // draft.infos = action.data.infos;
-        // draft.maxPage = action.data.lastPage;
+        draft.maxPage = action.data.lastPage;
         break;
       }
       case INFO_LIST_FAILURE: {
@@ -280,6 +308,65 @@ const reducer = (state = initailState, action) =>
         draft.st_infoTypeDeleteLoading = false;
         draft.st_infoTypeDeleteDone = false;
         draft.st_infoTypeDeleteError = action.error;
+        break;
+      }
+      ///////////////////////////////////////////////////////
+      case INFORMATION_NEXT_REQUEST: {
+        draft.st_informationNextLoading = true;
+        draft.st_informationNextDone = null;
+        draft.st_informationNextError = false;
+        break;
+      }
+      case INFORMATION_NEXT_SUCCESS: {
+        draft.st_informationNextLoading = false;
+        draft.st_informationNextDone = true;
+        draft.nextData = action.data;
+        break;
+      }
+      case INFORMATION_NEXT_FAILURE: {
+        draft.st_informationNextLoading = false;
+        draft.st_informationNextDone = false;
+        draft.st_informationNextError = action.error;
+        break;
+      }
+      ///////////////////////////////////////////////////////
+      case INFORMATION_BEFORE_REQUEST: {
+        draft.st_informationBeforeLoading = true;
+        draft.st_informationBeforeDone = null;
+        draft.st_informationBeforeError = false;
+        break;
+      }
+      case INFORMATION_BEFORE_SUCCESS: {
+        draft.st_informationBeforeLoading = false;
+        draft.st_informationBeforeDone = true;
+        draft.beforeData = action.data;
+        break;
+      }
+      case INFORMATION_BEFORE_FAILURE: {
+        draft.st_informationBeforeLoading = false;
+        draft.st_informationBeforeDone = false;
+        draft.st_informationBeforeError = action.error;
+        break;
+      }
+      ///////////////////////////////////////////////////////
+      case INFORMATION_DETAIL_REQUEST: {
+        draft.st_informationDetailLoading = true;
+        draft.st_informationDetailDone = null;
+        draft.st_informationDetailError = false;
+        break;
+      }
+      case INFORMATION_DETAIL_SUCCESS: {
+        draft.st_informationDetailLoading = false;
+        draft.st_informationDetailDone = true;
+        draft.infoDetail = action.data;
+        draft.beforeData = null;
+        draft.nextData = null;
+        break;
+      }
+      case INFORMATION_DETAIL_FAILURE: {
+        draft.st_informationDetailLoading = false;
+        draft.st_informationDetailDone = false;
+        draft.st_informationDetailError = action.error;
         break;
       }
 

@@ -1,4 +1,4 @@
-import React, { useCallback, useState } from "react";
+import React, { useCallback, useEffect, useState } from "react";
 import Theme from "../../../components/Theme";
 import {
   Wrapper,
@@ -15,6 +15,10 @@ import useWidth from "../../../hooks/useWidth";
 import { CloseOutlined, DownOutlined, UpOutlined } from "@ant-design/icons";
 import { useRouter } from "next/dist/client/router";
 import { NotificationOutlined } from "@ant-design/icons";
+import useInput from "../../../hooks/useInput";
+import { useDispatch, useSelector } from "react-redux";
+import { INFO_LIST_REQUEST } from "../../../reducers/info";
+import { Pagination } from "antd";
 
 const TableWrapper = styled(Wrapper)`
   border-bottom: 1px solid ${Theme.lightGrey_C};
@@ -34,13 +38,70 @@ const Index = () => {
   ////// HOOKS //////
   const [tab, setTab] = useState(false);
 
+  const dispatch = useDispatch();
+
+  const [currentPage, setCurrentPage] = useState(1);
+  const inputSearch = useInput("");
+  const [searchValue, setSearchValue] = useState("");
+
+  const { infos, maxPage } = useSelector((state) => state.info);
   ////// REDUX //////
 
+  // Test Datum
+
   ////// USEEFFECT //////
+
+  useEffect(() => {
+    const qs = getQs();
+    dispatch({
+      type: INFO_LIST_REQUEST,
+      data: {
+        qs,
+      },
+    });
+  }, [router.query]);
 
   ////// TOGGLE ///////
 
   ///// HANDLER //////
+
+  const otherPageCall = useCallback(
+    (changePage) => {
+      setCurrentPage(changePage);
+      const queryString = `?page=${changePage}&search=${searchValue}`;
+
+      dispatch({
+        type: INFO_LIST_REQUEST,
+        data: {
+          qs: queryString || "",
+        },
+      });
+    },
+    [searchValue]
+  );
+
+  console.log(maxPage);
+  const getQs = () => {
+    const qs = router.query;
+
+    let value = "";
+
+    if (!qs.page) {
+      setCurrentPage(1);
+      value = "?page=1";
+    } else {
+      setCurrentPage(qs.page);
+      value = `?page=${qs.page}`;
+    }
+
+    if (qs.search) {
+      value += `&searchTitle=${qs.search}`;
+      setSearchValue(qs.search);
+    }
+
+    return value;
+  };
+
   const moveBackHandler = useCallback(() => {
     router.back();
   }, []);
@@ -90,40 +151,30 @@ const Index = () => {
               이용안내
             </Text>
 
-            <TableWrapper>
-              <Wrapper al={`flex-start`}>
-                <Text fontSize={`0.7rem`}>타입</Text>
-                <Text>내용이 들어올 곳 입니다.</Text>
-              </Wrapper>
-            </TableWrapper>
+            {console.log(infos)}
+            {infos &&
+              infos.map((data) => {
+                return (
+                  <TableWrapper
+                    key={data.id}
+                    onClick={() =>
+                      moveLinkHandler(`/center/information/${data.id}`)
+                    }
+                  >
+                    <Wrapper al={`flex-start`}>
+                      <Text fontSize={`0.7rem`}>{data.type}</Text>
+                      <Text>{data.title}</Text>
+                    </Wrapper>
+                  </TableWrapper>
+                );
+              })}
 
-            <TableWrapper>
-              <Wrapper al={`flex-start`}>
-                <Text fontSize={`0.7rem`}>타입</Text>
-                <Text>내용이 들어올 곳 입니다.</Text>
-              </Wrapper>
-            </TableWrapper>
-
-            <TableWrapper>
-              <Wrapper al={`flex-start`}>
-                <Text fontSize={`0.7rem`}>타입</Text>
-                <Text>내용이 들어올 곳 입니다.</Text>
-              </Wrapper>
-            </TableWrapper>
-
-            <TableWrapper>
-              <Wrapper al={`flex-start`}>
-                <Text fontSize={`0.7rem`}>타입</Text>
-                <Text>내용이 들어올 곳 입니다.</Text>
-              </Wrapper>
-            </TableWrapper>
-
-            <TableWrapper>
-              <Wrapper al={`flex-start`}>
-                <Text fontSize={`0.7rem`}>타입</Text>
-                <Text>내용이 들어올 곳 입니다.</Text>
-              </Wrapper>
-            </TableWrapper>
+            <Pagination
+              defaultCurrent={1}
+              current={parseInt(currentPage)}
+              total={maxPage * 10}
+              onChange={(page) => otherPageCall(page)}
+            />
           </Wrapper>
         </RsWrapper>
       </Wrapper>

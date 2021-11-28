@@ -20,6 +20,18 @@ import {
   EVENT_DELETE_REQUEST,
   EVENT_DELETE_SUCCESS,
   EVENT_DELETE_FAILURE,
+  //
+  EVENT_NEXT_REQUEST,
+  EVENT_NEXT_SUCCESS,
+  EVENT_NEXT_FAILURE,
+  //
+  EVENT_BEFORE_REQUEST,
+  EVENT_BEFORE_SUCCESS,
+  EVENT_BEFORE_FAILURE,
+  //
+  EVENT_DETAIL_REQUEST,
+  EVENT_DETAIL_SUCCESS,
+  EVENT_DETAIL_FAILURE,
 } from "../reducers/event";
 
 // SAGA AREA ********************************************************************************************************
@@ -157,6 +169,91 @@ function* eventDelete(action) {
 // ******************************************************************************************************************
 // ******************************************************************************************************************
 
+// ******************************************************************************************************************
+// ******************************************************************************************************************
+// ******************************************************************************************************************
+// SAGA AREA ********************************************************************************************************
+// ******************************************************************************************************************
+function eventNextAPI(data) {
+  return axios.get(`/api/event/next/${data.eventId}`);
+}
+
+function* eventNext(action) {
+  try {
+    const result = yield call(eventNextAPI, action.data);
+
+    yield put({
+      type: EVENT_NEXT_SUCCESS,
+      data: result.data,
+    });
+  } catch (err) {
+    console.error(err);
+    yield put({
+      type: EVENT_NEXT_FAILURE,
+      error: err.response.data,
+    });
+  }
+}
+
+// ******************************************************************************************************************
+// ******************************************************************************************************************
+// ******************************************************************************************************************
+
+// SAGA AREA ********************************************************************************************************
+// ******************************************************************************************************************
+function eventBeforeAPI(data) {
+  return axios.get(`/api/event/prev/${data.eventId}`);
+}
+
+function* eventBefore(action) {
+  try {
+    const result = yield call(eventBeforeAPI, action.data);
+
+    yield put({
+      type: EVENT_BEFORE_SUCCESS,
+      data: result.data,
+    });
+  } catch (err) {
+    console.error(err);
+    yield put({
+      type: EVENT_BEFORE_FAILURE,
+      error: err.response.data,
+    });
+  }
+}
+
+// ******************************************************************************************************************
+// ******************************************************************************************************************
+// ******************************************************************************************************************
+
+// SAGA AREA ********************************************************************************************************
+// ******************************************************************************************************************
+
+function eventDetailAPI(data) {
+  return axios.get(`/api/event/list/${data.eventId}`);
+}
+
+function* eventDetail(action) {
+  try {
+    const result = yield call(eventDetailAPI, action.data);
+
+    yield put({
+      type: EVENT_DETAIL_SUCCESS,
+      data: result.data,
+    });
+  } catch (err) {
+    console.error(err);
+    yield put({
+      type: EVENT_DETAIL_FAILURE,
+      error: err.response.data,
+    });
+  }
+}
+
+// ******************************************************************************************************************
+// ******************************************************************************************************************
+// ******************************************************************************************************************
+
 //////////////////////////////////////////////////////////////
 function* watchEventList() {
   yield takeLatest(EVENT_LIST_REQUEST, eventList);
@@ -177,7 +274,15 @@ function* watchEventUpdate() {
 function* watchEventDelete() {
   yield takeLatest(EVENT_DELETE_REQUEST, eventDelete);
 }
-
+function* watchEventDetail() {
+  yield takeLatest(EVENT_DETAIL_REQUEST, eventDetail);
+}
+function* watchEventNext() {
+  yield takeLatest(EVENT_NEXT_REQUEST, eventNext);
+}
+function* watchEventBefore() {
+  yield takeLatest(EVENT_BEFORE_REQUEST, eventBefore);
+}
 //////////////////////////////////////////////////////////////
 export default function* eventSaga() {
   yield all([
@@ -186,6 +291,9 @@ export default function* eventSaga() {
     fork(watchEventCreate),
     fork(watchEventUpdate),
     fork(watchEventDelete),
+    fork(watchEventDetail),
+    fork(watchEventNext),
+    fork(watchEventBefore),
     //
   ]);
 }

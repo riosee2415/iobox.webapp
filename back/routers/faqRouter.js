@@ -6,6 +6,7 @@ const AWS = require("aws-sdk");
 const multerS3 = require("multer-s3");
 const { FaqType, Faq } = require("../models");
 const isAdminCheck = require("../middlewares/isAdminCheck");
+const { Op } = require("sequelize");
 
 const router = express.Router();
 
@@ -141,15 +142,120 @@ router.delete(
 //FAQ
 
 router.get("/list", async (req, res, next) => {
+  const { page, search } = req.query;
+
+  const LIMIT = 10;
+
+  const _page = page ? page : 1;
+  const _search = search ? search : "";
+
+  const __page = _page - 1;
+  const OFFSET = __page * 10;
+
   try {
-    const lists = await Faq.findAll({
-      where: { isDelete: false },
+    const totalFaqs = await Faq.findAll({
+      where: {
+        question: {
+          [Op.like]: `%${_search}%`,
+        },
+        isDelete: false,
+      },
+      include: [
+        {
+          model: FaqType,
+        },
+      ],
     });
 
-    return res.status(200).json(lists);
+    const faqLen = totalFaqs.length;
+
+    const lastPage = faqLen % LIMIT > 0 ? faqLen / LIMIT + 1 : faqLen / LIMIT;
+
+    const faqs = await Faq.findAll({
+      offset: OFFSET,
+      limit: LIMIT,
+      where: {
+        question: {
+          [Op.like]: `%${_search}%`,
+        },
+        isDelete: false,
+      },
+      include: [
+        {
+          model: FaqType,
+        },
+      ],
+    });
+    return res.status(200).json({ faqs, lastPage: parseInt(lastPage) });
   } catch (error) {
     console.error(error);
     return res.status(401).send("FAQ 목록을 불러올 수 없습니다.");
+  }
+});
+
+router.get("/list/:faqId", async (req, res, next) => {
+  const { faqId } = req.params;
+
+  try {
+    const exFaq = await Faq.findOne({
+      where: { id: parseInt(faqId) },
+    });
+
+    if (!exFaq) {
+      return res.status(401).send("존재하지 않는 FAQ 입니다.");
+    }
+
+    return res.status(200).json(exFaq);
+  } catch (error) {
+    console.error(error);
+    return res.status(401).send("FAQ 정보를 불러올 수 없습니다. [CODE 107]");
+  }
+});
+
+router.get("/next/:faqId", async (req, res, next) => {
+  const { faqId } = req.params;
+
+  try {
+    const faqs = await Faq.findAll({
+      where: {
+        id: {
+          [Op.gt]: parseInt(faqId),
+        },
+      },
+      limit: 1,
+    });
+
+    if (!faqs[0]) {
+      return res.status(401).send("마지막 FAQ 입니다.");
+    }
+
+    return res.redirect(`/api/faq/list/${faqs[0].id}`);
+  } catch (error) {
+    console.error(error);
+    return res.status(401).send("FAQ 정보를 불러올 수 없습니다. [CODE 107]");
+  }
+});
+
+router.get("/prev/:faqId", async (req, res, next) => {
+  const { faqId } = req.params;
+
+  try {
+    const faqs = await Faq.findAll({
+      where: {
+        id: {
+          [Op.lt]: parseInt(faqId),
+        },
+      },
+    });
+
+    if (!faqs[0]) {
+      return res.status(401).send("첫번째 FAQ 입니다.");
+    }
+
+    return res.redirect(`/api/faq/list/${faqs[faqs.length - 1].id}`);
+  } catch (error) {
+    console.error(error);
+    return res.status(401).send("FAQ 정보를 불러올 수 없습니다. [CODE 107]");
   }
 });
 

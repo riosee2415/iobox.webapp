@@ -40,6 +40,18 @@ import {
   INFO_TYPE_DELETE_REQUEST,
   INFO_TYPE_DELETE_SUCCESS,
   INFO_TYPE_DELETE_FAILURE,
+  //
+  INFORMATION_NEXT_REQUEST,
+  INFORMATION_NEXT_SUCCESS,
+  INFORMATION_NEXT_FAILURE,
+  //
+  INFORMATION_BEFORE_REQUEST,
+  INFORMATION_BEFORE_SUCCESS,
+  INFORMATION_BEFORE_FAILURE,
+  //
+  INFORMATION_DETAIL_REQUEST,
+  INFORMATION_DETAIL_SUCCESS,
+  INFORMATION_DETAIL_FAILURE,
 } from "../reducers/info";
 
 // SAGA AREA ********************************************************************************************************
@@ -287,6 +299,86 @@ function* infoTypeUpdate(action) {
 // ******************************************************************************************************************
 // ******************************************************************************************************************
 
+// ******************************************************************************************************************
+// ******************************************************************************************************************
+// ******************************************************************************************************************
+// SAGA AREA ********************************************************************************************************
+// ******************************************************************************************************************
+function infoNextAPI(data) {
+  console.log(data);
+  return axios.get(`/api/guide/next/${data.guideId}`);
+}
+
+function* infoNext(action) {
+  try {
+    const result = yield call(infoNextAPI, action.data);
+
+    yield put({
+      type: INFORMATION_NEXT_SUCCESS,
+      data: result.data,
+    });
+  } catch (err) {
+    console.error(err);
+    yield put({
+      type: INFORMATION_NEXT_FAILURE,
+      error: err.response.data,
+    });
+  }
+}
+
+// ******************************************************************************************************************
+// ******************************************************************************************************************
+// ******************************************************************************************************************
+
+// SAGA AREA ********************************************************************************************************
+// ******************************************************************************************************************
+function infoBeforeAPI(data) {
+  return axios.get(`/api/guide/prev/${data.guideId}`);
+}
+
+function* infoBefore(action) {
+  try {
+    const result = yield call(infoBeforeAPI, action.data);
+
+    yield put({
+      type: INFORMATION_BEFORE_SUCCESS,
+      data: result.data,
+    });
+  } catch (err) {
+    console.error(err);
+    yield put({
+      type: INFORMATION_BEFORE_FAILURE,
+      error: err.response.data,
+    });
+  }
+}
+
+// ******************************************************************************************************************
+// ******************************************************************************************************************
+// ******************************************************************************************************************
+
+function infoDetailAPI(data) {
+  console.log(data);
+  return axios.get(`/api/guide/list/${data.guideId}`);
+}
+
+function* infoDetail(action) {
+  try {
+    const result = yield call(infoDetailAPI, action.data);
+
+    yield put({
+      type: INFORMATION_DETAIL_SUCCESS,
+      data: result.data,
+    });
+  } catch (err) {
+    console.error(err);
+    yield put({
+      type: INFORMATION_DETAIL_FAILURE,
+      error: err.response.data,
+    });
+  }
+}
+
 // SAGA AREA ********************************************************************************************************
 // ******************************************************************************************************************
 function infoTypeDeleteAPI(data) {
@@ -354,7 +446,15 @@ function* watchInfoTypeUpdate() {
 function* watchInfoTypeDelete() {
   yield takeLatest(INFO_TYPE_DELETE_REQUEST, infoTypeDelete);
 }
-
+function* watchInfoDetail() {
+  yield takeLatest(INFORMATION_DETAIL_REQUEST, infoDetail);
+}
+function* watchInfoNext() {
+  yield takeLatest(INFORMATION_NEXT_REQUEST, infoNext);
+}
+function* watchInfoBefore() {
+  yield takeLatest(INFORMATION_BEFORE_REQUEST, infoBefore);
+}
 //////////////////////////////////////////////////////////////
 export default function* infoSaga() {
   yield all([
@@ -369,5 +469,9 @@ export default function* infoSaga() {
     fork(watchInfoTypeCreate),
     fork(watchInfoTypeUpdate),
     fork(watchInfoTypeDelete),
+    //
+    fork(watchInfoDetail),
+    fork(watchInfoNext),
+    fork(watchInfoBefore),
   ]);
 }

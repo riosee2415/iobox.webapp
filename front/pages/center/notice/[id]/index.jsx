@@ -1,4 +1,4 @@
-import React, { useCallback, useState } from "react";
+import React, { useCallback, useEffect, useState } from "react";
 import Theme from "../../../../components/Theme";
 import {
   Wrapper,
@@ -15,6 +15,12 @@ import useWidth from "../../../../hooks/useWidth";
 import { CloseOutlined, DownOutlined, UpOutlined } from "@ant-design/icons";
 import { useRouter } from "next/dist/client/router";
 import { NotificationOutlined } from "@ant-design/icons";
+import { useDispatch, useSelector } from "react-redux";
+import {
+  NOTICE_BEFORE_REQUEST,
+  NOTICE_DETAIL_REQUEST,
+  NOTICE_NEXT_REQUEST,
+} from "../../../../reducers/notice";
 
 const TableWrapper = styled(Wrapper)`
   border-bottom: 1px solid ${Theme.lightGrey_C};
@@ -33,10 +39,43 @@ const Index = () => {
 
   ////// HOOKS //////
   const [tab, setTab] = useState(false);
+  const dispatch = useDispatch();
+
+  const { noticeDetail, beforeData, nextData } = useSelector(
+    (state) => state.notice
+  );
 
   ////// REDUX //////
 
+  console.log(nextData, "1");
+  console.log(beforeData, "2");
   ////// USEEFFECT //////
+
+  useEffect(() => {
+    dispatch({
+      type: NOTICE_DETAIL_REQUEST,
+      data: {
+        noticeId: router.query.id,
+      },
+    });
+  }, [router.query]);
+
+  useEffect(() => {
+    dispatch({
+      type: NOTICE_NEXT_REQUEST,
+      data: {
+        noticeId: router.query.id,
+      },
+    });
+  }, [router.query]);
+  useEffect(() => {
+    dispatch({
+      type: NOTICE_BEFORE_REQUEST,
+      data: {
+        noticeId: router.query.id,
+      },
+    });
+  }, [router.query]);
 
   ////// TOGGLE ///////
 
@@ -75,26 +114,46 @@ const Index = () => {
         >
           <Wrapper al={`flex-start`}>
             <Text bold={true} fontSize={`2rem`} margin={`0 0 10px`}>
-              자주 묻는 질문
+              공지사항
             </Text>
 
             <Wrapper padding={`10px 0`} al={`flex-start`} ju={`flex-start`}>
-              내용이 들어올 곳 입니다.
+              {noticeDetail && noticeDetail.content}
+              {console.log(noticeDetail)}
             </Wrapper>
           </Wrapper>
 
           <Wrapper dr={`row`} ju={`space-between`}>
             <CommonButton
-              width={`calc(100% / 2 - 10px)`}
+              width={`calc(100% / 3 - 10px)`}
               height={`50px`}
-              kindOf={`white`}
-              onClick={moveBackHandler}
+              onClick={() => moveLinkHandler(`/center/notice`)}
             >
-              이전
+              목록
             </CommonButton>
-            <CommonButton width={`calc(100% / 2 - 10px)`} height={`50px`}>
-              다음
-            </CommonButton>
+
+            {beforeData && (
+              <CommonButton
+                width={`calc(100% / 3 - 10px)`}
+                height={`50px`}
+                kindOf={`white`}
+                onClick={() =>
+                  moveLinkHandler(`/center/notice/${beforeData.id}`)
+                }
+              >
+                이전
+              </CommonButton>
+            )}
+
+            {nextData && (
+              <CommonButton
+                width={`calc(100% / 3 - 10px)`}
+                height={`50px`}
+                onClick={() => moveLinkHandler(`/center/notice/${nextData.id}`)}
+              >
+                다음
+              </CommonButton>
+            )}
           </Wrapper>
         </RsWrapper>
       </Wrapper>

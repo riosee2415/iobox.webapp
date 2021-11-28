@@ -20,6 +20,18 @@ import {
   FAQ_DELETE_REQUEST,
   FAQ_DELETE_SUCCESS,
   FAQ_DELETE_FAILURE,
+  //
+  FAQ_NEXT_REQUEST,
+  FAQ_NEXT_SUCCESS,
+  FAQ_NEXT_FAILURE,
+  //
+  FAQ_BEFORE_REQUEST,
+  FAQ_BEFORE_SUCCESS,
+  FAQ_BEFORE_FAILURE,
+  //
+  FAQ_DETAIL_REQUEST,
+  FAQ_DETAIL_SUCCESS,
+  FAQ_DETAIL_FAILURE,
 } from "../reducers/faq";
 
 // SAGA AREA ********************************************************************************************************
@@ -157,6 +169,91 @@ function* faqDelete(action) {
 // ******************************************************************************************************************
 // ******************************************************************************************************************
 
+// ******************************************************************************************************************
+// ******************************************************************************************************************
+// ******************************************************************************************************************
+// SAGA AREA ********************************************************************************************************
+// ******************************************************************************************************************
+function faqNextAPI(data) {
+  return axios.get(`/api/faq/next/${data.faqId}`);
+}
+
+function* faqNext(action) {
+  try {
+    const result = yield call(faqNextAPI, action.data);
+
+    yield put({
+      type: FAQ_NEXT_SUCCESS,
+      data: result.data,
+    });
+  } catch (err) {
+    console.error(err);
+    yield put({
+      type: FAQ_NEXT_FAILURE,
+      error: err.response.data,
+    });
+  }
+}
+
+// ******************************************************************************************************************
+// ******************************************************************************************************************
+// ******************************************************************************************************************
+
+// SAGA AREA ********************************************************************************************************
+// ******************************************************************************************************************
+function faqBeforeAPI(data) {
+  return axios.get(`/api/faq/prev/${data.faqId}`);
+}
+
+function* faqBefore(action) {
+  try {
+    const result = yield call(faqBeforeAPI, action.data);
+
+    yield put({
+      type: FAQ_BEFORE_SUCCESS,
+      data: result.data,
+    });
+  } catch (err) {
+    console.error(err);
+    yield put({
+      type: FAQ_BEFORE_FAILURE,
+      error: err.response.data,
+    });
+  }
+}
+
+// ******************************************************************************************************************
+// ******************************************************************************************************************
+// ******************************************************************************************************************
+
+// SAGA AREA ********************************************************************************************************
+// ******************************************************************************************************************
+
+function faqDetailAPI(data) {
+  return axios.get(`/api/faq/list/${data.faqId}`);
+}
+
+function* faqDetail(action) {
+  try {
+    const result = yield call(faqDetailAPI, action.data);
+
+    yield put({
+      type: FAQ_DETAIL_SUCCESS,
+      data: result.data,
+    });
+  } catch (err) {
+    console.error(err);
+    yield put({
+      type: FAQ_DETAIL_FAILURE,
+      error: err.response.data,
+    });
+  }
+}
+
+// ******************************************************************************************************************
+// ******************************************************************************************************************
+// ******************************************************************************************************************
+
 //////////////////////////////////////////////////////////////
 function* watchFaqList() {
   yield takeLatest(FAQ_LIST_REQUEST, faqList);
@@ -177,7 +274,15 @@ function* watchFaqUpdate() {
 function* watchFaqDelete() {
   yield takeLatest(FAQ_DELETE_REQUEST, faqDelete);
 }
-
+function* watchFaqDetail() {
+  yield takeLatest(FAQ_DETAIL_REQUEST, faqDetail);
+}
+function* watchFaqNext() {
+  yield takeLatest(FAQ_NEXT_REQUEST, faqNext);
+}
+function* watchFaqBefore() {
+  yield takeLatest(FAQ_BEFORE_REQUEST, faqBefore);
+}
 //////////////////////////////////////////////////////////////
 export default function* faqSaga() {
   yield all([
@@ -186,6 +291,9 @@ export default function* faqSaga() {
     fork(watchFaqCreate),
     fork(watchFaqUpdate),
     fork(watchFaqDelete),
+    fork(watchFaqDetail),
+    fork(watchFaqNext),
+    fork(watchFaqBefore),
     //
   ]);
 }

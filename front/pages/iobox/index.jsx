@@ -147,7 +147,16 @@ const Index = () => {
               minHeight={`100vh`}
             >
               <Text bold={true} fontSize={`2rem`}>
-                io박스
+                {router.query &&
+                  (router.query.type === "iobox" || !router.query.type) &&
+                  "io박스"}
+                {router.query && router.query.type === "tentBox" && "텐트박스"}
+                {router.query &&
+                  router.query.type === "hangerBox" &&
+                  "행거박스"}
+                {router.query &&
+                  router.query.type === "bigBox" &&
+                  "대용량 박스"}
               </Text>
               <Wrapper al={`flex-start`} margin={`10px 0 0`}>
                 <Text>배송&#38;보관박스 크기</Text>
@@ -161,7 +170,18 @@ const Index = () => {
                   fontSize={`1.5rem`}
                   margin={`30px 0 0`}
                 >
-                  iO 베이직 월 9,000원
+                  {router.query &&
+                    (router.query.type === "iobox" || !router.query.type) &&
+                    "iO 베이직 월 9,000원"}
+                  {router.query &&
+                    router.query.type === "tentBox" &&
+                    "iO 베이직 월 49,000원"}
+                  {router.query &&
+                    router.query.type === "hangerBox" &&
+                    "iO 베이직 월 9,000원"}
+                  {router.query &&
+                    router.query.type === "bigBox" &&
+                    "iO 베이직 월 11,900원"}
                 </Text>
                 <TextButton onClick={moreTabToggle}>자세히 보기</TextButton>
               </Wrapper>
