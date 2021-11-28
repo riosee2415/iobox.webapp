@@ -475,7 +475,7 @@ router.delete("/delete/:boxId", async (req, res, next) => {
 
 router.get("/image/list", async (req, res, next) => {
   try {
-    const list = await BoxType.findAll({
+    const list = await BoxImage.findAll({
       where: {
         isDelete: false,
       },
