@@ -61,6 +61,7 @@ const Home = () => {
 
     setTimeout(() => {
       sessionStorage.setItem("KJAKJ&&DJ%K#ASD", "true");
+      // setTimout 2000이 아쉽네요 - 재완 -
     }, [2000]);
   }, [main]);
 
@@ -101,6 +102,8 @@ const Home = () => {
   useEffect(() => {
     setLengthData1(0);
     setLengthData2(0);
+
+    // 코드가 2번 도는 느낌이 드는데 제가 코드를 제대로 본건 아니라 잘 모르겠네요 - 재완 -
     if (String(value).length === 1) {
       setLengthData1(0);
       setLengthData2(String(value)[0]);
@@ -127,6 +130,7 @@ const Home = () => {
   return (
     <>
       <FirstWrapper
+        // 젤 밖에 {}로 !firstRendar 로 하는게 더 이해가 쉽지 않을까요? - 재완 -
         display={firstRender === "true" ? `none` : `flex`}
         position={`fixed`}
         className={main ? `main` : `notMain`}

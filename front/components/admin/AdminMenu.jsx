@@ -126,8 +126,14 @@ const AdminMenu = () => {
           <Menu.Item key="/admin/board/notice/list">
             <MenuName>공지사항 관리</MenuName>
           </Menu.Item>
-          <Menu.Item key="/admin/board/gallery/list">
-            <MenuName>갤러리 관리</MenuName>
+          <Menu.Item key="/admin/board/info/list">
+            <MenuName>이용 안내</MenuName>
+          </Menu.Item>
+          <Menu.Item key="/admin/board/faq/list">
+            <MenuName>자주 묻는 질문</MenuName>
+          </Menu.Item>
+          <Menu.Item key="/admin/board/event">
+            <MenuName>이벤트</MenuName>
           </Menu.Item>
         </SubMenu>
         <SubMenu

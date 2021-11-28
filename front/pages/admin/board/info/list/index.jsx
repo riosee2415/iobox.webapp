@@ -164,7 +164,6 @@ const Index = () => {
 
   ////// USEEFFECT //////
   useEffect(() => {
-    console.log("???");
     const qs = getQs();
     dispatch({
       type: INFO_LIST_REQUEST,

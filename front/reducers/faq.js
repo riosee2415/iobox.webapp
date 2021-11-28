@@ -6,19 +6,19 @@ export const initailState = {
   maxPage: 1,
   modal: false,
   //
-  st_faqListLoading: false, // 후기 가져오기
+  st_faqListLoading: false, // 자주 묻는 질문 가져오기
   st_faqListDone: false,
   st_faqListError: null,
   //
-  st_faqCreateLoading: false, // 후기 만들기
+  st_faqCreateLoading: false, // 자주 묻는 질문 만들기
   st_faqCreateDone: false,
   st_faqCreateError: null,
   //
-  st_faqUpdateLoading: false, // 후기 업데이트
+  st_faqUpdateLoading: false, // 자주 묻는 질문 업데이트
   st_faqUpdateDone: false,
   st_faqUpdateError: null,
   //
-  st_faqDeleteLoading: false, // 후기 삭제
+  st_faqDeleteLoading: false, // 자주 묻는 질문 삭제
   st_faqDeleteDone: false,
   st_faqDeleteError: null,
   //

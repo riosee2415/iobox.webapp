@@ -23,19 +23,19 @@ export const initailState = {
   st_infoDeleteDone: false,
   st_infoDeleteError: null,
   //
-  st_infoTypeListLoading: false, // 가이드 가져오기
+  st_infoTypeListLoading: false, // 가이드 유형 가져오기
   st_infoTypeListDone: false,
   st_infoTypeListError: null,
   //
-  st_infoTypeCreateLoading: false, // 가이드 만들기
+  st_infoTypeCreateLoading: false, // 가이드 유형 만들기
   st_infoTypeCreateDone: false,
   st_infoTypeCreateError: null,
   //
-  st_infoTypeUpdateLoading: false, // 가이드 업데이트
+  st_infoTypeUpdateLoading: false, // 가이드 유형 업데이트
   st_infoTypeUpdateDone: false,
   st_infoTypeUpdateError: null,
   //
-  st_infoTypeDeleteLoading: false, // 가이드 삭제
+  st_infoTypeDeleteLoading: false, // 가이드 유형 삭제
   st_infoTypeDeleteDone: false,
   st_infoTypeDeleteError: null,
   //

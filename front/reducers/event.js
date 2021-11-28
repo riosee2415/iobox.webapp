@@ -6,19 +6,19 @@ export const initailState = {
   maxPage: 1,
   modal: false,
   //
-  st_eventListLoading: false, // 후기 가져오기
+  st_eventListLoading: false, // 이벤트 가져오기
   st_eventListDone: false,
   st_eventListError: null,
   //
-  st_eventCreateLoading: false, // 후기 만들기
+  st_eventCreateLoading: false, // 이벤트 만들기
   st_eventCreateDone: false,
   st_eventCreateError: null,
   //
-  st_eventUpdateLoading: false, // 후기 업데이트
+  st_eventUpdateLoading: false, // 이벤트 업데이트
   st_eventUpdateDone: false,
   st_eventUpdateError: null,
   //
-  st_eventDeleteLoading: false, // 후기 삭제
+  st_eventDeleteLoading: false, // 이벤트 삭제
   st_eventDeleteDone: false,
   st_eventDeleteError: null,
   //
@@ -61,9 +61,9 @@ const reducer = (state = initailState, action) =>
       case EVENT_LIST_SUCCESS: {
         draft.st_eventListLoading = false;
         draft.st_eventListDone = true;
-        draft.events = action.data;
-        // draft.events = action.data.events;
-        // draft.maxPage = action.data.lastPage;
+        // draft.events = action.data;
+        draft.events = action.data.events;
+        draft.maxPage = action.data.lastPage;
         break;
       }
       case EVENT_LIST_FAILURE: {

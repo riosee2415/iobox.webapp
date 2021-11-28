@@ -140,6 +140,8 @@ const Index = () => {
   const formRef = useRef();
   const imageInput = useRef();
 
+  const [currentImage, setCurrentImage] = useState(null);
+
   const [updateData, setUpdateData] = useState(null);
 
   const [deletePopVisible, setDeletePopVisible] = useState(false);
@@ -301,16 +303,22 @@ const Index = () => {
   ////// HANDLER //////
   const onSubmit = useCallback(
     (value) => {
+      const formData = new FormData();
+
+      console.log(uploadEventPath);
+
+      formData.append("title", value.title);
+      formData.append("image", uploadEventPath);
+
       dispatch({
         type: EVENT_CREATE_REQUEST,
-        data: {
-          title: value.title,
-          imagePath: uploadEventPath,
-        },
+        data: formData,
       });
     },
     [uploadEventPath]
   );
+
+  console.log(uploadEventPath);
 
   const onSubmitUpdate = useCallback(
     (value) => {
@@ -327,15 +335,31 @@ const Index = () => {
   );
 
   const onChangeImages = useCallback((e) => {
-    const formData = new FormData();
+    const get_file = e.target.files;
 
-    [].forEach.call(e.target.files, (file) => {
-      formData.append("image", file);
-    });
+    const image = document.getElementById("image");
+
+    const reader = new FileReader();
+
+    reader.onload = (function (aImg) {
+      return function (e) {
+        aImg.src = e.target.result;
+      };
+    })(image);
+
+    if (get_file) {
+      reader.readAsDataURL(get_file[0]);
+    }
+
+    // console.log(e.target.result, "ASDANSdjkl");
+
+    // setCurrentImage(e.target.result);
+
+    console.log(get_file[0]);
 
     dispatch({
-      type: EVENT_UPLOAD_REQUEST,
-      data: formData,
+      type: UPDATE_EVENT_PATH,
+      data: get_file[0],
     });
   });
 
@@ -528,14 +552,11 @@ const Index = () => {
             </GuideWrapper>
 
             <UploadImage
-              src={
-                uploadEventPath
-                  ? `${uploadEventPath}`
-                  : `https://via.placeholder.com/${_WIDTH}x${_HEIGHT}`
-              }
+              id={`image`}
+              src={`https://via.placeholder.com/${_WIDTH}x${_HEIGHT}`}
               alt="main_GALLEY_image"
             />
-            <Guide>{uploadEventPath && `이미지 미리보기 입니다.`}</Guide>
+            <Guide>{currentImage && `이미지 미리보기 입니다.`}</Guide>
 
             <UploadWrapper>
               <input
