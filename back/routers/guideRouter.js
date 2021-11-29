@@ -46,6 +46,7 @@ router.get("/type/list", async (req, res, next) => {
   try {
     const typeList = await GuideType.findAll({
       where: { isDelete: false },
+      order: [["createdAt", "ASC"]],
     });
 
     return res.status(200).json(typeList);
@@ -160,6 +161,7 @@ router.get("/list", async (req, res, next) => {
         },
         isDelete: false,
       },
+      order: [["createdAt", "ASC"]],
     });
 
     const guideLen = totalGuide.length;
@@ -176,6 +178,7 @@ router.get("/list", async (req, res, next) => {
         },
         isDelete: false,
       },
+      order: [["createdAt", "ASC"]],
     });
 
     return res.status(200).json({ lists, lastPage: parseInt(lastPage) });

@@ -46,6 +46,7 @@ router.get("/type/list", async (req, res, next) => {
   try {
     const typeList = await FaqType.findAll({
       where: { isDelete: false },
+      order: [["createdAt", "ASC"]],
     });
 
     return res.status(200).json(typeList);
@@ -160,6 +161,7 @@ router.get("/list", async (req, res, next) => {
         },
         isDelete: false,
       },
+      order: [["createdAt", "ASC"]],
       include: [
         {
           model: FaqType,
@@ -180,6 +182,7 @@ router.get("/list", async (req, res, next) => {
         },
         isDelete: false,
       },
+      order: [["createdAt", "ASC"]],
       include: [
         {
           model: FaqType,
