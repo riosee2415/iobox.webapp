@@ -15,6 +15,25 @@ import { useRouter } from "next/dist/client/router";
 import { Planet } from "react-planet";
 import { MenuOutlined } from "@ant-design/icons";
 
+const BoxWrapper = styled(Wrapper)`
+  padding: 0 30px;
+  flex-direction: row;
+  justify-content: space-between;
+  height: 70px;
+  margin: 0 0 5px;
+  background: ${Theme.lightGrey_C};
+  cursor: pointer;
+
+  &:hover {
+    background: ${Theme.basicTheme_C};
+    color: ${Theme.white_C};
+  }
+
+  @media (max-width: 700px) {
+    height: 50px;
+  }
+`;
+
 const TextHover = styled(Text)`
   font-size: 1.4rem;
   margin: 0 0 35px;
@@ -506,14 +525,7 @@ const AppFooter = () => {
 
                 <Wrapper>
                   <Wrapper al={`flex-start`}>
-                    <Wrapper
-                      padding={`0 30px`}
-                      dr={`row`}
-                      ju={`space-between`}
-                      height={width < 700 ? `50px` : `70px`}
-                      margin={`0 0 5px`}
-                      bgColor={Theme.lightGrey_C}
-                      cursor={`pointer`}
+                    <BoxWrapper
                       onClick={() => moveLinkHandler(`/center/event`)}
                     >
                       <Text>io박스 이벤트 보기</Text>
@@ -522,40 +534,23 @@ const AppFooter = () => {
                         src={`https://4leaf-s3.s3.ap-northeast-2.amazonaws.com/iobox/assets/images/sidemenu/event.png`}
                         alt={`event_image`}
                       />
-                    </Wrapper>
-                    <Wrapper
-                      padding={`0 30px`}
-                      dr={`row`}
-                      ju={`space-between`}
-                      height={width < 700 ? `50px` : `70px`}
-                      margin={`0 0 5px`}
-                      bgColor={Theme.lightGrey_C}
-                      onClick={() => moveLinkHandler(`/calculate`)}
-                      cursor={`pointer`}
-                    >
+                    </BoxWrapper>
+                    <BoxWrapper onClick={() => moveLinkHandler(`/calculate`)}>
                       <Text>1초만에 보관료 계산하기</Text>
                       <Image
                         width={width < 700 ? `30px` : `40px`}
                         src={`https://4leaf-s3.s3.ap-northeast-2.amazonaws.com/iobox/assets/images/sidemenu/calculator.png`}
                         alt={`calculate_image`}
                       />
-                    </Wrapper>
-                    <Wrapper
-                      padding={`0 30px`}
-                      dr={`row`}
-                      ju={`space-between`}
-                      height={width < 700 ? `50px` : `70px`}
-                      margin={`0 0 5px`}
-                      bgColor={Theme.lightGrey_C}
-                      cursor={`pointer`}
-                    >
+                    </BoxWrapper>
+                    <BoxWrapper>
                       <Text>실시간 카톡문의</Text>
                       <Image
                         width={width < 700 ? `30px` : `40px`}
                         src={`https://4leaf-s3.s3.ap-northeast-2.amazonaws.com/iobox/assets/images/sidemenu/kakao.png`}
                         alt={`kakao_image`}
                       />
-                    </Wrapper>
+                    </BoxWrapper>
                   </Wrapper>
 
                   <Wrapper dr={`row`} ju={`flex-end`} padding={`10px`}>
