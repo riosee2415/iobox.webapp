@@ -209,6 +209,28 @@ const GlobalStyles = createGlobalStyle`
   width : auto !important;
 }
 
+.ant-pagination-item-active a{
+  color : ${(props) => props.theme.white_C};
+}
+.ant-pagination-item-active a:hover{
+  color : ${(props) => props.theme.basicTheme_C} !important;
+}
+.ant-pagination-item-active:focus-visible, .ant-pagination-item-active:hover{
+  border-color : ${(props) => props.theme.basicTheme_C};
+}
+
+.ant-pagination-item-active:focus-visible a, .ant-pagination-item-active:hover a{
+  color : ${(props) => props.theme.basicTheme_C};
+  
+}
+
+.ant-pagination-item-active{
+  border-color : ${(props) => props.theme.basicTheme_C};
+  background : ${(props) => props.theme.basicTheme_C};
+}
+
+
+
   a {
         color : inherit;
         text-decoration : none;

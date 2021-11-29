@@ -15,6 +15,42 @@ import { useRouter } from "next/dist/client/router";
 import { Planet } from "react-planet";
 import { MenuOutlined } from "@ant-design/icons";
 
+const TextHover = styled(Text)`
+  font-size: 1.4rem;
+  margin: 0 0 35px;
+  position: relative;
+  cursor: pointer;
+  transition: 0.5s;
+
+  &:before {
+    content: "";
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 0;
+    height: 1px;
+    background: ${Theme.basicTheme_C};
+    transition: 0.5s;
+  }
+
+  &:hover {
+    font-weight: 700;
+    &:before {
+      width: 100%;
+    }
+  }
+
+  @media (max-width: 1350px) {
+    font-size: 1.2rem;
+    margin: 0 0 25px;
+  }
+
+  @media (max-width: 700px) {
+    font-size: 1rem;
+    margin: 0 0 20px;
+  }
+`;
+
 const IconBox = styled(Wrapper)`
   width: ${(props) => props.width || `130px`};
   cursor: pointer;
@@ -206,7 +242,10 @@ const AppFooter = () => {
           height={`100px`}
           shadow={tab ? `none` : `0px -3px 10px ${Theme.grey_C}`}
         >
-          <ButtonWrapper bottom={tab ? `300px` : `150px`} transition={`0.5s`}>
+          <ButtonWrapper
+            bottom={tab ? (width < 700 ? `250px` : `280px`) : `150px`}
+            transition={`0.5s`}
+          >
             <GradientText
               className="gradient"
               bold={true}
@@ -413,141 +452,54 @@ const AppFooter = () => {
               visible={true}
               getContainer={false}
             >
-              <Image
-                src={`https://via.placeholder.com/100x100`}
-                margin={width < 1350 ? `30px 0 60px 40px` : `50px 0 60px 40px`}
-                width={width < 1350 ? `80px` : `100px`}
-                alt={`logo`}
-              />
-              <Wrapper
-                height={
-                  width < 1350 ? `calc(100vh - 170px)` : `calc(100vh - 210px)`
-                }
-                ju={`space-between`}
-              >
+              <Wrapper height={`100vh`} ju={`space-between`}>
                 <RsWrapper
-                  ju={`flex-start`}
                   al={`flex-start`}
-                  height={width < 700 ? `100px` : `auto`}
+                  height={`auto`}
+                  margin={width < 700 ? `50px 0 0` : `20px 0 0`}
                 >
+                  <Image
+                    src={`https://4leaf-s3.s3.ap-northeast-2.amazonaws.com/iobox/assets/images/icon/logo_square.png`}
+                    width={width < 1350 ? `80px` : `100px`}
+                    alt={`logo`}
+                    margin={`0 0 50px`}
+                  />
+
                   <Wrapper ju={`flex-start`} al={`flex-start`}>
                     <Wrapper al={`flex-start`}>
-                      <Text
-                        fontSize={
-                          width < 1350
-                            ? width < 700
-                              ? `1rem`
-                              : `1.2rem`
-                            : `1.4rem`
-                        }
-                        margin={
-                          width < 1350
-                            ? width < 700
-                              ? `0 0 20px 0`
-                              : `0 0 25px`
-                            : `0 0 35px`
-                        }
-                      >
-                        아이오 박스란?
-                      </Text>
+                      <TextHover>아이오 박스란?</TextHover>
                     </Wrapper>
                     <Wrapper al={`flex-start`}>
-                      <Text
-                        fontSize={
-                          width < 1350
-                            ? width < 700
-                              ? `1rem`
-                              : `1.2rem`
-                            : `1.4rem`
-                        }
-                        margin={
-                          width < 1350
-                            ? width < 700
-                              ? `0 0 20px 0`
-                              : `0 0 25px`
-                            : `0 0 35px`
-                        }
-                      >
-                        서비스 이용방법
-                      </Text>
+                      <TextHover>서비스 이용방법</TextHover>
                     </Wrapper>
                     <Wrapper al={`flex-start`}>
-                      <Text
-                        fontSize={
-                          width < 1350
-                            ? width < 700
-                              ? `1rem`
-                              : `1.2rem`
-                            : `1.4rem`
-                        }
-                        margin={
-                          width < 1350
-                            ? width < 700
-                              ? `0 0 20px 0`
-                              : `0 0 25px`
-                            : `0 0 35px`
-                        }
-                      >
-                        서비스 이용료
-                      </Text>
+                      <TextHover>서비스 이용료</TextHover>
                     </Wrapper>
                     <Wrapper al={`flex-start`}>
-                      <Text
-                        fontSize={
-                          width < 1350
-                            ? width < 700
-                              ? `1rem`
-                              : `1.2rem`
-                            : `1.4rem`
-                        }
-                        margin={
-                          width < 1350
-                            ? width < 700
-                              ? `0 0 20px 0`
-                              : `0 0 25px`
-                            : `0 0 35px`
-                        }
-                        // onClick={() => moveLinkHandler(``)}
+                      <TextHover
+
+                      // onClick={() => moveLinkHandler(``)}
                       >
                         IO박스 보관센터
-                      </Text>
+                      </TextHover>
                     </Wrapper>
                     <Wrapper al={`flex-start`}>
-                      <Text
-                        fontSize={
-                          width < 1350
-                            ? width < 700
-                              ? `1rem`
-                              : `1.2rem`
-                            : `1.4rem`
-                        }
-                        margin={
-                          width < 1350
-                            ? width < 700
-                              ? `0 0 20px 0`
-                              : `0 0 25px`
-                            : `0 0 35px`
-                        }
+                      <TextHover
                         onClick={() => {
                           moveLinkHandler(`/locker`);
                         }}
                       >
                         배송현황
-                      </Text>
+                      </TextHover>
                     </Wrapper>
                     <Wrapper al={`flex-start`}>
-                      <Text
-                        fontSize={
-                          width < 1350
-                            ? width < 700
-                              ? `1rem`
-                              : `1.2rem`
-                            : `1.4rem`
-                        }
-                        margin={width < 700 ? `0 0 20px 0` : `0`}
+                      <TextHover
+                        onClick={() => {
+                          moveLinkHandler(`/locker/mylocker`);
+                        }}
                       >
                         내 물건 찾기
-                      </Text>
+                      </TextHover>
                     </Wrapper>
                   </Wrapper>
                 </RsWrapper>

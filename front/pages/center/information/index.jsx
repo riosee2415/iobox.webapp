@@ -134,7 +134,9 @@ const Index = () => {
           right={`30px`}
           fontSize={`20px`}
           cursor={`pointer`}
-          onClick={moveBackHandler}
+          onClick={() => {
+            moveLinkHandler("/");
+          }}
           zIndex={`100`}
         >
           <CloseOutlined />
@@ -146,35 +148,46 @@ const Index = () => {
           padding={`30px 0`}
           bgColor={Theme.white_C}
         >
-          <Wrapper al={`flex-start`}>
-            <Text bold={true} fontSize={`2rem`} margin={`0 0 10px`}>
-              이용안내
-            </Text>
+          <Wrapper
+            al={`flex-start`}
+            minHeight={`calc(100vh - 60px)`}
+            ju={`space-between`}
+          >
+            <Wrapper
+              minHeight={`calc(100% - 100px)`}
+              ju={`flex-start`}
+              al={`flex-start`}
+            >
+              <Text bold={true} fontSize={`2rem`} margin={`0 0 10px`}>
+                이용안내
+              </Text>
 
-            {console.log(infos)}
-            {infos &&
-              infos.map((data) => {
-                return (
-                  <TableWrapper
-                    key={data.id}
-                    onClick={() =>
-                      moveLinkHandler(`/center/information/${data.id}`)
-                    }
-                  >
-                    <Wrapper al={`flex-start`}>
-                      <Text fontSize={`0.7rem`}>{data.type}</Text>
-                      <Text>{data.title}</Text>
-                    </Wrapper>
-                  </TableWrapper>
-                );
-              })}
+              {infos &&
+                infos.map((data) => {
+                  return (
+                    <TableWrapper
+                      key={data.id}
+                      onClick={() =>
+                        moveLinkHandler(`/center/information/${data.id}`)
+                      }
+                    >
+                      <Wrapper al={`flex-start`}>
+                        <Text fontSize={`0.7rem`}>{data.type}</Text>
+                        <Text>{data.title}</Text>
+                      </Wrapper>
+                    </TableWrapper>
+                  );
+                })}
+            </Wrapper>
 
-            <Pagination
-              defaultCurrent={1}
-              current={parseInt(currentPage)}
-              total={maxPage * 10}
-              onChange={(page) => otherPageCall(page)}
-            />
+            <Wrapper margin={`50px 0 0`}>
+              <Pagination
+                defaultCurrent={1}
+                current={parseInt(currentPage)}
+                total={maxPage * 10}
+                onChange={(page) => otherPageCall(page)}
+              />
+            </Wrapper>
           </Wrapper>
         </RsWrapper>
       </Wrapper>

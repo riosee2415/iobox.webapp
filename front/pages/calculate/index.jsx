@@ -106,7 +106,7 @@ const Index = () => {
                 <Image
                   src={`https://4leaf-s3.s3.ap-northeast-2.amazonaws.com/iobox/assets/images/main/paperbox_dial.png`}
                   alt={`icon`}
-                  width={`30px`}
+                  width={`25px`}
                 />
                 <Text fontWeight={`700`} margin={`0 5px`} fontSize={`0.9rem`}>
                   박스
@@ -121,7 +121,11 @@ const Index = () => {
               </Wrapper>
 
               <Wrapper width={`auto`} dr={`row`}>
-                <Image src={`#`} alt={`icon`} width={`auto`} />
+                <Image
+                  src={`https://4leaf-s3.s3.ap-northeast-2.amazonaws.com/iobox/assets/images/icon/hanger.png`}
+                  alt={`icon`}
+                  width={`30px`}
+                />
                 <Text fontWeight={`700`} margin={`0 5px`} fontSize={`0.9rem`}>
                   행거
                 </Text>
@@ -138,7 +142,7 @@ const Index = () => {
                 <Image
                   src={`https://4leaf-s3.s3.ap-northeast-2.amazonaws.com/iobox/assets/images/main/box_dial.png`}
                   alt={`icon`}
-                  width={`45px`}
+                  width={`35px`}
                 />
                 <Text fontWeight={`700`} margin={`0 5px`} fontSize={`0.9rem`}>
                   텐트박스
@@ -163,7 +167,11 @@ const Index = () => {
               border={`1px solid ${Theme.grey_C}`}
               margin={`0 0 10px`}
             >
-              <Image src={`#`} alt={`thumbnail`} width={`30%`} />
+              <Image
+                src={`https://4leaf-s3.s3.ap-northeast-2.amazonaws.com/iobox/assets/images/icon/tee.png`}
+                alt={`thumbnail`}
+                width={`30%`}
+              />
               <Wrapper
                 width={`30%`}
                 padding={`0 10px`}
@@ -204,7 +212,11 @@ const Index = () => {
               border={`1px solid ${Theme.grey_C}`}
               margin={`0 0 10px`}
             >
-              <Image src={`#`} alt={`thumbnail`} width={`30%`} />
+              <Image
+                src={`https://4leaf-s3.s3.ap-northeast-2.amazonaws.com/iobox/assets/images/icon/knit.png`}
+                alt={`thumbnail`}
+                width={`30%`}
+              />
               <Wrapper
                 width={`30%`}
                 padding={`0 10px`}
@@ -245,7 +257,11 @@ const Index = () => {
               border={`1px solid ${Theme.grey_C}`}
               margin={`0 0 10px`}
             >
-              <Image src={`#`} alt={`thumbnail`} width={`30%`} />
+              <Image
+                src={`https://4leaf-s3.s3.ap-northeast-2.amazonaws.com/iobox/assets/images/icon/onepiece.png`}
+                alt={`thumbnail`}
+                width={`30%`}
+              />
               <Wrapper
                 width={`30%`}
                 padding={`0 10px`}
@@ -327,7 +343,11 @@ const Index = () => {
               border={`1px solid ${Theme.grey_C}`}
               margin={`0 0 10px`}
             >
-              <Image src={`#`} alt={`thumbnail`} width={`30%`} />
+              <Image
+                src={`https://4leaf-s3.s3.ap-northeast-2.amazonaws.com/iobox/assets/images/icon/bag.png`}
+                alt={`thumbnail`}
+                width={`30%`}
+              />
               <Wrapper
                 width={`30%`}
                 padding={`0 10px`}
@@ -368,7 +388,11 @@ const Index = () => {
               border={`1px solid ${Theme.grey_C}`}
               margin={`0 0 10px`}
             >
-              <Image src={`#`} alt={`thumbnail`} width={`30%`} />
+              <Image
+                src={`https://4leaf-s3.s3.ap-northeast-2.amazonaws.com/iobox/assets/images/icon/luxury.png`}
+                alt={`thumbnail`}
+                width={`30%`}
+              />
               <Wrapper
                 width={`30%`}
                 padding={`0 10px`}
@@ -409,7 +433,11 @@ const Index = () => {
               border={`1px solid ${Theme.grey_C}`}
               margin={`0 0 10px`}
             >
-              <Image src={`#`} alt={`thumbnail`} width={`30%`} />
+              <Image
+                src={`https://4leaf-s3.s3.ap-northeast-2.amazonaws.com/iobox/assets/images/icon/book.png`}
+                alt={`thumbnail`}
+                width={`30%`}
+              />
               <Wrapper
                 width={`30%`}
                 padding={`0 10px`}
@@ -450,7 +478,11 @@ const Index = () => {
               border={`1px solid ${Theme.grey_C}`}
               margin={`0 0 10px`}
             >
-              <Image src={`#`} alt={`thumbnail`} width={`30%`} />
+              <Image
+                src={`https://4leaf-s3.s3.ap-northeast-2.amazonaws.com/iobox/assets/images/icon/coat.png`}
+                alt={`thumbnail`}
+                width={`30%`}
+              />
               <Wrapper
                 width={`30%`}
                 padding={`0 10px`}
@@ -491,7 +523,11 @@ const Index = () => {
               border={`1px solid ${Theme.grey_C}`}
               margin={`0 0 10px`}
             >
-              <Image src={`#`} alt={`thumbnail`} width={`30%`} />
+              <Image
+                src={`https://4leaf-s3.s3.ap-northeast-2.amazonaws.com/iobox/assets/images/icon/padding.png`}
+                alt={`thumbnail`}
+                width={`30%`}
+              />
               <Wrapper
                 width={`30%`}
                 padding={`0 10px`}
@@ -555,9 +591,9 @@ const Index = () => {
             </Wrapper>
             <Wrapper dr={`row`} ju={`flex-start`}>
               <Image
-                src={`#`}
+                src={`https://4leaf-s3.s3.ap-northeast-2.amazonaws.com/iobox/assets/images/icon/box.png`}
                 alt={`thumbnail`}
-                width={`auto`}
+                width={`40px`}
                 margin={`0 10px 0 0`}
               />
               <Text fontSize={`1.1rem`} fontWeight={`700`}>

@@ -126,7 +126,9 @@ const Index = () => {
           right={`30px`}
           fontSize={`20px`}
           cursor={`pointer`}
-          onClick={moveBackHandler}
+          onClick={() => {
+            moveLinkHandler("/");
+          }}
           zIndex={`100`}
         >
           <CloseOutlined />
@@ -139,40 +141,54 @@ const Index = () => {
           bgColor={Theme.white_C}
           minHeight={`100vh`}
         >
-          <Wrapper al={`flex-start`}>
-            <Text bold={true} fontSize={`2rem`} margin={`0 0 10px`}>
-              공지사항
-            </Text>
-            {console.log(notices)}
-            {notices &&
-              notices.map((data) => {
-                return (
-                  <TableWrapper
-                    key={data.id}
-                    onClick={() => moveLinkHandler(`/center/notice/${data.id}`)}
-                  >
-                    <Wrapper
-                      width={`50px`}
-                      color={Theme.basicTheme_C}
-                      fontSize={`25px`}
+          <Wrapper
+            al={`flex-start`}
+            minHeight={`calc(100vh - 60px)`}
+            ju={`space-between`}
+          >
+            <Wrapper
+              minHeight={`calc(100% - 100px)`}
+              ju={`flex-start`}
+              al={`flex-start`}
+            >
+              <Text bold={true} fontSize={`2rem`} margin={`0 0 10px`}>
+                공지사항
+              </Text>
+              {notices &&
+                notices.map((data) => {
+                  return (
+                    <TableWrapper
+                      key={data.id}
+                      onClick={() =>
+                        moveLinkHandler(`/center/notice/${data.id}`)
+                      }
                     >
-                      <NotificationOutlined />
-                    </Wrapper>
-                    <Wrapper width={`calc(100% - 50px)`} al={`flex-start`}>
-                      <Text>{data.title}</Text>
-                      <Text fontSize={`0.7rem`} color={Theme.grey_C}>
-                        {data.createdAt.slice(0, 10)}
-                      </Text>
-                    </Wrapper>
-                  </TableWrapper>
-                );
-              })}
-            <Pagination
-              defaultCurrent={1}
-              current={parseInt(currentPage)}
-              total={maxPage * 10}
-              onChange={(page) => otherPageCall(page)}
-            />
+                      <Wrapper
+                        width={`50px`}
+                        color={Theme.basicTheme_C}
+                        fontSize={`25px`}
+                      >
+                        <NotificationOutlined />
+                      </Wrapper>
+                      <Wrapper width={`calc(100% - 50px)`} al={`flex-start`}>
+                        <Text>{data.title}</Text>
+                        <Text fontSize={`0.7rem`} color={Theme.grey_C}>
+                          {data.createdAt.slice(0, 10)}
+                        </Text>
+                      </Wrapper>
+                    </TableWrapper>
+                  );
+                })}
+            </Wrapper>
+
+            <Wrapper margin={`50px 0 0`}>
+              <Pagination
+                defaultCurrent={1}
+                current={parseInt(currentPage)}
+                total={maxPage * 10}
+                onChange={(page) => otherPageCall(page)}
+              />
+            </Wrapper>
           </Wrapper>
         </RsWrapper>
       </Wrapper>

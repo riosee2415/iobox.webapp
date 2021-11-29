@@ -106,11 +106,14 @@ const Index = () => {
             padding={`20px`}
           >
             <Wrapper dr={`row`} al={`flex-start`}>
-              <Wrapper width={`18%`}>
-                <Image src={`#`} alt={`logo`} />
+              <Wrapper width={`20%`} padding={`0 5px 0 0`}>
+                <Image
+                  src={`https://4leaf-s3.s3.ap-northeast-2.amazonaws.com/iobox/assets/images/icon/logo.png`}
+                  alt={`logo`}
+                />
               </Wrapper>
               <Wrapper
-                width={`78%`}
+                width={`80%`}
                 al={`flex-start`}
                 color={Theme.basicTheme_C}
               >

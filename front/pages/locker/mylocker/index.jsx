@@ -448,7 +448,7 @@ const Index = () => {
                       //  onChange={CheckBoxChangeHandler}
                       > */}
                       <Wrapper
-                        bgColor={checkA ? Theme.grey_C : ``}
+                        bgColor={checkA ? Theme.lightGrey_C : ``}
                         dr={`row`}
                         ju={`space-between`}
                         padding={`20px 0 10px`}
@@ -468,14 +468,16 @@ const Index = () => {
                               tab === 1 ? setCheckA((prev) => !prev) : {}
                             }
                           />
-
-                          {console.log(checkA)}
                         </Wrapper>
                       </Wrapper>
 
                       <Wrapper
                         bgColor={
-                          checkA ? Theme.grey_C : check1 ? Theme.grey_C : ``
+                          checkA
+                            ? Theme.lightGrey_C
+                            : check1
+                            ? Theme.lightGrey_C
+                            : ``
                         }
                         dr={`row`}
                         ju={`space-between`}
@@ -499,7 +501,11 @@ const Index = () => {
 
                       <Wrapper
                         bgColor={
-                          checkA ? Theme.grey_C : check2 ? Theme.grey_C : ``
+                          checkA
+                            ? Theme.lightGrey_C
+                            : check2
+                            ? Theme.lightGrey_C
+                            : ``
                         }
                         dr={`row`}
                         ju={`space-between`}
@@ -523,7 +529,11 @@ const Index = () => {
 
                       <Wrapper
                         bgColor={
-                          checkA ? Theme.grey_C : check3 ? Theme.grey_C : ``
+                          checkA
+                            ? Theme.lightGrey_C
+                            : check3
+                            ? Theme.lightGrey_C
+                            : ``
                         }
                         dr={`row`}
                         ju={`space-between`}
@@ -547,7 +557,11 @@ const Index = () => {
 
                       <Wrapper
                         bgColor={
-                          checkA ? Theme.grey_C : check4 ? Theme.grey_C : ``
+                          checkA
+                            ? Theme.lightGrey_C
+                            : check4
+                            ? Theme.lightGrey_C
+                            : ``
                         }
                         dr={`row`}
                         ju={`space-between`}
@@ -574,7 +588,7 @@ const Index = () => {
                         ju={`space-between`}
                         padding={`50px 0 10px`}
                         borderBottom={`1px solid ${Theme.grey_C}`}
-                        bgColor={checkB ? Theme.grey_C : ``}
+                        bgColor={checkB ? Theme.lightGrey_C : ``}
                       >
                         <Text bold={true} fontSize={`1.3rem`}>
                           행거박스 A-2
@@ -594,7 +608,11 @@ const Index = () => {
 
                       <Wrapper
                         bgColor={
-                          checkB ? Theme.grey_C : check5 ? Theme.grey_C : ``
+                          checkB
+                            ? Theme.lightGrey_C
+                            : check5
+                            ? Theme.lightGrey_C
+                            : ``
                         }
                         dr={`row`}
                         ju={`space-between`}
@@ -618,7 +636,11 @@ const Index = () => {
 
                       <Wrapper
                         bgColor={
-                          checkB ? Theme.grey_C : check6 ? Theme.grey_C : ``
+                          checkB
+                            ? Theme.lightGrey_C
+                            : check6
+                            ? Theme.lightGrey_C
+                            : ``
                         }
                         dr={`row`}
                         ju={`space-between`}
@@ -642,7 +664,11 @@ const Index = () => {
 
                       <Wrapper
                         bgColor={
-                          checkB ? Theme.grey_C : check7 ? Theme.grey_C : ``
+                          checkB
+                            ? Theme.lightGrey_C
+                            : check7
+                            ? Theme.lightGrey_C
+                            : ``
                         }
                         dr={`row`}
                         ju={`space-between`}
@@ -666,7 +692,11 @@ const Index = () => {
 
                       <Wrapper
                         bgColor={
-                          checkB ? Theme.grey_C : check8 ? Theme.grey_C : ``
+                          checkB
+                            ? Theme.lightGrey_C
+                            : check8
+                            ? Theme.lightGrey_C
+                            : ``
                         }
                         dr={`row`}
                         ju={`space-between`}
