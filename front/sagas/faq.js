@@ -32,6 +32,22 @@ import {
   FAQ_DETAIL_REQUEST,
   FAQ_DETAIL_SUCCESS,
   FAQ_DETAIL_FAILURE,
+  // ************************************************
+  FAQ_TYPE_GET_REQUEST,
+  FAQ_TYPE_GET_SUCCESS,
+  FAQ_TYPE_GET_FAILURE,
+  //
+  FAQ_TYPE_CREATE_REQUEST,
+  FAQ_TYPE_CREATE_SUCCESS,
+  FAQ_TYPE_CREATE_FAILURE,
+  //
+  FAQ_TYPE_DELETE_REQUEST,
+  FAQ_TYPE_DELETE_SUCCESS,
+  FAQ_TYPE_DELETE_FAILURE,
+  //
+  FAQ_TYPE_UPDATE_REQUEST,
+  FAQ_TYPE_UPDATE_SUCCESS,
+  FAQ_TYPE_UPDATE_FAILURE,
 } from "../reducers/faq";
 
 // SAGA AREA ********************************************************************************************************
@@ -254,6 +270,114 @@ function* faqDetail(action) {
 // ******************************************************************************************************************
 // ******************************************************************************************************************
 
+// SAGA AREA ********************************************************************************************************
+// ******************************************************************************************************************
+function faqTypeGetAPI() {
+  return axios.get(`/api/faq/type/list`);
+}
+
+function* faqTypeGet() {
+  try {
+    const result = yield call(faqTypeGetAPI);
+
+    yield put({
+      type: FAQ_TYPE_GET_SUCCESS,
+      data: result.data,
+    });
+  } catch (err) {
+    console.error(err);
+    yield put({
+      type: FAQ_TYPE_GET_FAILURE,
+      error: err.response.data,
+    });
+  }
+}
+
+// ******************************************************************************************************************
+// ******************************************************************************************************************
+// ******************************************************************************************************************
+
+// SAGA AREA ********************************************************************************************************
+// ******************************************************************************************************************
+function faqTypeCreateAPI(data) {
+  return axios.post(`/api/faq/type/create`, data);
+}
+
+function* faqTypeCreate(action) {
+  try {
+    const result = yield call(faqTypeCreateAPI, action.data);
+
+    yield put({
+      type: FAQ_TYPE_CREATE_SUCCESS,
+      data: result.data,
+    });
+  } catch (err) {
+    console.error(err);
+    yield put({
+      type: FAQ_TYPE_CREATE_FAILURE,
+      error: err.response.data,
+    });
+  }
+}
+
+// ******************************************************************************************************************
+// ******************************************************************************************************************
+// ******************************************************************************************************************
+
+// SAGA AREA ********************************************************************************************************
+// ******************************************************************************************************************
+function faqTypeDeleteAPI(data) {
+  return axios.delete(`/api/question/type/delete/${data.faqTypeId}`);
+}
+
+function* faqTypeDelete(action) {
+  try {
+    const result = yield call(faqTypeDeleteAPI, action.data);
+
+    yield put({
+      type: FAQ_TYPE_DELETE_SUCCESS,
+      data: result.data,
+    });
+  } catch (err) {
+    console.error(err);
+    yield put({
+      type: FAQ_TYPE_DELETE_FAILURE,
+      error: err.response.data,
+    });
+  }
+}
+
+// ******************************************************************************************************************
+// ******************************************************************************************************************
+// ******************************************************************************************************************
+
+// SAGA AREA ********************************************************************************************************
+// ******************************************************************************************************************
+function faqTypeUpdateAPI(data) {
+  return axios.patch(`/api/question/type/update`, data);
+}
+
+function* faqTypeUpdate(action) {
+  try {
+    const result = yield call(faqTypeUpdateAPI, action.data);
+
+    yield put({
+      type: FAQ_TYPE_UPDATE_SUCCESS,
+      data: result.data,
+    });
+  } catch (err) {
+    console.error(err);
+    yield put({
+      type: FAQ_TYPE_UPDATE_FAILURE,
+      error: err.response.data,
+    });
+  }
+}
+
+// ******************************************************************************************************************
+// ******************************************************************************************************************
+// ******************************************************************************************************************
+
 //////////////////////////////////////////////////////////////
 function* watchFaqList() {
   yield takeLatest(FAQ_LIST_REQUEST, faqList);
@@ -283,6 +407,24 @@ function* watchFaqNext() {
 function* watchFaqBefore() {
   yield takeLatest(FAQ_BEFORE_REQUEST, faqBefore);
 }
+// ****************************************************************
+
+function* watchFaqTypeGet() {
+  yield takeLatest(FAQ_TYPE_GET_REQUEST, faqTypeGet);
+}
+
+function* watchFaqTypeCreate() {
+  yield takeLatest(FAQ_TYPE_CREATE_REQUEST, faqTypeCreate);
+}
+
+function* watchFaqTypeDelete() {
+  yield takeLatest(FAQ_TYPE_DELETE_REQUEST, faqTypeDelete);
+}
+
+function* watchFaqTypeUpdate() {
+  yield takeLatest(FAQ_TYPE_UPDATE_REQUEST, faqTypeUpdate);
+}
+
 //////////////////////////////////////////////////////////////
 export default function* faqSaga() {
   yield all([
@@ -294,6 +436,12 @@ export default function* faqSaga() {
     fork(watchFaqDetail),
     fork(watchFaqNext),
     fork(watchFaqBefore),
+    // ****************************************************************
+
+    fork(watchFaqTypeGet),
+    fork(watchFaqTypeCreate),
+    fork(watchFaqTypeDelete),
+    fork(watchFaqTypeUpdate),
     //
   ]);
 }

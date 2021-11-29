@@ -31,6 +31,7 @@ import {
   FAQ_UPDATE_REQUEST,
   FAQ_UPLOAD_REQUEST,
   UPDATE_FAQ_PATH,
+  FAQ_TYPE_GET_REQUEST,
 } from "../../../../../reducers/faq";
 import useInput from "../../../../../hooks/useInput";
 import {
@@ -140,6 +141,8 @@ const Index = () => {
   const formRef = useRef();
   const imageInput = useRef();
 
+  const [currentImage, setCurrentImage] = useState(null);
+
   const [updateData, setUpdateData] = useState(null);
 
   const [deletePopVisible, setDeletePopVisible] = useState(false);
@@ -147,6 +150,7 @@ const Index = () => {
 
   const {
     faqs,
+    types,
     uploadFaqPath,
     maxPage,
     modal,
@@ -165,6 +169,10 @@ const Index = () => {
   ////// USEEFFECT //////
   useEffect(() => {
     const qs = getQs();
+    dispatch({
+      type: FAQ_TYPE_GET_REQUEST,
+    });
+
     dispatch({
       type: FAQ_LIST_REQUEST,
       data: {
@@ -307,11 +315,11 @@ const Index = () => {
           title: value.quesition,
           type: value.type,
           content: value.answer,
-          imagePath: uploadFaqPath,
+          imagePath: currentImage,
         },
       });
     },
-    [uploadFaqPath]
+    [currentImage]
   );
 
   const onSubmitUpdate = useCallback(
@@ -323,24 +331,31 @@ const Index = () => {
           title: value.quesition,
           type: value.type,
           content: value.answer,
-          imagePath: uploadFaqPath,
+          imagePath: currentImage,
         },
       });
     },
-    [uploadFaqPath, updateData]
+    [currentImage, updateData]
   );
 
   const onChangeImages = useCallback((e) => {
-    const formData = new FormData();
+    const get_file = e.target.files;
 
-    [].forEach.call(e.target.files, (file) => {
-      formData.append("image", file);
-    });
+    const image = document.getElementById("image");
 
-    dispatch({
-      type: FAQ_UPLOAD_REQUEST,
-      data: formData,
-    });
+    const reader = new FileReader();
+
+    reader.onload = (function (aImg) {
+      return function (e) {
+        aImg.src = e.target.result;
+      };
+    })(image);
+
+    if (get_file) {
+      reader.readAsDataURL(get_file[0]);
+    }
+
+    setCurrentImage(get_file[0]);
   });
 
   const createModalOk = useCallback(() => {
@@ -534,9 +549,10 @@ const Index = () => {
             </GuideWrapper>
 
             <UploadImage
+              id={`image`}
               src={
-                uploadFaqPath
-                  ? `${uploadFaqPath}`
+                updateData
+                  ? updateData.imagePath
                   : `https://via.placeholder.com/${_WIDTH}x${_HEIGHT}`
               }
               alt="main_GALLEY_image"
@@ -579,7 +595,14 @@ const Index = () => {
 
             <Form.Item name={"type"} label="유형" rules={[{ required: true }]}>
               <Select>
-                <Select.Option>asd</Select.Option>
+                {types &&
+                  types.map((data) => {
+                    return (
+                      <Select.Option value={data.id} key={data.id}>
+                        {data.value}
+                      </Select.Option>
+                    );
+                  })}
               </Select>
             </Form.Item>
 

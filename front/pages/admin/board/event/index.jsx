@@ -305,33 +305,30 @@ const Index = () => {
     (value) => {
       const formData = new FormData();
 
-      console.log(uploadEventPath);
-
       formData.append("title", value.title);
-      formData.append("image", uploadEventPath);
+      formData.append("image", currentImage);
 
       dispatch({
         type: EVENT_CREATE_REQUEST,
         data: formData,
       });
     },
-    [uploadEventPath]
+    [currentImage]
   );
-
-  console.log(uploadEventPath);
 
   const onSubmitUpdate = useCallback(
     (value) => {
+      const formData = new FormData();
+
+      formData.append("title", value.title);
+      formData.append("image", updateData.imagePath);
+
       dispatch({
         type: EVENT_UPDATE_REQUEST,
-        data: {
-          id: updateData.id,
-          title: value.title,
-          imagePath: uploadEventPath,
-        },
+        data: formData,
       });
     },
-    [uploadEventPath, updateData]
+    [currentImage, updateData]
   );
 
   const onChangeImages = useCallback((e) => {
@@ -351,16 +348,7 @@ const Index = () => {
       reader.readAsDataURL(get_file[0]);
     }
 
-    // console.log(e.target.result, "ASDANSdjkl");
-
-    // setCurrentImage(e.target.result);
-
-    console.log(get_file[0]);
-
-    dispatch({
-      type: UPDATE_EVENT_PATH,
-      data: get_file[0],
-    });
+    setCurrentImage(get_file[0]);
   });
 
   const createModalOk = useCallback(() => {
@@ -442,21 +430,10 @@ const Index = () => {
       dataIndex: "id",
     },
     {
-      title: "이름",
-      dataIndex: "name",
+      title: "제목",
+      dataIndex: "title",
     },
-    {
-      title: "전화번호",
-      dataIndex: "mobile",
-    },
-    {
-      title: "참여횟수",
-      dataIndex: "count",
-    },
-    {
-      title: "이벤트 당첨",
-      dataIndex: "id",
-    },
+
     {
       title: "참여일",
       render: (data) => <div>{data.createdAt.slice(0, 10)}</div>,
@@ -490,7 +467,7 @@ const Index = () => {
       <AdminTop createButton={true} createButtonAction={modalOpen} />
 
       <AdminContent>
-        <Row gutter={[10, 10]} style={{ padding: "0 0 10px 0" }}>
+        {/* <Row gutter={[10, 10]} style={{ padding: "0 0 10px 0" }}>
           <Col span={`6`}>
             <Input
               style={{ width: "100%" }}
@@ -511,22 +488,19 @@ const Index = () => {
               검색
             </Button>
           </Col>
-        </Row>
+        </Row> */}
         <Table
           rowKey="id"
           columns={columns}
           dataSource={events ? events : []}
           size="small"
-          pagination={
-            false
-            //   {
-            //   defaultCurrent: 1,
-            //   current: parseInt(currentPage),
+          pagination={{
+            defaultCurrent: 1,
+            current: parseInt(currentPage),
 
-            //   total: maxPage * 10,
-            //   onChange: (page) => otherPageCall(page),
-            // }
-          }
+            total: maxPage * 10,
+            onChange: (page) => otherPageCall(page),
+          }}
         />
       </AdminContent>
 
@@ -553,7 +527,11 @@ const Index = () => {
 
             <UploadImage
               id={`image`}
-              src={`https://via.placeholder.com/${_WIDTH}x${_HEIGHT}`}
+              src={
+                updateData
+                  ? updateData.imagePath
+                  : `https://via.placeholder.com/${_WIDTH}x${_HEIGHT}`
+              }
               alt="main_GALLEY_image"
             />
             <Guide>{currentImage && `이미지 미리보기 입니다.`}</Guide>
