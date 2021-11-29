@@ -202,6 +202,11 @@ router.get("/list/:faqId", async (req, res, next) => {
   try {
     const exFaq = await Faq.findOne({
       where: { id: parseInt(faqId) },
+      include: [
+        {
+          model: FaqType,
+        },
+      ],
     });
 
     if (!exFaq) {
@@ -225,6 +230,11 @@ router.get("/next/:faqId", async (req, res, next) => {
           [Op.gt]: parseInt(faqId),
         },
       },
+      include: [
+        {
+          model: FaqType,
+        },
+      ],
       limit: 1,
     });
 
@@ -249,6 +259,11 @@ router.get("/prev/:faqId", async (req, res, next) => {
           [Op.lt]: parseInt(faqId),
         },
       },
+      include: [
+        {
+          model: FaqType,
+        },
+      ],
     });
 
     if (!faqs[0]) {
