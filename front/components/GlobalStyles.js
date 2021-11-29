@@ -83,12 +83,11 @@ const GlobalStyles = createGlobalStyle`
     }
   } */
 
-  .ant-modal{
+  /* .ant-modal{
     display : flex;
     align-items: center;
     justify-content: center;
-    height : 80%;
-  }
+  } */
 
   .ant-modal-body{
     padding:0;
