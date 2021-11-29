@@ -190,6 +190,8 @@ const Type = () => {
       return LoadNotification("ADMIN SYSTEM ERRLR", "문의 유형을 입력해주세요");
     }
 
+    console.log({ id: updateData.id, value: inputValue.value });
+
     dispatch({
       type: FAQ_TYPE_UPDATE_REQUEST,
       data: { id: updateData.id, value: inputValue.value },
@@ -221,22 +223,22 @@ const Type = () => {
       dataIndex: "id",
     },
     {
-      title: "VALUE",
+      title: "유형명",
       render: (data) => <div>{data.value}</div>,
     },
     {
-      title: "UPDATE",
+      title: "수정",
       render: (data) => (
         <Button type="primary" onClick={() => updateModalOpen(data)}>
-          UPDATE
+          수정
         </Button>
       ),
     },
     {
-      title: "DELETE",
+      title: "삭제",
       render: (data) => (
         <Button type="danger" onClick={deletePopToggle(data.id)}>
-          DEL
+          삭제
         </Button>
       ),
     },

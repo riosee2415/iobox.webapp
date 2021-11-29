@@ -13,6 +13,7 @@ import event from "./event";
 import faq from "./faq";
 import info from "./info";
 import keepBox from "./keepBox";
+import menuImage from "./menuImage";
 
 const rootReducer = (state, action) => {
   switch (action.type) {
@@ -35,6 +36,7 @@ const rootReducer = (state, action) => {
           faq,
           info,
           keepBox,
+          menuImage,
         });
         return combinedReducer(state, action);
       }

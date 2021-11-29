@@ -430,38 +430,30 @@ const Index = () => {
       dataIndex: "id",
     },
     {
-      title: "이름",
-      dataIndex: "name",
+      title: "질문",
+      dataIndex: "question",
     },
     {
-      title: "전화번호",
-      dataIndex: "mobile",
+      title: "답변",
+      dataIndex: "answer",
     },
     {
-      title: "참여횟수",
-      dataIndex: "count",
-    },
-    {
-      title: "이벤트 당첨",
-      dataIndex: "id",
-    },
-    {
-      title: "참여일",
+      title: "작성일",
       render: (data) => <div>{data.createdAt.slice(0, 10)}</div>,
     },
     {
-      title: "UPDATE",
+      title: "상세",
       render: (data) => (
         <Button type="primary" onClick={() => updateModalOpen(data)}>
-          UPDATE
+          상세
         </Button>
       ),
     },
     {
-      title: "DELETE",
+      title: "삭제",
       render: (data) => (
         <Button type="danger" onClick={deletePopToggle(data.id)}>
-          DEL
+          삭제
         </Button>
       ),
     },
@@ -470,15 +462,15 @@ const Index = () => {
   return (
     <AdminLayout>
       <PageHeader
-        breadcrumbs={["참가자 관리", "참가자 리스트"]}
-        title={`참가자 리스트`}
-        subTitle={`참가자 리스트를 관리할 수 있습니다.`}
+        breadcrumbs={["게시판 관리", "자주 묻는 질문 리스트"]}
+        title={`자주 묻는 질문 리스트`}
+        subTitle={`자주 묻는 질문 리스트를 관리할 수 있습니다.`}
       />
 
       <AdminTop createButton={true} createButtonAction={modalOpen} />
 
       <AdminContent>
-        <Row gutter={[10, 10]} style={{ padding: "0 0 10px 0" }}>
+        {/* <Row gutter={[10, 10]} style={{ padding: "0 0 10px 0" }}>
           <Col span={`6`}>
             <Input
               style={{ width: "100%" }}
@@ -499,21 +491,21 @@ const Index = () => {
               검색
             </Button>
           </Col>
-        </Row>
+        </Row> */}
         <Table
           rowKey="id"
           columns={columns}
           dataSource={faqs ? faqs : []}
           size="small"
           pagination={
-            false
-            //   {
-            //   defaultCurrent: 1,
-            //   current: parseInt(currentPage),
+            // false
+            {
+              defaultCurrent: 1,
+              current: parseInt(currentPage),
 
-            //   total: maxPage * 10,
-            //   onChange: (page) => otherPageCall(page),
-            // }
+              total: maxPage * 10,
+              onChange: (page) => otherPageCall(page),
+            }
           }
         />
       </AdminContent>

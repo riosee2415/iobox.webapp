@@ -132,6 +132,9 @@ const AdminMenu = () => {
           <Menu.Item key="/admin/board/faq/list">
             <MenuName>자주 묻는 질문</MenuName>
           </Menu.Item>
+          <Menu.Item key="/admin/board/faq/type">
+            <MenuName>자주 묻는 질문 유형</MenuName>
+          </Menu.Item>
           <Menu.Item key="/admin/board/event">
             <MenuName>이벤트</MenuName>
           </Menu.Item>
@@ -139,11 +142,11 @@ const AdminMenu = () => {
         <SubMenu
           key="su43"
           icon={<SettingOutlined />}
-          title="베너 관리"
+          title="안내 관리"
           onTitleClick={titleClickHandler("sub4")}
         >
-          <Menu.Item key="/admin/banner/mainbanner">
-            <MenuName>메인베너 관리</MenuName>
+          <Menu.Item key="/admin/infoImage/list">
+            <MenuName>안내 리스트</MenuName>
           </Menu.Item>
         </SubMenu>
         <SubMenu
