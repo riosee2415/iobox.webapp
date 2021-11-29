@@ -75,13 +75,13 @@ const GlobalStyles = createGlobalStyle`
     color: ${(props) => props.theme.black_C};
   }
 
-  .ant-modal-content{
+  /* .ant-modal-content{
     width : 400px;
 
     @media(max-width : 700px) {
       width : 90%;
     }
-  }
+  } */
 
   .ant-modal{
     display : flex;

@@ -1093,7 +1093,7 @@ const Index = () => {
         </>
       )}
       <Modal visible={floorModal} closable={false} footer={null}>
-        <Wrapper>
+        <Wrapper width={width < 700 ? `250px` : `400px`}>
           <Wrapper width={`30%`} ju={`flex-start`}>
             <ElevatorSlider />
           </Wrapper>
