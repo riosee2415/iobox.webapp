@@ -75,20 +75,6 @@ const GlobalStyles = createGlobalStyle`
     color: ${(props) => props.theme.black_C};
   }
 
-  /* .ant-modal-content{
-    width : 400px;
-
-    @media(max-width : 700px) {
-      width : 90%;
-    }
-  } */
-
-  /* .ant-modal{
-    display : flex;
-    align-items: center;
-    justify-content: center;
-  } */
-
   .ant-modal-body{
     padding:0;
   }
