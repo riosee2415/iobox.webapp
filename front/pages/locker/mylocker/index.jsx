@@ -722,7 +722,16 @@ const Index = () => {
                   )}
                 </Wrapper>
 
-                <Wrapper dr={`row`} ju={`space-around`} margin={`50px 0 0`}>
+                <Wrapper
+                  dr={`row`}
+                  ju={`space-around`}
+                  margin={
+                    (boxRealNum || hangRealNum || tentRealNum || bigRealNum) ===
+                    0
+                      ? `50px 0`
+                      : `50px 0 0`
+                  }
+                >
                   <TextHover
                     onClick={() => {
                       setTab(0);
@@ -751,7 +760,11 @@ const Index = () => {
       </WholeWrapper>
 
       <Wrapper
-        position={`sticky`}
+        position={
+          (boxRealNum || hangRealNum || tentRealNum || bigRealNum) === 0
+            ? `fixed`
+            : `sticky`
+        }
         bottom={`0`}
         left={`0`}
         bgColor={Theme.lightGrey_C}
