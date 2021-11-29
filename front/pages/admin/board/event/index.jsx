@@ -112,8 +112,8 @@ const LoadNotification = (msg, content) => {
 const Index = () => {
   const _WIDTH = `400`;
   const _HEIGHT = `400`;
-  //   // LOAD CURRENT INFO AREA /////////////////////////////////////////////
-  //   const { me, st_loadMyInfoDone } = useSelector((state) => state.user);
+  // LOAD CURRENT INFO AREA /////////////////////////////////////////////
+  const { me, st_loadMyInfoDone } = useSelector((state) => state.user);
 
   const router = useRouter();
 
@@ -121,14 +121,14 @@ const Index = () => {
     router.push(link);
   }, []);
 
-  //   useEffect(() => {
-  //     if (st_loadMyInfoDone) {
-  //       if (!me || parseInt(me.level) < 3) {
-  //         moveLinkHandler(`/admin`);
-  //       }
-  //     }
-  //   }, [st_loadMyInfoDone]);
-  //   /////////////////////////////////////////////////////////////////////////
+  useEffect(() => {
+    if (st_loadMyInfoDone) {
+      if (!me || parseInt(me.level) < 3) {
+        moveLinkHandler(`/admin`);
+      }
+    }
+  }, [st_loadMyInfoDone]);
+  /////////////////////////////////////////////////////////////////////////
 
   ////// HOOKS //////
   const dispatch = useDispatch();
@@ -139,8 +139,6 @@ const Index = () => {
 
   const formRef = useRef();
   const imageInput = useRef();
-
-  const [currentImage, setCurrentImage] = useState(null);
 
   const [updateData, setUpdateData] = useState(null);
 
@@ -303,52 +301,43 @@ const Index = () => {
   ////// HANDLER //////
   const onSubmit = useCallback(
     (value) => {
-      const formData = new FormData();
-
-      formData.append("title", value.title);
-      formData.append("image", currentImage);
-
       dispatch({
         type: EVENT_CREATE_REQUEST,
-        data: formData,
+        data: {
+          title: value.content,
+          imagePath: uploadEventPath,
+        },
       });
     },
-    [currentImage]
+    [uploadEventPath]
   );
 
   const onSubmitUpdate = useCallback(
     (value) => {
-      const formData = new FormData();
-
-      formData.append("title", value.title);
-      formData.append("image", updateData.imagePath);
-
       dispatch({
         type: EVENT_UPDATE_REQUEST,
-        data: formData,
+        data: {
+          id: updateData.id,
+
+          title: value.content,
+          imagePath: uploadEventPath,
+        },
       });
     },
-    [currentImage, updateData]
+    [uploadEventPath, updateData]
   );
 
   const onChangeImages = useCallback((e) => {
-    const get_file = e.target.files;
+    const formData = new FormData();
 
-    const image = document.getElementById("image");
+    [].forEach.call(e.target.files, (file) => {
+      formData.append("image", file);
+    });
 
-    const reader = new FileReader();
-
-    reader.onload = (function (aImg) {
-      return function (e) {
-        aImg.src = e.target.result;
-      };
-    })(image);
-
-    if (get_file) {
-      reader.readAsDataURL(get_file[0]);
-    }
-
-    setCurrentImage(get_file[0]);
+    dispatch({
+      type: EVENT_UPLOAD_REQUEST,
+      data: formData,
+    });
   });
 
   const createModalOk = useCallback(() => {
@@ -413,13 +402,15 @@ const Index = () => {
 
   const onFill = useCallback((data) => {
     formRef.current.setFieldsValue({
-      title: data.title,
+      content: data.title,
     });
 
-    // dispatch({
-    //   type: UPDATE_EVENT_PATH,
-    //   data: data.ima,
-    // });
+    console.log(data);
+
+    dispatch({
+      type: UPDATE_EVENT_PATH,
+      data: data.imagePath,
+    });
   }, []);
   ////// DATAVIEW //////
 
@@ -429,28 +420,29 @@ const Index = () => {
       title: "No",
       dataIndex: "id",
     },
+
     {
       title: "제목",
       dataIndex: "title",
     },
 
     {
-      title: "참여일",
+      title: "작성일",
       render: (data) => <div>{data.createdAt.slice(0, 10)}</div>,
     },
     {
-      title: "UPDATE",
+      title: "상세보기",
       render: (data) => (
         <Button type="primary" onClick={() => updateModalOpen(data)}>
-          UPDATE
+          상세
         </Button>
       ),
     },
     {
-      title: "DELETE",
+      title: "삭제",
       render: (data) => (
         <Button type="danger" onClick={deletePopToggle(data.id)}>
-          DEL
+          삭제
         </Button>
       ),
     },
@@ -526,15 +518,14 @@ const Index = () => {
             </GuideWrapper>
 
             <UploadImage
-              id={`image`}
               src={
-                updateData
-                  ? updateData.imagePath
+                uploadEventPath
+                  ? `${uploadEventPath}`
                   : `https://via.placeholder.com/${_WIDTH}x${_HEIGHT}`
               }
               alt="main_GALLEY_image"
             />
-            <Guide>{currentImage && `이미지 미리보기 입니다.`}</Guide>
+            <Guide>{uploadEventPath && `이미지 미리보기 입니다.`}</Guide>
 
             <UploadWrapper>
               <input
@@ -562,8 +553,12 @@ const Index = () => {
             onFinish={updateData ? onSubmitUpdate : onSubmit}
             ref={formRef}
           >
-            <Form.Item name={"title"} label="제목" rules={[{ required: true }]}>
-              <Input allowClear size="small" placeholder="Title..." />
+            <Form.Item
+              name={"content"}
+              label="제목"
+              rules={[{ required: true }]}
+            >
+              <Input allowClear size="small" placeholder="Content..." />
             </Form.Item>
           </Form>
         </Wrapper>

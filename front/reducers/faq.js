@@ -2,6 +2,7 @@ import produce from "../util/produce";
 
 export const initailState = {
   faqs: null,
+  types: null,
   uploadFaqPath: "",
   maxPage: 1,
   modal: false,

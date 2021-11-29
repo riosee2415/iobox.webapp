@@ -59,7 +59,7 @@ const Filename = styled.span`
 `;
 
 const ImageWrapper = styled.div`
-  width: 500px;
+  width: 40%;
 
   display: flex;
   flex-direction: column;
@@ -113,8 +113,8 @@ const LoadNotification = (msg, content) => {
 const Index = () => {
   const _WIDTH = `400`;
   const _HEIGHT = `400`;
-  // LOAD CURRENT INFO AREA /////////////////////////////////////////////
-  const { me, st_loadMyInfoDone } = useSelector((state) => state.user);
+  //   // LOAD CURRENT INFO AREA /////////////////////////////////////////////
+  //   const { me, st_loadMyInfoDone } = useSelector((state) => state.user);
 
   const router = useRouter();
 
@@ -122,14 +122,14 @@ const Index = () => {
     router.push(link);
   }, []);
 
-  useEffect(() => {
-    if (st_loadMyInfoDone) {
-      if (!me || parseInt(me.level) < 3) {
-        moveLinkHandler(`/admin`);
-      }
-    }
-  }, [st_loadMyInfoDone]);
-  /////////////////////////////////////////////////////////////////////////
+  //   useEffect(() => {
+  //     if (st_loadMyInfoDone) {
+  //       if (!me || parseInt(me.level) < 3) {
+  //         moveLinkHandler(`/admin`);
+  //       }
+  //     }
+  //   }, [st_loadMyInfoDone]);
+  //   /////////////////////////////////////////////////////////////////////////
 
   ////// HOOKS //////
   const dispatch = useDispatch();
@@ -140,8 +140,6 @@ const Index = () => {
 
   const formRef = useRef();
   const imageInput = useRef();
-
-  const [currentImage, setCurrentImage] = useState(null);
 
   const [updateData, setUpdateData] = useState(null);
 
@@ -170,14 +168,13 @@ const Index = () => {
   useEffect(() => {
     const qs = getQs();
     dispatch({
-      type: FAQ_TYPE_GET_REQUEST,
-    });
-
-    dispatch({
       type: FAQ_LIST_REQUEST,
       data: {
         qs,
       },
+    });
+    dispatch({
+      type: FAQ_TYPE_GET_REQUEST,
     });
   }, [router.query]);
 
@@ -312,14 +309,14 @@ const Index = () => {
       dispatch({
         type: FAQ_CREATE_REQUEST,
         data: {
-          title: value.quesition,
           type: value.type,
-          content: value.answer,
-          imagePath: currentImage,
+          question: value.content,
+          answer: value.answer,
+          imagePath: uploadFaqPath,
         },
       });
     },
-    [currentImage]
+    [uploadFaqPath]
   );
 
   const onSubmitUpdate = useCallback(
@@ -328,34 +325,27 @@ const Index = () => {
         type: FAQ_UPDATE_REQUEST,
         data: {
           id: updateData.id,
-          title: value.quesition,
           type: value.type,
-          content: value.answer,
-          imagePath: currentImage,
+          question: value.content,
+          answer: value.answer,
+          imagePath: uploadFaqPath,
         },
       });
     },
-    [currentImage, updateData]
+    [uploadFaqPath, updateData]
   );
 
   const onChangeImages = useCallback((e) => {
-    const get_file = e.target.files;
+    const formData = new FormData();
 
-    const image = document.getElementById("image");
+    [].forEach.call(e.target.files, (file) => {
+      formData.append("image", file);
+    });
 
-    const reader = new FileReader();
-
-    reader.onload = (function (aImg) {
-      return function (e) {
-        aImg.src = e.target.result;
-      };
-    })(image);
-
-    if (get_file) {
-      reader.readAsDataURL(get_file[0]);
-    }
-
-    setCurrentImage(get_file[0]);
+    dispatch({
+      type: FAQ_UPLOAD_REQUEST,
+      data: formData,
+    });
   });
 
   const createModalOk = useCallback(() => {
@@ -419,10 +409,11 @@ const Index = () => {
   };
 
   const onFill = useCallback((data) => {
+    console.log(data);
     formRef.current.setFieldsValue({
-      quesition: data.title,
-      type: data.type,
-      answer: data.content,
+      type: data.FaqType.id,
+      content: data.question,
+      answer: data.answer,
     });
 
     dispatch({
@@ -479,9 +470,9 @@ const Index = () => {
   return (
     <AdminLayout>
       <PageHeader
-        breadcrumbs={["게시판 관리", "자주 묻는 질문 리스트"]}
-        title={`자주 묻는 질문 리스트`}
-        subTitle={`자주 묻는 질문 리스트를 관리할 수 있습니다.`}
+        breadcrumbs={["참가자 관리", "참가자 리스트"]}
+        title={`참가자 리스트`}
+        subTitle={`참가자 리스트를 관리할 수 있습니다.`}
       />
 
       <AdminTop createButton={true} createButtonAction={modalOpen} />
@@ -535,8 +526,8 @@ const Index = () => {
         onCancel={modalClose}
         onOk={createModalOk}
       >
-        <Wrapper padding={`10px`}>
-          <ImageWrapper>
+        <Wrapper padding={`10px`} dr={`row`}>
+          <ImageWrapper width={`600px`}>
             <GuideWrapper>
               <GuideText>
                 이미지 사이즈는 가로 {_WIDTH}px 과 세로
@@ -549,10 +540,9 @@ const Index = () => {
             </GuideWrapper>
 
             <UploadImage
-              id={`image`}
               src={
-                updateData
-                  ? updateData.imagePath
+                uploadFaqPath
+                  ? `${uploadFaqPath}`
                   : `https://via.placeholder.com/${_WIDTH}x${_HEIGHT}`
               }
               alt="main_GALLEY_image"
@@ -585,25 +575,30 @@ const Index = () => {
             onFinish={updateData ? onSubmitUpdate : onSubmit}
             ref={formRef}
           >
-            <Form.Item
-              name={"quesition"}
-              label="질문"
-              rules={[{ required: true }]}
-            >
-              <Input allowClear size="small" placeholder="Quesition..." />
-            </Form.Item>
-
             <Form.Item name={"type"} label="유형" rules={[{ required: true }]}>
               <Select>
                 {types &&
-                  types.map((data) => {
+                  types.map((data, idx) => {
                     return (
-                      <Select.Option value={data.id} key={data.id}>
+                      <Select.Option value={data.id} key={idx}>
                         {data.value}
                       </Select.Option>
                     );
                   })}
               </Select>
+            </Form.Item>
+
+            <Form.Item
+              name={"content"}
+              label="질문"
+              rules={[{ required: true }]}
+            >
+              <Input.TextArea
+                allowClear
+                size="small"
+                autoSize={{ minRows: 10, maxRows: 10 }}
+                placeholder="Content..."
+              />
             </Form.Item>
 
             <Form.Item
@@ -614,8 +609,8 @@ const Index = () => {
               <Input.TextArea
                 allowClear
                 size="small"
-                autoSize={{ minRows: 14, maxRows: 14 }}
-                placeholder="Answer..."
+                autoSize={{ minRows: 10, maxRows: 10 }}
+                placeholder="Content..."
               />
             </Form.Item>
           </Form>

@@ -2,7 +2,7 @@ import produce from "../util/produce";
 
 export const initailState = {
   events: null,
-  uploadeventPath: "",
+  uploadEventPath: "",
   maxPage: 1,
   modal: false,
   //
@@ -112,7 +112,7 @@ const reducer = (state = initailState, action) =>
       case EVENT_UPLOAD_SUCCESS: {
         draft.st_eventUploadLoading = false;
         draft.st_eventUploadDone = true;
-        draft.uploadeventPath = action.data.path;
+        draft.uploadEventPath = action.data.path;
         break;
       }
       case EVENT_UPLOAD_FAILURE: {
@@ -251,7 +251,7 @@ const reducer = (state = initailState, action) =>
         break;
 
       case UPDATE_EVENT_PATH:
-        draft.uploadeventPath = action.data;
+        draft.uploadEventPath = action.data;
         break;
 
       default:
