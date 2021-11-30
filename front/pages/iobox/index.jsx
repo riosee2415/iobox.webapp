@@ -302,7 +302,7 @@ const Index = () => {
                   <Text margin={`1px 0 0 2px`}>?</Text>
                 </Wrapper>
               </Wrapper>
-              type setType
+
               <Wrapper
                 padding={`20px 0`}
                 dr={`row`}
@@ -310,13 +310,18 @@ const Index = () => {
                 al={`flex-start`}
                 borderBottom={`1px solid ${Theme.grey_C}`}
               >
-                <Radio />
-                <Wrapper width={`auto`} al={`flex-start`}>
-                  <Text>단기</Text>
-                  <Text color={Theme.grey_C} fontSize={`0.8rem`}>
-                    월 단위
-                  </Text>
-                </Wrapper>
+                <Radio
+                  style={{ display: "flex", alignItems: "center" }}
+                  checked={type === "단기"}
+                  onClick={() => setType("단기")}
+                >
+                  <Wrapper width={`auto`} al={`flex-start`}>
+                    <Text>단기</Text>
+                    <Text color={Theme.grey_C} fontSize={`0.8rem`}>
+                      월 단위
+                    </Text>
+                  </Wrapper>
+                </Radio>
               </Wrapper>
               <Wrapper
                 padding={`20px 0`}
@@ -325,13 +330,18 @@ const Index = () => {
                 al={`flex-start`}
                 borderBottom={`1px solid ${Theme.grey_C}`}
               >
-                <Radio />
-                <Wrapper width={`auto`} al={`flex-start`}>
-                  <Text>장기약정</Text>
-                  <Text color={Theme.grey_C} fontSize={`0.8rem`}>
-                    6개월 이상, 선 결제 30% 할인
-                  </Text>
-                </Wrapper>
+                <Radio
+                  style={{ display: "flex", alignItems: "center" }}
+                  checked={type === "정기"}
+                  onClick={() => setType("정기")}
+                >
+                  <Wrapper width={`auto`} al={`flex-start`}>
+                    <Text>장기약정</Text>
+                    <Text color={Theme.grey_C} fontSize={`0.8rem`}>
+                      6개월 이상, 선 결제 30% 할인
+                    </Text>
+                  </Wrapper>
+                </Radio>
               </Wrapper>
             </RsWrapper>
           </Wrapper>
