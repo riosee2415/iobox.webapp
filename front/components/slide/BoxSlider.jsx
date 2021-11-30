@@ -53,6 +53,8 @@ const BoxSlider = ({
   //
   row = 1,
   line = 5, // Row 슬라이드 행 수
+  //
+  setCurrentBox,
 }) => {
   const width = useWidth();
 
@@ -194,6 +196,9 @@ const BoxSlider = ({
         ref={slideRef}
         autoplay={autoplay}
         className={`slide-0`}
+        afterChange={(index) => {
+          setCurrentBox(index);
+        }}
       >
         {slideDatum.map((slide, idx) => {
           return (

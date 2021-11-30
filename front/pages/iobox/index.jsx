@@ -69,11 +69,21 @@ const Index = () => {
   const width = useWidth();
   const router = useRouter();
 
+  const data = [
+    //
+    ["io박스", "W55 x H35 x D30 (CM)", "iO 베이직 월", 9000],
+    ["행거박스", "W55 x H35 x D30 (CM)", "iO 베이직 월", 19000],
+    ["텐트박스", "W55 x H35 x D30 (CM)", "iO 베이직 월", 29000],
+    ["대용량 박스", "W55 x H35 x D30 (CM)", "iO 베이직 월", 39000],
+  ];
+
   ////// HOOKS //////
   const [tab, setTab] = useState(false);
   const [number, setNumber] = useState(0);
 
   const [moreTab, setMoreTab] = useState(false);
+
+  const [currentBox, setCurrentBox] = useState(0);
 
   ////// REDUX //////
 
@@ -149,20 +159,11 @@ const Index = () => {
               minHeight={`100vh`}
             >
               <Text bold={true} fontSize={`2rem`}>
-                {router.query &&
-                  (router.query.type === "iobox" || !router.query.type) &&
-                  "io박스"}
-                {router.query && router.query.type === "tentBox" && "텐트박스"}
-                {router.query &&
-                  router.query.type === "hangerBox" &&
-                  "행거박스"}
-                {router.query &&
-                  router.query.type === "bigBox" &&
-                  "대용량 박스"}
+                {data[currentBox][0]}
               </Text>
               <Wrapper al={`flex-start`} margin={`10px 0 0`}>
                 <Text>배송&#38;보관박스 크기</Text>
-                <Text fontWeight={`700`}>W55 x H35 x D30 (CM)</Text>
+                <Text fontWeight={`700`}> {data[currentBox][1]}</Text>
               </Wrapper>
 
               <Wrapper width={`auto`} al={`flex-end`}>
@@ -172,24 +173,18 @@ const Index = () => {
                   fontSize={`1.5rem`}
                   margin={`30px 0 0`}
                 >
-                  {router.query &&
-                    (router.query.type === "iobox" || !router.query.type) &&
-                    "iO 베이직 월 9,000원"}
-                  {router.query &&
-                    router.query.type === "tentBox" &&
-                    "iO 베이직 월 49,000원"}
-                  {router.query &&
-                    router.query.type === "hangerBox" &&
-                    "iO 베이직 월 9,000원"}
-                  {router.query &&
-                    router.query.type === "bigBox" &&
-                    "iO 베이직 월 11,900원"}
+                  {data[currentBox][2]} {data[currentBox][3]}원
                 </Text>
                 <TextButton onClick={moreTabToggle}>자세히 보기</TextButton>
               </Wrapper>
 
               <Wrapper minHeight={`300px`} margin={`10px 0`} zIndex={`1`}>
-                <BoxSlider datum={[1, 2, 3, 4]} line={1} row={1} />
+                <BoxSlider
+                  datum={[1, 2, 3, 4]}
+                  line={1}
+                  row={1}
+                  setCurrentBox={setCurrentBox}
+                />
               </Wrapper>
 
               <Wrapper ju={`flex-end`} dr={`row`}>
