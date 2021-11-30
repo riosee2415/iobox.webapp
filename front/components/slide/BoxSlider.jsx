@@ -197,6 +197,7 @@ const BoxSlider = ({
         autoplay={autoplay}
         className={`slide-0`}
         afterChange={(index) => {
+          console.log(index);
           setCurrentBox(index);
         }}
       >
