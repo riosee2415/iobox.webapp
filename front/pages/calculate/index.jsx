@@ -89,7 +89,11 @@ const Index = () => {
             bgColor={Theme.white_C}
             minHeight={`100vh`}
           >
-            <Image src={`#`} width={`auto`} alt={`LOGO`} />
+            <Image
+              src={`https://4leaf-s3.s3.ap-northeast-2.amazonaws.com/iobox/assets/images/logo/LOGO.png`}
+              width={`50px`}
+              alt={`LOGO`}
+            />
 
             <Wrapper dr={`row`} ju={`space-between`} margin={`50px 0 0`}>
               <Text>장기보관(6개월이상)</Text>
@@ -302,7 +306,11 @@ const Index = () => {
               border={`1px solid ${Theme.grey_C}`}
               margin={`0 0 10px`}
             >
-              <Image src={`#`} alt={`thumbnail`} width={`30%`} />
+              <Image
+                src={`https://4leaf-s3.s3.ap-northeast-2.amazonaws.com/iobox/assets/images/icon/shirt.png`}
+                alt={`thumbnail`}
+                width={`30%`}
+              />
               <Wrapper
                 width={`30%`}
                 padding={`0 10px`}

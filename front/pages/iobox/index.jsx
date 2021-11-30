@@ -425,12 +425,17 @@ const Index = () => {
 
             <Wrapper dr={`row`} width={`auto`}>
               <Image
-                src={`#`}
+                src={`https://4leaf-s3.s3.ap-northeast-2.amazonaws.com/iobox/assets/images/icon/arrow.png`}
                 alt={`arrow`}
-                width={`50px`}
+                width={`40px`}
                 margin={`0 10px 0 30px`}
               />
-              <Text fontSize={`1.2rem`} bold={true} color={Theme.basicTheme_C}>
+              <Text
+                fontSize={`1.2rem`}
+                bold={true}
+                color={Theme.basicTheme_C}
+                margin={`8px 0 0`}
+              >
                 to. 8,900원
               </Text>
             </Wrapper>

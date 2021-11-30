@@ -481,10 +481,14 @@ const Index = () => {
                         }
                         dr={`row`}
                         ju={`space-between`}
-                        height={`100px`}
+                        height={`150px`}
                         borderBottom={`1px solid ${Theme.grey_C}`}
                       >
-                        <Image src={`#`} alt={`image`} width={`30%`} />
+                        <Image
+                          src={`https://4leaf-s3.s3.ap-northeast-2.amazonaws.com/iobox/assets/images/icon/tee.png`}
+                          alt={`image`}
+                          width={`30%`}
+                        />
 
                         <Wrapper
                           width={`auto`}
@@ -509,10 +513,14 @@ const Index = () => {
                         }
                         dr={`row`}
                         ju={`space-between`}
-                        height={`100px`}
+                        height={`150px`}
                         borderBottom={`1px solid ${Theme.grey_C}`}
                       >
-                        <Image src={`#`} alt={`image`} width={`30%`} />
+                        <Image
+                          src={`https://4leaf-s3.s3.ap-northeast-2.amazonaws.com/iobox/assets/images/icon/book.png`}
+                          alt={`image`}
+                          width={`30%`}
+                        />
 
                         <Wrapper
                           width={`auto`}
@@ -537,10 +545,14 @@ const Index = () => {
                         }
                         dr={`row`}
                         ju={`space-between`}
-                        height={`100px`}
+                        height={`150px`}
                         borderBottom={`1px solid ${Theme.grey_C}`}
                       >
-                        <Image src={`#`} alt={`image`} width={`30%`} />
+                        <Image
+                          src={`https://4leaf-s3.s3.ap-northeast-2.amazonaws.com/iobox/assets/images/icon/shirt.png`}
+                          alt={`image`}
+                          width={`30%`}
+                        />
 
                         <Wrapper
                           width={`auto`}
@@ -565,10 +577,14 @@ const Index = () => {
                         }
                         dr={`row`}
                         ju={`space-between`}
-                        height={`100px`}
+                        height={`150px`}
                         borderBottom={`1px solid ${Theme.grey_C}`}
                       >
-                        <Image src={`#`} alt={`image`} width={`30%`} />
+                        <Image
+                          src={`https://4leaf-s3.s3.ap-northeast-2.amazonaws.com/iobox/assets/images/icon/knit.png`}
+                          alt={`image`}
+                          width={`30%`}
+                        />
 
                         <Wrapper
                           width={`auto`}
@@ -616,10 +632,14 @@ const Index = () => {
                         }
                         dr={`row`}
                         ju={`space-between`}
-                        height={`100px`}
+                        height={`150px`}
                         borderBottom={`1px solid ${Theme.grey_C}`}
                       >
-                        <Image src={`#`} alt={`image`} width={`30%`} />
+                        <Image
+                          src={`https://4leaf-s3.s3.ap-northeast-2.amazonaws.com/iobox/assets/images/icon/tee.png`}
+                          alt={`image`}
+                          width={`30%`}
+                        />
 
                         <Wrapper
                           width={`auto`}
@@ -644,10 +664,14 @@ const Index = () => {
                         }
                         dr={`row`}
                         ju={`space-between`}
-                        height={`100px`}
+                        height={`150px`}
                         borderBottom={`1px solid ${Theme.grey_C}`}
                       >
-                        <Image src={`#`} alt={`image`} width={`30%`} />
+                        <Image
+                          src={`https://4leaf-s3.s3.ap-northeast-2.amazonaws.com/iobox/assets/images/icon/book.png`}
+                          alt={`image`}
+                          width={`30%`}
+                        />
 
                         <Wrapper
                           width={`auto`}
@@ -672,10 +696,14 @@ const Index = () => {
                         }
                         dr={`row`}
                         ju={`space-between`}
-                        height={`100px`}
+                        height={`150px`}
                         borderBottom={`1px solid ${Theme.grey_C}`}
                       >
-                        <Image src={`#`} alt={`image`} width={`30%`} />
+                        <Image
+                          src={`https://4leaf-s3.s3.ap-northeast-2.amazonaws.com/iobox/assets/images/icon/shirt.png`}
+                          alt={`image`}
+                          width={`30%`}
+                        />
 
                         <Wrapper
                           width={`auto`}
@@ -700,10 +728,14 @@ const Index = () => {
                         }
                         dr={`row`}
                         ju={`space-between`}
-                        height={`100px`}
+                        height={`150px`}
                         borderBottom={`1px solid ${Theme.grey_C}`}
                       >
-                        <Image src={`#`} alt={`image`} width={`30%`} />
+                        <Image
+                          src={`https://4leaf-s3.s3.ap-northeast-2.amazonaws.com/iobox/assets/images/icon/knit.png`}
+                          alt={`image`}
+                          width={`30%`}
+                        />
 
                         <Wrapper
                           width={`auto`}
