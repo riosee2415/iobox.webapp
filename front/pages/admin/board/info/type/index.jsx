@@ -38,6 +38,7 @@ import {
   Wrapper,
 } from "../../../../../components/commonComponents";
 import { SearchOutlined } from "@ant-design/icons";
+import { FAQ_TYPE_UPDATE_REQUEST } from "../../../../../reducers/faq";
 
 const AdminContent = styled.div`
   padding: 20px;
@@ -140,6 +141,8 @@ const Index = () => {
   const imageInput = useRef();
 
   const [updateData, setUpdateData] = useState(null);
+
+  const inputValue = useInput("");
 
   const [deletePopVisible, setDeletePopVisible] = useState(false);
   const [deleteId, setDeleteId] = useState(null);
@@ -245,13 +248,9 @@ const Index = () => {
   }, [st_infoTypeDeleteError]);
 
   useEffect(() => {
-    if (!modal && formRef.current) {
-      formRef.current.resetFields();
-
-      dispatch({
-        type: UPDATE_INFO_TYPE_PATH,
-        data: "",
-      });
+    if (!modal) {
+      setUpdateData(null);
+      inputValue.setValue("");
     }
   }, [modal, formRef]);
 
@@ -264,19 +263,19 @@ const Index = () => {
   }, [updateData]);
 
   ////// TOGGLE //////
-  const modalOpen = useCallback(() => {
+  const createModalOpen = useCallback(() => {
     dispatch({
       type: MODAL_OPEN_REQUEST,
     });
   }, [modal]);
 
-  const modalClose = useCallback(() => {
+  const createModalClose = useCallback(() => {
     dispatch({
       type: MODAL_CLOSE_REQUEST,
     });
 
-    setUpdateData(null);
-  }, [modal]);
+    inputValue.setValue("");
+  }, [modal, inputValue]);
 
   const updateModalOpen = useCallback(
     (data) => {
@@ -284,10 +283,19 @@ const Index = () => {
         type: MODAL_OPEN_REQUEST,
       });
 
+      inputValue.setValue(data.value);
       setUpdateData(data);
     },
-    [modal]
+    [modal, inputValue]
   );
+
+  const updateModalClose = useCallback(() => {
+    dispatch({
+      type: MODAL_CLOSE_REQUEST,
+    });
+    setUpdateData(null);
+    inputValue.setValue("");
+  }, [modal, inputValue]);
 
   const deletePopToggle = useCallback(
     (id) => () => {
@@ -298,36 +306,30 @@ const Index = () => {
   );
 
   ////// HANDLER //////
-  const onSubmit = useCallback(
-    (value) => {
-      dispatch({
-        type: INFO_TYPE_CREATE_REQUEST,
-        data: {
-          hint: value.hint,
-          title: value.content,
-          answer: value.answer,
-          outLink: "-",
-        },
-      });
-    },
-    [uploadInfoTypePath]
-  );
 
-  const onSubmitUpdate = useCallback(
-    (value) => {
-      dispatch({
-        type: INFO_TYPE_UPDATE_REQUEST,
-        data: {
-          id: updateData.id,
-          hint: value.hint,
-          title: value.content,
-          answer: value.answer,
-          outLink: "-",
-        },
-      });
-    },
-    [uploadInfoTypePath, updateData]
-  );
+  const createModalOk = useCallback(() => {
+    if (!inputValue.value || inputValue.value.trim() === "") {
+      return LoadNotification("ADMIN SYSTEM ERRLR", "문의 유형을 입력해주세요");
+    }
+
+    dispatch({
+      type: INFO_TYPE_CREATE_REQUEST,
+      data: { value: inputValue.value },
+    });
+  }, [inputValue]);
+
+  const onSubmitUpdate = useCallback(() => {
+    if (!inputValue.value || inputValue.value.trim() === "") {
+      return LoadNotification("ADMIN SYSTEM ERRLR", "문의 유형을 입력해주세요");
+    }
+
+    console.log({ id: updateData.id, value: inputValue.value });
+
+    dispatch({
+      type: INFO_TYPE_UPDATE_REQUEST,
+      data: { id: updateData.id, value: inputValue.value },
+    });
+  }, [inputValue, updateData]);
 
   const onChangeImages = useCallback((e) => {
     const formData = new FormData();
@@ -341,10 +343,6 @@ const Index = () => {
       data: formData,
     });
   });
-
-  const createModalOk = useCallback(() => {
-    formRef.current.submit();
-  }, []);
 
   const clickImageUpload = useCallback(() => {
     imageInput.current.click();
@@ -403,12 +401,6 @@ const Index = () => {
   };
 
   const onFill = useCallback((data) => {
-    formRef.current.setFieldsValue({
-      hint: data.hint,
-      content: data.title,
-      answer: data.answer,
-    });
-
     // dispatch({
     //   type: UPDATE_INFO_TYPE_PATH,
     //   data: data.ima,
@@ -423,38 +415,22 @@ const Index = () => {
       dataIndex: "id",
     },
     {
-      title: "이름",
-      dataIndex: "name",
+      title: "유형명",
+      render: (data) => <div>{data.value}</div>,
     },
     {
-      title: "전화번호",
-      dataIndex: "mobile",
-    },
-    {
-      title: "참여횟수",
-      dataIndex: "count",
-    },
-    {
-      title: "이벤트 당첨",
-      dataIndex: "id",
-    },
-    {
-      title: "참여일",
-      render: (data) => <div>{data.createdAt.slice(0, 10)}</div>,
-    },
-    {
-      title: "UPDATE",
+      title: "수정",
       render: (data) => (
         <Button type="primary" onClick={() => updateModalOpen(data)}>
-          UPDATE
+          수정
         </Button>
       ),
     },
     {
-      title: "DELETE",
+      title: "삭제",
       render: (data) => (
         <Button type="danger" onClick={deletePopToggle(data.id)}>
-          DEL
+          삭제
         </Button>
       ),
     },
@@ -463,15 +439,15 @@ const Index = () => {
   return (
     <AdminLayout>
       <PageHeader
-        breadcrumbs={["참가자 관리", "참가자 리스트"]}
-        title={`참가자 리스트`}
-        subTitle={`참가자 리스트를 관리할 수 있습니다.`}
+        breadcrumbs={["게시판 관리", "이용 안내 유형 리스트"]}
+        title={`이용 안내 유형 리스트`}
+        subTitle={`이용 안내 유형 리스트를 관리할 수 있습니다.`}
       />
 
-      <AdminTop createButton={true} createButtonAction={modalOpen} />
+      <AdminTop createButton={true} createButtonAction={createModalOpen} />
 
       <AdminContent>
-        <Row gutter={[10, 10]} style={{ padding: "0 0 10px 0" }}>
+        {/* <Row gutter={[10, 10]} style={{ padding: "0 0 10px 0" }}>
           <Col span={`6`}>
             <Input
               style={{ width: "100%" }}
@@ -492,7 +468,7 @@ const Index = () => {
               검색
             </Button>
           </Col>
-        </Row>
+        </Row> */}
         <Table
           rowKey="id"
           columns={columns}
@@ -513,97 +489,13 @@ const Index = () => {
 
       <Modal
         visible={modal}
-        width={`600px`}
-        title={`매입 관리`}
-        size="small"
-        onCancel={modalClose}
-        onOk={createModalOk}
+        width={`400px`}
+        title={`문의 유형`}
+        onCancel={updateData ? updateModalClose : createModalClose}
+        onOk={updateData ? onSubmitUpdate : createModalOk}
       >
         <Wrapper padding={`10px`}>
-          {/* <ImageWrapper>
-            <GuideWrapper>
-              <GuideText>
-                이미지 사이즈는 가로 {_WIDTH}px 과 세로
-                {_HEIGHT}px을 기준으로 합니다.
-              </GuideText>
-              <GuideText>
-                이미지 사이즈가 상이할 경우 화면에 올바르지 않게 보일 수 있으니
-                이미지 사이즈를 확인해주세요.
-              </GuideText>
-            </GuideWrapper>
-
-            <UploadImage
-              src={
-                uploadInfoTypePath
-                  ? `${uploadInfoTypePath}`
-                  : `https://via.placeholder.com/${_WIDTH}x${_HEIGHT}`
-              }
-              alt="main_GALLEY_image"
-            />
-            <Guide>
-              {uploadInfoTypePath && `이미지 미리보기 입니다.`}
-            </Guide>
-
-            <UploadWrapper>
-              <input
-                type="file"
-                name="image"
-                accept=".png, .jpg"
-                // multiple
-                hidden
-                ref={imageInput}
-                onChange={onChangeImages}
-              />
-              <Button
-                size="small"
-                type="primary"
-                onClick={clickImageUpload}
-                loading={st_infoTypeUploadLoading}
-              >
-                UPLOAD
-              </Button>
-            </UploadWrapper>
-          </ImageWrapper> */}
-
-          <Form
-            style={{ width: `80%` }}
-            onFinish={updateData ? onSubmitUpdate : onSubmit}
-            ref={formRef}
-          >
-            <Form.Item
-              name={"content"}
-              label="문제"
-              rules={[{ required: true }]}
-            >
-              <Input.TextArea
-                allowClear
-                size="small"
-                autoSize={{ minRows: 10, maxRows: 10 }}
-                placeholder="Content..."
-              />
-            </Form.Item>
-
-            <Form.Item
-              name={"hint"}
-              label="힌트 링크"
-              rules={[{ required: true }]}
-            >
-              <Input allowClear size="small" placeholder="Hint..." />
-            </Form.Item>
-
-            <Form.Item
-              name={"answer"}
-              label="정답"
-              rules={[{ required: true }]}
-            >
-              <Input
-                allowClear
-                size="small"
-                placeholder="Answer..."
-                type="number"
-              />
-            </Form.Item>
-          </Form>
+          <Input {...inputValue} />
         </Wrapper>
       </Modal>
 
