@@ -17,6 +17,7 @@ import { useRouter } from "next/dist/client/router";
 import { MinusOutlined, PlusOutlined } from "@ant-design/icons";
 import BoxSlider from "../../components/slide/BoxSlider";
 import { Checkbox, Radio } from "antd";
+import { numberWithCommas } from "../../components/commonUtils";
 
 const PayButtton = styled(Wrapper)`
   color: ${Theme.basicTheme_C};
@@ -84,6 +85,7 @@ const Index = () => {
   const [moreTab, setMoreTab] = useState(false);
 
   const [currentBox, setCurrentBox] = useState(0);
+  const [currentBuy, setCurrentBuy] = useState([0, 0, 0, 0]);
 
   ////// REDUX //////
 
@@ -171,7 +173,8 @@ const Index = () => {
                   fontSize={`1.5rem`}
                   margin={`30px 0 0`}
                 >
-                  {data[currentBox][2]} {data[currentBox][3]}원
+                  {data[currentBox][2]} {numberWithCommas(data[currentBox][3])}
+                  원
                 </Text>
                 <TextButton onClick={moreTabToggle}>자세히 보기</TextButton>
               </Wrapper>
