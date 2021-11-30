@@ -433,9 +433,19 @@ const AppFooter = () => {
                 margin={`0 0 5px`}
                 color={`rgb(224,222,222)`}
                 height={`35px`}
+                className="noHoverIcon"
               >
                 <MenuOutlined />
               </Wrapper>
+
+              <Image
+                margin={`0 0 5px`}
+                height={`35px`}
+                width={`30px`}
+                objectFit={`contain`}
+                className="hoverIcon"
+                src={`https://4leaf-s3.s3.ap-northeast-2.amazonaws.com/iobox/assets/images/main/menu_gra.png`}
+              />
 
               <GradientText fontSize={`0.8rem`} bold={true} padding={`0`}>
                 메 뉴
