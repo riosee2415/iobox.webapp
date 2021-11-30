@@ -121,10 +121,10 @@ const Home = () => {
     }
   }, [value, value2]);
 
-  useEffect(() => {
-    if (!mainOpacity) {
-    }
-  }, [main]);
+  // useEffect(() => {
+  //   if (!mainOpacity) {
+  //   }
+  // }, [main]);
 
   ////// DATAVIEW //////
   return (
@@ -146,6 +146,7 @@ const Home = () => {
             transition={`0.5s`}
           >
             <Image
+              width={`30px`}
               src={`https://4leaf-s3.s3.ap-northeast-2.amazonaws.com/iobox/assets/images/logo/LOGO_W.png`}
             />
           </FirstDisplay>
