@@ -327,7 +327,7 @@ function* faqTypeCreate(action) {
 // SAGA AREA ********************************************************************************************************
 // ******************************************************************************************************************
 function faqTypeDeleteAPI(data) {
-  return axios.delete(`/api/question/type/delete/${data.faqTypeId}`);
+  return axios.delete(`/api/faq/type/delete/${data.faqTypeId}`);
 }
 
 function* faqTypeDelete(action) {
@@ -354,7 +354,7 @@ function* faqTypeDelete(action) {
 // SAGA AREA ********************************************************************************************************
 // ******************************************************************************************************************
 function faqTypeUpdateAPI(data) {
-  return axios.patch(`/api/question/type/update`, data);
+  return axios.patch(`/api/faq/type/update`, data);
 }
 
 function* faqTypeUpdate(action) {

@@ -60,6 +60,7 @@ router.get("/list", async (req, res, next) => {
         },
         isDelete: false,
       },
+      order: [["createdAt", "ASC"]],
     });
 
     const eventLen = totalEvents.length;
@@ -76,6 +77,7 @@ router.get("/list", async (req, res, next) => {
         },
         isDelete: false,
       },
+      order: [["createdAt", "ASC"]],
     });
 
     return res.status(200).json({ lists, lastPage: parseInt(lastPage) });

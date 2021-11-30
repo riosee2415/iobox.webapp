@@ -57,12 +57,10 @@ import {
 // SAGA AREA ********************************************************************************************************
 // ******************************************************************************************************************
 function infoListAPI(data) {
-  console.log("?????");
-  return axios.get(`/api/guide/list/`, data);
+  return axios.get(`/api/guide/list/${data.qs}`, data);
 }
 
 function* infoList(action) {
-  console.log("????!!!");
   try {
     const result = yield call(infoListAPI, action.data);
 

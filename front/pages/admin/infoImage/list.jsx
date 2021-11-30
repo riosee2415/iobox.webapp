@@ -1,7 +1,7 @@
 import React, { useCallback, useEffect, useRef, useState } from "react";
-import AdminLayout from "../../../../../components/AdminLayout";
-import PageHeader from "../../../../../components/admin/PageHeader";
-import AdminTop from "../../../../../components/admin/AdminTop";
+import AdminLayout from "../../../components/AdminLayout";
+import PageHeader from "../../../components/admin/PageHeader";
+import AdminTop from "../../../components/admin/AdminTop";
 import styled from "styled-components";
 import { useDispatch, useSelector } from "react-redux";
 import {
@@ -20,26 +20,24 @@ import {
 import { END } from "redux-saga";
 import axios from "axios";
 import { useRouter } from "next/router";
-import { LOAD_MY_INFO_REQUEST } from "../../../../../reducers/user";
-import wrapper from "../../../../../store/configureStore";
+import { LOAD_MY_INFO_REQUEST } from "../../../reducers/user";
+import wrapper from "../../../store/configureStore";
 import {
   MODAL_CLOSE_REQUEST,
   MODAL_OPEN_REQUEST,
-  INFO_CREATE_REQUEST,
-  INFO_DELETE_REQUEST,
-  INFO_LIST_REQUEST,
-  INFO_UPDATE_REQUEST,
-  INFO_UPLOAD_REQUEST,
-  UPDATE_INFO_PATH,
-  //
-  INFO_TYPE_LIST_REQUEST,
-} from "../../../../../reducers/info";
-import useInput from "../../../../../hooks/useInput";
+  MENU_CREATE_REQUEST,
+  MENU_DELETE_REQUEST,
+  MENU_LIST_REQUEST,
+  MENU_UPDATE_REQUEST,
+  MENU_UPLOAD_REQUEST,
+  UPDATE_MENU_PATH,
+} from "../../../reducers/menuImage";
+import useInput from "../../../hooks/useInput";
 import {
   ColWrapper,
   RowWrapper,
   Wrapper,
-} from "../../../../../components/commonComponents";
+} from "../../../components/commonComponents";
 import { SearchOutlined } from "@ant-design/icons";
 
 const AdminContent = styled.div`
@@ -114,8 +112,15 @@ const LoadNotification = (msg, content) => {
 const Index = () => {
   const _WIDTH = `400`;
   const _HEIGHT = `400`;
-  //   // LOAD CURRENT INFO AREA /////////////////////////////////////////////
-  //   const { me, st_loadMyInfoDone } = useSelector((state) => state.user);
+
+  const data = [
+    "아이오 박스란?",
+    "서비스 이용방법",
+    "서비스 이용료",
+    "IO박스 보관센터",
+  ];
+  // LOAD CURRENT INFO AREA /////////////////////////////////////////////
+  const { me, st_loadMyInfoDone } = useSelector((state) => state.user);
 
   const router = useRouter();
 
@@ -123,14 +128,14 @@ const Index = () => {
     router.push(link);
   }, []);
 
-  //   useEffect(() => {
-  //     if (st_loadMyInfoDone) {
-  //       if (!me || parseInt(me.level) < 3) {
-  //         moveLinkHandler(`/admin`);
-  //       }
-  //     }
-  //   }, [st_loadMyInfoDone]);
-  //   /////////////////////////////////////////////////////////////////////////
+  useEffect(() => {
+    if (st_loadMyInfoDone) {
+      if (!me || parseInt(me.level) < 3) {
+        moveLinkHandler(`/admin`);
+      }
+    }
+  }, [st_loadMyInfoDone]);
+  /////////////////////////////////////////////////////////////////////////
 
   ////// HOOKS //////
   const dispatch = useDispatch();
@@ -148,42 +153,40 @@ const Index = () => {
   const [deleteId, setDeleteId] = useState(null);
 
   const {
-    infos,
-    infoTypes,
-    uploadInfoPath,
+    menuImages,
+    uploadMenuImagePath,
     maxPage,
     modal,
     //
-    st_infoListError,
-    st_infoCreateDone,
-    st_infoCreateError,
-    st_infoUpdateDone,
-    st_infoUpdateError,
-    st_infoDeleteDone,
-    st_infoDeleteError,
+    st_menuImageListError,
+    st_menuImageCreateDone,
+    st_menuImageCreateError,
+    st_menuImageUpdateDone,
+    st_menuImageUpdateError,
+    st_menuImageDeleteDone,
+    st_menuImageDeleteError,
 
-    st_infoUploadLoading,
-  } = useSelector((state) => state.info);
+    st_menuImageUploadLoading,
+  } = useSelector((state) => state.menuImage);
+
+  console.log(menuImages);
 
   ////// USEEFFECT //////
   useEffect(() => {
     const qs = getQs();
     dispatch({
-      type: INFO_LIST_REQUEST,
+      type: MENU_LIST_REQUEST,
       data: {
         qs,
       },
     });
-    dispatch({
-      type: INFO_TYPE_LIST_REQUEST,
-    });
   }, [router.query]);
 
   useEffect(() => {
-    if (st_infoCreateDone) {
+    if (st_menuImageCreateDone) {
       const qs = getQs();
       dispatch({
-        type: INFO_LIST_REQUEST,
+        type: MENU_LIST_REQUEST,
         data: {
           qs,
         },
@@ -193,13 +196,13 @@ const Index = () => {
         type: MODAL_CLOSE_REQUEST,
       });
     }
-  }, [st_infoCreateDone, router.query]);
+  }, [st_menuImageCreateDone, router.query]);
 
   useEffect(() => {
-    if (st_infoUpdateDone) {
+    if (st_menuImageUpdateDone) {
       const qs = getQs();
       dispatch({
-        type: INFO_LIST_REQUEST,
+        type: MENU_LIST_REQUEST,
         data: {
           qs,
         },
@@ -209,13 +212,13 @@ const Index = () => {
         type: MODAL_CLOSE_REQUEST,
       });
     }
-  }, [st_infoUpdateDone, router.query]);
+  }, [st_menuImageUpdateDone, router.query]);
 
   useEffect(() => {
-    if (st_infoDeleteDone) {
+    if (st_menuImageDeleteDone) {
       const qs = getQs();
       dispatch({
-        type: INFO_LIST_REQUEST,
+        type: MENU_LIST_REQUEST,
         data: {
           qs,
         },
@@ -225,38 +228,38 @@ const Index = () => {
         type: MODAL_CLOSE_REQUEST,
       });
     }
-  }, [st_infoDeleteDone, router.query]);
+  }, [st_menuImageDeleteDone, router.query]);
 
   useEffect(() => {
-    if (st_infoListError) {
-      return message.error(st_infoListError);
+    if (st_menuImageListError) {
+      return message.error(st_menuImageListError);
     }
-  }, [st_infoListError]);
+  }, [st_menuImageListError]);
 
   useEffect(() => {
-    if (st_infoCreateError) {
-      return message.error(st_infoCreateError);
+    if (st_menuImageCreateError) {
+      return message.error(st_menuImageCreateError);
     }
-  }, [st_infoCreateError]);
+  }, [st_menuImageCreateError]);
 
   useEffect(() => {
-    if (st_infoUpdateError) {
-      return message.error(st_infoUpdateError);
+    if (st_menuImageUpdateError) {
+      return message.error(st_menuImageUpdateError);
     }
-  }, [st_infoUpdateError]);
+  }, [st_menuImageUpdateError]);
 
   useEffect(() => {
-    if (st_infoDeleteError) {
-      return message.error(st_infoDeleteError);
+    if (st_menuImageDeleteError) {
+      return message.error(st_menuImageDeleteError);
     }
-  }, [st_infoDeleteError]);
+  }, [st_menuImageDeleteError]);
 
   useEffect(() => {
     if (!modal && formRef.current) {
       formRef.current.resetFields();
 
       dispatch({
-        type: UPDATE_INFO_PATH,
+        type: UPDATE_MENU_PATH,
         data: "",
       });
     }
@@ -308,32 +311,32 @@ const Index = () => {
   const onSubmit = useCallback(
     (value) => {
       dispatch({
-        type: INFO_CREATE_REQUEST,
+        type: MENU_CREATE_REQUEST,
         data: {
-          type: value.type,
-          title: value.title,
-          content: value.content,
-          imagePath: uploadInfoPath,
+          hint: value.hint,
+          title: value.content,
+          answer: value.answer,
+          outLink: "-",
         },
       });
     },
-    [uploadInfoPath]
+    [uploadMenuImagePath]
   );
 
   const onSubmitUpdate = useCallback(
     (value) => {
       dispatch({
-        type: INFO_UPDATE_REQUEST,
+        type: MENU_UPDATE_REQUEST,
         data: {
           id: updateData.id,
-          type: value.type,
-          title: value.title,
-          content: value.content,
-          imagePath: uploadInfoPath,
+          hint: value.hint,
+          title: value.content,
+          answer: value.answer,
+          outLink: "-",
         },
       });
     },
-    [uploadInfoPath, updateData]
+    [uploadMenuImagePath, updateData]
   );
 
   const onChangeImages = useCallback((e) => {
@@ -344,14 +347,20 @@ const Index = () => {
     });
 
     dispatch({
-      type: INFO_UPLOAD_REQUEST,
+      type: MENU_UPLOAD_REQUEST,
       data: formData,
     });
   });
 
   const createModalOk = useCallback(() => {
-    formRef.current.submit();
-  }, []);
+    dispatch({
+      type: MENU_UPDATE_REQUEST,
+      data: {
+        id: updateData.id,
+        imagePath: uploadMenuImagePath,
+      },
+    });
+  }, [uploadMenuImagePath, updateData]);
 
   const clickImageUpload = useCallback(() => {
     imageInput.current.click();
@@ -363,7 +372,7 @@ const Index = () => {
       const queryString = `?page=${changePage}&search=${searchValue}`;
 
       dispatch({
-        type: INFO_LIST_REQUEST,
+        type: MENU_LIST_REQUEST,
         data: {
           qs: queryString || "",
         },
@@ -380,7 +389,7 @@ const Index = () => {
       );
     }
     dispatch({
-      type: INFO_DELETE_REQUEST,
+      type: MENU_DELETE_REQUEST,
       data: { infoId: deleteId },
     });
 
@@ -411,13 +420,13 @@ const Index = () => {
 
   const onFill = useCallback((data) => {
     formRef.current.setFieldsValue({
-      type: data.GuideType.id,
-      title: data.title,
-      content: data.content,
+      hint: data.hint,
+      content: data.title,
+      answer: data.answer,
     });
 
     dispatch({
-      type: UPDATE_INFO_PATH,
+      type: UPDATE_MENU_PATH,
       data: data.imagePath,
     });
   }, []);
@@ -430,31 +439,19 @@ const Index = () => {
       dataIndex: "id",
     },
     {
-      title: "유형",
-      render: (data) => <div>{data.GuideType.value}</div>,
-    },
-    {
-      title: "제목",
-      dataIndex: "title",
+      title: "이름",
+      render: (info) => <div>{data[info.id - 1]}</div>,
     },
 
     {
-      title: "작성일",
-      render: (data) => <div>{data.createdAt.slice(0, 10)}</div>,
+      title: "수정일",
+      render: (data) => <div>{data.updatedAt.slice(0, 10)}</div>,
     },
     {
-      title: "상세",
+      title: "수정",
       render: (data) => (
         <Button type="primary" onClick={() => updateModalOpen(data)}>
-          상세
-        </Button>
-      ),
-    },
-    {
-      title: "삭제",
-      render: (data) => (
-        <Button type="danger" onClick={deletePopToggle(data.id)}>
-          삭제
+          수정
         </Button>
       ),
     },
@@ -463,15 +460,15 @@ const Index = () => {
   return (
     <AdminLayout>
       <PageHeader
-        breadcrumbs={["게시판 관리", "이용 안내 리스트"]}
-        title={`이용 안내 리스트`}
-        subTitle={`이용 안내 리스트를 관리할 수 있습니다.`}
+        breadcrumbs={["안내 관리", "안내 리스트"]}
+        title={`안내 리스트`}
+        subTitle={`안내 리스트를 관리할 수 있습니다.`}
       />
 
       <AdminTop createButton={true} createButtonAction={modalOpen} />
 
       <AdminContent>
-        {/* <Row gutter={[10, 10]} style={{ padding: "0 0 10px 0" }}>
+        <Row gutter={[10, 10]} style={{ padding: "0 0 10px 0" }}>
           <Col span={`6`}>
             <Input
               style={{ width: "100%" }}
@@ -492,21 +489,21 @@ const Index = () => {
               검색
             </Button>
           </Col>
-        </Row> */}
+        </Row>
         <Table
           rowKey="id"
           columns={columns}
-          dataSource={infos ? infos : []}
+          dataSource={menuImages ? menuImages : []}
           size="small"
           pagination={
-            // false
-            {
-              defaultCurrent: 1,
-              current: parseInt(currentPage),
+            false
+            //   {
+            //   defaultCurrent: 1,
+            //   current: parseInt(currentPage),
 
-              total: maxPage * 10,
-              onChange: (page) => otherPageCall(page),
-            }
+            //   total: maxPage * 10,
+            //   onChange: (page) => otherPageCall(page),
+            // }
           }
         />
       </AdminContent>
@@ -514,8 +511,9 @@ const Index = () => {
       <Modal
         visible={modal}
         width={`600px`}
-        title={`가이드 관리`}
+        title={`안내 관리`}
         size="small"
+        // footer={false}
         onCancel={modalClose}
         onOk={createModalOk}
       >
@@ -534,13 +532,13 @@ const Index = () => {
 
             <UploadImage
               src={
-                uploadInfoPath
-                  ? `${uploadInfoPath}`
+                uploadMenuImagePath
+                  ? `${uploadMenuImagePath}`
                   : `https://via.placeholder.com/${_WIDTH}x${_HEIGHT}`
               }
               alt="main_GALLEY_image"
             />
-            <Guide>{uploadInfoPath && `이미지 미리보기 입니다.`}</Guide>
+            <Guide>{uploadMenuImagePath && `이미지 미리보기 입니다.`}</Guide>
 
             <UploadWrapper>
               <input
@@ -556,7 +554,7 @@ const Index = () => {
                 size="small"
                 type="primary"
                 onClick={clickImageUpload}
-                loading={st_infoUploadLoading}
+                loading={st_menuImageUploadLoading}
               >
                 UPLOAD
               </Button>
@@ -568,26 +566,10 @@ const Index = () => {
             onFinish={updateData ? onSubmitUpdate : onSubmit}
             ref={formRef}
           >
-            <Form.Item name={"type"} label="유형" rules={[{ required: true }]}>
-              <Select>
-                {infoTypes &&
-                  infoTypes.map((data, idx) => {
-                    return (
-                      <Select.Option value={data.id} key={idx}>
-                        {data.value}
-                      </Select.Option>
-                    );
-                  })}
-              </Select>
-            </Form.Item>
-
-            <Form.Item name={"title"} label="제목" rules={[{ required: true }]}>
-              <Input allowClear size="small" placeholder="Content..." />
-            </Form.Item>
-
+            {/* 
             <Form.Item
               name={"content"}
-              label="내용"
+              label="문제"
               rules={[{ required: true }]}
             >
               <Input.TextArea
@@ -597,6 +579,27 @@ const Index = () => {
                 placeholder="Content..."
               />
             </Form.Item>
+
+            <Form.Item
+              name={"hint"}
+              label="힌트 링크"
+              rules={[{ required: true }]}
+            >
+              <Input allowClear size="small" placeholder="Hint..." />
+            </Form.Item>
+
+            <Form.Item
+              name={"answer"}
+              label="정답"
+              rules={[{ required: true }]}
+            >
+              <Input
+                allowClear
+                size="small"
+                placeholder="Answer..."
+                type="number"
+              />
+            </Form.Item> */}
           </Form>
         </Wrapper>
       </Modal>

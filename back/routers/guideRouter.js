@@ -46,6 +46,7 @@ router.get("/type/list", async (req, res, next) => {
   try {
     const typeList = await GuideType.findAll({
       where: { isDelete: false },
+      order: [["createdAt", "ASC"]],
     });
 
     return res.status(200).json(typeList);
@@ -160,6 +161,12 @@ router.get("/list", async (req, res, next) => {
         },
         isDelete: false,
       },
+      include: [
+        {
+          model: GuideType,
+        },
+      ],
+      order: [["createdAt", "ASC"]],
     });
 
     const guideLen = totalGuide.length;
@@ -176,6 +183,12 @@ router.get("/list", async (req, res, next) => {
         },
         isDelete: false,
       },
+      include: [
+        {
+          model: GuideType,
+        },
+      ],
+      order: [["createdAt", "ASC"]],
     });
 
     return res.status(200).json({ lists, lastPage: parseInt(lastPage) });
@@ -191,6 +204,11 @@ router.get("/list/:guideId", async (req, res, next) => {
   try {
     const exGuide = await Guide.findOne({
       where: { id: parseInt(guideId) },
+      include: [
+        {
+          model: GuideType,
+        },
+      ],
     });
 
     if (!exGuide) {
@@ -216,6 +234,11 @@ router.get("/next/:guideId", async (req, res, next) => {
           [Op.gt]: parseInt(guideId),
         },
       },
+      include: [
+        {
+          model: GuideType,
+        },
+      ],
       limit: 1,
     });
 
@@ -242,6 +265,11 @@ router.get("/prev/:guideId", async (req, res, next) => {
           [Op.lt]: parseInt(guideId),
         },
       },
+      include: [
+        {
+          model: GuideType,
+        },
+      ],
     });
 
     if (!guides[0]) {
