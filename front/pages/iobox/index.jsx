@@ -377,6 +377,13 @@ const Index = () => {
               height={`50px`}
               onClick={() => {
                 moveLinkHandler("/iobox/service");
+                sessionStorage.setItem(
+                  "DATA",
+                  JSON.stringify({
+                    boxs: currentBuy,
+                    type,
+                  })
+                );
               }}
             >
               다음
