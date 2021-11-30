@@ -1,4 +1,4 @@
-import React, { useCallback, useState } from "react";
+import React, { useCallback, useEffect, useState } from "react";
 import Theme from "../../components/Theme";
 import {
   Wrapper,
@@ -70,7 +70,7 @@ const Index = () => {
   const width = useWidth();
   const router = useRouter();
 
-  const data = [
+  const dataArr = [
     //
     ["io박스", "W55 x H35 x D30 (CM)", "iO 베이직 월", 9000],
     ["행거박스", "W55 x H35 x D30 (CM)", "iO 베이직 월", 19000],
@@ -80,16 +80,27 @@ const Index = () => {
 
   ////// HOOKS //////
   const [tab, setTab] = useState(false);
-  const [number, setNumber] = useState(0);
 
+  const [type, setType] = useState("");
   const [moreTab, setMoreTab] = useState(false);
 
   const [currentBox, setCurrentBox] = useState(0);
   const [currentBuy, setCurrentBuy] = useState([0, 0, 0, 0]);
 
+  const [totalPay, setTotalPay] = useState(0);
+
   ////// REDUX //////
 
   ////// USEEFFECT //////
+  useEffect(() => {
+    let tempPay = 0;
+
+    currentBuy.map((data, idx) => {
+      tempPay += dataArr[idx][3] * data;
+    });
+
+    setTotalPay(tempPay);
+  }, [currentBuy]);
 
   ////// TOGGLE ///////
 
@@ -98,17 +109,35 @@ const Index = () => {
   }, [moreTab]);
 
   ///// HANDLER //////
-  const minusNumberHandler = useCallback(() => {
-    setNumber(number - 1);
+  const numberHandler = useCallback(
+    (value) => {
+      let tempArr = currentBuy.map((data, idx) => {
+        return idx === currentBox
+          ? data + value < 0
+            ? 0
+            : data + value
+          : data;
+      });
 
-    if (number === 0) {
-      setNumber(0);
-    }
-  }, [number]);
+      console.log(tempArr);
 
-  const plusNumberHandler = useCallback(() => {
-    setNumber(number + 1);
-  }, [number]);
+      setCurrentBuy(tempArr);
+
+      // if (number + value >= 0) setNumber(number + value);
+    },
+    [currentBox, currentBuy]
+  );
+
+  const deleteBuyHandler = useCallback(
+    (id) => {
+      let tempArr = currentBuy.map((data, idx) => {
+        return idx === id ? 0 : data;
+      });
+
+      setCurrentBuy(tempArr);
+    },
+    [currentBox, currentBuy]
+  );
 
   const moveBackHandler = useCallback(() => {
     router.back();
@@ -161,13 +190,12 @@ const Index = () => {
               minHeight={`100vh`}
             >
               <Text bold={true} fontSize={`2rem`}>
-                {data[currentBox][0]}
+                {dataArr[currentBox][0]}
               </Text>
               <Wrapper al={`flex-start`} margin={`10px 0 0`}>
                 <Text>배송&#38;보관박스 크기</Text>
-                <Text fontWeight={`700`}> {data[currentBox][1]}</Text>
+                <Text fontWeight={`700`}> {dataArr[currentBox][1]}</Text>
               </Wrapper>
-
               <Wrapper width={`auto`} al={`flex-end`}>
                 <Text
                   color={Theme.grey_C}
@@ -175,12 +203,11 @@ const Index = () => {
                   fontSize={`1.5rem`}
                   margin={`30px 0 0`}
                 >
-                  {data[currentBox][2]} {numberWithCommas(data[currentBox][3])}
-                  원
+                  {dataArr[currentBox][2]}{" "}
+                  {numberWithCommas(dataArr[currentBox][3])}원
                 </Text>
                 <TextButton onClick={moreTabToggle}>자세히 보기</TextButton>
               </Wrapper>
-
               <Wrapper minHeight={`300px`} margin={`10px 0`} zIndex={`1`}>
                 <BoxSlider
                   datum={[1, 2, 3, 4]}
@@ -189,63 +216,68 @@ const Index = () => {
                   setCurrentBox={setCurrentBox}
                 />
               </Wrapper>
-
               <Wrapper ju={`flex-end`} dr={`row`}>
                 <Wrapper
                   width={`30px`}
                   height={`30px`}
                   radius={`50%`}
                   border={`1px solid ${Theme.darkGrey2_C}`}
-                  onClick={minusNumberHandler}
+                  onClick={() => numberHandler(-1)}
                   cursor={`pointer`}
                 >
                   <MinusOutlined />
                 </Wrapper>
                 <Text fontWeight={`700`} margin={`0 20px`}>
-                  {number}
+                  {currentBuy[currentBox]}
                 </Text>
                 <Wrapper
                   width={`30px`}
                   height={`30px`}
                   radius={`50%`}
                   border={`1px solid ${Theme.darkGrey2_C}`}
-                  onClick={plusNumberHandler}
+                  onClick={() => numberHandler(+1)}
                   cursor={`pointer`}
                 >
                   <PlusOutlined />
                 </Wrapper>
               </Wrapper>
+              {currentBuy.map((data, idx) => {
+                return (
+                  data > 0 && (
+                    <Wrapper
+                      key={idx}
+                      dr={`row`}
+                      ju={`space-between`}
+                      margin={`20px 0 0`}
+                      trnansition={`0.5s`}
+                    >
+                      <Text fontSize={`1.1rem`}>
+                        {dataArr[idx][0]} {dataArr[idx][1]}
+                      </Text>
 
-              <Wrapper
-                dr={`row`}
-                ju={`space-between`}
-                margin={`20px 0 0`}
-                opacity={number === 0 ? `0` : `1`}
-                trnansition={`0.5s`}
-              >
-                <Text fontSize={`1.1rem`}>iO 박스 W55 x H35 x D30 (CM)</Text>
+                      <Wrapper dr={`row`} width={`auto`}>
+                        <Text fontSize={`1.1rem`} fontWeight={`700`}>
+                          {data}개
+                        </Text>
 
-                <Wrapper dr={`row`} width={`auto`}>
-                  <Text fontSize={`1.1rem`} fontWeight={`700`}>
-                    {number}개
-                  </Text>
-
-                  <Wrapper
-                    width={`18px`}
-                    height={`18px`}
-                    bgColor={Theme.black2_C}
-                    radius={`50%`}
-                    margin={`0 0 0 5px`}
-                    color={Theme.white_C}
-                    onClick={() => {
-                      setNumber(0);
-                    }}
-                  >
-                    <CloseOutlined />
-                  </Wrapper>
-                </Wrapper>
-              </Wrapper>
-
+                        <Wrapper
+                          width={`18px`}
+                          height={`18px`}
+                          bgColor={Theme.black2_C}
+                          radius={`50%`}
+                          margin={`0 0 0 5px`}
+                          color={Theme.white_C}
+                          onClick={() => {
+                            deleteBuyHandler(idx);
+                          }}
+                        >
+                          <CloseOutlined />
+                        </Wrapper>
+                      </Wrapper>
+                    </Wrapper>
+                  )
+                );
+              })}
               <Wrapper dr={`row`} ju={`space-between`} margin={`50px 0 0`}>
                 <Wrapper width={`auto`} dr={`row`}>
                   <Image
@@ -270,7 +302,7 @@ const Index = () => {
                   <Text margin={`1px 0 0 2px`}>?</Text>
                 </Wrapper>
               </Wrapper>
-
+              type setType
               <Wrapper
                 padding={`20px 0`}
                 dr={`row`}
@@ -286,7 +318,6 @@ const Index = () => {
                   </Text>
                 </Wrapper>
               </Wrapper>
-
               <Wrapper
                 padding={`20px 0`}
                 dr={`row`}
@@ -324,7 +355,7 @@ const Index = () => {
           <RsWrapper dr={`row`} ju={`space-between`}>
             <Wrapper width={`auto`} al={`flex-start`}>
               <Text bold={true} fontSize={`1.2rem`}>
-                월 9,000
+                월 {numberWithCommas(totalPay)}원
               </Text>
               <PayButtton bold={true} fontSize={`1.2rem`} cursor={`pointer`}>
                 예상금액 상세

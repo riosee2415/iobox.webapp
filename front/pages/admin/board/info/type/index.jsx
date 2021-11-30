@@ -1,7 +1,7 @@
 import React, { useCallback, useEffect, useRef, useState } from "react";
-import AdminLayout from "../../../components/AdminLayout";
-import PageHeader from "../../../components/admin/PageHeader";
-import AdminTop from "../../../components/admin/AdminTop";
+import AdminLayout from "../../../../../components/AdminLayout";
+import PageHeader from "../../../../../components/admin/PageHeader";
+import AdminTop from "../../../../../components/admin/AdminTop";
 import styled from "styled-components";
 import { useDispatch, useSelector } from "react-redux";
 import {
@@ -20,24 +20,23 @@ import {
 import { END } from "redux-saga";
 import axios from "axios";
 import { useRouter } from "next/router";
-import { LOAD_MY_INFO_REQUEST } from "../../../reducers/user";
-import wrapper from "../../../store/configureStore";
+import { LOAD_MY_INFO_REQUEST } from "../../../../../reducers/user";
+import wrapper from "../../../../../store/configureStore";
 import {
-  MODAL_CLOSE_REQUEST,
   MODAL_OPEN_REQUEST,
+  MODAL_CLOSE_REQUEST,
   INFO_TYPE_CREATE_REQUEST,
   INFO_TYPE_DELETE_REQUEST,
   INFO_TYPE_LIST_REQUEST,
   INFO_TYPE_UPDATE_REQUEST,
   INFO_TYPE_UPLOAD_REQUEST,
-  UPDATE_INFO_TYPE_PATH,
-} from "../../../reducers/infoType";
-import useInput from "../../../hooks/useInput";
+} from "../../../../../reducers/info";
+import useInput from "../../../../../hooks/useInput";
 import {
   ColWrapper,
   RowWrapper,
   Wrapper,
-} from "../../../components/commonComponents";
+} from "../../../../../components/commonComponents";
 import { SearchOutlined } from "@ant-design/icons";
 
 const AdminContent = styled.div`
@@ -160,7 +159,7 @@ const Index = () => {
     st_infoTypeDeleteError,
 
     st_infoTypeUploadLoading,
-  } = useSelector((state) => state.infoType);
+  } = useSelector((state) => state.info);
 
   ////// USEEFFECT //////
   useEffect(() => {
