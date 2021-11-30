@@ -238,7 +238,7 @@ const Index = () => {
                   <TextInput
                     width={`100%`}
                     height={`50px`}
-                    placeholder="전화번호를 적어주세요."
+                    placeholder="주소를 적어주세요."
                   />
 
                   <Wrapper
@@ -256,7 +256,7 @@ const Index = () => {
                   <TextInput
                     width={`100%`}
                     height={`50px`}
-                    placeholder="전화번호를 적어주세요."
+                    placeholder="주소를 적어주세요."
                     borderTop={`none`}
                   />
 

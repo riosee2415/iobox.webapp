@@ -15,7 +15,7 @@ import ClientLayout from "../../../components/ClientLayout";
 import useWidth from "../../../hooks/useWidth";
 import { CloseOutlined, DownOutlined, UpOutlined } from "@ant-design/icons";
 import { useRouter } from "next/dist/client/router";
-import { Radio } from "antd";
+import { Radio, Spin } from "antd";
 import { numberWithCommas } from "../../../components/commonUtils";
 
 const PayButtton = styled(Wrapper)`
@@ -90,6 +90,10 @@ const Index = () => {
   }, [tab]);
 
   ////// DATAVIEW //////
+  if (!storeData) {
+    return <Spin />;
+  }
+
   return (
     <>
       <WholeWrapper bgColor={Theme.lightGrey_C}>
@@ -327,11 +331,14 @@ const Index = () => {
               height={width < 700 ? `40px` : `50px`}
               onClick={() => {
                 moveLinkHandler("/iobox/keep");
-                sessionStorage.setItem("DATA", {
-                  ...storeData,
-                  pickUp,
-                  isCapture,
-                });
+                sessionStorage.setItem(
+                  "DATA",
+                  JSON.stringify({
+                    ...storeData,
+                    pickUp,
+                    isCapture,
+                  })
+                );
               }}
             >
               다음
