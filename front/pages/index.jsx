@@ -121,10 +121,10 @@ const Home = () => {
     }
   }, [value, value2]);
 
-  // useEffect(() => {
-  //   if (!mainOpacity) {
-  //   }
-  // }, [main]);
+  useEffect(() => {
+    if (!mainOpacity) {
+    }
+  }, [main]);
 
   ////// DATAVIEW //////
   return (
@@ -138,15 +138,9 @@ const Home = () => {
           zIndex={mainZIndex}
           height={`100vh`}
         >
-          <FirstDisplay
-            positon={``}
-            top={`0`}
-            left={`0`}
-            bgColor={Theme.basicTheme_C}
-            transition={`0.5s`}
-          >
+          <FirstDisplay bgColor={Theme.basicTheme_C} transition={`0.5s`}>
             <Image
-              width={`30px`}
+              width={`100px`}
               src={`https://4leaf-s3.s3.ap-northeast-2.amazonaws.com/iobox/assets/images/logo/LOGO_W.png`}
             />
           </FirstDisplay>

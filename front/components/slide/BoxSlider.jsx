@@ -36,6 +36,13 @@ const ArrowWrapper = styled(Wrapper)`
   & svg {
     font-size: 30px;
     color: ${Theme.darkGrey_C};
+    transition: 0.5s;
+  }
+
+  &:hover {
+    & svg {
+      color: ${Theme.basicTheme_C};
+    }
   }
 `;
 

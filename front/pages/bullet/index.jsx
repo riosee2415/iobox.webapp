@@ -9,6 +9,7 @@ import {
   CommonButton,
   TextInput,
   GradientText,
+  Question,
 } from "../../components/commonComponents";
 import styled from "styled-components";
 import ClientLayout from "../../components/ClientLayout";
@@ -486,17 +487,9 @@ const Index = () => {
                     월 00,000원
                   </Text>
 
-                  <Wrapper
-                    width={`20px`}
-                    height={`20px`}
-                    radius={`50%`}
-                    border={`1px solid ${Theme.grey_C}`}
-                    color={Theme.grey_C}
-                    cursor={`pointer`}
-                    margin={`0 0 0 10px`}
-                  >
+                  <Question>
                     <Text margin={`1px 0 0 2px`}>?</Text>
-                  </Wrapper>
+                  </Question>
                 </Wrapper>
 
                 <Wrapper
@@ -690,17 +683,9 @@ const Index = () => {
                   >
                     <Text fontSize={`1.3rem`}>출발지 주소</Text>
 
-                    <Wrapper
-                      width={`20px`}
-                      height={`20px`}
-                      radius={`50%`}
-                      border={`1px solid ${Theme.grey_C}`}
-                      color={Theme.grey_C}
-                      cursor={`pointer`}
-                      margin={`0 0 0 10px`}
-                    >
+                    <Question>
                       <Text margin={`1px 0 0 2px`}>?</Text>
-                    </Wrapper>
+                    </Question>
                   </Wrapper>
                   <Wrapper
                     dr={`row`}
@@ -763,17 +748,9 @@ const Index = () => {
                   >
                     <Text fontSize={`1.3rem`}>보관 기간</Text>
 
-                    <Wrapper
-                      width={`20px`}
-                      height={`20px`}
-                      radius={`50%`}
-                      border={`1px solid ${Theme.grey_C}`}
-                      color={Theme.grey_C}
-                      cursor={`pointer`}
-                      margin={`0 0 0 10px`}
-                    >
+                    <Question>
                       <Text margin={`1px 0 0 2px`}>?</Text>
-                    </Wrapper>
+                    </Question>
                   </Wrapper>
                   <Wrapper al={`flex-start`} margin={`35px 0 0 0`}>
                     <CustomRadioGroup
@@ -980,17 +957,9 @@ const Index = () => {
                   <Wrapper dr={`row`} ju={`space-between`} margin={`0 0 20px `}>
                     <Text fontSize={`1.3rem`}>도착지 주소</Text>
 
-                    <Wrapper
-                      width={`20px`}
-                      height={`20px`}
-                      radius={`50%`}
-                      border={`1px solid ${Theme.grey_C}`}
-                      color={Theme.grey_C}
-                      cursor={`pointer`}
-                      margin={`0 0 0 10px`}
-                    >
+                    <Question>
                       <Text margin={`1px 0 0 2px`}>?</Text>
-                    </Wrapper>
+                    </Question>
                   </Wrapper>
                   <Wrapper
                     dr={`row`}

@@ -8,6 +8,7 @@ import {
   Image,
   CommonButton,
   TextInput,
+  Question,
 } from "../../../components/commonComponents";
 import styled from "styled-components";
 import ClientLayout from "../../../components/ClientLayout";
@@ -21,6 +22,7 @@ const PayButtton = styled(Wrapper)`
   width: auto;
   font-size: 1.2rem;
   position: relative;
+  cursor: pointer;
 
   &:before {
     content: "";
@@ -33,7 +35,7 @@ const PayButtton = styled(Wrapper)`
   }
 
   &:hover {
-    font-weight: 700;
+    font-size: 1.3rem;
   }
 `;
 
@@ -120,16 +122,9 @@ const Index = () => {
                   </Text>
                 </Wrapper>
               </Wrapper>
-              <Wrapper
-                width={`20px`}
-                height={`20px`}
-                radius={`50%`}
-                border={`1px solid ${Theme.grey_C}`}
-                color={Theme.grey_C}
-                cursor={`pointer`}
-              >
+              <Question>
                 <Text margin={`1px 0 0 2px`}>?</Text>
-              </Wrapper>
+              </Question>
             </Wrapper>
 
             <Wrapper bgColor={Theme.lightGrey_C} height={`10px`}></Wrapper>
@@ -147,16 +142,9 @@ const Index = () => {
                 </Text>
               </Wrapper>
 
-              <Wrapper
-                width={`20px`}
-                height={`20px`}
-                radius={`50%`}
-                border={`1px solid ${Theme.grey_C}`}
-                color={Theme.grey_C}
-                cursor={`pointer`}
-              >
+              <Question>
                 <Text margin={`1px 0 0 2px`}>?</Text>
-              </Wrapper>
+              </Question>
             </Wrapper>
 
             <Wrapper

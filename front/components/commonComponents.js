@@ -508,3 +508,33 @@ export const GradientText = styled.h2`
 
   font-family: ${(props) => (props.bold && `SBAggroB` ? `SBAggroB` : ``)};
 `;
+
+export const Question = styled(Wrapper)`
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  border: 1px solid ${(props) => props.theme.grey_C};
+  color: ${(props) => props.theme.grey_C};
+  cursor: pointer;
+
+  &:hover {
+    background: ${(props) => props.theme.grey_C};
+    color: ${(props) => props.theme.white_C};
+  }
+`;
+
+export const Canceal = styled(Wrapper)`
+  width: 20px;
+  height: 20px;
+  background: ${(props) => props.theme.black2_C};
+  border-radius: 50%;
+  margin: 0 0 0 5px;
+  cursor: pointer;
+  color: ${(props) => props.theme.white_C};
+
+  &:hover {
+    background: ${(props) => props.theme.white_C};
+    border: 1px solid ${(props) => props.theme.black2_C};
+    color: ${(props) => props.theme.black2_C};
+  }
+`;

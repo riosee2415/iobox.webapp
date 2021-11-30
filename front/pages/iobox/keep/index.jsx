@@ -9,6 +9,7 @@ import {
   CommonButton,
   TextInput,
   TextArea,
+  Canceal,
 } from "../../../components/commonComponents";
 import styled from "styled-components";
 import ClientLayout from "../../../components/ClientLayout";
@@ -23,6 +24,7 @@ const PayButtton = styled(Wrapper)`
   width: auto;
   font-size: 1.2rem;
   position: relative;
+  cursor: pointer;
 
   &:before {
     content: "";
@@ -36,6 +38,7 @@ const PayButtton = styled(Wrapper)`
 
   &:hover {
     font-weight: 700;
+    font-size: 1.4rem;
   }
 `;
 
@@ -196,7 +199,9 @@ const Index = () => {
                   fontSize={`20px`}
                   cursor={`pointer`}
                 >
-                  <CloseCircleOutlined />
+                  <Canceal>
+                    <CloseOutlined />
+                  </Canceal>
                 </Wrapper>
               </Wrapper>
             </Wrapper>
@@ -218,7 +223,9 @@ const Index = () => {
                   fontSize={`20px`}
                   cursor={`pointer`}
                 >
-                  <CloseCircleOutlined />
+                  <Canceal>
+                    <CloseOutlined />
+                  </Canceal>
                 </Wrapper>
               </Wrapper>
             </Wrapper>
@@ -261,7 +268,9 @@ const Index = () => {
                     fontSize={`20px`}
                     cursor={`pointer`}
                   >
-                    <CloseCircleOutlined />
+                    <Canceal>
+                      <CloseOutlined />
+                    </Canceal>
                   </Wrapper>
                 </Wrapper>
               </Wrapper>
@@ -340,13 +349,13 @@ const Index = () => {
           padding={`20px 0`}
         >
           <RsWrapper>
-            <Wrapper width={`auto`} al={`flex-start`}>
-              <PayButtton
-                bold={true}
-                fontSize={`1.2rem`}
-                margin={`0 0 10px`}
-                cursor={`pointer`}
-              >
+            <Wrapper
+              width={`auto`}
+              al={`flex-start`}
+              zIndex={`100`}
+              cursor={`pointer`}
+            >
+              <PayButtton bold={true} margin={`0 0 10px`}>
                 예상금액 상세
               </PayButtton>
             </Wrapper>
