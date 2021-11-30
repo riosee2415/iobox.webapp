@@ -86,7 +86,9 @@ const Index = () => {
             right={`30px`}
             fontSize={`20px`}
             cursor={`pointer`}
-            onClick={moveBackHandler}
+            onClick={() => {
+              moveLinkHandler("/");
+            }}
             zIndex={`100`}
           >
             <CloseOutlined />
@@ -348,9 +350,21 @@ const Index = () => {
                 예상금액 상세
               </PayButtton>
             </Wrapper>
-            <CommonButton width={`100%`} height={`50px`}>
-              00,000원 결제하기
-            </CommonButton>
+
+            <Wrapper dr={`row`}>
+              <CommonButton
+                width={`80px`}
+                height={`50px`}
+                onClick={moveBackHandler}
+                kindOf={`white`}
+                margin={`0 5px 0 0`}
+              >
+                이전
+              </CommonButton>
+              <CommonButton width={`calc(100% - 80px - 5px)`} height={`50px`}>
+                00,000원 결제하기
+              </CommonButton>
+            </Wrapper>
           </RsWrapper>
         </Wrapper>
       </Wrapper>

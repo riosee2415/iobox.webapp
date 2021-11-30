@@ -129,26 +129,28 @@ const Home = () => {
   ////// DATAVIEW //////
   return (
     <>
-      <FirstWrapper
-        // 젤 밖에 {}로 !firstRendar 로 하는게 더 이해가 쉽지 않을까요? - 재완 -
-        display={firstRender === "true" ? `none` : `flex`}
-        position={`fixed`}
-        className={main ? `main` : `notMain`}
-        transition={`0.5s`}
-        opacity={mainOpacity}
-        zIndex={mainZIndex}
-        height={`100vh`}
-      >
-        <FirstDisplay
-          positon={``}
-          top={`0`}
-          left={`0`}
-          bgColor={Theme.basicTheme_C}
+      {firstRender !== "true" && (
+        <FirstWrapper
+          position={`fixed`}
+          className={main ? `main` : `notMain`}
           transition={`0.5s`}
+          opacity={mainOpacity}
+          zIndex={mainZIndex}
+          height={`100vh`}
         >
-          <Image src={`#`} />
-        </FirstDisplay>
-      </FirstWrapper>
+          <FirstDisplay
+            positon={``}
+            top={`0`}
+            left={`0`}
+            bgColor={Theme.basicTheme_C}
+            transition={`0.5s`}
+          >
+            <Image
+              src={`https://4leaf-s3.s3.ap-northeast-2.amazonaws.com/iobox/assets/images/logo/LOGO_W.png`}
+            />
+          </FirstDisplay>
+        </FirstWrapper>
+      )}
 
       <ClientLayout>
         <WholeWrapper
@@ -168,7 +170,11 @@ const Home = () => {
             >
               <RsWrapper ju={`flex-start`} position={`relative`}>
                 <Wrapper padding={`10px 0`}>
-                  <Image src={`#`} alt={`logo`} width={`40px`} />
+                  <Image
+                    src={`https://4leaf-s3.s3.ap-northeast-2.amazonaws.com/iobox/assets/images/logo/LOGO_W.png`}
+                    alt={`logo`}
+                    width={`40px`}
+                  />
                 </Wrapper>
 
                 <Text

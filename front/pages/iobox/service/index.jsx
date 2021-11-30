@@ -84,7 +84,9 @@ const Index = () => {
             right={`30px`}
             fontSize={`20px`}
             cursor={`pointer`}
-            onClick={moveBackHandler}
+            onClick={() => {
+              moveLinkHandler("/");
+            }}
             zIndex={`100`}
           >
             <CloseOutlined />
@@ -274,8 +276,16 @@ const Index = () => {
               </PayButtton>
             </Wrapper>
             <CommonButton
-              width={`130px`}
-              height={`50px`}
+              width={width < 700 ? `80px` : `130px`}
+              height={width < 700 ? `40px` : `50px`}
+              onClick={moveBackHandler}
+              kindOf={`white`}
+            >
+              이전
+            </CommonButton>
+            <CommonButton
+              width={width < 700 ? `80px` : `130px`}
+              height={width < 700 ? `40px` : `50px`}
               onClick={() => {
                 moveLinkHandler("/iobox/keep");
               }}
