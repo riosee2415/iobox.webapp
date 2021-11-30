@@ -8,22 +8,43 @@ import {
   Image,
   CommonButton,
   GradientText,
+  Question,
+  Canceal,
 } from "../../components/commonComponents";
 import styled from "styled-components";
 import ClientLayout from "../../components/ClientLayout";
 import useWidth from "../../hooks/useWidth";
-import { CloseOutlined, DownOutlined, UpOutlined } from "@ant-design/icons";
+import {
+  CloseOutlined,
+  DownOutlined,
+  UpOutlined,
+  MinusOutlined,
+  PlusOutlined,
+} from "@ant-design/icons";
 import { useRouter } from "next/dist/client/router";
-import { MinusOutlined, PlusOutlined } from "@ant-design/icons";
 import BoxSlider from "../../components/slide/BoxSlider";
 import { Checkbox, Radio } from "antd";
 import { numberWithCommas } from "../../components/commonUtils";
+
+const Box = styled(Wrapper)`
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+  border: 1px solid ${Theme.darkGrey2_C};
+  cursor: pointer;
+
+  &:hover {
+    background: ${Theme.darkGrey2_C};
+    color: ${Theme.white_C};
+  }
+`;
 
 const PayButtton = styled(Wrapper)`
   color: ${Theme.basicTheme_C};
   width: auto;
   font-size: 1.2rem;
   position: relative;
+  cursor: pointer;
 
   &:before {
     content: "";
@@ -36,7 +57,7 @@ const PayButtton = styled(Wrapper)`
   }
 
   &:hover {
-    font-weight: 700;
+    font-size: 1.4rem;
   }
 `;
 
@@ -217,29 +238,15 @@ const Index = () => {
                 />
               </Wrapper>
               <Wrapper ju={`flex-end`} dr={`row`}>
-                <Wrapper
-                  width={`30px`}
-                  height={`30px`}
-                  radius={`50%`}
-                  border={`1px solid ${Theme.darkGrey2_C}`}
-                  onClick={() => numberHandler(-1)}
-                  cursor={`pointer`}
-                >
+                <Box onClick={() => numberHandler(-1)}>
                   <MinusOutlined />
-                </Wrapper>
+                </Box>
                 <Text fontWeight={`700`} margin={`0 20px`}>
                   {currentBuy[currentBox]}
                 </Text>
-                <Wrapper
-                  width={`30px`}
-                  height={`30px`}
-                  radius={`50%`}
-                  border={`1px solid ${Theme.darkGrey2_C}`}
-                  onClick={() => numberHandler(+1)}
-                  cursor={`pointer`}
-                >
+                <Box onClick={() => numberHandler(+1)}>
                   <PlusOutlined />
-                </Wrapper>
+                </Box>
               </Wrapper>
               {currentBuy.map((data, idx) => {
                 return (
@@ -260,19 +267,13 @@ const Index = () => {
                           {data}개
                         </Text>
 
-                        <Wrapper
-                          width={`18px`}
-                          height={`18px`}
-                          bgColor={Theme.black2_C}
-                          radius={`50%`}
-                          margin={`0 0 0 5px`}
-                          color={Theme.white_C}
+                        <Canceal
                           onClick={() => {
                             deleteBuyHandler(idx);
                           }}
                         >
                           <CloseOutlined />
-                        </Wrapper>
+                        </Canceal>
                       </Wrapper>
                     </Wrapper>
                   )
@@ -291,16 +292,9 @@ const Index = () => {
                   </Text>
                 </Wrapper>
 
-                <Wrapper
-                  width={`20px`}
-                  height={`20px`}
-                  radius={`50%`}
-                  border={`1px solid ${Theme.grey_C}`}
-                  color={Theme.grey_C}
-                  cursor={`pointer`}
-                >
+                <Question>
                   <Text margin={`1px 0 0 2px`}>?</Text>
-                </Wrapper>
+                </Question>
               </Wrapper>
 
               <Wrapper
