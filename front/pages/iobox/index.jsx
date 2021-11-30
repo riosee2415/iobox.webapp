@@ -382,6 +382,7 @@ const Index = () => {
                   JSON.stringify({
                     boxs: currentBuy,
                     type,
+                    totalPay,
                   })
                 );
               }}
