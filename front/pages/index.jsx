@@ -146,7 +146,9 @@ const Home = () => {
           bgColor={Theme.basicTheme_C}
           transition={`0.5s`}
         >
-          <Image src={`#`} />
+          <Image
+            src={`https://4leaf-s3.s3.ap-northeast-2.amazonaws.com/iobox/assets/images/logo/LOGO_W.png`}
+          />
         </FirstDisplay>
       </FirstWrapper>
 
@@ -168,7 +170,11 @@ const Home = () => {
             >
               <RsWrapper ju={`flex-start`} position={`relative`}>
                 <Wrapper padding={`10px 0`}>
-                  <Image src={`#`} alt={`logo`} width={`40px`} />
+                  <Image
+                    src={`https://4leaf-s3.s3.ap-northeast-2.amazonaws.com/iobox/assets/images/logo/LOGO_W.png`}
+                    alt={`logo`}
+                    width={`40px`}
+                  />
                 </Wrapper>
 
                 <Text
