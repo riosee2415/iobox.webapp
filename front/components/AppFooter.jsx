@@ -219,6 +219,13 @@ const AppFooter = () => {
         bgColor={tab ? `rgba(0,0,0,0.8)` : ``}
         zIndex={`1000`}
         overflow={tab ? `hidden` : ``}
+        onClick={() => {
+          if (tab) {
+            tabToggle();
+          } else {
+            return;
+          }
+        }}
       >
         <Wrapper
           width={`auto`}
