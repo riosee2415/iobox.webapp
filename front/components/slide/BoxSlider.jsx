@@ -62,6 +62,7 @@ const BoxSlider = ({
   line = 5, // Row 슬라이드 행 수
   //
   setCurrentBox,
+  currentBox,
 }) => {
   const width = useWidth();
 
@@ -194,6 +195,8 @@ const BoxSlider = ({
         </Wrapper>
       )}
 
+      {console.log(currentBox)}
+
       <Carousel
         // onChange={change}
         effect={effect}
@@ -203,6 +206,7 @@ const BoxSlider = ({
         ref={slideRef}
         autoplay={autoplay}
         className={`slide-0`}
+        initialSlide={currentBox}
         afterChange={(index) => {
           console.log(index);
           setCurrentBox(index);

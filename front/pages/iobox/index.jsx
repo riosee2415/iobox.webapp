@@ -114,6 +114,24 @@ const Index = () => {
 
   ////// USEEFFECT //////
   useEffect(() => {
+    const type = router.query.type;
+    if (type) {
+      if (type === "iobox") {
+        setCurrentBox(0);
+      }
+      if (type === "hangerBox") {
+        setCurrentBox(1);
+      }
+      if (type === "tentBox") {
+        setCurrentBox(2);
+      }
+      if (type === "bigBox") {
+        setCurrentBox(3);
+      }
+    }
+  }, [router.query]);
+
+  useEffect(() => {
     let tempPay = 0;
 
     currentBuy.map((data, idx) => {
@@ -234,6 +252,8 @@ const Index = () => {
                   datum={[1, 2, 3, 4]}
                   line={1}
                   row={1}
+                  //
+                  currentBox={currentBox}
                   setCurrentBox={setCurrentBox}
                 />
               </Wrapper>
@@ -376,6 +396,7 @@ const Index = () => {
                   JSON.stringify({
                     boxs: currentBuy,
                     type,
+                    totalPay,
                   })
                 );
               }}

@@ -1,4 +1,4 @@
-import React, { useCallback, useState } from "react";
+import React, { useCallback, useState, useEffect } from "react";
 import Theme from "../../../components/Theme";
 import {
   Wrapper,
@@ -15,7 +15,8 @@ import ClientLayout from "../../../components/ClientLayout";
 import useWidth from "../../../hooks/useWidth";
 import { CloseOutlined, DownOutlined, UpOutlined } from "@ant-design/icons";
 import { useRouter } from "next/dist/client/router";
-import { Radio } from "antd";
+import { Radio, Spin } from "antd";
+import { numberWithCommas } from "../../../components/commonUtils";
 
 const PayButtton = styled(Wrapper)`
   color: ${Theme.basicTheme_C};
@@ -43,12 +44,35 @@ const Index = () => {
   const width = useWidth();
   const router = useRouter();
 
+  const dataArr = {
+    방문택배: 5000,
+    예약방문: 7000,
+    "편의점 셀프": 5000,
+    "무인택배함 셀프": 3000,
+  };
+
   ////// HOOKS //////
   const [tab, setTab] = useState(false);
+
+  const [storeData, setStoreData] = useState(null);
+
+  const [isCapture, setIsCapture] = useState(false);
+  const [pickUp, setPickUp] = useState("");
 
   ////// REDUX //////
 
   ////// USEEFFECT //////
+  useEffect(() => {
+    const data = JSON.parse(sessionStorage.getItem("DATA"));
+
+    if (!data) {
+      router.push("/");
+      return;
+    }
+
+    console.log(data);
+    setStoreData(data);
+  }, []);
 
   ////// TOGGLE ///////
 
@@ -66,6 +90,10 @@ const Index = () => {
   }, [tab]);
 
   ////// DATAVIEW //////
+  if (!storeData) {
+    return <Spin />;
+  }
+
   return (
     <>
       <WholeWrapper bgColor={Theme.lightGrey_C}>
@@ -114,13 +142,18 @@ const Index = () => {
 
             <Wrapper dr={`row`} ju={`space-between`} margin={`20px 0`}>
               <Wrapper width={`auto`} dr={`row`}>
-                <Radio />
-                <Wrapper width={`auto`} al={`flex-start`}>
-                  <Text>상자 보관 물건 촬영</Text>
-                  <Text color={Theme.basicTheme_C} fontWeight={`700`}>
-                    무료
-                  </Text>
-                </Wrapper>
+                <Radio
+                  style={{ display: "flex", alignItems: "center" }}
+                  checked={isCapture}
+                  onClick={() => setIsCapture(!isCapture)}
+                >
+                  <Wrapper width={`auto`} al={`flex-start`}>
+                    <Text>상자 보관 물건 촬영</Text>
+                    <Text color={Theme.basicTheme_C} fontWeight={`700`}>
+                      무료
+                    </Text>
+                  </Wrapper>
+                </Radio>
               </Wrapper>
               <Question>
                 <Text margin={`1px 0 0 2px`}>?</Text>
@@ -154,14 +187,19 @@ const Index = () => {
               al={`flex-start`}
               borderBottom={`1px solid ${Theme.grey_C}`}
             >
-              <Radio />
-              <Wrapper width={`auto`} al={`flex-start`}>
-                <Text>방문택배</Text>
-                <Text>(21년 11월 03일 ~ 21년 11월 05일 방문)</Text>
-                <Text color={Theme.grey_C} fontSize={`0.8rem`}>
-                  5,000원 (보관함 1개당)
-                </Text>
-              </Wrapper>
+              <Radio
+                style={{ display: "flex", alignItems: "center" }}
+                checked={pickUp === "방문택배"}
+                onClick={() => setPickUp("방문택배")}
+              >
+                <Wrapper width={`auto`} al={`flex-start`}>
+                  <Text>방문택배</Text>
+                  <Text>(21년 11월 03일 ~ 21년 11월 05일 방문)</Text>
+                  <Text color={Theme.grey_C} fontSize={`0.8rem`}>
+                    {numberWithCommas(dataArr["방문택배"])}원 (보관함 1개당)
+                  </Text>
+                </Wrapper>
+              </Radio>
             </Wrapper>
 
             <Wrapper
@@ -171,13 +209,18 @@ const Index = () => {
               al={`flex-start`}
               borderBottom={`1px solid ${Theme.grey_C}`}
             >
-              <Radio />
-              <Wrapper width={`auto`} al={`flex-start`}>
-                <Text>예약방문 - 서울 (방문일 지정)</Text>
-                <Text color={Theme.grey_C} fontSize={`0.8rem`}>
-                  7,000원 (보관함 1개당)
-                </Text>
-              </Wrapper>
+              <Radio
+                style={{ display: "flex", alignItems: "center" }}
+                checked={pickUp === "예약방문"}
+                onClick={() => setPickUp("예약방문")}
+              >
+                <Wrapper width={`auto`} al={`flex-start`}>
+                  <Text>예약방문 - 서울 (방문일 지정)</Text>
+                  <Text color={Theme.grey_C} fontSize={`0.8rem`}>
+                    {numberWithCommas(dataArr["예약방문"])}원 (보관함 1개당)
+                  </Text>
+                </Wrapper>
+              </Radio>
             </Wrapper>
 
             <Wrapper
@@ -187,13 +230,19 @@ const Index = () => {
               borderBottom={`1px solid ${Theme.grey_C}`}
             >
               <Wrapper dr={`row`} width={`auto`} al={`flex-start`}>
-                <Radio />
-                <Wrapper width={`auto`} al={`flex-start`}>
-                  <Text>편의점 셀프 접수</Text>
-                  <Text color={Theme.grey_C} fontSize={`0.8rem`}>
-                    5,000원 (보관함 1개당)
-                  </Text>
-                </Wrapper>
+                <Radio
+                  style={{ display: "flex", alignItems: "center" }}
+                  checked={pickUp === "편의점 셀프"}
+                  onClick={() => setPickUp("편의점 셀프")}
+                >
+                  <Wrapper width={`auto`} al={`flex-start`}>
+                    <Text>편의점 셀프 접수</Text>
+                    <Text color={Theme.grey_C} fontSize={`0.8rem`}>
+                      {numberWithCommas(dataArr["편의점 셀프"])}원 (보관함
+                      1개당)
+                    </Text>
+                  </Wrapper>
+                </Radio>
               </Wrapper>
 
               <Wrapper
@@ -216,13 +265,19 @@ const Index = () => {
               borderBottom={`1px solid ${Theme.grey_C}`}
             >
               <Wrapper dr={`row`} width={`auto`} al={`flex-start`}>
-                <Radio />
-                <Wrapper width={`auto`} al={`flex-start`}>
-                  <Text>무인택배함 셀프 접수</Text>
-                  <Text color={Theme.grey_C} fontSize={`0.8rem`}>
-                    3,000원 (보관함 1개당)
-                  </Text>
-                </Wrapper>
+                <Radio
+                  style={{ display: "flex", alignItems: "center" }}
+                  checked={pickUp === "무인택배함 셀프"}
+                  onClick={() => setPickUp("무인택배함 셀프")}
+                >
+                  <Wrapper width={`auto`} al={`flex-start`}>
+                    <Text>무인택배함 셀프 접수</Text>
+                    <Text color={Theme.grey_C} fontSize={`0.8rem`}>
+                      {numberWithCommas(dataArr["무인택배함 셀프"])}원 (보관함
+                      1개당)
+                    </Text>
+                  </Wrapper>
+                </Radio>
               </Wrapper>
 
               <Wrapper
@@ -257,7 +312,7 @@ const Index = () => {
           <RsWrapper dr={`row`} ju={`space-between`}>
             <Wrapper width={`auto`} al={`flex-start`}>
               <Text bold={true} fontSize={`1.2rem`}>
-                월 9,000
+                월 {numberWithCommas(storeData.totalPay)}원
               </Text>
               <PayButtton bold={true} fontSize={`1.2rem`} cursor={`pointer`}>
                 예상금액 상세
@@ -276,6 +331,14 @@ const Index = () => {
               height={width < 700 ? `40px` : `50px`}
               onClick={() => {
                 moveLinkHandler("/iobox/keep");
+                sessionStorage.setItem(
+                  "DATA",
+                  JSON.stringify({
+                    ...storeData,
+                    pickUp,
+                    isCapture,
+                  })
+                );
               }}
             >
               다음
