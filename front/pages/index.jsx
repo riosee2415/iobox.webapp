@@ -150,7 +150,7 @@ const Home = () => {
       <ClientLayout>
         <WholeWrapper
           overflow={`hidden`}
-          height={`100vh`}
+          height={`90vh`}
           bgColor={width < 700 ? Theme.white_C : Theme.lightGrey_C}
         >
           <Wrapper
@@ -176,17 +176,23 @@ const Home = () => {
                   bold={true}
                   color={Theme.white_C}
                   fontSize={`3rem`}
-                  margin={`30px 0 0`}
+                  margin={width < 700 ? `0` : `30px 0 0`}
                 >
                   맡아줘 내 짐!
                 </Text>
-                <Wrapper al={`flex-start`} margin={`45px 0 0`}>
+                <Wrapper
+                  al={`flex-start`}
+                  margin={width < 700 ? `20px 0 0` : `45px 0 0`}
+                >
                   <Text bold={true} color={Theme.white_C}>
                     원할 때 맡겨!
                   </Text>
                 </Wrapper>
 
-                <Wrapper al={`flex-end`} margin={`35px 0 0`}>
+                <Wrapper
+                  al={`flex-end`}
+                  margin={width < 700 ? `20px 0 0` : `35px 0 0`}
+                >
                   <Text bold={true} color={Theme.white_C}>
                     원할 때 찾고!
                   </Text>
