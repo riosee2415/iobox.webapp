@@ -210,7 +210,7 @@ const AppFooter = () => {
   return (
     <>
       <Wrapper
-        position={`absolute`}
+        position={`fixed`}
         bottom={`0`}
         left={width < 700 ? `0` : `50%`}
         margin={width < 700 ? `0` : `0 0 0 -250px`}

@@ -5,6 +5,7 @@ import {
   CommonButton,
   Image,
   ATag,
+  WholeWrapper,
 } from "./commonComponents";
 import { withResizeDetector } from "react-resize-detector";
 import styled from "styled-components";
@@ -140,8 +141,7 @@ const AppHeader = ({ children, width }) => {
   }, [pageY]);
   return (
     <>
-      <WebRow
-        justify={`center`}
+      <WholeWrapper
         position={`fixed`}
         top={`0`}
         left={`0`}
@@ -195,7 +195,7 @@ const AppHeader = ({ children, width }) => {
             </RowWrapper>
           </ColWrapper>
         </ColWrapper>
-      </WebRow>
+      </WholeWrapper>
       {/* mobile */}
       <MobileRow justify={`center`} className={headerScroll && "background"}>
         <ColWrapper span={11} al={`flex-start`}>
