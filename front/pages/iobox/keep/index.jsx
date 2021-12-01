@@ -18,6 +18,8 @@ import { CloseOutlined, DownOutlined, UpOutlined } from "@ant-design/icons";
 import { useRouter } from "next/dist/client/router";
 import { Radio } from "antd";
 import { CloseCircleOutlined, SearchOutlined } from "@ant-design/icons";
+import useInput from "../../../hooks/useInput";
+import PostCode from "../../../Components/postCode/PostCode";
 
 const PayButtton = styled(Wrapper)`
   color: ${Theme.basicTheme_C};
@@ -47,6 +49,13 @@ const Index = () => {
 
   ////// HOOKS //////
   const [tab, setTab] = useState(false);
+
+  const inputName = useInput("");
+  const inputMobile = useInput("");
+  const inputZoneCode = useInput("");
+  const inputAddress = useInput("");
+  const inputDetail = useInput("");
+  const inputContent = useInput("");
 
   ////// REDUX //////
 
@@ -188,6 +197,7 @@ const Index = () => {
                   width={`100%`}
                   height={`50px`}
                   placeholder="전화번호를 적어주세요."
+                  {...inputName}
                 />
 
                 <Wrapper
@@ -198,7 +208,7 @@ const Index = () => {
                   fontSize={`20px`}
                   cursor={`pointer`}
                 >
-                  <Canceal>
+                  <Canceal onClick={() => inputName.setValue("")}>
                     <CloseOutlined />
                   </Canceal>
                 </Wrapper>
@@ -212,6 +222,7 @@ const Index = () => {
                   width={`100%`}
                   height={`50px`}
                   placeholder="전화번호를 적어주세요."
+                  {...inputMobile}
                 />
 
                 <Wrapper
@@ -222,7 +233,7 @@ const Index = () => {
                   fontSize={`20px`}
                   cursor={`pointer`}
                 >
-                  <Canceal>
+                  <Canceal onClick={() => inputMobile.setValue("")}>
                     <CloseOutlined />
                   </Canceal>
                 </Wrapper>
@@ -256,6 +267,7 @@ const Index = () => {
                     width={`100%`}
                     height={`50px`}
                     placeholder="주소를 적어주세요."
+                    {...inputDetail}
                     borderTop={`none`}
                   />
 
@@ -267,7 +279,7 @@ const Index = () => {
                     fontSize={`20px`}
                     cursor={`pointer`}
                   >
-                    <Canceal>
+                    <Canceal onClick={() => inputDetail.setValue("")}>
                       <CloseOutlined />
                     </Canceal>
                   </Wrapper>
@@ -281,6 +293,7 @@ const Index = () => {
                 width={`100%`}
                 radius={`0`}
                 placeholder="특정시간 방문 요청 불가"
+                {...inputContent}
               />
             </Wrapper>
 
@@ -376,6 +389,19 @@ const Index = () => {
           </RsWrapper>
         </Wrapper>
       </Wrapper>
+
+      <PostCode
+        width={width}
+        //
+        isPostCode={isPostCode}
+        //
+        toggleDialogHandler={togglePostCodeDialogHandler}
+        onCompleteHandler={async (data) => {
+          inputAddress.setValue(data.address);
+          inputZoneCode.setValue(data.zonecode);
+          setIsPostCode(false);
+        }}
+      />
     </>
   );
 };
