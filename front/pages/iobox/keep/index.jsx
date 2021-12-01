@@ -19,7 +19,7 @@ import { useRouter } from "next/dist/client/router";
 import { Radio } from "antd";
 import { CloseCircleOutlined, SearchOutlined } from "@ant-design/icons";
 import useInput from "../../../hooks/useInput";
-import PostCode from "../../../Components/postCode/PostCode";
+import PostCode from "../../../components/postCode/PostCode";
 
 const PayButtton = styled(Wrapper)`
   color: ${Theme.basicTheme_C};
