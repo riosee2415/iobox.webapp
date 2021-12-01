@@ -17,6 +17,9 @@ import {
 import useWidth from "../../hooks/useWidth";
 import Theme from "../../components/Theme";
 import styled from "styled-components";
+import KakaoLogin from "react-kakao-login";
+import { useRouter } from "next/router";
+import naver from "naver-id-login";
 
 const CustomButton = styled.button`
   width: ${(props) => props.width};
@@ -53,16 +56,81 @@ const Home = ({}) => {
   const width = useWidth();
 
   ////// HOOKS //////
+  const router = useRouter();
 
   ////// REDUX //////
 
   ////// USEEFFECT //////
+  useEffect(() => {
+    if (typeof window !== "undefined") {
+      console.log(window.Kakao);
+      window.Kakao.init("ee41ebc5b6da97b7f6aed5ef579fa9a4");
+    }
+  }, []);
+
+  useEffect(() => {
+    const query = router.query;
+
+    if (query.naver) {
+      naver.handleTokenResponse();
+    }
+  }, [router.query]);
 
   ////// TOGGLE ///////
 
   ///// HANDLER //////
 
+  const loginKakaoHandler = (req) => {
+    const userId = "Kakao_" + req.profile.id;
+
+    const info = {
+      userId,
+      email: req.profile.kakao_account.email,
+    };
+
+    localStorage.setItem("platform", "3r5sKGMdgUoKaKasdaoiJej5TtN");
+    localStorage.setItem(
+      "3r5sKGMdgUoKaKasdaoiJej5TtN",
+      JSON.stringify({ ...info })
+    );
+
+    console.log(req);
+
+    router.push("/user/signup");
+  };
+
+  const loginNaverHandler = async () => {
+    const clientId = process.env.NEXT_PUBLIC_SNS_NAVER_KEY;
+    const callbackUrl = process.env.NEXT_PUBLIC_SNS_NAVER_CALLBACK;
+    const auth = await naver.login(clientId, callbackUrl);
+    console.log(auth);
+    const accessToken = auth.access_token;
+
+    const profile = await naver.getProfile(accessToken);
+    const userId = "Naver_" + profile.response.id;
+
+    const info = {
+      userId,
+      email: profile.response.email,
+    };
+
+    console.log(profile);
+
+    localStorage.setItem("platform", "3r5sKGMdgUoNasdaverJej5TtN");
+    localStorage.setItem(
+      "3r5sKGMdgUoNasdaverJej5TtN",
+      JSON.stringify({ ...info })
+    );
+
+    // setSnsPlatform(info.userId);
+    // setLoginSkipPlatform(false);
+  };
+
   ////// DATAVIEW //////
+  if (typeof window === "undefined") {
+    return null;
+  }
+
   return (
     <WholeWrapper
       height={`100vh`}
@@ -96,21 +164,39 @@ const Home = ({}) => {
               }}
               getProfile="true"
               render={(props) => ( */}
-            <CustomButton
-              width={width < 700 ? `100%` : `300px`}
-              height={`60px`}
-              radius={`10px`}
-              className={`kakao`}
-              margin={`20px 0`}
-            >
-              <Image
-                width={`37px`}
-                margin={`0 10px 0 0`}
-                src={`https://4leaf-s3.s3.ap-northeast-2.amazonaws.com/iobox/assets/images/kakao.png`}
-                alt={`kakao image`}
-              />
-              카카오로 로그인
-            </CustomButton>
+
+            <KakaoLogin
+              jsKey={process.env[`SNS_KAKAO_KEY`]}
+              onSuccess={loginKakaoHandler}
+              onFailure={(error) => {
+                console.log(error);
+              }}
+              getProfile="true"
+              render={({ onClick }) => {
+                return (
+                  <CustomButton
+                    width={width < 700 ? `100%` : `300px`}
+                    height={`60px`}
+                    radius={`10px`}
+                    className={`kakao`}
+                    margin={`20px 0`}
+                    onClick={(e) => {
+                      e.preventDefault();
+                      onClick();
+                    }}
+                  >
+                    <Image
+                      width={`37px`}
+                      margin={`0 10px 0 0`}
+                      src={`https://4leaf-s3.s3.ap-northeast-2.amazonaws.com/iobox/assets/images/kakao.png`}
+                      alt={`kakao image`}
+                    />
+                    카카오로 로그인
+                  </CustomButton>
+                );
+              }}
+            />
+
             {/* )} */}
             {/* /> */}
 
@@ -120,6 +206,7 @@ const Home = ({}) => {
               radius={`10px`}
               className={`naver`}
               margin={`0 0 85px`}
+              onClick={loginNaverHandler}
             >
               <Image
                 margin={`0 10px 0 0`}

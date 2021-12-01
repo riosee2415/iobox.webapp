@@ -3317,7 +3317,7 @@ debug@4, debug@^4.1.0, debug@^4.1.1, debug@^4.3.1, debug@~4.3.1:
   dependencies:
     ms "2.1.2"
 
-debug@^2.2.0, debug@^2.3.3:
+debug@^2.1.3, debug@^2.2.0, debug@^2.3.3:
   version "2.6.9"
   resolved "https://registry.yarnpkg.com/debug/-/debug-2.6.9.tgz#5d128515df134ff327e90a4c93f4e077a536341f"
   integrity sha512-bC7ElrdJaJnPbAP+1EotYvqZsb3ecl5wi6Bfi6BJTUcNowp6cvspg0jXznRTKDjm/E7AdgFBVeAPVMNcKGsHMA==
@@ -4758,6 +4758,13 @@ jsonfile@^4.0.0:
   optionalDependencies:
     graceful-fs "^4.1.6"
 
+jsonp@0.2.1:
+  version "0.2.1"
+  resolved "https://registry.yarnpkg.com/jsonp/-/jsonp-0.2.1.tgz#a65b4fa0f10bda719a05441ea7b94c55f3e15bae"
+  integrity sha1-pltPoPEL2nGaBUQep7lMVfPhW64=
+  dependencies:
+    debug "^2.1.3"
+
 jss-plugin-camel-case@^10.5.1:
   version "10.8.2"
   resolved "https://registry.yarnpkg.com/jss-plugin-camel-case/-/jss-plugin-camel-case-10.8.2.tgz#8d7f915c8115afaff8cbde08faf610ec9892fba6"
@@ -5277,6 +5284,13 @@ native-url@0.3.4:
   integrity sha512-6iM8R99ze45ivyH8vybJ7X0yekIcPf5GgLV5K0ENCbmRcaRIDoj37BC8iLEmaaBfqqb8enuZ5p0uhY+lVAbAcA==
   dependencies:
     querystring "^0.2.0"
+
+naver-id-login@^2.0.0:
+  version "2.0.0"
+  resolved "https://registry.yarnpkg.com/naver-id-login/-/naver-id-login-2.0.0.tgz#9bce44a53e9ce18c79049dcd6055af71a3ce518e"
+  integrity sha512-rCpwPeaIbE6AruWwuvskW71ec65NrT61UGr4Ydbix58XCbZ8ThWiXbrDni8VuOjeDFzZuTaS51ch7ZLTsWc2CA==
+  dependencies:
+    jsonp "0.2.1"
 
 needle@2.4.0:
   version "2.4.0"
@@ -6480,6 +6494,11 @@ react-is@16.13.1, react-is@^16.12.0, react-is@^16.13.1, react-is@^16.7.0, react-
   version "17.0.2"
   resolved "https://registry.yarnpkg.com/react-is/-/react-is-17.0.2.tgz#e691d4a8e9c789365655539ab372762b0efb54f0"
   integrity sha512-w2GsyukL62IJnlaff/nRegPQR94C/XXamvMWmSHRJ4y7Ts/4ocGRmTHvOs8PSE6pB3dWOrD/nueuU5sduBsQ4w==
+
+react-kakao-login@^1.2.3:
+  version "1.2.3"
+  resolved "https://registry.yarnpkg.com/react-kakao-login/-/react-kakao-login-1.2.3.tgz#608d970eb985e551e9a816bee81b91b7be26b75b"
+  integrity sha512-3EvQJombS/YsRe/1jGc+J/fdSVMtlG+f/dnQG8Js01pXyWOzsC3OKetiuo2bRgcno5GLNIQ4rG7pmF1yGp1t3g==
 
 react-planet@1.0.1:
   version "1.0.1"
