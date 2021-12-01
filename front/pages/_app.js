@@ -32,6 +32,17 @@ const Fourleaf = ({ Component }) => {
         <meta property="og:image:height" content="400" />
         <link rel="shortcut icon" href="/favicon.ico" />
         <link rel="canonical" href="https://www.sample.com" />
+
+        <script
+          type="text/javascript"
+          src="https://code.jquery.com/jquery-1.12.4.min.js"
+        ></script>
+
+        <script
+          type="text/javascript"
+          src="https://cdn.iamport.kr/js/iamport.payment-1.1.5.js"
+        ></script>
+        <script type="text/javascript" src="./customScript.js"></script>
       </Head>
       <Component />
     </ThemeProvider>

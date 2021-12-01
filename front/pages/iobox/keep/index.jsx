@@ -1,4 +1,4 @@
-import React, { useCallback, useState } from "react";
+import React, { useCallback, useEffect, useState } from "react";
 import Theme from "../../../components/Theme";
 import {
   Wrapper,
@@ -52,18 +52,37 @@ const Index = () => {
 
   const inputName = useInput("");
   const inputMobile = useInput("");
-  const inputZoneCode = useInput("");
   const inputAddress = useInput("");
+  const inputZoneCode = useInput("");
   const inputDetail = useInput("");
   const inputContent = useInput("");
+  const [storeData, setStoreData] = useState(null);
+
+  const [isPostCode, setIsPostCode] = useState(false);
 
   ////// REDUX //////
 
   ////// USEEFFECT //////
+  useEffect(() => {
+    const data = JSON.parse(sessionStorage.getItem("DATA"));
+
+    if (!data) {
+      router.push("/");
+      return;
+    }
+
+    setStoreData(data);
+  }, []);
+
+  console.log(storeData);
 
   ////// TOGGLE ///////
 
   ///// HANDLER //////
+  const togglePostCodeDialogHandler = () => {
+    setIsPostCode(!isPostCode);
+  };
+
   const moveBackHandler = useCallback(() => {
     router.back();
   }, []);
@@ -75,6 +94,25 @@ const Index = () => {
   const tabToggle = useCallback(() => {
     setTab(!tab);
   }, [tab]);
+
+  const handleFormSubmit = () => {
+    axios({
+      url: "{빌링키 발급 요청을 받을 서비스 URL}", // 예: https://www.myservice.com/subscription/issue-billing
+      method: "post",
+      data: {
+        // 카드번호
+        cardNumber: "4092160302741999",
+        // 유효기간
+        expiry: "0724",
+        // 생년월일
+        birth: "920131",
+        // 비밀번호 앞 두자리
+        pwd2Digit: "74",
+        // 고유 코드
+        customer_uid: "gildong_0001_1234",
+      },
+    }).then((rsp) => {});
+  };
 
   ////// DATAVIEW //////
   return (
@@ -248,7 +286,9 @@ const Index = () => {
                   <TextInput
                     width={`100%`}
                     height={`50px`}
+                    readOnly
                     placeholder="주소를 적어주세요."
+                    {...inputAddress}
                   />
 
                   <Wrapper
@@ -258,6 +298,7 @@ const Index = () => {
                     right={`10px`}
                     fontSize={`20px`}
                     cursor={`pointer`}
+                    onClick={() => togglePostCodeDialogHandler()}
                   >
                     <SearchOutlined />
                   </Wrapper>
