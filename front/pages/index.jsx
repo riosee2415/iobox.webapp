@@ -159,7 +159,7 @@ const Home = () => {
             shadow={`0px 0px 10px ${Theme.grey_C}`}
           >
             <Wrapper
-              height={`45%`}
+              height={`40%`}
               bgColor={Theme.basicTheme_C}
               ju={`flex-start`}
             >
@@ -197,15 +197,18 @@ const Home = () => {
                   position={`absolute`}
                   bottom={`0`}
                   left={`50%`}
-                  width={`130px`}
+                  width={`100px`}
                   zIndex={`2`}
-                  margin={`0 0 0 -65px`}
+                  margin={`0 0 0 -50px`}
                 />
               </RsWrapper>
             </Wrapper>
-            <Wrapper height={`55%`} bgColor={Theme.white_C}>
+            <Wrapper height={`60%`} bgColor={Theme.white_C}>
               <RsWrapper ju={`flex-start`}>
-                <Wrapper al={`flex-start`} margin={`50px 0 0`}>
+                <Wrapper
+                  al={`flex-start`}
+                  margin={width < 700 ? `30px 0 0` : `50px 0 0`}
+                >
                   <Text>3초 만에 내가 맡길 짐 가격 알아보기</Text>
 
                   <Wrapper
@@ -233,7 +236,9 @@ const Home = () => {
                   </Wrapper>
                 </Wrapper>
 
-                <Text margin={`40px 0 0`}>보관중인 고객님의 소중한 물건</Text>
+                <Text margin={width < 700 ? `30px 0 0` : `40px 0 0`}>
+                  보관중인 고객님의 소중한 물건
+                </Text>
 
                 <Wrapper dr={`row`} margin={`5px 0 0`}>
                   <Text

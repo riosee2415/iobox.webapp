@@ -93,7 +93,11 @@ const Index = () => {
           padding={`30px 0`}
           bgColor={`linear-gradient(160deg,rgb(249, 2, 80),rgb(247, 141, 150),rgb(242, 146, 98),rgb(241, 115, 80))`}
         >
-          <Image src={`#`} alt={`logo`} />
+          <Image
+            src={`https://4leaf-s3.s3.ap-northeast-2.amazonaws.com/iobox/assets/images/logo/LOGO_W.png`}
+            width={`50px`}
+            alt={`logo`}
+          />
           <Text color={Theme.white_C}>상담 가능 시간</Text>
           <Text fontSize={`0.7rem`} color={Theme.white_C}>
             평일 오전 10:00시 ~ 오후 18:00시 (토,일,공휴일 휴무)

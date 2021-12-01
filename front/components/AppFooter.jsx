@@ -185,13 +185,34 @@ const AppFooter = () => {
   const router = useRouter();
   ////// HOOKS //////
 
-  let data = [];
-  for (let i = 0; i < 12; i++) {
-    data.push({
-      text: `楼层${i}`,
-      title: `F${i}`,
-    });
-  }
+  const data = [
+    {
+      text: "11",
+      title: "33",
+      index: 1,
+    },
+
+    {
+      text: "33",
+      title: "123",
+      index: 2,
+    },
+
+    {
+      text: "123",
+      title: "123",
+    },
+
+    {
+      text: "123",
+      title: "123",
+    },
+
+    {
+      text: "123",
+      title: "123",
+    },
+  ];
 
   const [tab, setTab] = useState(false);
 
@@ -221,6 +242,10 @@ const AppFooter = () => {
   ////// DATAVIEW //////
   return (
     <>
+      {/* <Wrapper zIndex={`100000`} bgColor={Theme.black2_C} height={`300px`}>
+        <RotateMenu dataSource={data} onClick={(e, d) => console.log(d, e)} />
+      </Wrapper> */}
+
       <Wrapper
         position={`fixed`}
         bottom={`0`}
@@ -274,7 +299,6 @@ const AppFooter = () => {
             원할 때 맡기고 원할 때 찾기
           </Text>
         </Wrapper>
-        <RotateMenu dataSource={data} />
 
         <Wrapper
           dr={`row`}
@@ -289,6 +313,7 @@ const AppFooter = () => {
               className="gradient"
               bold={true}
               opacity={tab ? `0` : `1`}
+              padding={`0`}
             >
               내 물건 맡기기
             </GradientText>
@@ -501,7 +526,11 @@ const AppFooter = () => {
               visible={true}
               getContainer={false}
             >
-              <Wrapper height={`100vh`} ju={`space-between`}>
+              <Wrapper
+                height={`100vh !important`}
+                ju={`space-between`}
+                overflowX={`hidden`}
+              >
                 <RsWrapper
                   al={`flex-start`}
                   height={`auto`}
