@@ -14,6 +14,7 @@ import useWidth from "../hooks/useWidth";
 import { useRouter } from "next/dist/client/router";
 import { Planet } from "react-planet";
 import { MenuOutlined } from "@ant-design/icons";
+import RotateMenu from "react-rotate-menu";
 
 const BoxWrapper = styled(Wrapper)`
   padding: 0 30px;
@@ -181,6 +182,14 @@ const AppFooter = () => {
   const router = useRouter();
   ////// HOOKS //////
 
+  let data = [];
+  for (let i = 0; i < 12; i++) {
+    data.push({
+      text: `楼层${i}`,
+      title: `F${i}`,
+    });
+  }
+
   const [tab, setTab] = useState(false);
 
   const [top, setTop] = useState(0);
@@ -262,6 +271,7 @@ const AppFooter = () => {
             원할 때 맡기고 원할 때 찾기
           </Text>
         </Wrapper>
+        <RotateMenu dataSource={data} />
 
         <Wrapper
           dr={`row`}
