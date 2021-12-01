@@ -14,7 +14,10 @@ import useWidth from "../hooks/useWidth";
 import { useRouter } from "next/dist/client/router";
 import { Planet } from "react-planet";
 import { MenuOutlined } from "@ant-design/icons";
-import RotateMenu from "react-rotate-menu";
+
+import dynamic from "next/dynamic";
+
+const RotateMenu = dynamic(() => import("react-rotate-menu"), { ssr: false });
 
 const BoxWrapper = styled(Wrapper)`
   padding: 0 30px;
