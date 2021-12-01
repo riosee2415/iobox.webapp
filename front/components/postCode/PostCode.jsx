@@ -1,7 +1,7 @@
 import React from "react";
 import DaumPostCode from "react-daum-postcode";
 import Dialog from "@material-ui/core/Dialog";
-import { Wrapper } from "../../Components/CommonComponents";
+import { Wrapper } from "../../components/commonComponents";
 import { AiOutlineClose } from "react-icons/ai";
 
 const style = {
