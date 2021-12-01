@@ -90,7 +90,14 @@ const GlobalStyles = createGlobalStyle`
 
   }
 
+  .ant-drawer-content-wrapper{
+    width : 400px !important;
 
+    @media (max-width : 700px) {
+      width : 80vw !important;
+    }
+    
+  }
   .ant-switch-checked{
     background-color : ${(props) => props.theme.basicTheme_C};
   }
