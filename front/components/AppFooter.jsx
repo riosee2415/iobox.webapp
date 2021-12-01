@@ -273,7 +273,7 @@ const AppFooter = () => {
           shadow={tab ? `none` : `0px -3px 10px ${Theme.grey_C}`}
         >
           <ButtonWrapper
-            bottom={tab ? (width < 700 ? `250px` : `280px`) : `150px`}
+            bottom={tab ? (width < 700 ? `230px` : `280px`) : `150px`}
             transition={`0.5s`}
           >
             <GradientText
