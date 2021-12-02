@@ -111,7 +111,7 @@ const ButtonWrapper = styled(Wrapper)`
   left: 50%;
   cursor: pointer;
   width: auto;
-  margin: 0 0 0 -80px;
+  margin: 0 0 0 -90px;
 
   &:hover {
     .circle {
@@ -235,7 +235,7 @@ const AppFooter = () => {
           width={`auto`}
           al={`flex-start`}
           display={tab ? `flex` : `none`}
-          margin={width < 700 ? `0 0 180px` : `0 0 150px`}
+          margin={width < 700 ? `0 0 170px` : `0 0 150px`}
         >
           <Image
             width={`60px`}
