@@ -136,7 +136,7 @@ const Index = () => {
           fontSize={`20px`}
           cursor={`pointer`}
           onClick={() => {
-            moveLinkHandler("/");
+            moveLinkHandler("/main");
           }}
           zIndex={`100`}
         >

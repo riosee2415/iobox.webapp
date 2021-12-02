@@ -1,10 +1,10 @@
 import React, { useCallback, useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { LOAD_MY_INFO_REQUEST, LOGIN_REQUEST } from "../reducers/user";
-import useInput from "../hooks/useInput";
-import ClientLayout from "../components/ClientLayout";
+import { LOAD_MY_INFO_REQUEST, LOGIN_REQUEST } from "../../reducers/user";
+import useInput from "../../hooks/useInput";
+import ClientLayout from "../../components/ClientLayout";
 import axios from "axios";
-import wrapper from "../store/configureStore";
+import wrapper from "../../store/configureStore";
 import { END } from "redux-saga";
 import {
   Image,
@@ -12,11 +12,11 @@ import {
   RsWrapper,
   Wrapper,
   Text,
-} from "../components/commonComponents";
-import useWidth from "../hooks/useWidth";
-import Theme from "../components/Theme";
+} from "../../components/commonComponents";
+import useWidth from "../../hooks/useWidth";
+import Theme from "../../components/Theme";
 import { useRouter } from "next/dist/client/router";
-import { KEEPBOX_LIST_REQUEST } from "../reducers/keepBox";
+import { KEEPBOX_LIST_REQUEST } from "../../reducers/keepBox";
 import { useCountUp, CountUp } from "use-count-up";
 import styled from "styled-components";
 
@@ -131,25 +131,25 @@ const Home = () => {
   ////// DATAVIEW //////
   return (
     <>
-      {/* {firstRender !== "true" && ( */}
-      <FirstWrapper
-        position={`fixed`}
-        className={main ? `main` : `notMain`}
-        transition={`0.5s`}
-        opacity={mainOpacity}
-        zIndex={mainZIndex}
-        height={`100vh`}
-      >
-        <FirstDisplay bgColor={Theme.basicTheme_C} transition={`0.5s`}>
-          <Image
-            width={`100px`}
-            src={`https://4leaf-s3.s3.ap-northeast-2.amazonaws.com/iobox/assets/images/logo/LOGO_W.png`}
-          />
-        </FirstDisplay>
-      </FirstWrapper>
-      {/* )} */}
+      {firstRender !== "true" && (
+        <FirstWrapper
+          position={`fixed`}
+          className={main ? `main` : `notMain`}
+          transition={`0.5s`}
+          opacity={mainOpacity}
+          zIndex={mainZIndex}
+          height={`100vh`}
+        >
+          <FirstDisplay bgColor={Theme.basicTheme_C} transition={`0.5s`}>
+            <Image
+              width={`100px`}
+              src={`https://4leaf-s3.s3.ap-northeast-2.amazonaws.com/iobox/assets/images/logo/LOGO_W.png`}
+            />
+          </FirstDisplay>
+        </FirstWrapper>
+      )}
 
-      {/* <ClientLayout>
+      <ClientLayout>
         <WholeWrapper
           overflow={`hidden`}
           height={`90vh`}
@@ -298,7 +298,7 @@ const Home = () => {
             </Wrapper>
           </Wrapper>
         </WholeWrapper>
-      </ClientLayout> */}
+      </ClientLayout>
     </>
   );
 };

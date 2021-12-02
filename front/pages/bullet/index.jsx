@@ -24,6 +24,7 @@ import {
   RightOutlined,
   SearchOutlined,
   UpOutlined,
+  DeleteOutlined,
 } from "@ant-design/icons";
 import { useRouter } from "next/dist/client/router";
 import {
@@ -503,20 +504,15 @@ const Index = () => {
                     상자 총{" "}
                     {currentHanger + currentIo + currentBig + currentTent}개
                   </Text>
-                  <Wrapper width={`auto`} dr={`row`}>
+                  <Wrapper width={`auto`} dr={`row`} color={Theme.red_C}>
                     <Text
-                      color={Theme.red_C}
                       onClick={deleteAllBoxHandler}
                       cursor={`pointer`}
                       margin={`0 10px 0 0`}
                     >
                       전체삭제
                     </Text>
-                    <Image
-                      src={`https://via.placeholder.com/100x100`}
-                      alt={``}
-                      width={`1.5rem`}
-                    />
+                    <DeleteOutlined />
                   </Wrapper>
                 </Wrapper>
 

@@ -20,6 +20,7 @@ import styled from "styled-components";
 import KakaoLogin from "react-kakao-login";
 import { useRouter } from "next/router";
 import naver from "naver-id-login";
+import { Link } from "@material-ui/core";
 
 const CustomButton = styled.button`
   width: ${(props) => props.width};
@@ -147,14 +148,17 @@ const Home = ({}) => {
           ju={`flex-start`}
         >
           <RsWrapper ju={`flex-end`} margin={`0 0 10px`} position={`relative`}>
-            <Image
-              position={`absolute`}
-              bottom={`calc(50% - 170px / 2)`}
-              left={`calc(50% - 87px / 2)`}
-              width={`87px`}
-              src={`https://via.placeholder.com/87x170`}
-              alt={`logo_Image`}
-            />
+            <Link href="/main">
+              <Image
+                position={`absolute`}
+                bottom={`50%`}
+                left={`50%`}
+                width={`90px`}
+                margin={`0 0 -45px -33px`}
+                src={`https://4leaf-s3.s3.ap-northeast-2.amazonaws.com/iobox/assets/images/logo/LOGO_W.png`}
+                alt={`logo_Image`}
+              />
+            </Link>
 
             {/* <KakaoLogin
               jsKey={process.env.SNS_KAKAO_KEY}
@@ -188,7 +192,7 @@ const Home = ({}) => {
                     <Image
                       width={`37px`}
                       margin={`0 10px 0 0`}
-                      src={`https://4leaf-s3.s3.ap-northeast-2.amazonaws.com/iobox/assets/images/kakao.png`}
+                      src={`https://4leaf-s3.s3.ap-northeast-2.amazonaws.com/iobox/assets/images/login/kakao_login.png`}
                       alt={`kakao image`}
                     />
                     카카오로 로그인
@@ -211,7 +215,7 @@ const Home = ({}) => {
               <Image
                 margin={`0 10px 0 0`}
                 width={`17px`}
-                src={`https://4leaf-s3.s3.ap-northeast-2.amazonaws.com/iobox/assets/images/naver.png`}
+                src={`https://4leaf-s3.s3.ap-northeast-2.amazonaws.com/iobox/assets/images/login/naver_login.png`}
                 alt={`kakao image`}
               />
               네이버로 로그인

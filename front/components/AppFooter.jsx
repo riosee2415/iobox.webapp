@@ -15,10 +15,6 @@ import { useRouter } from "next/dist/client/router";
 import { Planet } from "react-planet";
 import { MenuOutlined } from "@ant-design/icons";
 
-import dynamic from "next/dynamic";
-
-const RotateMenu = dynamic(() => import("react-rotate-menu"), { ssr: false });
-
 const BoxWrapper = styled(Wrapper)`
   padding: 0 30px;
   flex-direction: row;
@@ -115,7 +111,7 @@ const ButtonWrapper = styled(Wrapper)`
   left: 50%;
   cursor: pointer;
   width: auto;
-  margin: 0 0 0 -76px;
+  margin: 0 0 0 -80px;
 
   &:hover {
     .circle {
@@ -185,35 +181,6 @@ const AppFooter = () => {
   const router = useRouter();
   ////// HOOKS //////
 
-  const data = [
-    {
-      text: "11",
-      title: "33",
-      index: 1,
-    },
-
-    {
-      text: "33",
-      title: "123",
-      index: 2,
-    },
-
-    {
-      text: "123",
-      title: "123",
-    },
-
-    {
-      text: "123",
-      title: "123",
-    },
-
-    {
-      text: "123",
-      title: "123",
-    },
-  ];
-
   const [tab, setTab] = useState(false);
 
   const [top, setTop] = useState(0);
@@ -268,7 +235,7 @@ const AppFooter = () => {
           width={`auto`}
           al={`flex-start`}
           display={tab ? `flex` : `none`}
-          margin={`0 0 150px`}
+          margin={width < 700 ? `0 0 180px` : `0 0 150px`}
         >
           <Image
             width={`60px`}
@@ -306,7 +273,7 @@ const AppFooter = () => {
           shadow={tab ? `none` : `0px -3px 10px ${Theme.grey_C}`}
         >
           <ButtonWrapper
-            bottom={tab ? (width < 700 ? `250px` : `280px`) : `150px`}
+            bottom={tab ? (width < 700 ? `230px` : `280px`) : `150px`}
             transition={`0.5s`}
           >
             <GradientText

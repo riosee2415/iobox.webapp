@@ -131,7 +131,10 @@ const Index = () => {
               padding={`10px 5px`}
               border={`1px solid  ${Theme.basicTheme_C}`}
             >
-              <Image src={`#`} alt={`logo`} />
+              <Image
+                src={`https://4leaf-s3.s3.ap-northeast-2.amazonaws.com/iobox/assets/images/logo/LOGO_W.png`}
+                alt={`logo`}
+              />
             </Wrapper>
           </CouponWrapper>
 
@@ -158,7 +161,10 @@ const Index = () => {
               padding={`10px 5px`}
               border={`1px solid  ${Theme.basicTheme_C}`}
             >
-              <Image src={`#`} alt={`logo`} />
+              <Image
+                src={`https://4leaf-s3.s3.ap-northeast-2.amazonaws.com/iobox/assets/images/logo/LOGO_W.png`}
+                alt={`logo`}
+              />
             </Wrapper>
           </CouponWrapper>
 
@@ -185,7 +191,10 @@ const Index = () => {
               padding={`10px 5px`}
               border={`1px solid  ${Theme.basicTheme_C}`}
             >
-              <Image src={`#`} alt={`logo`} />
+              <Image
+                src={`https://4leaf-s3.s3.ap-northeast-2.amazonaws.com/iobox/assets/images/logo/LOGO_W.png`}
+                alt={`logo`}
+              />
             </Wrapper>
           </CouponWrapper>
 
@@ -212,7 +221,10 @@ const Index = () => {
               padding={`10px 5px`}
               border={`1px solid  ${Theme.basicTheme_C}`}
             >
-              <Image src={`#`} alt={`logo`} />
+              <Image
+                src={`https://4leaf-s3.s3.ap-northeast-2.amazonaws.com/iobox/assets/images/logo/LOGO_W.png`}
+                alt={`logo`}
+              />
             </Wrapper>
           </CouponWrapper>
 
@@ -239,7 +251,10 @@ const Index = () => {
               padding={`10px 5px`}
               border={`1px solid  ${Theme.basicTheme_C}`}
             >
-              <Image src={`#`} alt={`logo`} />
+              <Image
+                src={`https://4leaf-s3.s3.ap-northeast-2.amazonaws.com/iobox/assets/images/logo/LOGO_W.png`}
+                alt={`logo`}
+              />
             </Wrapper>
           </CouponWrapper>
 
