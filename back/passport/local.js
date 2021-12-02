@@ -11,15 +11,16 @@ module.exports = () => {
         passwordField: "password",
       },
       async (userId, password, done) => {
+        // 프론트 로그인의 경우 password가 Email로 되어있다.
+        // 관리자 로그인의 경우 기존과 동일
         try {
           const user = await User.findOne({
             where: { userId },
           });
 
+          // 아이디로 유저를 검색했을때, 없으면 바로 생성해준다.
           if (!user) {
-            return done(null, false, {
-              reason: "존재하지 않는 아이디 입니다.",
-            });
+            return done(null, false);
           }
 
           const result = await bcrypt.compare(password, user.password);

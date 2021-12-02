@@ -110,30 +110,64 @@ router.get("/signin", async (req, res, next) => {
 });
 
 router.post("/signin", (req, res, next) => {
-  passport.authenticate("local", (err, user, info) => {
-    if (err) {
-      console.error(err);
-      return next(err);
-    }
+  passport.authenticate("local", async (err, user, info) => {
+    console.log(req.body);
 
-    if (info) {
-      console.log(`❌ LOGIN FAILED : ${info.reason}`);
-      return res.status(401).send(info.reason);
-    }
+    const { userId, password, nickname } = req.body;
 
-    return req.login(user, async (loginErr) => {
-      if (loginErr) {
-        console.error(loginErr);
-        return next(loginErr);
+    if (user) {
+      if (err) {
+        console.error(err);
+        return next(err);
       }
 
-      const fullUserWithoutPassword = await User.findOne({
-        where: { id: user.id },
-        attributes: ["id", "nickname", "userId", "level"],
+      if (info) {
+        console.log(`❌ LOGIN FAILED : ${info.reason}`);
+        return res.status(401).send(info.reason);
+      }
+
+      return req.login(user, async (loginErr) => {
+        if (loginErr) {
+          console.error(loginErr);
+          return next(loginErr);
+        }
+
+        const fullUserWithoutPassword = await User.findOne({
+          where: { id: user.id },
+          attributes: ["id", "nickname", "userId", "level"],
+        });
+
+        return res.status(200).json(fullUserWithoutPassword);
+      });
+    } else {
+      // 추가된 코드
+      // 특정 유저가 없을 경우 바로 유저를 생성한다.
+      // 특이사항으로 유저의 비밀번호가 이메일로 되어있다. => 무조건 SNS로그인만 있기 떄문에
+      // 생성 후 생성된 유저로 login처리를 한다.
+      const newUser = await User.create({
+        userId,
+        email: password,
+        password,
+        nickname,
+        mobile: "-",
+        userPk: userId,
+        terms: 1,
       });
 
-      return res.status(200).json(fullUserWithoutPassword);
-    });
+      return req.login(newUser, async (loginErr) => {
+        if (loginErr) {
+          console.error(loginErr);
+          return next(loginErr);
+        }
+
+        const fullUserWithoutPassword = await User.findOne({
+          where: { id: newUser.id },
+          attributes: ["id", "nickname", "userId", "level"],
+        });
+
+        return res.status(200).json(fullUserWithoutPassword);
+      });
+    }
   })(req, res, next);
 });
 
