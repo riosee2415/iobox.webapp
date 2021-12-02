@@ -285,45 +285,39 @@ const NoticeList = ({ router }) => {
     formRef.current.setFieldsValue({
       title: data.title,
       content: data.content,
-      type: data.type,
-      isTop: data.isTop,
+      // type: data.type,
+      // isTop: data.isTop,
     });
 
-    setIsTop(data.isTop);
+    // setIsTop(data.isTop);
   }, []);
 
   const onSubmit = useCallback(
     (value) => {
       const formData = new FormData();
 
-      formData.append("title", value.title);
-      formData.append("content", value.content);
-      formData.append("type", value.type);
-      formData.append("isTop", isTop);
-      formData.append("file", realFile.value);
-
       dispatch({
         type: NOTICE_CREATE_REQUEST,
-        data: formData,
+        data: {
+          title: value.title,
+          content: value.content,
+        },
       });
     },
     [isTop, realFile.value]
   );
 
+  console.log(updateData);
+
   const onSubmitUpdate = useCallback(
     (value) => {
-      const formData = new FormData();
-
-      formData.append("id", updateData.id);
-      formData.append("title", value.title);
-      formData.append("content", value.content);
-      formData.append("type", value.type);
-      formData.append("isTop", isTop);
-      formData.append("file", realFile.value);
-
       dispatch({
         type: NOTICE_UPDATE_REQUEST,
-        data: formData,
+        data: {
+          id: updateData.id,
+          title: value.title,
+          content: value.content,
+        },
       });
     },
     [isTop, realFile.value, updateData]
@@ -485,7 +479,7 @@ const NoticeList = ({ router }) => {
               <Input allowClear placeholder="Title..." />
             </Form.Item>
 
-            <Form.Item name={"type"} label="유형" rules={[{ required: true }]}>
+            {/* <Form.Item name={"type"} label="유형" rules={[{ required: true }]}>
               <Select
                 showSearch
                 style={{ width: 200 }}
@@ -509,7 +503,7 @@ const NoticeList = ({ router }) => {
                 checked={isTop}
                 onChange={isTopChange}
               />
-            </Form.Item>
+            </Form.Item> */}
 
             <Form.Item
               name={"content"}
@@ -523,7 +517,7 @@ const NoticeList = ({ router }) => {
               />
             </Form.Item>
 
-            <Form.Item>
+            {/* <Form.Item>
               <FileBox>
                 <input
                   type="file"
@@ -539,7 +533,7 @@ const NoticeList = ({ router }) => {
                   FILE UPLOAD
                 </Button>
               </FileBox>
-            </Form.Item>
+            </Form.Item> */}
 
             {/* {updateData && (
             <Form.Item>
