@@ -135,7 +135,7 @@ const Index = () => {
           fontSize={`20px`}
           cursor={`pointer`}
           onClick={() => {
-            moveLinkHandler("/");
+            moveLinkHandler("/myInfo");
           }}
           zIndex={`100`}
         >
@@ -172,7 +172,7 @@ const Index = () => {
                       }
                     >
                       <Wrapper al={`flex-start`}>
-                        <Text fontSize={`0.7rem`}>{data.type}</Text>
+                        <Text fontSize={`0.7rem`}>{data.GuideType.value}</Text>
                         <Text>{data.title}</Text>
                       </Wrapper>
                     </TableWrapper>

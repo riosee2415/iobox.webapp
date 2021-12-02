@@ -112,11 +112,34 @@ const Index = () => {
               자주 묻는 질문
             </Text>
 
-            <Wrapper padding={`10px 0`} al={`flex-start`} ju={`flex-start`}>
-              Q: {faqDetail && faqDetail.question}
+            <Wrapper padding={`10px 0`} ju={`flex-start`} dr={`row`}>
+              <Wrapper
+                fontSize={`1.4rem`}
+                bold={true}
+                color={Theme.basicTheme_C}
+                margin={`0 5px 0 0`}
+                width={`30px`}
+              >
+                Q
+              </Wrapper>
+              <Wrapper width={`calc(100% - 30px - 5px)`} al={`flex-start`}>
+                {faqDetail && faqDetail.question}
+              </Wrapper>
             </Wrapper>
-            <Wrapper padding={`10px 0`} al={`flex-start`} ju={`flex-start`}>
-              A: {faqDetail && faqDetail.question}
+
+            <Wrapper padding={`10px 0`} dr={`row`} ju={`flex-start`}>
+              <Wrapper
+                fontSize={`1.4rem`}
+                bold={true}
+                color={Theme.basicTheme_C}
+                margin={`0 5px 0 0`}
+                width={`30px`}
+              >
+                A
+              </Wrapper>
+              <Wrapper width={`calc(100% - 30px - 5px)`} al={`flex-start`}>
+                {faqDetail && faqDetail.question}
+              </Wrapper>
             </Wrapper>
           </Wrapper>
 
