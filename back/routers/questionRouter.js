@@ -144,7 +144,7 @@ router.get(
             include: [
               {
                 model: User,
-                attributes: ["id", "email", "nickname"],
+                attributes: ["id", "userId", "nickname"],
               },
               {
                 model: QuestionType,
@@ -159,7 +159,7 @@ router.get(
             include: [
               {
                 model: User,
-                attributes: ["id", "email", "nickname"],
+                attributes: ["id", "userId", "nickname"],
               },
               {
                 model: QuestionType,
@@ -173,7 +173,7 @@ router.get(
             include: [
               {
                 model: User,
-                attributes: ["id", "email", "nickname"],
+                attributes: ["id", "userId", "nickname"],
               },
               {
                 model: QuestionType,

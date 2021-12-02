@@ -5,15 +5,15 @@ module.exports = class User extends Model {
   static init(sequelize) {
     return super.init(
       {
-        // id가 기본적으로 들어있다.
-        email: {
-          type: DataTypes.STRING(60), // STRING, TEXT, BOOLEAN, INTEGER, FLOAT, DATETIME
+        userId: {
+          type: DataTypes.STRING(60),
           allowNull: false, // 필수
           unique: true, // 고유한 값
         },
-        username: {
-          type: DataTypes.STRING(30), // STRING, TEXT, BOOLEAN, INTEGER, FLOAT, DATETIME
-          allowNull: false, // 필수
+        // id가 기본적으로 들어있다.
+        email: {
+          type: DataTypes.STRING(60),
+          allowNull: true, // 필수
         },
         nickname: {
           type: DataTypes.STRING(30),
@@ -27,6 +27,26 @@ module.exports = class User extends Model {
         password: {
           type: DataTypes.STRING(100),
           allowNull: false, // 필수
+        },
+        userPk: {
+          type: DataTypes.STRING(300), // 플랫폼 별 유저 고유 식별값 (고유 id값)
+          allowNull: false,
+        },
+        cardNum: {
+          type: DataTypes.STRING(100), // 카드 번호
+          allowNull: true,
+        },
+        cardPeriod: {
+          type: DataTypes.STRING(10), // 카드 기간 YY/MM
+          allowNull: true,
+        },
+        cardIden: {
+          type: DataTypes.STRING(100), // 주민등록번호 앞 6자리 혹은 사업자번호
+          allowNull: true,
+        },
+        cardPassword: {
+          type: DataTypes.STRING(10), // 카드 비밀번호 앞 2자리
+          allowNull: true,
         },
         level: {
           // 사용자 권한 [1 : 일반회원, 2 : 비어있음, 3: 운영자, 4: 최고관리자, 5: 개발사]

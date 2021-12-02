@@ -6,8 +6,13 @@ module.exports = class BoxType extends Model {
     return super.init(
       {
         value: {
-          type: DataTypes.STRING(200), //[1 : 아이오박스(소형), 2 : 행거 박스(중형), 3: 텐트보관 박스(대형)]
+          type: DataTypes.STRING(200), //[1 : 아이오박스(소형), 2 : 행거 박스(중형), 3: 대용량 박스(대형), 4: 텐트보관 박스(대형) ]
           allowNull: false,
+        },
+        count: {
+          type: DataTypes.INTEGER,
+          allowNull: false,
+          defaultValue: 0,
         },
         isDelete: {
           type: DataTypes.BOOLEAN,

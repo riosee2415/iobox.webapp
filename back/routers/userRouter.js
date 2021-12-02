@@ -7,6 +7,7 @@ const isLoggedIn = require("../middlewares/isLoggedIn");
 const { Op } = require("sequelize");
 const generateUUID = require("../utils/generateUUID");
 const sendSecretMail = require("../utils/mailSender");
+const isNanCheck = require("../middlewares/isNanCheck");
 
 const router = express.Router();
 
@@ -17,7 +18,7 @@ router.get(
     let findType = 1;
 
     const { listType } = req.params;
-    const { name, email } = req.query;
+    const { name, userId } = req.query;
 
     const validation = Number(listType);
     const numberFlag = isNaN(validation);
@@ -36,17 +37,17 @@ router.get(
       let users = [];
 
       const searchName = name ? name : "";
-      const searchEmail = email ? email : "";
+      const searchUserId = userId ? userId : "";
 
       switch (parseInt(findType)) {
         case 1:
           users = await User.findAll({
             where: {
-              username: {
+              nickname: {
                 [Op.like]: `%${searchName}%`,
               },
-              email: {
-                [Op.like]: `%${searchEmail}%`,
+              userId: {
+                [Op.like]: `%${searchUserId}%`,
               },
             },
             attributes: {
@@ -58,17 +59,17 @@ router.get(
         case 2:
           users = await User.findAll({
             where: {
-              username: {
+              nickname: {
                 [Op.like]: `%${searchName}%`,
               },
-              email: {
-                [Op.like]: `%${searchEmail}%`,
+              userId: {
+                [Op.like]: `%${searchUserId}%`,
               },
             },
             attributes: {
               exclude: ["password"],
             },
-            order: [["username", "ASC"]],
+            order: [["nickname", "ASC"]],
           });
           break;
 
@@ -92,7 +93,7 @@ router.get("/signin", async (req, res, next) => {
     if (req.user) {
       const fullUserWithoutPassword = await User.findOne({
         where: { id: req.user.id },
-        attributes: ["id", "nickname", "email", "level"],
+        attributes: ["id", "nickname", "userId", "level"],
       });
 
       console.log("🍀🍀🍀🍀🍀🍀🍀🍀🍀🍀🍀🍀🍀🍀🍀🍀🍀🍀🍀🍀🍀🍀");
@@ -128,7 +129,7 @@ router.post("/signin", (req, res, next) => {
 
       const fullUserWithoutPassword = await User.findOne({
         where: { id: user.id },
-        attributes: ["id", "nickname", "email", "level", "username"],
+        attributes: ["id", "nickname", "userId", "level"],
       });
 
       return res.status(200).json(fullUserWithoutPassword);
@@ -161,7 +162,7 @@ router.post("/signin/admin", (req, res, next) => {
 
       const fullUserWithoutPassword = await User.findOne({
         where: { id: user.id },
-        attributes: ["id", "nickname", "email", "level", "username"],
+        attributes: ["id", "nickname", "userId", "level"],
       });
 
       return res.status(200).json(fullUserWithoutPassword);
@@ -170,7 +171,7 @@ router.post("/signin/admin", (req, res, next) => {
 });
 
 router.post("/signup", async (req, res, next) => {
-  const { email, username, nickname, mobile, password, terms } = req.body;
+  const { userId, email, nickname, mobile, password, userPk, terms } = req.body;
 
   if (!terms) {
     return res.status(401).send("이용약관에 동의해주세요.");
@@ -178,20 +179,21 @@ router.post("/signup", async (req, res, next) => {
 
   try {
     const exUser = await User.findOne({
-      where: { email: email },
+      where: { userId: userId },
     });
 
     if (exUser) {
-      return res.status(401).send("이미 가입된 이메일 입니다.");
+      return res.status(401).send("이미 가입된 아이디 입니다.");
     }
 
     const hashedPassword = await bcrypt.hash(password, 12);
 
     const result = await User.create({
-      email,
-      username,
+      userId,
+      email: req.body.email ? email : null,
       nickname,
       mobile,
+      userPk,
       terms,
       password: hashedPassword,
     });
@@ -236,7 +238,7 @@ router.post("/me/update", isLoggedIn, async (req, res, next) => {
   }
 });
 
-router.post("/findemail", async (req, res, next) => {
+router.post("/findUserId", async (req, res, next) => {
   const { nickname, mobile } = req.body;
 
   try {
@@ -248,109 +250,13 @@ router.post("/findemail", async (req, res, next) => {
     });
 
     if (exUser) {
-      return res.status(200).json({ email: exUser.email });
+      return res.status(200).json({ userId: exUser.userId });
     } else {
-      return res.status(200).json({ email: false });
+      return res.status(200).json({ userId: false });
     }
   } catch (error) {
     console.error(error);
     return res.status(401).send("아이디를 찾을 수 없습니다.");
-  }
-});
-
-router.post("/modifypass", isLoggedIn, async (req, res, next) => {
-  const { email, nickname, mobile } = req.body;
-
-  try {
-    const cookieEmail = req.user.dataValues.email;
-    const cookieNickname = req.user.dataValues.nickname;
-    const cookieMobile = req.user.dataValues.mobile;
-
-    if (
-      email === cookieEmail &&
-      nickname === cookieNickname &&
-      mobile === cookieMobile
-    ) {
-      const currentUserId = req.user.dataValues.id;
-
-      const UUID = generateUUID();
-
-      const updateResult = await User.update(
-        { secret: UUID },
-        {
-          where: { id: parseInt(currentUserId) },
-        }
-      );
-
-      if (updateResult[0] > 0) {
-        // 이메일 전송
-
-        await sendSecretMail(
-          cookieEmail,
-          `🔐 [보안 인증코드 입니다.] ㅁㅁㅁㅁ 에서 비밀번호 변경을 위한 보안인증 코드를 발송했습니다.`,
-          `
-          <div>
-            <h3>ㅁㅁㅁㅁ</h3>
-            <hr />
-            <p>보안 인증코드를 발송해드립니다. ㅁㅁㅁㅁ 홈페이지의 인증코드 입력란에 정확히 입력해주시기 바랍니다.</p>
-            <p>인증코드는 [<strong>${UUID}</strong>] 입니다. </p>
-
-            <br /><hr />
-            <article>
-              발송해드린 인증코드는 외부로 유출하시거나, 유출 될 경우 개인정보 침해의 위험이 있으니, 필히 본인만 사용하며 타인에게 양도하거나 알려주지 마십시오.
-            </article>
-          </div>
-          `
-        );
-
-        return res.status(200).json({ result: true });
-      } else {
-        return res
-          .status(401)
-          .send("요청이 올바르지 않습니다. 다시 시도해주세요.");
-      }
-    } else {
-      return res
-        .status(401)
-        .send("입력하신 정보가 잘못되었습니다. 다시 확인해주세요.");
-    }
-  } catch (error) {
-    console.error(error);
-    return res.status(401).send("잘못된 요청 입니다. [CODE097]");
-  }
-});
-
-router.patch("/modifypass/update", isLoggedIn, async (req, res, next) => {
-  const { secret, password } = req.body;
-
-  try {
-    const exUser = await User.findOne({
-      where: { id: req.user.dataValues.id },
-    });
-
-    if (!exUser) {
-      return res
-        .status(401)
-        .send("잘못된 요청 입니다. 다시 로그인 후 이용해주세요.");
-    }
-
-    const hashPassord = await bcrypt.hash(password, 12);
-
-    const updateResult = await User.update(
-      { password: hashPassord },
-      {
-        where: { id: req.user.dataValues.id },
-      }
-    );
-
-    if (updateResult[0] === 1) {
-      return res.status(200).json({ result: true });
-    } else {
-      return res.status(200).json({ result: false });
-    }
-  } catch (error) {
-    console.error(error);
-    return res.status(401).send("잘못된 요청 입니다.");
   }
 });
 
@@ -399,6 +305,75 @@ router.patch("/level/update", isAdminCheck, async (req, res, next) => {
   } catch (error) {
     console.error(error);
     return res.status(401).send("잘못된 요청 입니다. 개발사에 문의해주세요.");
+  }
+});
+
+router.post("/cardCreate", isLoggedIn, async (req, res, next) => {
+  const { cardNum, cardPeriod, cardIden, cardPassword } = req.body;
+  try {
+    const exUser = await User.findOne({
+      where: { id: parseInt(req.user.id) },
+    });
+
+    if (!exUser) {
+      return res.status(401).send("존재하지 않는 사용자입니다.");
+    }
+
+    const updateResult = await User.update(
+      {
+        cardNum,
+        cardPeriod,
+        cardIden,
+        cardPassword,
+      },
+      {
+        where: { id: parseInt(req.user.id) },
+      }
+    );
+
+    if (updateResult[0] > 0) {
+      return res.status(200).json({ result: true });
+    } else {
+      return res.status(200).json({ result: false });
+    }
+  } catch (error) {
+    console.error(error);
+    return res.status(401).send("카드정보를 등록할 수 없습니다.");
+  }
+});
+
+router.patch("/cardUpdate", isLoggedIn, async (req, res, next) => {
+  const { cardNum, cardPeriod, cardIden, cardPassword } = req.body;
+
+  try {
+    const exUser = await User.findOne({
+      where: { id: parseInt(req.user.id) },
+    });
+
+    if (!exUser) {
+      return res.status(401).send("존재하지 않는 사용자입니다.");
+    }
+
+    const updateResult = await User.update(
+      {
+        cardNum,
+        cardPeriod,
+        cardIden,
+        cardPassword,
+      },
+      {
+        where: { id: parseInt(req.user.id) },
+      }
+    );
+
+    if (updateResult[0] > 0) {
+      return res.status(200).json({ result: true });
+    } else {
+      return res.status(200).json({ result: false });
+    }
+  } catch (error) {
+    console.error(error);
+    return res.status(401).send("카드 정보를 수정할 수 없습니다.");
   }
 });
 
