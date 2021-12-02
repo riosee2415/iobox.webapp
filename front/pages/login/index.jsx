@@ -58,6 +58,7 @@ const Home = ({}) => {
 
   ////// HOOKS //////
   const router = useRouter();
+  const dispatch = useDispatch();
 
   ////// REDUX //////
 
@@ -97,7 +98,15 @@ const Home = ({}) => {
 
     console.log(req);
 
-    router.push("/user/signup");
+    dispatch({
+      type: LOGIN_REQUEST,
+      data: {
+        userId,
+        password: req.profile.kakao_account.email,
+        nickname: req.profile.kakao_account.profile.nickname + "5호기",
+      },
+    });
+    // router.push("/user/signup");
   };
 
   const loginNaverHandler = async () => {
