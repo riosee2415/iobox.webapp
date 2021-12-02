@@ -118,9 +118,15 @@ const Index = () => {
               al={`flex-start`}
               bgColor={Theme.white_C}
             >
-              <Text bold={true} fontSize={`2rem`}>
-                [타입]이용안내
-              </Text>
+              <Wrapper bold={true} dr={`row`}>
+                <Wrapper fontSize={`2rem`} width={`auto`}>
+                  [{infoDetail && infoDetail.GuideType.value}]
+                </Wrapper>
+
+                <Wrapper fontSize={`2rem`} width={`auto`}>
+                  {infoDetail && infoDetail.title}
+                </Wrapper>
+              </Wrapper>
             </Wrapper>
             <Image src={infoDetail && infoDetail.imagePath} width={`150px`} />
             <Wrapper padding={`10px 0`} al={`flex-start`} ju={`flex-start`}>
