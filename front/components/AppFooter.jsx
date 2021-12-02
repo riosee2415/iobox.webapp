@@ -278,7 +278,7 @@ const AppFooter = () => {
           >
             <GradientText
               className="gradient"
-              bold={true}
+              fontWeight={`900`}
               opacity={tab ? `0` : `1`}
               padding={`0`}
             >

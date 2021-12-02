@@ -186,7 +186,7 @@ const Home = () => {
                   al={`flex-start`}
                   margin={width < 700 ? `20px 0 0` : `45px 0 0`}
                 >
-                  <Text bold={true} color={Theme.white_C}>
+                  <Text fontWeight={`900`} color={Theme.white_C}>
                     원할 때 맡겨!
                   </Text>
                 </Wrapper>
@@ -195,7 +195,7 @@ const Home = () => {
                   al={`flex-end`}
                   margin={width < 700 ? `20px 0 0` : `35px 0 0`}
                 >
-                  <Text bold={true} color={Theme.white_C}>
+                  <Text fontWeight={`900`} color={Theme.white_C}>
                     원할 때 찾고!
                   </Text>
                 </Wrapper>
@@ -232,7 +232,7 @@ const Home = () => {
                     }}
                     cursor={`pointer`}
                   >
-                    <Text fontSize={`1.2rem`} bold={true}>
+                    <Text fontSize={`1.2rem`} fontWeight={`900`}>
                       내 짐 맡기면 얼마일까 ?
                     </Text>
 
