@@ -20,6 +20,10 @@ import { Radio } from "antd";
 import { CloseCircleOutlined, SearchOutlined } from "@ant-design/icons";
 import useInput from "../../../hooks/useInput";
 import PostCode from "../../../components/postCode/PostCode";
+import { numberWithCommas } from "../../../components/commonUtils";
+import axios from "axios";
+import { useDispatch } from "react-redux";
+import { SUBSCRIPTION_CREATE_REQUEST } from "../../../reducers/subscription";
 
 const PayButtton = styled(Wrapper)`
   color: ${Theme.basicTheme_C};
@@ -61,6 +65,7 @@ const Index = () => {
   const [isPostCode, setIsPostCode] = useState(false);
 
   ////// REDUX //////
+  const dispatch = useDispatch();
 
   ////// USEEFFECT //////
   useEffect(() => {
@@ -74,11 +79,10 @@ const Index = () => {
     setStoreData(data);
   }, []);
 
-  console.log(storeData);
-
   ////// TOGGLE ///////
 
   ///// HANDLER //////
+  const [isCheck, setIsCheck] = useState(false);
   const togglePostCodeDialogHandler = () => {
     setIsPostCode(!isPostCode);
   };
@@ -96,25 +100,50 @@ const Index = () => {
   }, [tab]);
 
   const handleFormSubmit = () => {
-    axios({
-      url: "{빌링키 발급 요청을 받을 서비스 URL}", // 예: https://www.myservice.com/subscription/issue-billing
-      method: "post",
+    dispatch({
+      type: SUBSCRIPTION_CREATE_REQUEST,
       data: {
-        // 카드번호
-        cardNumber: "4092160302741999",
-        // 유효기간
-        expiry: "0724",
-        // 생년월일
-        birth: "920131",
-        // 비밀번호 앞 두자리
-        pwd2Digit: "74",
-        // 고유 코드
-        customer_uid: "gildong_0001_1234",
+        data: {
+          // 카드번호
+          cardNumber: "4092160302741999",
+          // 유효기간
+          expiry: "0724",
+          // 생년월일
+          birth: "920131",
+          // 비밀번호 앞 두자리
+          pwd2Digit: "74",
+          // 고유 코드
+          customer_uid: "gildong_0001_1234",
+        },
       },
-    }).then((rsp) => {});
+    });
+    // axios({
+    //   url: "https://apis.tracker.delivery/carriers/kr.cjlogistics/tracks/1111111111111",
+    //   method: "get",
+    //   // url: "{빌링키 발급 요청을 받을 서비스 URL}", // 예: https://www.myservice.com/subscription/issue-billing
+    //   // method: "post",
+    //   // data: {
+    //   //   // 카드번호
+    //   //   cardNumber: "4092160302741999",
+    //   //   // 유효기간
+    //   //   expiry: "0724",
+    //   //   // 생년월일
+    //   //   birth: "920131",
+    //   //   // 비밀번호 앞 두자리
+    //   //   pwd2Digit: "74",
+    //   //   // 고유 코드
+    //   //   customer_uid: "gildong_0001_1234",
+    //   // },
+    // }).then((rsp) => {
+    //   console.log(rsp);
+    // });
   };
 
   ////// DATAVIEW //////
+
+  if (!storeData) {
+    return null;
+  }
   return (
     <>
       <WholeWrapper bgColor={Theme.lightGrey_C}>
@@ -177,7 +206,7 @@ const Index = () => {
               <Text fontSize={`1.2rem`} fontWeight={`700`}>
                 팍업방식
               </Text>
-              <Text>방문택배</Text>
+              <Text>{storeData.pickUp}</Text>
             </Wrapper>
 
             <Wrapper
@@ -213,7 +242,7 @@ const Index = () => {
                 </Wrapper>
               </Wrapper>
               <Text fontSize={`1.5rem`} fontWeight={`700`}>
-                38,600원
+                {numberWithCommas(storeData.totalPay)}원
               </Text>
             </Wrapper>
 
@@ -381,8 +410,10 @@ const Index = () => {
             </Wrapper>
 
             <Wrapper dr={`row`} ju={`space-between`} margin={`20px 0 0`}>
-              <Text>서비스 이용 필수 동의</Text>
-              <Radio />
+              <Text cursor={`pointer`} onClick={() => setIsCheck(!isCheck)}>
+                서비스 이용 필수 동의
+              </Text>
+              <Radio checked={isCheck} onClick={() => setIsCheck(!isCheck)} />
             </Wrapper>
           </RsWrapper>
         </Wrapper>
@@ -423,8 +454,12 @@ const Index = () => {
               >
                 이전
               </CommonButton>
-              <CommonButton width={`calc(100% - 80px - 5px)`} height={`50px`}>
-                00,000원 결제하기
+              <CommonButton
+                width={`calc(100% - 80px - 5px)`}
+                height={`50px`}
+                onClick={handleFormSubmit}
+              >
+                {numberWithCommas(storeData.totalPay)}원 결제하기
               </CommonButton>
             </Wrapper>
           </RsWrapper>
