@@ -235,7 +235,7 @@ const AppFooter = () => {
           width={`auto`}
           al={`flex-start`}
           display={tab ? `flex` : `none`}
-          margin={width < 700 ? `0 0 300px` : `0 0 150px`}
+          margin={width < 700 ? `0 0 180px` : `0 0 150px`}
         >
           <Image
             width={`60px`}
