@@ -135,9 +135,7 @@ const Index = () => {
           right={`30px`}
           fontSize={`20px`}
           cursor={`pointer`}
-          onClick={() => {
-            moveLinkHandler("/main");
-          }}
+          onClick={moveBackHandler}
           zIndex={`100`}
         >
           <CloseOutlined />
