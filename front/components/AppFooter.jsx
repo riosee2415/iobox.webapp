@@ -9,7 +9,7 @@ import {
 } from "./commonComponents";
 import Theme from "./Theme";
 import styled from "styled-components";
-import { Drawer } from "antd";
+import { Drawer, notification } from "antd";
 import useWidth from "../hooks/useWidth";
 import { useRouter } from "next/dist/client/router";
 import { Planet } from "react-planet";
@@ -179,6 +179,14 @@ const Logo = styled(Image)`
   }
 `;
 
+const LoadNotification = (msg, content) => {
+  notification.open({
+    message: msg,
+    description: content,
+    onClick: () => {},
+  });
+};
+
 const AppFooter = () => {
   const width = useWidth();
   const router = useRouter();
@@ -209,9 +217,15 @@ const AppFooter = () => {
 
   useEffect(() => {
     if (st_logoutDone) {
+      LoadNotification;
+
       dispatch({
         type: LOAD_MY_INFO_REQUEST,
       });
+
+      router.push("/");
+
+      return LoadNotification("LOGOUT SUCCESS", "로그아웃 되었습니다.");
     }
   }, [st_logoutDone]);
 

@@ -1,4 +1,4 @@
-import React, { useCallback, useState } from "react";
+import React, { useCallback, useEffect, useState } from "react";
 import Theme from "../../components/Theme";
 import {
   Wrapper,
@@ -15,7 +15,7 @@ import { CloseOutlined, DownOutlined, UpOutlined } from "@ant-design/icons";
 import { useRouter } from "next/dist/client/router";
 import { RightOutlined } from "@ant-design/icons";
 import { Switch } from "antd";
-import { LOGOUT_REQUEST } from "../../reducers/user";
+import { LOGOUT_REQUEST, LOAD_MY_INFO_REQUEST } from "../../reducers/user";
 import { useDispatch, useSelector } from "react-redux";
 import { notification } from "antd";
 
@@ -60,6 +60,20 @@ const Index = () => {
 
   ////// USEEFFECT //////
 
+  useEffect(() => {
+    if (st_logoutDone) {
+      LoadNotification;
+
+      dispatch({
+        type: LOAD_MY_INFO_REQUEST,
+      });
+
+      router.push("/");
+
+      return LoadNotification("LOGOUT SUCCESS", "로그아웃 되었습니다.");
+    }
+  }, [st_logoutDone]);
+
   ////// TOGGLE ///////
 
   ///// HANDLER //////
@@ -79,12 +93,6 @@ const Index = () => {
     dispatch({
       type: LOGOUT_REQUEST,
     });
-
-    if (st_logoutDone) {
-      return LoadNotification("LOGOUT SUCCESS", "로그아웃 되었습니다.");
-    }
-
-    router.push("/");
   }, []);
 
   console.log(LOGOUT_REQUEST);
