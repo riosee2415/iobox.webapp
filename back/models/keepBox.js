@@ -5,9 +5,23 @@ module.exports = class KeepBox extends Model {
   static init(sequelize) {
     return super.init(
       {
+        boxname: {
+          type: DataTypes.STRING(100),
+          allowNull: false,
+        },
+        boxcount: {
+          type: DataTypes.INTEGER,
+          allowNull: false,
+          defaultValue: 0,
+        },
         period: {
           type: DataTypes.STRING(200), // 보관 기간
           allowNull: false,
+        },
+        isFilming: {
+          type: DataTypes.BOOLEAN, // 상자보관 찰영유무
+          allowNull: false,
+          defaultValue: false,
         },
         isPickup: {
           type: DataTypes.BOOLEAN, // 픽업 유무
@@ -16,10 +30,6 @@ module.exports = class KeepBox extends Model {
         },
         pickWay: {
           type: DataTypes.STRING(300), // 픽업 방식
-          allowNull: false,
-        },
-        coupon: {
-          type: DataTypes.INTEGER, // 쿠폰할인
           allowNull: false,
         },
         price: {
@@ -46,25 +56,6 @@ module.exports = class KeepBox extends Model {
           type: DataTypes.STRING(300), // 특이사항
           allowNull: true,
         },
-        isFilming: {
-          type: DataTypes.BOOLEAN, // 상자보관 찰영유무
-          allowNull: false,
-          defaultValue: false,
-        },
-        imagePath: {
-          type: DataTypes.STRING(600), // 사진
-          allowNull: false,
-        },
-        isDelete: {
-          type: DataTypes.BOOLEAN,
-          allowNull: false,
-          defaultValue: false,
-        },
-        isComplete: {
-          type: DataTypes.BOOLEAN,
-          allowNull: false,
-          defaultValue: false,
-        },
       },
       {
         modelName: "KeepBox",
@@ -77,6 +68,6 @@ module.exports = class KeepBox extends Model {
   }
   static associate(db) {
     db.KeepBox.hasMany(db.BoxImage);
-    db.KeepBox.belongsTo(db.BoxType);
+    db.KeepBox.belongsTo(db.User);
   }
 };

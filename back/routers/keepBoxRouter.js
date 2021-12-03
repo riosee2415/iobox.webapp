@@ -1,6 +1,6 @@
 const express = require("express");
 const isAdminCheck = require("../middlewares/isAdminCheck");
-const { KeepBox, BoxType, BoxImage } = require("../models");
+const { KeepBox, BoxImage } = require("../models");
 const fs = require("fs");
 const { Op } = require("sequelize");
 const multer = require("multer");
@@ -41,100 +41,7 @@ const upload = multer({
   limits: { fileSize: 5 * 1024 * 1024 }, // 5MB
 });
 
-// BOX TYPE
-router.get("/type/list", async (req, res, next) => {
-  try {
-    const list = await BoxType.findAll({
-      where: {
-        isDelete: false,
-      },
-    });
-
-    return res.status(200).json(list);
-  } catch (error) {
-    console.error(error);
-  }
-});
-
-router.post("/type/create", isAdminCheck, async (req, res, next) => {
-  const { value, count } = req.body;
-  try {
-    const createResult = await BoxType.create({
-      value,
-      count,
-    });
-
-    return res.status(201).json({ result: true });
-  } catch (error) {
-    console.error(error);
-    return res.status(401).send("유형을 생성할 수 없습니다.");
-  }
-});
-
-router.patch("/type/update", isAdminCheck, async (req, res, next) => {
-  const { id, value, count } = req.body;
-  try {
-    const exType = await BoxType.findOne({
-      where: { id: parseInt(id) },
-    });
-
-    if (!exType) {
-      return res.status(401).send("해당 유형이 존재하지 않습니다.");
-    }
-
-    const updateResult = await BoxType.update(
-      {
-        value,
-        count,
-      },
-      {
-        where: { id: parseInt(id) },
-      }
-    );
-
-    if (updateResult[0] > 0) {
-      return res.status(200).json({ result: true });
-    } else {
-      return res.status(200).json({ result: false });
-    }
-  } catch (error) {
-    console.error(error);
-    return res.status(401).send("유형을 생성할 수 없습니다.");
-  }
-});
-
-router.delete("/type/delete/:typeId", isAdminCheck, async (req, res, next) => {
-  const { typeId } = req.params;
-  try {
-    const exType = await BoxType.findOne({
-      where: { id: parseInt(typeId) },
-    });
-
-    if (!exType) {
-      return res.status(401).send("해당 유형이 존재하지 않습니다.");
-    }
-
-    const deleteResult = await BoxType.update(
-      {
-        isDelete: true,
-      },
-      {
-        where: { id: parseInt(typeId) },
-      }
-    );
-
-    if (deleteResult[0] > 0) {
-      return res.status(200).json({ result: true });
-    } else {
-      return res.status(200).json({ result: false });
-    }
-  } catch (error) {
-    console.error(error);
-    return res.status(401).send("유형을 생성할 수 없습니다.");
-  }
-});
-
-// BOX
+// 보관하기 리스트
 router.get(["/list", "/list/:listType"], async (req, res, next) => {
   const { page, search } = req.query;
   const { listType } = req.params;
@@ -176,12 +83,8 @@ router.get(["/list", "/list/:listType"], async (req, res, next) => {
             name: {
               [Op.like]: `%${_search}%`,
             },
-            isDelete: false,
           },
           include: [
-            {
-              model: BoxType,
-            },
             {
               model: BoxImage,
             },
@@ -199,13 +102,10 @@ router.get(["/list", "/list/:listType"], async (req, res, next) => {
             name: {
               [Op.like]: `%${_search}%`,
             },
-            isDelete: false,
-            isComplete: false,
+
+            isPickup: false,
           },
           include: [
-            {
-              model: BoxType,
-            },
             {
               model: BoxImage,
             },
@@ -219,12 +119,8 @@ router.get(["/list", "/list/:listType"], async (req, res, next) => {
             name: {
               [Op.like]: `%${_search}%`,
             },
-            isDelete: false,
           },
           include: [
-            {
-              model: BoxType,
-            },
             {
               model: BoxImage,
             },
@@ -242,13 +138,9 @@ router.get(["/list", "/list/:listType"], async (req, res, next) => {
             name: {
               [Op.like]: `%${_search}%`,
             },
-            isDelete: false,
-            isComplete: true,
+            isPickup: true,
           },
           include: [
-            {
-              model: BoxType,
-            },
             {
               model: BoxImage,
             },
@@ -262,12 +154,8 @@ router.get(["/list", "/list/:listType"], async (req, res, next) => {
             name: {
               [Op.like]: `%${_search}%`,
             },
-            isDelete: false,
           },
           include: [
-            {
-              model: BoxType,
-            },
             {
               model: BoxImage,
             },
@@ -285,12 +173,8 @@ router.get(["/list", "/list/:listType"], async (req, res, next) => {
             name: {
               [Op.like]: `%${_search}%`,
             },
-            isDelete: false,
           },
           include: [
-            {
-              model: BoxType,
-            },
             {
               model: BoxImage,
             },
@@ -309,28 +193,7 @@ router.get(["/list", "/list/:listType"], async (req, res, next) => {
   }
 });
 
-router.get("/listOne/:boxId", async (req, res, next) => {
-  const { boxId } = req.params;
-  try {
-    const exBox = await KeepBox.findOne({
-      where: { id: parseInt(boxId) },
-      include: [
-        {
-          model: BoxType,
-        },
-        {
-          model: BoxImage,
-        },
-      ],
-    });
-
-    return res.status(200).json(exBox ? exBox : []);
-  } catch (error) {
-    console.error(error);
-    return res.status(401).send("데이터를 불러올 수 없습니다.");
-  }
-});
-
+// 사용자가 상자보관 물건 촬영 여부를 체크 했다면 사용하는 api
 router.post(
   "/image",
   isAdminCheck,
@@ -340,37 +203,36 @@ router.post(
   }
 );
 
+// 보관하기
 router.post("/create", async (req, res, next) => {
   const {
-    type,
+    boxname,
+    boxcount,
     period,
-    isPickup,
+    isFilming,
     pickWay,
-    coupon,
     price,
     name,
     mobile,
     address,
     detailAddress,
     remark,
-    isFilming,
-    imagePath,
+    UserId,
   } = req.body;
   try {
     const createResult = await KeepBox.create({
-      BoxTypeId: parseInt(type),
+      boxname,
+      boxcount,
       period,
-      isPickup,
+      isFilming,
       pickWay,
-      coupon,
       price,
       name,
       mobile,
       address,
       detailAddress,
       remark,
-      isFilming,
-      imagePath,
+      UserId: parseInt(UserId),
     });
 
     if (!createResult) {
@@ -384,23 +246,9 @@ router.post("/create", async (req, res, next) => {
   }
 });
 
+// 픽업 여부 변경
 router.patch("/update", async (req, res, next) => {
-  const {
-    id,
-    type,
-    period,
-    isPickup,
-    pickWay,
-    coupon,
-    price,
-    name,
-    mobile,
-    address,
-    detailAddress,
-    remark,
-    isFilming,
-    imagePath,
-  } = req.body;
+  const { id } = req.body;
   try {
     const exBox = await KeepBox.findOne({
       where: { id: parseInt(id) },
@@ -410,21 +258,13 @@ router.patch("/update", async (req, res, next) => {
       return res.status(401).send("존재하지 않는 박스입니다.");
     }
 
+    if (exBox.isPickup) {
+      return res.status(401).send("이미 픽업이 완료된 박스입니다.");
+    }
+
     const updateResult = await KeepBox.update(
       {
-        BoxTypeId: parseInt(type),
-        period,
-        isPickup,
-        pickWay,
-        coupon,
-        price,
-        name,
-        mobile,
-        address,
-        detailAddress,
-        remark,
-        isFilming,
-        imagePath,
+        isPickup: true,
       },
       {
         where: { id: parseInt(id) },
@@ -438,43 +278,11 @@ router.patch("/update", async (req, res, next) => {
     }
   } catch (error) {
     console.error(error);
-    return res.status(401).send("박스를 수정할 수 없습니다.");
+    return res.status(401).send("픽업상태를 변경할 수 없습니다.");
   }
 });
 
-router.delete("/delete/:boxId", async (req, res, next) => {
-  const { boxId } = req.params;
-  try {
-    const exBox = await KeepBox.findOne({
-      where: { id: parseInt(boxId) },
-    });
-
-    if (!exBox) {
-      return res.status(401).send("존재하지 않는 박스입니다.");
-    }
-
-    const deleteResult = await KeepBox.update(
-      {
-        isDelete: true,
-      },
-      {
-        where: { id: parseInt(boxId) },
-      }
-    );
-
-    if (deleteResult[0] > 0) {
-      return res.status(200).json({ result: true });
-    } else {
-      return res.status(200).json({ result: false });
-    }
-  } catch (error) {
-    console.error(error);
-    return res.status(401).send("박스를 수정할 수 없습니다.");
-  }
-});
-
-//BOX IMAGE
-
+// 상자 보관 물건촬영 리스트
 router.get("/image/list", async (req, res, next) => {
   try {
     const list = await BoxImage.findAll({
@@ -495,6 +303,7 @@ router.get("/image/list", async (req, res, next) => {
   }
 });
 
+// 상자 보관 물건촬영 사진 추가
 router.post("/image/create", async (req, res, next) => {
   const { KeepBoxId, imagePath } = req.body;
 
@@ -502,19 +311,10 @@ router.post("/image/create", async (req, res, next) => {
     return res.status(401).send("잘못된 요청입니다.");
   }
   try {
-    const createResult = await BoxImage.create(
-      {
-        KeepBoxId: parseInt(KeepBoxId),
-        imagePath,
-      },
-      {
-        include: [
-          {
-            model: KeepBox,
-          },
-        ],
-      }
-    );
+    const createResult = await BoxImage.create({
+      KeepBoxId: parseInt(KeepBoxId),
+      imagePath,
+    });
 
     if (!createResult) {
       return res.status(401).send("처리중 문제가 발생하였습니다.");
@@ -523,10 +323,11 @@ router.post("/image/create", async (req, res, next) => {
     return res.status(201).json({ result: true });
   } catch (error) {
     console.error(error);
-    return res.status(401).send("유형을 생성할 수 없습니다.");
+    return res.status(401).send("이미지를 생성할 수 없습니다.");
   }
 });
 
+// 상자 보관 물건촬영 사진 수정
 router.patch("/image/update", async (req, res, next) => {
   const { id, imagePath } = req.body;
   try {
@@ -558,6 +359,7 @@ router.patch("/image/update", async (req, res, next) => {
   }
 });
 
+// 상자 보관 물건촬영 사진 삭제
 router.delete("/image/delete/:imageId", async (req, res, next) => {
   const { imageId } = req.params;
   try {
@@ -586,36 +388,6 @@ router.delete("/image/delete/:imageId", async (req, res, next) => {
   } catch (error) {
     console.error(error);
     return res.status(401).send("이미지를 삭제할 수 없습니다.");
-  }
-});
-
-router.patch("/boxPermit", isAdminCheck, async (req, res, next) => {
-  const { boxId } = req.body;
-  try {
-    const exBox = await KeepBox.findOne({
-      where: { id: parseInt(boxId) },
-    });
-
-    if (!exBox) {
-      return res.status(401).send("존재하지 않는 박스입니다.");
-    }
-
-    const result = await KeepBox.update(
-      {
-        isComplete: true,
-      },
-      {
-        where: { id: parseInt(boxId) },
-      }
-    );
-
-    if (result[0] > 0) {
-      return res.status(200).json({ result: true });
-    } else {
-      return res.status(200).json({ result: false });
-    }
-  } catch (error) {
-    console.error(error);
   }
 });
 
