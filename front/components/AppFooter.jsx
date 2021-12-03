@@ -555,29 +555,45 @@ const AppFooter = () => {
                   />
 
                   <Wrapper ju={`flex-start`} al={`flex-start`}>
-                    <Link href="/guide?type=iobox">
-                      <Wrapper al={`flex-start`}>
-                        <TextHover>아이오 박스란?</TextHover>
-                      </Wrapper>
-                    </Link>
+                    <Wrapper al={`flex-start`}>
+                      <TextHover
+                        onClick={() => {
+                          moveLinkHandler("/guide?type=iobox");
+                        }}
+                      >
+                        아이오 박스란?
+                      </TextHover>
+                    </Wrapper>
 
-                    <Link href="/guide?type=way">
-                      <Wrapper al={`flex-start`}>
-                        <TextHover>서비스 이용방법</TextHover>
-                      </Wrapper>
-                    </Link>
+                    <Wrapper al={`flex-start`}>
+                      <TextHover
+                        onClick={() => {
+                          moveLinkHandler("/guide?type=way");
+                        }}
+                      >
+                        서비스 이용방법
+                      </TextHover>
+                    </Wrapper>
 
-                    <Link href="/guide?type=pay">
-                      <Wrapper al={`flex-start`}>
-                        <TextHover>서비스 이용료</TextHover>
-                      </Wrapper>
-                    </Link>
+                    <Wrapper al={`flex-start`}>
+                      <TextHover
+                        onClick={() => {
+                          moveLinkHandler("/guide?type=pay");
+                        }}
+                      >
+                        서비스 이용료
+                      </TextHover>
+                    </Wrapper>
 
-                    <Link href="/guide?type=center">
-                      <Wrapper al={`flex-start`}>
-                        <TextHover>IO박스 보관센터</TextHover>
-                      </Wrapper>
-                    </Link>
+                    <Wrapper al={`flex-start`}>
+                      <TextHover
+                        onClick={() => {
+                          moveLinkHandler("/guide?type=center");
+                        }}
+                      >
+                        IO박스 보관센터
+                      </TextHover>
+                    </Wrapper>
                     <Wrapper al={`flex-start`}>
                       <TextHover
                         onClick={() => {
