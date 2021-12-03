@@ -23,8 +23,6 @@ const Index = () => {
 
   const { menuImages } = useSelector((state) => state.menuImage);
 
-  console.log(menuImages);
-
   ////// HOOKS //////
   const [qs, setQs] = useState(0);
 
@@ -67,6 +65,7 @@ const Index = () => {
       >
         <Wrapper
           width={width < 700 ? `100%` : `500px`}
+          bgColor={Theme.white_C}
           height={`100%`}
           shadow={`0px 0px 10px ${Theme.grey_C}`}
           position={`relative`}

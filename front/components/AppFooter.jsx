@@ -195,7 +195,6 @@ const AppFooter = () => {
   const dispatch = useDispatch();
 
   ////// REDUX //////
-  console.log(me);
 
   ////// USEEFFECT //////
   useEffect(() => {
