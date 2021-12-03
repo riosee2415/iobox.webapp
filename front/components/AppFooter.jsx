@@ -14,6 +14,8 @@ import useWidth from "../hooks/useWidth";
 import { useRouter } from "next/dist/client/router";
 import { Planet } from "react-planet";
 import { MenuOutlined } from "@ant-design/icons";
+import { LOAD_MY_INFO_REQUEST, LOGOUT_REQUEST } from "../reducers/user";
+import { useDispatch, useSelector } from "react-redux";
 import Link from "next/link";
 
 const BoxWrapper = styled(Wrapper)`
@@ -112,7 +114,7 @@ const ButtonWrapper = styled(Wrapper)`
   left: 50%;
   cursor: pointer;
   width: auto;
-  margin: 0 0 0 -90px;
+  margin: 0 0 0 -9px;
 
   &:hover {
     .circle {
@@ -189,12 +191,23 @@ const AppFooter = () => {
 
   const [drawar, setDrawar] = useState(false);
 
+  const { me } = useSelector((state) => state.user);
+  const dispatch = useDispatch();
+
   ////// REDUX //////
 
   ////// USEEFFECT //////
   useEffect(() => {
     setDrawar(false);
   }, [router.asPath]);
+
+  useEffect(() => {
+    dispatch({
+      type: LOAD_MY_INFO_REQUEST,
+    });
+  }, []);
+
+  console.log(me, "me");
 
   ////// TOGGLE ///////
 
@@ -209,6 +222,12 @@ const AppFooter = () => {
 
   const moveLinkHandler = useCallback((link) => {
     router.push(link);
+  }, []);
+
+  const logoutHandler = useCallback(() => {
+    dispatch({
+      type: LOGOUT_REQUEST,
+    });
   }, []);
 
   ////// DATAVIEW //////
@@ -602,16 +621,20 @@ const AppFooter = () => {
                     </Text>
 
                     {/* 로그인 되어 있을 때 */}
-                    {/* <Text
-                        cursor={`pointer`}
-                        margin={`0 10px 0 0`}
-                        onClick={() => moveLinkHandler(`/myInfo`)}
-                      >
-                        내 정보
-                      </Text>
-                      <Text cursor={`pointer`} margin={`0 10px 0 0`}>
-                        로그아웃
-                      </Text> */}
+                    <Text
+                      cursor={`pointer`}
+                      margin={`0 10px 0 0`}
+                      onClick={() => moveLinkHandler(`/myInfo`)}
+                    >
+                      내 정보
+                    </Text>
+                    <Text
+                      onClick={logoutHandler}
+                      cursor={`pointer`}
+                      margin={`0 10px 0 0`}
+                    >
+                      로그아웃
+                    </Text>
 
                     {/* 공통 */}
                     <Text

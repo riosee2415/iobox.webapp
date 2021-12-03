@@ -96,7 +96,7 @@ const Home = ({}) => {
       JSON.stringify({ ...info })
     );
 
-    console.log(req);
+    console.log(req, "req");
 
     dispatch({
       type: LOGIN_REQUEST,

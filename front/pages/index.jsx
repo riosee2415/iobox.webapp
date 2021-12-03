@@ -19,7 +19,6 @@ import { useRouter } from "next/dist/client/router";
 import { KEEPBOX_LIST_REQUEST } from "../reducers/keepBox";
 import { useCountUp, CountUp } from "use-count-up";
 import styled from "styled-components";
-
 const FirstWrapper = styled(Wrapper)`
   width: 100%;
   height: 100vh;
