@@ -11,6 +11,8 @@ import {
 import useWidth from "../../hooks/useWidth";
 import Theme from "../../components/Theme";
 import { useDispatch, useSelector } from "react-redux";
+import { CloseOutlined, DownOutlined, UpOutlined } from "@ant-design/icons";
+import { MENU_LIST_REQUEST } from "../../reducers/menuImage";
 
 const Index = () => {
   const width = useWidth();
@@ -21,12 +23,20 @@ const Index = () => {
 
   const { menuImages } = useSelector((state) => state.menuImage);
 
+  console.log(menuImages);
+
   ////// HOOKS //////
   const [qs, setQs] = useState(0);
 
   ////// REDUX //////
 
   ////// USEEFFECT //////
+
+  useEffect(() => {
+    dispatch({
+      type: MENU_LIST_REQUEST,
+    });
+  }, []);
 
   useEffect(() => {
     if (router.query.type === "iobox") {
@@ -59,11 +69,44 @@ const Index = () => {
           width={width < 700 ? `100%` : `500px`}
           height={`100%`}
           shadow={`0px 0px 10px ${Theme.grey_C}`}
+          position={`relative`}
         >
-          {menuImages &&
-            menuImages.map((data) => {
-              return <Wrapper>{console.log(qs)}</Wrapper>;
-            })}
+          <Wrapper
+            padding={`5px`}
+            width={`auto`}
+            position={`absolute`}
+            top={`30px`}
+            right={`30px`}
+            fontSize={`20px`}
+            cursor={`pointer`}
+            onClick={() => {
+              moveLinkHandler("/main");
+            }}
+            zIndex={`100`}
+          >
+            <CloseOutlined />
+          </Wrapper>
+
+          {qs === 0 && (
+            <>
+              <Image src={menuImages && menuImages[0].imagePath} />
+            </>
+          )}
+          {qs === 1 && (
+            <Text>
+              <Image src={menuImages && menuImages[1].imagePath} />
+            </Text>
+          )}
+          {qs === 2 && (
+            <Text>
+              <Image src={menuImages && menuImages[2].imagePath} />
+            </Text>
+          )}
+          {qs === 3 && (
+            <Text>
+              <Image src={menuImages && menuImages[3].imagePath} />
+            </Text>
+          )}
         </Wrapper>
       </WholeWrapper>
     </ClientLayout>

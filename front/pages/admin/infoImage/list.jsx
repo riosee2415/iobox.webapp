@@ -169,8 +169,6 @@ const Index = () => {
     st_menuImageUploadLoading,
   } = useSelector((state) => state.menuImage);
 
-  console.log(menuImages);
-
   ////// USEEFFECT //////
   useEffect(() => {
     const qs = getQs();

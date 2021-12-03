@@ -207,8 +207,6 @@ const AppFooter = () => {
     });
   }, []);
 
-  console.log(me, "me");
-
   ////// TOGGLE ///////
 
   const tabToggle = useCallback(() => {
