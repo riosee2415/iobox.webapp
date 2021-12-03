@@ -7,26 +7,25 @@ module.exports = class User extends Model {
       {
         userId: {
           type: DataTypes.STRING(60),
-          allowNull: false, // 필수
+          allowNull: false,
           unique: true, // 고유한 값
         },
-        // id가 기본적으로 들어있다.
         email: {
           type: DataTypes.STRING(60),
-          allowNull: true, // 필수
+          allowNull: true,
         },
         nickname: {
           type: DataTypes.STRING(30),
-          allowNull: false, // 필수
+          allowNull: false,
           unique: true, // 고유한 값
         },
         mobile: {
           type: DataTypes.STRING(30),
-          allowNull: false, // 필수
+          allowNull: true,
         },
         password: {
           type: DataTypes.STRING(100),
-          allowNull: false, // 필수
+          allowNull: false,
         },
         userPk: {
           type: DataTypes.STRING(300), // 플랫폼 별 유저 고유 식별값 (고유 id값)
@@ -58,11 +57,6 @@ module.exports = class User extends Model {
           type: DataTypes.STRING(10),
           allowNull: true,
           defaultValue: null,
-        },
-        terms: {
-          // 이용약관동의
-          type: DataTypes.BOOLEAN,
-          allowNull: false,
         },
       },
       {

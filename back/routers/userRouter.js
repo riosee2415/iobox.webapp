@@ -111,8 +111,6 @@ router.get("/signin", async (req, res, next) => {
 
 router.post("/signin", (req, res, next) => {
   passport.authenticate("local", async (err, user, info) => {
-    console.log(req.body);
-
     const { userId, password, nickname } = req.body;
 
     if (user) {
@@ -144,14 +142,15 @@ router.post("/signin", (req, res, next) => {
       // 특정 유저가 없을 경우 바로 유저를 생성한다.
       // 특이사항으로 유저의 비밀번호가 이메일로 되어있다. => 무조건 SNS로그인만 있기 떄문에
       // 생성 후 생성된 유저로 login처리를 한다.
+
+      const hashedPassword = await bcrypt.hash(password, 12);
+
       const newUser = await User.create({
         userId,
         email: password,
-        password,
+        password: hashedPassword,
         nickname,
-        mobile: "-",
         userPk: userId,
-        terms: 1,
       });
 
       return req.login(newUser, async (loginErr) => {
@@ -204,12 +203,9 @@ router.post("/signin/admin", (req, res, next) => {
   })(req, res, next);
 });
 
+// 사용하지 않는 기능 (배포 후 관리자 계정 넣어줄 때 사용)
 router.post("/signup", async (req, res, next) => {
-  const { userId, email, nickname, mobile, password, userPk, terms } = req.body;
-
-  if (!terms) {
-    return res.status(401).send("이용약관에 동의해주세요.");
-  }
+  const { userId, email, nickname, mobile, password, userPk } = req.body;
 
   try {
     const exUser = await User.findOne({
@@ -228,7 +224,6 @@ router.post("/signup", async (req, res, next) => {
       nickname,
       mobile,
       userPk,
-      terms,
       password: hashedPassword,
     });
 
@@ -409,6 +404,14 @@ router.patch("/cardUpdate", isLoggedIn, async (req, res, next) => {
     console.error(error);
     return res.status(401).send("카드 정보를 수정할 수 없습니다.");
   }
+});
+
+router.get("/logout", function (req, res) {
+  req.logout();
+  req.session.save(() => {
+    res.clearCookie("connect.sid");
+    res.redirect("/");
+  });
 });
 
 module.exports = router;
