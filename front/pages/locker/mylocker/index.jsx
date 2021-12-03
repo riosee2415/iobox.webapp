@@ -333,15 +333,13 @@ const Index = () => {
                         ? `none`
                         : `flex`
                     }
+                    onClick={modalToggle}
+                    cursor={`pointer`}
                   >
                     <Text margin={`0 10px 0 0`} fontSize={`1.2rem`}>
                       보관함을 선택 해주세요.
                     </Text>
-                    <Wrapper
-                      width={`auto`}
-                      cursor={`pointer`}
-                      onClick={modalToggle}
-                    >
+                    <Wrapper width={`auto`} cursor={`pointer`}>
                       <DownOutlined />
                     </Wrapper>
                   </Wrapper>
@@ -750,40 +748,42 @@ const Index = () => {
                         </Wrapper>
                       </Wrapper>
                       {/* </CheckboxGroup> */}
+
+                      <Wrapper
+                        dr={`row`}
+                        ju={`space-around`}
+                        margin={
+                          (boxRealNum ||
+                            hangRealNum ||
+                            tentRealNum ||
+                            bigRealNum) === 0
+                            ? `50px 0`
+                            : `50px 0 0`
+                        }
+                      >
+                        <TextHover
+                          onClick={() => {
+                            setTab(0);
+                          }}
+                          bold={true}
+                          color={tab === 0 ? Theme.basicTheme_C : Theme.grey_C}
+                          beforeWidth={tab === 0 ? `100%` : `0`}
+                        >
+                          부분 찾기
+                        </TextHover>
+                        <TextHover
+                          onClick={() => {
+                            setTab(1);
+                          }}
+                          bold={true}
+                          color={tab === 1 ? Theme.basicTheme_C : Theme.grey_C}
+                          beforeWidth={tab === 1 ? `100%` : `0`}
+                        >
+                          전체 찾기
+                        </TextHover>
+                      </Wrapper>
                     </>
                   )}
-                </Wrapper>
-
-                <Wrapper
-                  dr={`row`}
-                  ju={`space-around`}
-                  margin={
-                    (boxRealNum || hangRealNum || tentRealNum || bigRealNum) ===
-                    0
-                      ? `50px 0`
-                      : `50px 0 0`
-                  }
-                >
-                  <TextHover
-                    onClick={() => {
-                      setTab(0);
-                    }}
-                    bold={true}
-                    color={tab === 0 ? Theme.basicTheme_C : Theme.grey_C}
-                    beforeWidth={tab === 0 ? `100%` : `0`}
-                  >
-                    부분 찾기
-                  </TextHover>
-                  <TextHover
-                    onClick={() => {
-                      setTab(1);
-                    }}
-                    bold={true}
-                    color={tab === 1 ? Theme.basicTheme_C : Theme.grey_C}
-                    beforeWidth={tab === 1 ? `100%` : `0`}
-                  >
-                    전체 찾기
-                  </TextHover>
                 </Wrapper>
               </Wrapper>
             </RsWrapper>
