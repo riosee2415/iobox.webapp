@@ -13,6 +13,7 @@ import faqSaga from "./faq";
 import infoSaga from "./info";
 import keepBoxSaga from "./keepBox";
 import menuImageSaga from "./menuImage";
+import subscriptionSaga from "./subscription";
 //
 import axios from "axios";
 import backURL from "../config/config";
@@ -36,5 +37,6 @@ export default function* rootSaga() {
     fork(infoSaga),
     fork(keepBoxSaga),
     fork(menuImageSaga),
+    fork(subscriptionSaga),
   ]);
 }
