@@ -103,18 +103,16 @@ const Index = () => {
     dispatch({
       type: SUBSCRIPTION_CREATE_REQUEST,
       data: {
-        data: {
-          // 카드번호
-          cardNumber: "4092160302741999",
-          // 유효기간
-          expiry: "0724",
-          // 생년월일
-          birth: "920131",
-          // 비밀번호 앞 두자리
-          pwd2Digit: "74",
-          // 고유 코드
-          customer_uid: "gildong_0001_1234",
-        },
+        // 카드번호
+        cardNumber: "4092160302741999",
+        // 유효기간
+        expiry: "2024-07",
+        // 생년월일
+        birth: "920131",
+        // 비밀번호 앞 두자리
+        pwd2Digit: "74",
+        // 고유 코드
+        customer_uid: "gildong_0001_1234",
       },
     });
     // axios({

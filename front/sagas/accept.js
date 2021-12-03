@@ -1,29 +1,29 @@
 import { all, call, delay, fork, put, takeLatest } from "redux-saga/effects";
 import axios from "axios";
 import {
-  SUBSCRIPTION_CREATE_REQUEST,
-  SUBSCRIPTION_CREATE_SUCCESS,
-  SUBSCRIPTION_CREATE_FAILURE,
-} from "../reducers/subscription";
+  ACCEPT_LOG_REQUEST,
+  ACCEPT_LOG_SUCCESS,
+  ACCEPT_LOG_FAILURE,
+} from "../reducers/accept";
 
 // SAGA AREA ********************************************************************************************************
 // ******************************************************************************************************************
-function subscriptionCreateAPI(data) {
-  return axios.post(`/api/subscription/create`, data);
+function acceptLogoAPI(data) {
+  return axios.get(`/api/accept/list/graph/${data.typeId}`);
 }
 
-function* subscriptionCreate(action) {
+function* acceptLogo(action) {
   try {
-    const result = yield call(subscriptionCreateAPI, action.data);
+    const result = yield call(acceptLogoAPI, action.data);
 
     yield put({
-      type: SUBSCRIPTION_CREATE_SUCCESS,
+      type: ACCEPT_LOG_SUCCESS,
       data: result.data,
     });
   } catch (err) {
     console.error(err);
     yield put({
-      type: SUBSCRIPTION_CREATE_FAILURE,
+      type: ACCEPT_LOG_FAILURE,
       error: err.response.data,
     });
   }
@@ -34,14 +34,14 @@ function* subscriptionCreate(action) {
 // ******************************************************************************************************************
 
 //////////////////////////////////////////////////////////////
-function* watchSubScriptionCreate() {
-  yield takeLatest(SUBSCRIPTION_CREATE_REQUEST, subscriptionCreate);
+function* watchAcceptLogo() {
+  yield takeLatest(ACCEPT_LOG_REQUEST, acceptLogo);
 }
 
 //////////////////////////////////////////////////////////////
-export default function* subscriptionSaga() {
+export default function* bannerSaga() {
   yield all([
-    fork(watchSubScriptionCreate),
+    fork(watchAcceptLogo),
     //
   ]);
 }

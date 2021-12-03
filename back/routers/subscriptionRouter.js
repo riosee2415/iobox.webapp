@@ -1,0 +1,113 @@
+const express = require("express");
+const axios = require("axios");
+
+const router = express.Router();
+
+router.post(`/`, async (req, res, next) => {
+  try {
+    const { cardNumber, expiry, birth, pwd2Digit, customer_uid } = req.body;
+
+    console.log(cardNumber, expiry, birth, pwd2Digit, customer_uid);
+
+    const getToken = await axios({
+      url: "https://api.iamport.kr/users/getToken",
+      method: "post", // POST method
+      headers: { "Content-Type": "application/json" }, // "Content-Type": "application/json"
+      data: {
+        imp_key: "9134198546040290", // REST API 키
+        imp_secret:
+          "786198908d47a63ad00927cece057a617666d0a2436b56a731a6f857fa1cd72c57035d200ac6df0a", // REST API Secret
+      },
+    });
+    const { access_token } = getToken.data.response; // 인증 토큰
+
+    console.log(access_token);
+
+    // 빌링키 발급 요청
+    const issueBilling = await axios({
+      url: `https://api.iamport.kr/subscribe/customers/${customer_uid}`,
+      method: "post",
+      headers: { Authorization: access_token }, // 인증 토큰 Authorization header에 추가
+      data: {
+        card_number: cardNumber, // 카드 번호
+        expiry, // 카드 유효기간
+        birth, // 생년월일
+        pwd_2digit: pwd2Digit, // 카드 비밀번호 앞 두자리
+        amount: 1000,
+      },
+    });
+
+    // const { code, message } = issueBilling.data;
+    // if (code === 0) {
+    //   console.log(code, message, "?ASDASDASD", issueBilling.data);
+    //   // 빌링키 발급 성공
+    //   //   res.send({
+    //   //     status: "success",
+    //   //     message: "Billing has successfully issued",
+    //   //   });
+    // } else {
+    //   console.log(message);
+    //   // 빌링키 발급 실패
+    //   //   res.send({ status: "failed", message });
+    // }
+    const paymentResult = await axios({
+      url: `https://api.iamport.kr/subscribe/payments/again`,
+      method: "post",
+      headers: { Authorization: access_token }, // 인증 토큰을 Authorization header에 추가
+      data: {
+        customer_uid,
+        merchant_uid: "order_monthly_002", // 새로 생성한 결제(재결제)용 주문 번호
+        amount: 1000,
+        name: "카드 도용",
+      },
+    });
+
+    console.log(paymentResult.data.code);
+
+    const { code, message } = paymentResult.data;
+    if (code === 0) {
+      // 카드사 통신에 성공(실제 승인 성공 여부는 추가 판단이 필요함)
+      if (paymentResult.status === "paid") {
+        //카드 정상 승인
+        let time = new Date();
+        time.setMinutes(time.getSeconds() + 30);
+        console.log("개꿀", paymentResult, Math.floor(time.getTime() / 1000));
+        axios({
+          url: `https://api.iamport.kr/subscribe/payments/schedule`,
+          method: "post",
+          headers: { Authorization: access_token }, // 인증 토큰 Authorization header에 추가
+          data: {
+            customer_uid: "gildong_0001_1234", // 카드(빌링키)와 1:1로 대응하는 값
+            schedules: [
+              {
+                merchant_uid: `order_monthly_${Math.floor(
+                  time.getTime() / 1000
+                )}`, // 주문 번호
+                schedule_at: Math.floor(time.getTime() / 1000), // 결제 시도 시각 in Unix Time Stamp. 예: 다음 달 1일
+                amount: 1000,
+                name: "월간 이용권 정기결제",
+                buyer_name: "홍길동",
+                buyer_tel: "01012345678",
+                buyer_email: "gildong@gmail.com",
+              },
+            ],
+          },
+        });
+      } else {
+        //카드 승인 실패 (예: 고객 카드 한도초과, 거래정지카드, 잔액부족 등)
+        //paymentResult.status : failed 로 수신됨
+        console.log("실패", paymentResult);
+      }
+    } else {
+      // 카드사 요청에 실패 (paymentResult is null)
+      console.log("요청 실패", paymentResult);
+    }
+
+    // return res.status(200).json(users);
+  } catch (error) {
+    console.error(error);
+    return res.status(401).send("사용자 목록을 불러올 수 없습니다.");
+  }
+});
+
+module.exports = router;
