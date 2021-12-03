@@ -114,7 +114,7 @@ const ButtonWrapper = styled(Wrapper)`
   left: 50%;
   cursor: pointer;
   width: auto;
-  margin: 0 0 0 -9px;
+  margin: 0 0 0 -50px;
 
   &:hover {
     .circle {
