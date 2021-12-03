@@ -10,11 +10,16 @@ import {
 } from "../../components/commonComponents";
 import useWidth from "../../hooks/useWidth";
 import Theme from "../../components/Theme";
+import { useDispatch, useSelector } from "react-redux";
 
 const Index = () => {
   const width = useWidth();
 
   const router = useRouter();
+
+  const dispatch = useDispatch();
+
+  const { menuImages } = useSelector((state) => state.menuImage);
 
   ////// HOOKS //////
   const [qs, setQs] = useState(0);
@@ -55,10 +60,10 @@ const Index = () => {
           height={`100%`}
           shadow={`0px 0px 10px ${Theme.grey_C}`}
         >
-          {qs === 0 && <Text>이오박스란 ?</Text>}
-          {qs === 1 && <Text>서비스 이용방법</Text>}
-          {qs === 2 && <Text>서비스 이용료</Text>}
-          {qs === 3 && <Text>보관센터</Text>}
+          {menuImages &&
+            menuImages.map((data) => {
+              return <Wrapper>{console.log(qs)}</Wrapper>;
+            })}
         </Wrapper>
       </WholeWrapper>
     </ClientLayout>

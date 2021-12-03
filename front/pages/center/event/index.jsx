@@ -52,8 +52,6 @@ const Index = () => {
     (state) => state.event
   );
 
-  console.log(events);
-
   ////// REDUX //////
 
   ////// USEEFFECT //////

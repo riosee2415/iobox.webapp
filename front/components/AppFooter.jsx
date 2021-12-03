@@ -180,6 +180,7 @@ const Logo = styled(Image)`
 const AppFooter = () => {
   const width = useWidth();
   const router = useRouter();
+
   ////// HOOKS //////
 
   const [tab, setTab] = useState(false);
@@ -191,6 +192,9 @@ const AppFooter = () => {
   ////// REDUX //////
 
   ////// USEEFFECT //////
+  useEffect(() => {
+    setDrawar(false);
+  }, [router.asPath]);
 
   ////// TOGGLE ///////
 
@@ -517,20 +521,24 @@ const AppFooter = () => {
                         <TextHover>아이오 박스란?</TextHover>
                       </Wrapper>
                     </Link>
-                    <Wrapper al={`flex-start`}>
-                      <TextHover>서비스 이용방법</TextHover>
-                    </Wrapper>
-                    <Wrapper al={`flex-start`}>
-                      <TextHover>서비스 이용료</TextHover>
-                    </Wrapper>
-                    <Wrapper al={`flex-start`}>
-                      <TextHover
 
-                      // onClick={() => moveLinkHandler(``)}
-                      >
-                        IO박스 보관센터
-                      </TextHover>
-                    </Wrapper>
+                    <Link href="/guide?type=way">
+                      <Wrapper al={`flex-start`}>
+                        <TextHover>서비스 이용방법</TextHover>
+                      </Wrapper>
+                    </Link>
+
+                    <Link href="/guide?type=pay">
+                      <Wrapper al={`flex-start`}>
+                        <TextHover>서비스 이용료</TextHover>
+                      </Wrapper>
+                    </Link>
+
+                    <Link href="/guide?type=center">
+                      <Wrapper al={`flex-start`}>
+                        <TextHover>IO박스 보관센터</TextHover>
+                      </Wrapper>
+                    </Link>
                     <Wrapper al={`flex-start`}>
                       <TextHover
                         onClick={() => {
