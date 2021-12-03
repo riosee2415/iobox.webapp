@@ -94,11 +94,6 @@ router.get("/signin", async (req, res, next) => {
       const fullUserWithoutPassword = await User.findOne({
         where: { id: req.user.id },
         attributes: ["id", "nickname", "level"],
-        include: [
-          {
-            model: Coupon,
-          },
-        ],
       });
 
       console.log("🍀🍀🍀🍀🍀🍀🍀🍀🍀🍀🍀🍀🍀🍀🍀🍀🍀🍀🍀🍀🍀🍀");
@@ -138,11 +133,6 @@ router.post("/signin", (req, res, next) => {
         const fullUserWithoutPassword = await User.findOne({
           where: { id: user.id },
           attributes: ["id", "nickname", "level"],
-          include: [
-            {
-              model: Coupon,
-            },
-          ],
         });
 
         return res.status(200).json(fullUserWithoutPassword);
@@ -172,11 +162,6 @@ router.post("/signin", (req, res, next) => {
         const fullUserWithoutPassword = await User.findOne({
           where: { id: newUser.id },
           attributes: ["id", "nickname", "level"],
-          include: [
-            {
-              model: Coupon,
-            },
-          ],
         });
 
         return res.status(200).json(fullUserWithoutPassword);
