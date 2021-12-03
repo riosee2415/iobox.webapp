@@ -15,6 +15,19 @@ import { CloseOutlined, DownOutlined, UpOutlined } from "@ant-design/icons";
 import { useRouter } from "next/dist/client/router";
 import { MinusOutlined, PlusOutlined } from "@ant-design/icons";
 
+const Box = styled(Wrapper)`
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+  border: 1px solid ${Theme.darkGrey2_C};
+  cursor: pointer;
+
+  &:hover {
+    background: ${Theme.darkGrey2_C};
+    color: ${Theme.white_C};
+  }
+`;
+
 const Index = () => {
   const width = useWidth();
   const router = useRouter();
@@ -23,6 +36,9 @@ const Index = () => {
   const [tab, setTab] = useState(false);
   const [number, setNumber] = useState(0);
 
+  const [currentBox, setCurrentBox] = useState(0);
+  const [currentBuy, setCurrentBuy] = useState([0, 0, 0, 0, 0, 0, 0, 0, 0]);
+
   ////// REDUX //////
 
   ////// USEEFFECT //////
@@ -30,17 +46,24 @@ const Index = () => {
   ////// TOGGLE ///////
 
   ///// HANDLER //////
-  const minusNumberHandler = useCallback(() => {
-    setNumber(number - 1);
+  const numberHandler = useCallback(
+    (value) => {
+      let tempArr = currentBuy.map((data, idx) => {
+        return idx === currentBox
+          ? data + value < 0
+            ? 0
+            : data + value
+          : data;
+      });
 
-    if (number === 0) {
-      setNumber(0);
-    }
-  }, [number]);
+      console.log(tempArr);
 
-  const plusNumberHandler = useCallback(() => {
-    setNumber(number + 1);
-  }, [number]);
+      setCurrentBuy(tempArr);
+
+      // if (number + value >= 0) setNumber(number + value);
+    },
+    [currentBox, currentBuy]
+  );
 
   const moveBackHandler = useCallback(() => {
     router.back();
@@ -186,27 +209,23 @@ const Index = () => {
                 티셔츠
               </Wrapper>
               <Wrapper width={`40%`} dr={`row`} ju={`space-between`}>
-                <Wrapper
-                  width={`30px`}
-                  height={`30px`}
-                  radius={`50%`}
-                  border={`1px solid ${Theme.darkGrey2_C}`}
-                  onClick={minusNumberHandler}
-                  cursor={`pointer`}
+                <Box
+                  onClick={() => {
+                    setCurrentBox(0);
+                    numberHandler(-1);
+                  }}
                 >
                   <MinusOutlined />
-                </Wrapper>
-                <Text fontWeight={`700`}>{number}</Text>
-                <Wrapper
-                  width={`30px`}
-                  height={`30px`}
-                  radius={`50%`}
-                  border={`1px solid ${Theme.darkGrey2_C}`}
-                  onClick={plusNumberHandler}
-                  cursor={`pointer`}
+                </Box>
+                <Text fontWeight={`700`}>{currentBuy[0]}</Text>
+                <Box
+                  onClick={() => {
+                    setCurrentBox(0);
+                    numberHandler(+1);
+                  }}
                 >
                   <PlusOutlined />
-                </Wrapper>
+                </Box>
               </Wrapper>
             </Wrapper>
 
@@ -231,27 +250,23 @@ const Index = () => {
                 니트류
               </Wrapper>
               <Wrapper width={`40%`} dr={`row`} ju={`space-between`}>
-                <Wrapper
-                  width={`30px`}
-                  height={`30px`}
-                  radius={`50%`}
-                  border={`1px solid ${Theme.darkGrey2_C}`}
-                  onClick={minusNumberHandler}
-                  cursor={`pointer`}
+                <Box
+                  onClick={() => {
+                    setCurrentBox(1);
+                    numberHandler(-1);
+                  }}
                 >
                   <MinusOutlined />
-                </Wrapper>
-                <Text fontWeight={`700`}>{number}</Text>
-                <Wrapper
-                  width={`30px`}
-                  height={`30px`}
-                  radius={`50%`}
-                  border={`1px solid ${Theme.darkGrey2_C}`}
-                  onClick={plusNumberHandler}
-                  cursor={`pointer`}
+                </Box>
+                <Text fontWeight={`700`}>{currentBuy[1]}</Text>
+                <Box
+                  onClick={() => {
+                    setCurrentBox(1);
+                    numberHandler(+1);
+                  }}
                 >
                   <PlusOutlined />
-                </Wrapper>
+                </Box>
               </Wrapper>
             </Wrapper>
 
@@ -276,27 +291,23 @@ const Index = () => {
                 원피스
               </Wrapper>
               <Wrapper width={`40%`} dr={`row`} ju={`space-between`}>
-                <Wrapper
-                  width={`30px`}
-                  height={`30px`}
-                  radius={`50%`}
-                  border={`1px solid ${Theme.darkGrey2_C}`}
-                  onClick={minusNumberHandler}
-                  cursor={`pointer`}
+                <Box
+                  onClick={() => {
+                    setCurrentBox(2);
+                    numberHandler(-1);
+                  }}
                 >
                   <MinusOutlined />
-                </Wrapper>
-                <Text fontWeight={`700`}>{number}</Text>
-                <Wrapper
-                  width={`30px`}
-                  height={`30px`}
-                  radius={`50%`}
-                  border={`1px solid ${Theme.darkGrey2_C}`}
-                  onClick={plusNumberHandler}
-                  cursor={`pointer`}
+                </Box>
+                <Text fontWeight={`700`}>{currentBuy[2]}</Text>
+                <Box
+                  onClick={() => {
+                    setCurrentBox(2);
+                    numberHandler(+1);
+                  }}
                 >
                   <PlusOutlined />
-                </Wrapper>
+                </Box>
               </Wrapper>
             </Wrapper>
 
@@ -321,27 +332,23 @@ const Index = () => {
                 셔츠
               </Wrapper>
               <Wrapper width={`40%`} dr={`row`} ju={`space-between`}>
-                <Wrapper
-                  width={`30px`}
-                  height={`30px`}
-                  radius={`50%`}
-                  border={`1px solid ${Theme.darkGrey2_C}`}
-                  onClick={minusNumberHandler}
-                  cursor={`pointer`}
+                <Box
+                  onClick={() => {
+                    setCurrentBox(3);
+                    numberHandler(-1);
+                  }}
                 >
                   <MinusOutlined />
-                </Wrapper>
-                <Text fontWeight={`700`}>{number}</Text>
-                <Wrapper
-                  width={`30px`}
-                  height={`30px`}
-                  radius={`50%`}
-                  border={`1px solid ${Theme.darkGrey2_C}`}
-                  onClick={plusNumberHandler}
-                  cursor={`pointer`}
+                </Box>
+                <Text fontWeight={`700`}>{currentBuy[3]}</Text>
+                <Box
+                  onClick={() => {
+                    setCurrentBox(3);
+                    numberHandler(+1);
+                  }}
                 >
                   <PlusOutlined />
-                </Wrapper>
+                </Box>
               </Wrapper>
             </Wrapper>
 
@@ -366,27 +373,23 @@ const Index = () => {
                 텐트
               </Wrapper>
               <Wrapper width={`40%`} dr={`row`} ju={`space-between`}>
-                <Wrapper
-                  width={`30px`}
-                  height={`30px`}
-                  radius={`50%`}
-                  border={`1px solid ${Theme.darkGrey2_C}`}
-                  onClick={minusNumberHandler}
-                  cursor={`pointer`}
+                <Box
+                  onClick={() => {
+                    setCurrentBox(4);
+                    numberHandler(-1);
+                  }}
                 >
                   <MinusOutlined />
-                </Wrapper>
-                <Text fontWeight={`700`}>{number}</Text>
-                <Wrapper
-                  width={`30px`}
-                  height={`30px`}
-                  radius={`50%`}
-                  border={`1px solid ${Theme.darkGrey2_C}`}
-                  onClick={plusNumberHandler}
-                  cursor={`pointer`}
+                </Box>
+                <Text fontWeight={`700`}>{currentBuy[4]}</Text>
+                <Box
+                  onClick={() => {
+                    setCurrentBox(4);
+                    numberHandler(+1);
+                  }}
                 >
                   <PlusOutlined />
-                </Wrapper>
+                </Box>
               </Wrapper>
             </Wrapper>
 
@@ -411,27 +414,23 @@ const Index = () => {
                 신발/가방
               </Wrapper>
               <Wrapper width={`40%`} dr={`row`} ju={`space-between`}>
-                <Wrapper
-                  width={`30px`}
-                  height={`30px`}
-                  radius={`50%`}
-                  border={`1px solid ${Theme.darkGrey2_C}`}
-                  onClick={minusNumberHandler}
-                  cursor={`pointer`}
+                <Box
+                  onClick={() => {
+                    setCurrentBox(5);
+                    numberHandler(-1);
+                  }}
                 >
                   <MinusOutlined />
-                </Wrapper>
-                <Text fontWeight={`700`}>{number}</Text>
-                <Wrapper
-                  width={`30px`}
-                  height={`30px`}
-                  radius={`50%`}
-                  border={`1px solid ${Theme.darkGrey2_C}`}
-                  onClick={plusNumberHandler}
-                  cursor={`pointer`}
+                </Box>
+                <Text fontWeight={`700`}>{currentBuy[5]}</Text>
+                <Box
+                  onClick={() => {
+                    setCurrentBox(5);
+                    numberHandler(+1);
+                  }}
                 >
                   <PlusOutlined />
-                </Wrapper>
+                </Box>
               </Wrapper>
             </Wrapper>
 
@@ -456,27 +455,23 @@ const Index = () => {
                 책
               </Wrapper>
               <Wrapper width={`40%`} dr={`row`} ju={`space-between`}>
-                <Wrapper
-                  width={`30px`}
-                  height={`30px`}
-                  radius={`50%`}
-                  border={`1px solid ${Theme.darkGrey2_C}`}
-                  onClick={minusNumberHandler}
-                  cursor={`pointer`}
+                <Box
+                  onClick={() => {
+                    setCurrentBox(6);
+                    numberHandler(-1);
+                  }}
                 >
                   <MinusOutlined />
-                </Wrapper>
-                <Text fontWeight={`700`}>{number}</Text>
-                <Wrapper
-                  width={`30px`}
-                  height={`30px`}
-                  radius={`50%`}
-                  border={`1px solid ${Theme.darkGrey2_C}`}
-                  onClick={plusNumberHandler}
-                  cursor={`pointer`}
+                </Box>
+                <Text fontWeight={`700`}>{currentBuy[6]}</Text>
+                <Box
+                  onClick={() => {
+                    setCurrentBox(6);
+                    numberHandler(+1);
+                  }}
                 >
                   <PlusOutlined />
-                </Wrapper>
+                </Box>
               </Wrapper>
             </Wrapper>
 
@@ -501,27 +496,23 @@ const Index = () => {
                 코트
               </Wrapper>
               <Wrapper width={`40%`} dr={`row`} ju={`space-between`}>
-                <Wrapper
-                  width={`30px`}
-                  height={`30px`}
-                  radius={`50%`}
-                  border={`1px solid ${Theme.darkGrey2_C}`}
-                  onClick={minusNumberHandler}
-                  cursor={`pointer`}
+                <Box
+                  onClick={() => {
+                    setCurrentBox(7);
+                    numberHandler(-1);
+                  }}
                 >
                   <MinusOutlined />
-                </Wrapper>
-                <Text fontWeight={`700`}>{number}</Text>
-                <Wrapper
-                  width={`30px`}
-                  height={`30px`}
-                  radius={`50%`}
-                  border={`1px solid ${Theme.darkGrey2_C}`}
-                  onClick={plusNumberHandler}
-                  cursor={`pointer`}
+                </Box>
+                <Text fontWeight={`700`}>{currentBuy[7]}</Text>
+                <Box
+                  onClick={() => {
+                    setCurrentBox(7);
+                    numberHandler(+1);
+                  }}
                 >
                   <PlusOutlined />
-                </Wrapper>
+                </Box>
               </Wrapper>
             </Wrapper>
 
@@ -546,27 +537,23 @@ const Index = () => {
                 두터운 패딩
               </Wrapper>
               <Wrapper width={`40%`} dr={`row`} ju={`space-between`}>
-                <Wrapper
-                  width={`30px`}
-                  height={`30px`}
-                  radius={`50%`}
-                  border={`1px solid ${Theme.darkGrey2_C}`}
-                  onClick={minusNumberHandler}
-                  cursor={`pointer`}
+                <Box
+                  onClick={() => {
+                    setCurrentBox(8);
+                    numberHandler(-1);
+                  }}
                 >
                   <MinusOutlined />
-                </Wrapper>
-                <Text fontWeight={`700`}>{number}</Text>
-                <Wrapper
-                  width={`30px`}
-                  height={`30px`}
-                  radius={`50%`}
-                  border={`1px solid ${Theme.darkGrey2_C}`}
-                  onClick={plusNumberHandler}
-                  cursor={`pointer`}
+                </Box>
+                <Text fontWeight={`700`}>{currentBuy[8]}</Text>
+                <Box
+                  onClick={() => {
+                    setCurrentBox(8);
+                    numberHandler(+1);
+                  }}
                 >
                   <PlusOutlined />
-                </Wrapper>
+                </Box>
               </Wrapper>
             </Wrapper>
 
