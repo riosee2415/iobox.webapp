@@ -14,6 +14,7 @@ import useWidth from "../hooks/useWidth";
 import { useRouter } from "next/dist/client/router";
 import { Planet } from "react-planet";
 import { MenuOutlined } from "@ant-design/icons";
+import Link from "next/link";
 
 const BoxWrapper = styled(Wrapper)`
   padding: 0 30px;
@@ -511,9 +512,11 @@ const AppFooter = () => {
                   />
 
                   <Wrapper ju={`flex-start`} al={`flex-start`}>
-                    <Wrapper al={`flex-start`}>
-                      <TextHover>아이오 박스란?</TextHover>
-                    </Wrapper>
+                    <Link href="/guide?type=iobox">
+                      <Wrapper al={`flex-start`}>
+                        <TextHover>아이오 박스란?</TextHover>
+                      </Wrapper>
+                    </Link>
                     <Wrapper al={`flex-start`}>
                       <TextHover>서비스 이용방법</TextHover>
                     </Wrapper>
