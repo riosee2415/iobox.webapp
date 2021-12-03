@@ -5,6 +5,10 @@ import {
   LOGIN_SUCCESS,
   LOGIN_FAILURE,
   /////////////////////////////
+  LOGOUT_REQUEST,
+  LOGOUT_SUCCESS,
+  LOGOUT_FAILURE,
+  /////////////////////////////
   LOGIN_ADMIN_REQUEST,
   LOGIN_ADMIN_SUCCESS,
   LOGIN_ADMIN_FAILURE,
@@ -71,6 +75,27 @@ function* signin(action) {
     console.error(err);
     yield put({
       type: LOGIN_FAILURE,
+      error: err.response.data,
+    });
+  }
+}
+// SAGA AREA ********************************************************************************************************
+// ******************************************************************************************************************
+function signoutAPI(data) {
+  return axios.post(`/api/user/logout`, data);
+}
+
+function* signout(action) {
+  try {
+    const result = yield call(signoutAPI, action.data);
+    yield put({
+      type: LOGOUT_SUCCESS,
+      data: result.data,
+    });
+  } catch (err) {
+    console.error(err);
+    yield put({
+      type: LOGOUT_FAILURE,
       error: err.response.data,
     });
   }
@@ -211,6 +236,9 @@ function* watchUserList() {
 function* watchUserListUpdate() {
   yield takeLatest(USERLIST_UPDATE_REQUEST, userListUpdate);
 }
+function* watchSignOut() {
+  yield takeLatest(LOGOUT_REQUEST, signout);
+}
 
 //////////////////////////////////////////////////////////////
 export default function* userSaga() {
@@ -221,6 +249,7 @@ export default function* userSaga() {
     fork(watchSignUp),
     fork(watchUserList),
     fork(watchUserListUpdate),
+    fork(watchSignOut),
     //
   ]);
 }
