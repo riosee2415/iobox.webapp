@@ -13,6 +13,7 @@ import Theme from "../../components/Theme";
 import { useDispatch, useSelector } from "react-redux";
 import { CloseOutlined, DownOutlined, UpOutlined } from "@ant-design/icons";
 import { MENU_LIST_REQUEST } from "../../reducers/menuImage";
+import { Empty } from "antd";
 
 const Index = () => {
   const width = useWidth();
@@ -88,23 +89,63 @@ const Index = () => {
 
           {qs === 0 && (
             <>
-              <Image src={menuImages && menuImages[0].imagePath} />
+              {menuImages ? (
+                menuImages.length === 0 ? (
+                  <Wrapper>
+                    <Empty image={Empty.PRESENTED_IMAGE_SIMPLE} />
+                  </Wrapper>
+                ) : (
+                  <Image src={menuImages[0].imagePath} />
+                )
+              ) : (
+                <Wrapper></Wrapper>
+              )}
             </>
           )}
           {qs === 1 && (
-            <Text>
-              <Image src={menuImages && menuImages[1].imagePath} />
-            </Text>
+            <>
+              {menuImages ? (
+                menuImages.length === 0 ? (
+                  <Wrapper>
+                    <Empty image={Empty.PRESENTED_IMAGE_SIMPLE} />
+                  </Wrapper>
+                ) : (
+                  <Image src={menuImages[1].imagePath} />
+                )
+              ) : (
+                <Wrapper></Wrapper>
+              )}
+            </>
           )}
           {qs === 2 && (
-            <Text>
-              <Image src={menuImages && menuImages[2].imagePath} />
-            </Text>
+            <>
+              {menuImages ? (
+                menuImages.length === 0 ? (
+                  <Wrapper>
+                    <Empty image={Empty.PRESENTED_IMAGE_SIMPLE} />
+                  </Wrapper>
+                ) : (
+                  <Image src={menuImages[2].imagePath} />
+                )
+              ) : (
+                <Wrapper></Wrapper>
+              )}
+            </>
           )}
           {qs === 3 && (
-            <Text>
-              <Image src={menuImages && menuImages[3].imagePath} />
-            </Text>
+            <>
+              {menuImages ? (
+                menuImages.length === 0 ? (
+                  <Wrapper>
+                    <Empty image={Empty.PRESENTED_IMAGE_SIMPLE} />
+                  </Wrapper>
+                ) : (
+                  <Image src={menuImages[3].imagePath} />
+                )
+              ) : (
+                <Wrapper></Wrapper>
+              )}
+            </>
           )}
         </Wrapper>
       </WholeWrapper>
