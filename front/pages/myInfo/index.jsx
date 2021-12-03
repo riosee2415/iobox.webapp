@@ -15,6 +15,9 @@ import { CloseOutlined, DownOutlined, UpOutlined } from "@ant-design/icons";
 import { useRouter } from "next/dist/client/router";
 import { RightOutlined } from "@ant-design/icons";
 import { Switch } from "antd";
+import { LOGOUT_REQUEST } from "../../reducers/user";
+import { useDispatch, useSelector } from "react-redux";
+import { notification } from "antd";
 
 const TableWrapper = styled(Wrapper)`
   flex-direction: row;
@@ -34,9 +37,21 @@ const TableWrapper = styled(Wrapper)`
   }
 `;
 
+const LoadNotification = (msg, content) => {
+  notification.open({
+    message: msg,
+    description: content,
+    onClick: () => {},
+  });
+};
+
 const Index = () => {
   const width = useWidth();
   const router = useRouter();
+
+  const dispatch = useDispatch();
+
+  const { st_logoutDone } = useSelector((state) => state.user);
 
   ////// HOOKS //////
   const [tab, setTab] = useState(false);
@@ -59,6 +74,20 @@ const Index = () => {
   const tabToggle = useCallback(() => {
     setTab(!tab);
   }, [tab]);
+
+  const logoutHandler = useCallback(() => {
+    dispatch({
+      type: LOGOUT_REQUEST,
+    });
+
+    if (st_logoutDone) {
+      return LoadNotification("LOGOUT SUCCESS", "로그아웃 되었습니다.");
+    }
+
+    router.push("/");
+  }, []);
+
+  console.log(LOGOUT_REQUEST);
 
   ////// DATAVIEW //////
   return (
@@ -293,7 +322,12 @@ const Index = () => {
 
           <Wrapper height={`10px`} bgColor={Theme.lightGrey_C}></Wrapper>
 
-          <Wrapper padding={`15px 50px`} al={`flex-start`}>
+          <Wrapper
+            padding={`15px 50px`}
+            al={`flex-start`}
+            onClick={logoutHandler}
+            cursor={`pointer`}
+          >
             로그아웃
           </Wrapper>
         </Wrapper>
