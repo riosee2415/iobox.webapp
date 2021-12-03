@@ -16,11 +16,6 @@ module.exports = () => {
         attributes: {
           exclude: ["password", "secret"],
         },
-        include: [
-          {
-            model: Coupon,
-          },
-        ],
       });
 
       // 첫번째 인자는 서버 에러, 두번째 인자는 성공 시 데이터

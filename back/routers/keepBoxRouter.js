@@ -57,10 +57,11 @@ router.get("/type/list", async (req, res, next) => {
 });
 
 router.post("/type/create", isAdminCheck, async (req, res, next) => {
-  const { value } = req.body;
+  const { value, count } = req.body;
   try {
     const createResult = await BoxType.create({
       value,
+      count,
     });
 
     return res.status(201).json({ result: true });
@@ -71,7 +72,7 @@ router.post("/type/create", isAdminCheck, async (req, res, next) => {
 });
 
 router.patch("/type/update", isAdminCheck, async (req, res, next) => {
-  const { id, value } = req.body;
+  const { id, value, count } = req.body;
   try {
     const exType = await BoxType.findOne({
       where: { id: parseInt(id) },
@@ -84,6 +85,7 @@ router.patch("/type/update", isAdminCheck, async (req, res, next) => {
     const updateResult = await BoxType.update(
       {
         value,
+        count,
       },
       {
         where: { id: parseInt(id) },
