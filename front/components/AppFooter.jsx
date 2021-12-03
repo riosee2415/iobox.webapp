@@ -191,10 +191,11 @@ const AppFooter = () => {
 
   const [drawar, setDrawar] = useState(false);
 
-  const { me } = useSelector((state) => state.user);
+  const { me, st_logoutDone } = useSelector((state) => state.user);
   const dispatch = useDispatch();
 
   ////// REDUX //////
+  console.log(me);
 
   ////// USEEFFECT //////
   useEffect(() => {
@@ -206,6 +207,14 @@ const AppFooter = () => {
       type: LOAD_MY_INFO_REQUEST,
     });
   }, []);
+
+  useEffect(() => {
+    if (st_logoutDone) {
+      dispatch({
+        type: LOAD_MY_INFO_REQUEST,
+      });
+    }
+  }, [st_logoutDone]);
 
   ////// TOGGLE ///////
 
@@ -608,31 +617,33 @@ const AppFooter = () => {
                   </Wrapper>
 
                   <Wrapper dr={`row`} ju={`flex-end`} padding={`10px`}>
-                    {/* 로그인 안되있을 때 */}
-                    <Text
-                      cursor={`pointer`}
-                      display={`flex`}
-                      margin={`0 10px 0 0`}
-                      onClick={() => moveLinkHandler(`/login`)}
-                    >
-                      로그인
-                    </Text>
-
-                    {/* 로그인 되어 있을 때 */}
-                    <Text
-                      cursor={`pointer`}
-                      margin={`0 10px 0 0`}
-                      onClick={() => moveLinkHandler(`/myInfo`)}
-                    >
-                      내 정보
-                    </Text>
-                    <Text
-                      onClick={logoutHandler}
-                      cursor={`pointer`}
-                      margin={`0 10px 0 0`}
-                    >
-                      로그아웃
-                    </Text>
+                    {!me ? (
+                      <Text
+                        cursor={`pointer`}
+                        display={`flex`}
+                        margin={`0 10px 0 0`}
+                        onClick={() => moveLinkHandler(`/login`)}
+                      >
+                        로그인
+                      </Text>
+                    ) : (
+                      <>
+                        <Text
+                          cursor={`pointer`}
+                          margin={`0 10px 0 0`}
+                          onClick={() => moveLinkHandler(`/myInfo`)}
+                        >
+                          내 정보
+                        </Text>
+                        <Text
+                          onClick={logoutHandler}
+                          cursor={`pointer`}
+                          margin={`0 10px 0 0`}
+                        >
+                          로그아웃
+                        </Text>
+                      </>
+                    )}
 
                     {/* 공통 */}
                     <Text

@@ -59,7 +59,7 @@ const Home = ({}) => {
   ////// HOOKS //////
   const router = useRouter();
   const dispatch = useDispatch();
-
+  const { me } = useSelector((state) => state.user);
   ////// REDUX //////
 
   ////// USEEFFECT //////
@@ -77,6 +77,12 @@ const Home = ({}) => {
       naver.handleTokenResponse();
     }
   }, [router.query]);
+
+  // useEffect(() => {
+  //   dispatch({
+  //     type: LOAD_MY_INFO_REQUEST,
+  //   });
+  // }, [router.query]);
 
   ////// TOGGLE ///////
 
@@ -96,7 +102,11 @@ const Home = ({}) => {
       JSON.stringify({ ...info })
     );
 
-    console.log(req, "req");
+    console.log(req);
+
+    console.log(userId);
+    console.log(req.profile.kakao_account.email);
+    console.log(req.profile.kakao_account.profile.nickname + "5호기");
 
     dispatch({
       type: LOGIN_REQUEST,
@@ -106,7 +116,8 @@ const Home = ({}) => {
         nickname: req.profile.kakao_account.profile.nickname + "5호기",
       },
     });
-    // router.push("/user/signup");
+    console.log(me, "me");
+    router.push("/");
   };
 
   const loginNaverHandler = async () => {
@@ -131,6 +142,8 @@ const Home = ({}) => {
       "3r5sKGMdgUoNasdaverJej5TtN",
       JSON.stringify({ ...info })
     );
+
+    console.log(me);
 
     // setSnsPlatform(info.userId);
     // setLoginSkipPlatform(false);
