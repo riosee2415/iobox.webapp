@@ -409,7 +409,6 @@ router.patch("/cardUpdate", isLoggedIn, async (req, res, next) => {
 router.get("/logout", function (req, res) {
   req.logout();
   req.session.save(() => {
-    res.clearCookie("connect.sid");
     res.redirect("/");
   });
 });
