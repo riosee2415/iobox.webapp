@@ -26,10 +26,12 @@ const BoxWrapper = styled(Wrapper)`
   margin: 0 0 5px;
   background: ${Theme.lightGrey_C};
   cursor: pointer;
+
   &:hover {
     background: ${Theme.basicTheme_C};
     color: ${Theme.white_C};
   }
+
   @media (max-width: 700px) {
     height: 50px;
   }
@@ -41,6 +43,7 @@ const TextHover = styled(Text)`
   position: relative;
   cursor: pointer;
   transition: 0.5s;
+
   &:before {
     content: "";
     position: absolute;
@@ -51,16 +54,19 @@ const TextHover = styled(Text)`
     background: ${Theme.basicTheme_C};
     transition: 0.5s;
   }
+
   &:hover {
     font-weight: 700;
     &:before {
       width: 100%;
     }
   }
+
   @media (max-width: 1350px) {
     font-size: 1.2rem;
     margin: 0 0 25px;
   }
+
   @media (max-width: 700px) {
     font-size: 1rem;
     margin: 0 0 20px;
@@ -70,13 +76,16 @@ const TextHover = styled(Text)`
 const IconBox = styled(Wrapper)`
   width: ${(props) => props.width || `130px`};
   cursor: pointer;
+
   ${Image} {
     transition: 0.5s;
     margin: 0 0 5px;
   }
+
   &:hover ${Image} {
     transform: scale(1.2);
   }
+
   @media (max-width: 700px) {
     width: auto;
   }
@@ -88,9 +97,11 @@ const CircleWrapper = styled(Wrapper)`
   height: 150px;
   border-radius: 50%;
   opacity: 0.5;
+
   &:hover {
     opacity: 1;
   }
+
   @media (max-width: 700px) {
     width: 110px;
     height: 110px;
@@ -99,16 +110,19 @@ const CircleWrapper = styled(Wrapper)`
 
 const ButtonWrapper = styled(Wrapper)`
   position: absolute;
+
   left: 50%;
   cursor: pointer;
   width: auto;
   margin: 0 0 0 -9px;
+
   &:hover {
     .circle {
       width: 30px;
       height: 30px;
     }
   }
+
   @media (max-width: 700px) {
     margin: 0 0 0 -60px;
   }
@@ -118,23 +132,29 @@ const TextWrapper = styled(Wrapper)`
   width: auto;
   cursor: pointer;
   transition: 0.5s;
+
   & h2 {
     color: ${Theme.darkGrey_C} !important;
     background: initial;
     -webkit-text-fill-color: initial !important;
     -webkit-background-clip: initial !important;
+
     transition: 0.5s;
   }
+
   .hoverIcon {
     display: none;
   }
+
   &:hover {
     .noHoverIcon {
       display: none;
     }
+
     .hoverIcon {
       display: flex;
     }
+
     h2 {
       background: linear-gradient(
         90deg,
@@ -143,6 +163,7 @@ const TextWrapper = styled(Wrapper)`
         rgb(242, 146, 98),
         rgb(241, 115, 80)
       );
+
       -webkit-text-fill-color: transparent !important;
       -webkit-background-clip: text !important;
     }
@@ -151,6 +172,7 @@ const TextWrapper = styled(Wrapper)`
 
 const Logo = styled(Image)`
   width: 200px !important;
+
   @media (max-width: 700px) {
     width: 150px !important;
     margin-top: 10px;
@@ -169,10 +191,11 @@ const AppFooter = () => {
 
   const [drawar, setDrawar] = useState(false);
 
-  const { me } = useSelector((state) => state.user);
+  const { me, st_logoutDone } = useSelector((state) => state.user);
   const dispatch = useDispatch();
 
   ////// REDUX //////
+  console.log(me);
 
   ////// USEEFFECT //////
   useEffect(() => {
@@ -185,7 +208,13 @@ const AppFooter = () => {
     });
   }, []);
 
-  console.log(me, "me");
+  useEffect(() => {
+    if (st_logoutDone) {
+      dispatch({
+        type: LOAD_MY_INFO_REQUEST,
+      });
+    }
+  }, [st_logoutDone]);
 
   ////// TOGGLE ///////
 
@@ -588,8 +617,6 @@ const AppFooter = () => {
                   </Wrapper>
 
                   <Wrapper dr={`row`} ju={`flex-end`} padding={`10px`}>
-                    {/* 로그인 안되있을 때 */}
-                    {/* 로그인 되어 있을 때 */}
                     {!me ? (
                       <Text
                         cursor={`pointer`}

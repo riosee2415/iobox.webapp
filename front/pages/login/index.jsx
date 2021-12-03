@@ -117,7 +117,7 @@ const Home = ({}) => {
       },
     });
     console.log(me, "me");
-    // router.push("/");
+    router.push("/");
   };
 
   const loginNaverHandler = async () => {

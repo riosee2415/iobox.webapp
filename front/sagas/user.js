@@ -82,7 +82,7 @@ function* signin(action) {
 // SAGA AREA ********************************************************************************************************
 // ******************************************************************************************************************
 function signoutAPI(data) {
-  return axios.post(`/api/user/logout`, data);
+  return axios.get(`/api/user/logout`, data);
 }
 
 function* signout(action) {
