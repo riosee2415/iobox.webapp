@@ -248,8 +248,8 @@ router.get("/me", isLoggedIn, async (req, res, next) => {
   }
 });
 
-router.post("/me/update", isLoggedIn, async (req, res, next) => {
-  const { id, nickname, mobile } = req.body;
+router.post("/me/updateNick", isLoggedIn, async (req, res, next) => {
+  const { id, nickname } = req.body;
 
   try {
     const exUser = await User.findOne({ where: { id: parseInt(id) } });
@@ -259,7 +259,30 @@ router.post("/me/update", isLoggedIn, async (req, res, next) => {
     }
 
     const updateUser = await User.update(
-      { nickname, mobile },
+      { nickname },
+      {
+        where: { id: parseInt(id) },
+      }
+    );
+
+    return res.status(200).json({ result: true });
+  } catch (error) {
+    console.error(error);
+    return res.status(401).send("정보를 수정할 수 없습니다.");
+  }
+});
+router.post("/me/updateMob", isLoggedIn, async (req, res, next) => {
+  const { id, mobile } = req.body;
+
+  try {
+    const exUser = await User.findOne({ where: { id: parseInt(id) } });
+
+    if (!exUser) {
+      return res.status(401).send("존재하지 않는 사용자 입니다.");
+    }
+
+    const updateUser = await User.update(
+      { mobile },
       {
         where: { id: parseInt(id) },
       }
