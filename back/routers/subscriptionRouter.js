@@ -28,7 +28,7 @@ router.post(`/`, async (req, res, next) => {
 
     let orderPK = "ORD" + year + month + date + hour + min + sec + mSec;
 
-    // 엑세스 토큰 발행 => 예약할때마다 새로운 엑세스 토큰이 필요한가?
+    // 엑세스 토큰 발행 => 예약할때마다 새로운 엑세스 토큰이 필요한가? => 필요
     const getToken = await axios({
       url: "https://api.iamport.kr/users/getToken",
       method: "post", // POST method
@@ -45,6 +45,7 @@ router.post(`/`, async (req, res, next) => {
 
     // 빌링키 발급 요청 => 예약 마다 빌링키가 필요한가?
     // 빌링키의 정확한 용도가 무엇인가?
+    // 빌링키는 카드정보를 넘길때 작업하고, 유저모델에 추가
     const issueBilling = await axios({
       url: `https://api.iamport.kr/subscribe/customers/${customer_uid}`,
       method: "post",

@@ -8,6 +8,7 @@ const { Op } = require("sequelize");
 const generateUUID = require("../utils/generateUUID");
 const sendSecretMail = require("../utils/mailSender");
 const isNanCheck = require("../middlewares/isNanCheck");
+const axios = require("axios");
 
 const router = express.Router();
 
@@ -348,23 +349,73 @@ router.post("/cardCreate", isLoggedIn, async (req, res, next) => {
       return res.status(401).send("존재하지 않는 사용자입니다.");
     }
 
-    const updateResult = await User.update(
-      {
-        cardNum,
-        cardPeriod,
-        cardIden,
-        cardPassword,
-        // cardCode :
-      },
-      {
-        where: { id: parseInt(req.user.id) },
-      }
-    );
+    const d = new Date();
 
-    if (updateResult[0] > 0) {
-      return res.status(200).json({ result: true });
+    let year = d.getFullYear() + "";
+    let month = d.getMonth() + 1 + "";
+    let date = d.getDate() + "";
+    let hour = d.getHours() + "";
+    let min = d.getMinutes() + "";
+    let sec = d.getSeconds() + "";
+    let mSec = d.getMilliseconds() + "";
+
+    month = month < 10 ? "0" + month : month;
+    date = date < 10 ? "0" + date : date;
+    hour = hour < 10 ? "0" + hour : hour;
+    min = min < 10 ? "0" + min : min;
+    sec = sec < 10 ? "0" + sec : sec;
+    mSec = mSec < 10 ? "0" + mSec : mSec;
+
+    let orderPK = "USER_C" + year + month + date + hour + min + sec + mSec;
+
+    const getToken = await axios({
+      url: "https://api.iamport.kr/users/getToken",
+      method: "post", // POST method
+      headers: { "Content-Type": "application/json" }, // "Content-Type": "application/json"
+      data: {
+        imp_key: process.env.IMP_KEY, // REST API 키
+        imp_secret: process.env.IMP_SECRET,
+      },
+    });
+
+    const { access_token } = getToken.data.response; // 인증 토큰
+
+    const issueBilling = await axios({
+      url: `https://api.iamport.kr/subscribe/customers/${orderPK}`,
+      method: "post",
+      headers: { Authorization: access_token }, // 인증 토큰 Authorization header에 추가
+      data: {
+        card_number: cardNum, // 카드 번호
+        expiry: cardPeriod, // 카드 유효기간
+        birth: cardIden, // 생년월일
+        pwd_2digit: cardPassword, // 카드 비밀번호 앞 두자리
+      },
+    });
+
+    const { code, message } = issueBilling.data;
+    if (code === 0) {
+      const updateResult = await User.update(
+        {
+          cardNum,
+          cardPeriod,
+          cardIden,
+          cardPassword,
+          cardCode: orderPK,
+        },
+        {
+          where: { id: parseInt(req.user.id) },
+        }
+      );
+
+      if (updateResult[0] > 0) {
+        return res.status(200).json({ result: true });
+      } else {
+        return res.status(200).json({ result: false });
+      }
     } else {
-      return res.status(200).json({ result: false });
+      console.log(message);
+      // 빌링키 발급 실패
+      res.send({ status: "failed", message });
     }
   } catch (error) {
     console.error(error);
