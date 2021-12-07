@@ -6538,7 +6538,7 @@ react-resize-detector@^5.0.6:
     raf-schd "^4.0.2"
     resize-observer-polyfill "^1.5.1"
 
-react-rotate-menu@0.2.4:
+react-rotate-menu@^0.2.4:
   version "0.2.4"
   resolved "https://registry.yarnpkg.com/react-rotate-menu/-/react-rotate-menu-0.2.4.tgz#0f53b113e2c4fc193b4ccae9a2d520971351069c"
   integrity sha512-fQ9ECgdeTcpsnPEVfzKQJM6GKnBJIHEfI4OhpTLtTrmgcPE85C74NBRTWSqHQALhf1QZhcer8oIZEwqGR3soMA==

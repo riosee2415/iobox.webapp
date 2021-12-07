@@ -255,6 +255,10 @@ const AppFooter = () => {
   }, []);
 
   ////// DATAVIEW //////
+  if (!width) {
+    return null;
+  }
+
   return (
     <>
       {/* <Wrapper zIndex={`100000`} bgColor={Theme.black2_C} height={`300px`}>
@@ -346,6 +350,7 @@ const AppFooter = () => {
                       width={`100px`}
                       height={`100px`}
                       radius={`50%`}
+                      className={"ajklsuajksdnajksdnajksdn"}
                       bgColor={`linear-gradient(90deg,rgb(249, 2, 80),rgb(247, 141, 150),rgb(242, 146, 98),rgb(241, 115, 80))`}
                     >
                       <Wrapper
