@@ -39,7 +39,7 @@ const BoxWrapper = styled(Wrapper)`
 
 const TextHover = styled(Text)`
   font-size: 1.4rem;
-  margin: 0 0 35px;
+  margin: 0 0 15px;
   position: relative;
   cursor: pointer;
   transition: 0.5s;
@@ -556,7 +556,7 @@ const AppFooter = () => {
                       src={`https://4leaf-s3.s3.ap-northeast-2.amazonaws.com/iobox/assets/images/icon/logo_square.png`}
                       width={width < 1350 ? `80px` : `100px`}
                       alt={`logo`}
-                      margin={`0 0 50px`}
+                      margin={`0 0 20px`}
                     />
 
                     <Wrapper ju={`flex-start`} al={`flex-start`}>
