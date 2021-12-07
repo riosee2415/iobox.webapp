@@ -118,7 +118,7 @@ const ButtonWrapper = styled(Wrapper)`
   left: 50%;
   cursor: pointer;
   width: auto;
-  margin: 0 0 0 -65px;
+  margin: 0 0 -50px -65px;
 
   &:hover {
     .circle {
@@ -128,7 +128,7 @@ const ButtonWrapper = styled(Wrapper)`
   }
 
   @media (max-width: 700px) {
-    margin: 0 0 0 -60px;
+    margin: 0 0 -50px -60px;
   }
 `;
 
