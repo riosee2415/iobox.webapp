@@ -118,7 +118,7 @@ const ButtonWrapper = styled(Wrapper)`
   left: 50%;
   cursor: pointer;
   width: auto;
-  margin: 0 0 -50px -65px;
+  margin: 0 0 0 -65px;
 
   &:hover {
     .circle {
@@ -128,7 +128,7 @@ const ButtonWrapper = styled(Wrapper)`
   }
 
   @media (max-width: 700px) {
-    margin: 0 0 -50px -60px;
+    margin: 0 0 0 -60px;
   }
 `;
 
@@ -326,6 +326,15 @@ const AppFooter = () => {
             shadow={tab ? `none` : `0px -3px 10px ${Theme.grey_C}`}
           >
             <ButtonWrapper
+              margin={
+                width < 700
+                  ? tab
+                    ? `0 0 -50px -60px`
+                    : `0 0 0 -60px`
+                  : tab
+                  ? `0 0 -50px -65px`
+                  : `0 0 0 -65px`
+              }
               bottom={tab ? (width < 700 ? `230px` : `280px`) : `50px`}
               transition={`0.5s`}
             >
