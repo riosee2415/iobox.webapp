@@ -18,6 +18,7 @@ import Footer from "../../../components/Footer";
 import useOnlyNumberInput from "../../../hooks/useOnlyNumberInput";
 import { USER_CARD_CREATE_REQUEST } from "../../../reducers/user";
 import { useDispatch, useSelector } from "react-redux";
+import { notification } from "antd";
 
 const FocusInput = styled(TextInput)`
   width: ${(props) => props.width || `calc(100% / 4)`};
@@ -25,6 +26,14 @@ const FocusInput = styled(TextInput)`
   padding: 10px;
   border: none !important;
 `;
+
+const LoadNotification = (msg, content) => {
+  notification.open({
+    message: msg,
+    description: content,
+    onClick: () => {},
+  });
+};
 
 const Index = () => {
   const width = useWidth();
@@ -48,9 +57,25 @@ const Index = () => {
   ////// REDUX //////
 
   const dispatch = useDispatch();
-  const { me } = useSelector((state) => state.user);
+  const { me, st_userCardCreateDone, st_userCardCreateError } = useSelector(
+    (state) => state.user
+  );
+
+  console.log(me);
 
   ////// USEEFFECT //////
+
+  useEffect(() => {
+    if (st_userCardCreateError) {
+      return LoadNotification(st_userCardCreateError);
+    }
+  }, [st_userCardCreateError]);
+
+  useEffect(() => {
+    if (st_userCardCreateDone) {
+      return LoadNotification("카드정보가 등록되었습니다.");
+    }
+  }, [st_userCardCreateDone]);
 
   ////// TOGGLE ///////
   const cardInputToggle = useCallback(() => {

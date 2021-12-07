@@ -160,8 +160,7 @@ const Index = () => {
                 <Text>{me && me.nickname}</Text>
                 <Text bold={true} color={Theme.basicTheme_C}>
                   {/* {me && me.userId.split("_")[0]} */}
-                  {console.log(me && me, users)}
-                  {console.log(users)}
+                  {me && me.userId.split("_")[0]}
                 </Text>
               </Wrapper>
 
@@ -183,7 +182,7 @@ const Index = () => {
                   fontWeight={`700`}
                   margin={`0 5px 0 0`}
                 >
-                  01099999999
+                  {me ? me.mobile : `휴대폰인증을 완료해주세요.`}
                 </Text>
                 <Wrapper width={`auto`} color={Theme.darkGrey_C}>
                   <RightOutlined />
@@ -204,7 +203,7 @@ const Index = () => {
                   fontWeight={`700`}
                   margin={`0 5px 0 0`}
                 >
-                  215156282****3333/3333
+                  {me ? me.cardNum : `휴대폰인증을 완료해주세요.`}
                 </Text>
                 <Wrapper width={`auto`} color={Theme.darkGrey_C}>
                   <RightOutlined />
