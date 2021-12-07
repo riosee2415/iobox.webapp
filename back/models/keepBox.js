@@ -43,27 +43,7 @@ module.exports = class KeepBox extends Model {
           type: DataTypes.STRING(300), // 픽업 방식
           allowNull: false,
         },
-        price1: {
-          type: DataTypes.INTEGER, // 금액
-          allowNull: false,
-          defaultValue: 0,
-        },
-        price2: {
-          type: DataTypes.INTEGER, // 금액
-          allowNull: false,
-          defaultValue: 0,
-        },
-        price3: {
-          type: DataTypes.INTEGER, // 금액
-          allowNull: false,
-          defaultValue: 0,
-        },
-        price4: {
-          type: DataTypes.INTEGER, // 금액
-          allowNull: false,
-          defaultValue: 0,
-        },
-        totalPrice: {
+        price: {
           type: DataTypes.INTEGER, // 금액
           allowNull: false,
           defaultValue: 0,
