@@ -30,6 +30,6 @@ module.exports = class Purchase extends Model {
   }
   static associate(db) {
     db.Purchase.belongsTo(db.User);
-    db.Purchase.belongsTo(db.KeepBox);
+    // db.Purchase.belongsTo(db.KeepBox);
   }
 };

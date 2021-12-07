@@ -15,7 +15,7 @@ const guidetype = require("./guidetype");
 const event = require("./event");
 const keepBox = require("./keepBox");
 const boxImage = require("./boxImage");
-const purchase = require("./purchase");
+// const purchase = require("./purchase");
 const menuImage = require("./menuImage");
 const coupon = require("./coupon");
 
@@ -46,7 +46,7 @@ db.GuideType = guidetype;
 db.Event = event;
 db.KeepBox = keepBox;
 db.BoxImage = boxImage;
-db.Purchase = purchase;
+// db.Purchase = purchase;
 db.MenuImage = menuImage;
 db.Coupon = coupon;
 

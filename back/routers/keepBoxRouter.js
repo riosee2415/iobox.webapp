@@ -7,6 +7,8 @@ const multer = require("multer");
 const path = require("path");
 const AWS = require("aws-sdk");
 const multerS3 = require("multer-s3");
+const isLoggedIn = require("../middlewares/isLoggedIn");
+const isNanCheck = require("../middlewares/isNanCheck");
 
 const router = express.Router();
 
@@ -203,48 +205,163 @@ router.post(
   }
 );
 
-// 보관하기
-router.post("/create", async (req, res, next) => {
-  const {
-    boxname,
-    boxcount,
-    period,
-    isFilming,
-    pickWay,
-    price,
-    name,
-    mobile,
-    address,
-    detailAddress,
-    remark,
-    UserId,
-  } = req.body;
-  try {
-    const createResult = await KeepBox.create({
-      boxname,
-      boxcount,
+router.post(
+  "/create",
+  //  isLoggedIn,
+  async (req, res, next) => {
+    const {
+      boxcount1,
+      boxcount2,
+      boxcount3,
+      boxcount4,
       period,
       isFilming,
       pickWay,
-      price,
+      price1,
+      price2,
+      price3,
+      price4,
       name,
       mobile,
       address,
       detailAddress,
       remark,
-      UserId: parseInt(UserId),
-    });
+      UserId,
+    } = req.body;
 
-    if (!createResult) {
-      return res.status(401).send("처리중 문제가 발생하였습니다.");
+    if (isNanCheck(boxcount1)) {
+      return res.status(401).send("잘못된 요청입니다.");
     }
 
-    return res.status(201).json({ result: true });
-  } catch (error) {
-    console.error(error);
-    return res.status(401).send("박스를 추가할 수 없습니다.");
+    if (isNanCheck(boxcount2)) {
+      return res.status(401).send("잘못된 요청입니다.");
+    }
+
+    if (isNanCheck(boxcount3)) {
+      return res.status(401).send("잘못된 요청입니다.");
+    }
+
+    if (isNanCheck(boxcount4)) {
+      return res.status(401).send("잘못된 요청입니다.");
+    }
+
+    try {
+      if (
+        parseInt(boxcount1) === 0 &&
+        parseInt(boxcount2) === 0 &&
+        parseInt(boxcount3) === 0 &&
+        parseInt(boxcount4) === 0
+      ) {
+        return res.status(401).send("박스를 선택하여 주십시오.");
+      } else {
+        if (parseInt(boxcount1) !== 0) {
+          for (let i = 0; i < parseInt(boxcount1); i++) {
+            const createResult = await KeepBox.create({
+              boxcount1,
+              boxcount2: 0,
+              boxcount3: 0,
+              boxcount4: 0,
+              period,
+              isFilming,
+              pickWay,
+              price1,
+              price2: 0,
+              price3: 0,
+              price4: 0,
+              totalPrice: boxcount1 * price1,
+              name,
+              mobile,
+              address,
+              detailAddress,
+              remark,
+              UserId: parseInt(UserId),
+            });
+          }
+        }
+
+        if (parseInt(boxcount2) !== 0) {
+          for (let i = 0; i < parseInt(boxcount2); i++) {
+            const createResult = await KeepBox.create({
+              boxcount1: 0,
+              boxcount2,
+              boxcount3: 0,
+              boxcount4: 0,
+              period,
+              isFilming,
+              pickWay,
+              price1: 0,
+              price2,
+              price3: 0,
+              price4: 0,
+              totalPrice: boxcount2 * price2,
+              name,
+              mobile,
+              address,
+              detailAddress,
+              remark,
+              UserId: parseInt(UserId),
+            });
+          }
+        }
+
+        if (parseInt(boxcount3) !== 0) {
+          for (let i = 0; i < parseInt(boxcount3); i++) {
+            const createResult = await KeepBox.create({
+              boxcount1: 0,
+              boxcount2: 0,
+              boxcount3,
+              boxcount4: 0,
+              period,
+              isFilming,
+              pickWay,
+              price1: 0,
+              price2: 0,
+              price3,
+              price4: 0,
+              totalPrice: boxcount3 * price3,
+              name,
+              mobile,
+              address,
+              detailAddress,
+              remark,
+              UserId: parseInt(UserId),
+            });
+          }
+        }
+
+        if (parseInt(boxcount4) !== 0) {
+          for (let i = 0; i < parseInt(boxcount4); i++) {
+            const createResult = await KeepBox.create({
+              boxcount1: 0,
+              boxcount2: 0,
+              boxcount3: 0,
+              boxcount4,
+              period,
+              isFilming,
+              pickWay,
+              price1: 0,
+              price2: 0,
+              price3: 0,
+              price4,
+              totalPrice: boxcount4 * price4,
+              name,
+              mobile,
+              address,
+              detailAddress,
+              remark,
+              UserId: parseInt(UserId),
+            });
+          }
+        }
+
+        return res.status(201).json({ result: true });
+      }
+    } catch (error) {
+      console.error(error);
+      return res.status(401).send("박스를 추가할 수 없습니다.");
+    }
   }
-});
+);
 
 // 픽업 여부 변경
 router.patch("/update", async (req, res, next) => {

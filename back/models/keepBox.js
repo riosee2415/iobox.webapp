@@ -5,12 +5,23 @@ module.exports = class KeepBox extends Model {
   static init(sequelize) {
     return super.init(
       {
-        boxname: {
-          type: DataTypes.STRING(100),
+        boxcount1: {
+          type: DataTypes.INTEGER, // 1번 박스 카운트
           allowNull: false,
+          defaultValue: 0,
         },
-        boxcount: {
-          type: DataTypes.INTEGER,
+        boxcount2: {
+          type: DataTypes.INTEGER, // 2번 박스 카운트
+          allowNull: false,
+          defaultValue: 0,
+        },
+        boxcount3: {
+          type: DataTypes.INTEGER, // 3번 박스 카운트
+          allowNull: false,
+          defaultValue: 0,
+        },
+        boxcount4: {
+          type: DataTypes.INTEGER, // 4번 박스 카운트
           allowNull: false,
           defaultValue: 0,
         },
@@ -32,9 +43,30 @@ module.exports = class KeepBox extends Model {
           type: DataTypes.STRING(300), // 픽업 방식
           allowNull: false,
         },
-        price: {
+        price1: {
           type: DataTypes.INTEGER, // 금액
           allowNull: false,
+          defaultValue: 0,
+        },
+        price2: {
+          type: DataTypes.INTEGER, // 금액
+          allowNull: false,
+          defaultValue: 0,
+        },
+        price3: {
+          type: DataTypes.INTEGER, // 금액
+          allowNull: false,
+          defaultValue: 0,
+        },
+        price4: {
+          type: DataTypes.INTEGER, // 금액
+          allowNull: false,
+          defaultValue: 0,
+        },
+        totalPrice: {
+          type: DataTypes.INTEGER, // 금액
+          allowNull: false,
+          defaultValue: 0,
         },
         name: {
           type: DataTypes.STRING(50), // 이름
