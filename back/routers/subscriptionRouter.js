@@ -9,6 +9,26 @@ router.post(`/`, async (req, res, next) => {
 
     console.log(cardNumber, expiry, birth, pwd2Digit, customer_uid);
 
+    const d = new Date();
+
+    let year = d.getFullYear() + "";
+    let month = d.getMonth() + 1 + "";
+    let date = d.getDate() + "";
+    let hour = d.getHours() + "";
+    let min = d.getMinutes() + "";
+    let sec = d.getSeconds() + "";
+    let mSec = d.getMilliseconds() + "";
+
+    month = month < 10 ? "0" + month : month;
+    date = date < 10 ? "0" + date : date;
+    hour = hour < 10 ? "0" + hour : hour;
+    min = min < 10 ? "0" + min : min;
+    sec = sec < 10 ? "0" + sec : sec;
+    mSec = mSec < 10 ? "0" + mSec : mSec;
+
+    let orderPK = "ORD" + year + month + date + hour + min + sec + mSec;
+
+    // 엑세스 토큰 발행 => 예약할때마다 새로운 엑세스 토큰이 필요한가?
     const getToken = await axios({
       url: "https://api.iamport.kr/users/getToken",
       method: "post", // POST method
@@ -23,7 +43,8 @@ router.post(`/`, async (req, res, next) => {
 
     console.log(access_token);
 
-    // 빌링키 발급 요청
+    // 빌링키 발급 요청 => 예약 마다 빌링키가 필요한가?
+    // 빌링키의 정확한 용도가 무엇인가?
     const issueBilling = await axios({
       url: `https://api.iamport.kr/subscribe/customers/${customer_uid}`,
       method: "post",
@@ -36,6 +57,8 @@ router.post(`/`, async (req, res, next) => {
         amount: 1000,
       },
     });
+
+    // customer_uid => 빌링키와 1:1 대응하는 값
 
     // const { code, message } = issueBilling.data;
     // if (code === 0) {
@@ -50,13 +73,14 @@ router.post(`/`, async (req, res, next) => {
     //   // 빌링키 발급 실패
     //   //   res.send({ status: "failed", message });
     // }
+
     const paymentResult = await axios({
       url: `https://api.iamport.kr/subscribe/payments/again`,
       method: "post",
       headers: { Authorization: access_token }, // 인증 토큰을 Authorization header에 추가
       data: {
         customer_uid,
-        merchant_uid: "order_monthly_002", // 새로 생성한 결제(재결제)용 주문 번호
+        merchant_uid: orderPK, // 새로 생성한 결제(재결제)용 주문 번호
         amount: 1000,
         name: "카드 도용",
       },
@@ -69,30 +93,33 @@ router.post(`/`, async (req, res, next) => {
       // 카드사 통신에 성공(실제 승인 성공 여부는 추가 판단이 필요함)
       if (paymentResult.status === "paid") {
         //카드 정상 승인
+
         let time = new Date();
+
         time.setMinutes(time.getSeconds() + 30);
+
         console.log("개꿀", paymentResult, Math.floor(time.getTime() / 1000));
-        axios({
-          url: `https://api.iamport.kr/subscribe/payments/schedule`,
-          method: "post",
-          headers: { Authorization: access_token }, // 인증 토큰 Authorization header에 추가
-          data: {
-            customer_uid: "gildong_0001_1234", // 카드(빌링키)와 1:1로 대응하는 값
-            schedules: [
-              {
-                merchant_uid: `order_monthly_${Math.floor(
-                  time.getTime() / 1000
-                )}`, // 주문 번호
-                schedule_at: Math.floor(time.getTime() / 1000), // 결제 시도 시각 in Unix Time Stamp. 예: 다음 달 1일
-                amount: 1000,
-                name: "월간 이용권 정기결제",
-                buyer_name: "홍길동",
-                buyer_tel: "01012345678",
-                buyer_email: "gildong@gmail.com",
-              },
-            ],
-          },
-        });
+        // axios({
+        //   url: `https://api.iamport.kr/subscribe/payments/schedule`,
+        //   method: "post",
+        //   headers: { Authorization: access_token }, // 인증 토큰 Authorization header에 추가
+        //   data: {
+        //     customer_uid, // 카드(빌링키)와 1:1로 대응하는 값
+        //     schedules: [
+        //       {
+        //         merchant_uid: `order_monthly_${Math.floor(
+        //           time.getTime() / 1000
+        //         )}`, // 주문 번호
+        //         schedule_at: Math.floor(time.getTime() / 1000), // 결제 시도 시각 in Unix Time Stamp. 예: 다음 달 1일
+        //         amount: 1000,
+        //         name: "월간 이용권 정기결제",
+        //         buyer_name: "홍길동",
+        //         buyer_tel: "01012345678",
+        //         buyer_email: "gildong@gmail.com",
+        //       },
+        //     ],
+        //   },
+        // });
       } else {
         //카드 승인 실패 (예: 고객 카드 한도초과, 거래정지카드, 잔액부족 등)
         //paymentResult.status : failed 로 수신됨
