@@ -793,11 +793,12 @@ const Index = () => {
       </WholeWrapper>
 
       <Wrapper
-        position={
-          (boxRealNum || hangRealNum || tentRealNum || bigRealNum) === 0
-            ? `fixed`
-            : `sticky`
-        }
+        // position={
+        //   (boxRealNum || hangRealNum || tentRealNum || bigRealNum) === 0
+        //     ? `fixed`
+        //     : `sticky`
+        // }
+        position={`sticky`}
         bottom={`0`}
         left={`0`}
         bgColor={Theme.lightGrey_C}

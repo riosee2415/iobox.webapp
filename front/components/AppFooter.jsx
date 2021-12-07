@@ -43,7 +43,7 @@ const BoxWrapper = styled(Wrapper)`
 
 const TextHover = styled(Text)`
   font-size: 1.4rem;
-  margin: 0 0 35px;
+  margin: 0 0 15px;
   position: relative;
   cursor: pointer;
   transition: 0.5s;
@@ -118,7 +118,7 @@ const ButtonWrapper = styled(Wrapper)`
   left: 50%;
   cursor: pointer;
   width: auto;
-  margin: 0 0 0 -50px;
+  margin: 0 0 0 -65px;
 
   &:hover {
     .circle {
@@ -284,7 +284,7 @@ const AppFooter = () => {
             width={`auto`}
             al={`flex-start`}
             display={tab ? `flex` : `none`}
-            margin={width < 700 ? `0 0 170px` : `0 0 150px`}
+            margin={width < 700 ? `0 0 200px` : `0 0 170px`}
           >
             <Image
               width={`60px`}
@@ -560,7 +560,7 @@ const AppFooter = () => {
                       src={`https://4leaf-s3.s3.ap-northeast-2.amazonaws.com/iobox/assets/images/icon/logo_square.png`}
                       width={width < 1350 ? `80px` : `100px`}
                       alt={`logo`}
-                      margin={`0 0 50px`}
+                      margin={`0 0 20px`}
                     />
 
                     <Wrapper ju={`flex-start`} al={`flex-start`}>
@@ -711,11 +711,12 @@ const AppFooter = () => {
 
             <Wrapper width={`auto`} al={`flex-start`}>
               <Text>상호명 : io박스</Text>
-              <Text>사업자등록번호 : 0000000</Text>
-              <Text>대표자명 : io박스</Text>
-              <Text>주소 : io박스</Text>
-              <Text>대표번호 : io박스</Text>
-              <Text>통신판매업번호 : io박스</Text>
+              <Text>사업자등록번호 : 283-87-02507</Text>
+              <Text>대표자명 : 박성찬, 김우현</Text>
+              <Text>주소 : 경기도 의정부시 오목로225번길 105, 5층</Text>
+              <Text>대표번호 : 1644-2753</Text>
+              <Text>이메일 : ebone0910@gmail.com</Text>
+              {/* <Text>통신판매업번호 : io박스</Text> */}
             </Wrapper>
           </Wrapper>
         </Wrapper>
