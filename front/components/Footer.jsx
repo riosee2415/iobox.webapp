@@ -37,7 +37,7 @@ const Index = () => {
           <Text>주소 : 경기도 의정부시 오목로225번길 105, 5층</Text>
           <Text>대표번호 : 1644-2753</Text>
           <Text>이메일 : ebone0910@gmail.com</Text>
-          <Text>통신판매업번호 : io박스</Text>
+          {/* <Text>통신판매업번호 : io박스</Text> */}
         </Wrapper>
       </Wrapper>
     </Wrapper>

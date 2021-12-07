@@ -114,7 +114,7 @@ const ButtonWrapper = styled(Wrapper)`
   left: 50%;
   cursor: pointer;
   width: auto;
-  margin: 0 0 0 -50px;
+  margin: 0 0 0 -65px;
 
   &:hover {
     .circle {
@@ -280,7 +280,7 @@ const AppFooter = () => {
             width={`auto`}
             al={`flex-start`}
             display={tab ? `flex` : `none`}
-            margin={width < 700 ? `0 0 170px` : `0 0 150px`}
+            margin={width < 700 ? `0 0 200px` : `0 0 170px`}
           >
             <Image
               width={`60px`}
@@ -712,7 +712,7 @@ const AppFooter = () => {
               <Text>주소 : 경기도 의정부시 오목로225번길 105, 5층</Text>
               <Text>대표번호 : 1644-2753</Text>
               <Text>이메일 : ebone0910@gmail.com</Text>
-              <Text>통신판매업번호 : io박스</Text>
+              {/* <Text>통신판매업번호 : io박스</Text> */}
             </Wrapper>
           </Wrapper>
         </Wrapper>
