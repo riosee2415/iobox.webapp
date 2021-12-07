@@ -88,6 +88,14 @@ module.exports = class KeepBox extends Model {
           type: DataTypes.STRING(300), // 특이사항
           allowNull: true,
         },
+        deliveryCom: {
+          type: DataTypes.STRING(100), // 배송 택배사
+          allowNull: true,
+        },
+        deliveryCode: {
+          type: DataTypes.STRING(100), // 송장 번호
+          allowNull: true,
+        },
       },
       {
         modelName: "KeepBox",

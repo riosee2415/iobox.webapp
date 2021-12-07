@@ -205,167 +205,167 @@ router.post(
   }
 );
 
-router.post(
-  "/create",
-  //  isLoggedIn,
-  async (req, res, next) => {
-    const {
-      boxcount1,
-      boxcount2,
-      boxcount3,
-      boxcount4,
-      period,
-      isFilming,
-      pickWay,
-      price1,
-      price2,
-      price3,
-      price4,
-      name,
-      mobile,
-      address,
-      detailAddress,
-      remark,
-      UserId,
-    } = req.body;
+router.post("/create", isLoggedIn, async (req, res, next) => {
+  const {
+    boxcount1,
+    boxcount2,
+    boxcount3,
+    boxcount4,
+    period,
+    isFilming,
+    pickWay,
+    price1,
+    price2,
+    price3,
+    price4,
+    name,
+    mobile,
+    address,
+    detailAddress,
+    remark,
+    UserId,
+  } = req.body;
 
-    if (isNanCheck(boxcount1)) {
-      return res.status(401).send("잘못된 요청입니다.");
-    }
-
-    if (isNanCheck(boxcount2)) {
-      return res.status(401).send("잘못된 요청입니다.");
-    }
-
-    if (isNanCheck(boxcount3)) {
-      return res.status(401).send("잘못된 요청입니다.");
-    }
-
-    if (isNanCheck(boxcount4)) {
-      return res.status(401).send("잘못된 요청입니다.");
-    }
-
-    try {
-      if (
-        parseInt(boxcount1) === 0 &&
-        parseInt(boxcount2) === 0 &&
-        parseInt(boxcount3) === 0 &&
-        parseInt(boxcount4) === 0
-      ) {
-        return res.status(401).send("박스를 선택하여 주십시오.");
-      } else {
-        if (parseInt(boxcount1) !== 0) {
-          for (let i = 0; i < parseInt(boxcount1); i++) {
-            const createResult = await KeepBox.create({
-              boxcount1,
-              boxcount2: 0,
-              boxcount3: 0,
-              boxcount4: 0,
-              period,
-              isFilming,
-              pickWay,
-              price1,
-              price2: 0,
-              price3: 0,
-              price4: 0,
-              totalPrice: boxcount1 * price1,
-              name,
-              mobile,
-              address,
-              detailAddress,
-              remark,
-              UserId: parseInt(UserId),
-            });
-          }
-        }
-
-        if (parseInt(boxcount2) !== 0) {
-          for (let i = 0; i < parseInt(boxcount2); i++) {
-            const createResult = await KeepBox.create({
-              boxcount1: 0,
-              boxcount2,
-              boxcount3: 0,
-              boxcount4: 0,
-              period,
-              isFilming,
-              pickWay,
-              price1: 0,
-              price2,
-              price3: 0,
-              price4: 0,
-              totalPrice: boxcount2 * price2,
-              name,
-              mobile,
-              address,
-              detailAddress,
-              remark,
-              UserId: parseInt(UserId),
-            });
-          }
-        }
-
-        if (parseInt(boxcount3) !== 0) {
-          for (let i = 0; i < parseInt(boxcount3); i++) {
-            const createResult = await KeepBox.create({
-              boxcount1: 0,
-              boxcount2: 0,
-              boxcount3,
-              boxcount4: 0,
-              period,
-              isFilming,
-              pickWay,
-              price1: 0,
-              price2: 0,
-              price3,
-              price4: 0,
-              totalPrice: boxcount3 * price3,
-              name,
-              mobile,
-              address,
-              detailAddress,
-              remark,
-              UserId: parseInt(UserId),
-            });
-          }
-        }
-
-        if (parseInt(boxcount4) !== 0) {
-          for (let i = 0; i < parseInt(boxcount4); i++) {
-            const createResult = await KeepBox.create({
-              boxcount1: 0,
-              boxcount2: 0,
-              boxcount3: 0,
-              boxcount4,
-              period,
-              isFilming,
-              pickWay,
-              price1: 0,
-              price2: 0,
-              price3: 0,
-              price4,
-              totalPrice: boxcount4 * price4,
-              name,
-              mobile,
-              address,
-              detailAddress,
-              remark,
-              UserId: parseInt(UserId),
-            });
-          }
-        }
-
-        return res.status(201).json({ result: true });
-      }
-    } catch (error) {
-      console.error(error);
-      return res.status(401).send("박스를 추가할 수 없습니다.");
-    }
+  if (isNanCheck(boxcount1)) {
+    return res.status(401).send("잘못된 요청입니다.");
   }
-);
+
+  if (isNanCheck(boxcount2)) {
+    return res.status(401).send("잘못된 요청입니다.");
+  }
+
+  if (isNanCheck(boxcount3)) {
+    return res.status(401).send("잘못된 요청입니다.");
+  }
+
+  if (isNanCheck(boxcount4)) {
+    return res.status(401).send("잘못된 요청입니다.");
+  }
+
+  try {
+    if (
+      parseInt(boxcount1) === 0 &&
+      parseInt(boxcount2) === 0 &&
+      parseInt(boxcount3) === 0 &&
+      parseInt(boxcount4) === 0
+    ) {
+      return res.status(401).send("박스를 선택하여 주십시오.");
+    } else {
+      if (parseInt(boxcount1) !== 0) {
+        for (let i = 0; i < parseInt(boxcount1); i++) {
+          const createResult = await KeepBox.create({
+            boxcount1,
+            boxcount2: 0,
+            boxcount3: 0,
+            boxcount4: 0,
+            period,
+            isFilming,
+            pickWay,
+            price1,
+            price2: 0,
+            price3: 0,
+            price4: 0,
+            totalPrice: boxcount1 * price1,
+            name,
+            mobile,
+            address,
+            detailAddress,
+            remark,
+            UserId: parseInt(UserId),
+          });
+        }
+      }
+
+      if (parseInt(boxcount2) !== 0) {
+        for (let i = 0; i < parseInt(boxcount2); i++) {
+          const createResult = await KeepBox.create({
+            boxcount1: 0,
+            boxcount2,
+            boxcount3: 0,
+            boxcount4: 0,
+            period,
+            isFilming,
+            pickWay,
+            price1: 0,
+            price2,
+            price3: 0,
+            price4: 0,
+            totalPrice: boxcount2 * price2,
+            name,
+            mobile,
+            address,
+            detailAddress,
+            remark,
+            UserId: parseInt(UserId),
+          });
+        }
+      }
+
+      if (parseInt(boxcount3) !== 0) {
+        for (let i = 0; i < parseInt(boxcount3); i++) {
+          const createResult = await KeepBox.create({
+            boxcount1: 0,
+            boxcount2: 0,
+            boxcount3,
+            boxcount4: 0,
+            period,
+            isFilming,
+            pickWay,
+            price1: 0,
+            price2: 0,
+            price3,
+            price4: 0,
+            totalPrice: boxcount3 * price3,
+            name,
+            mobile,
+            address,
+            detailAddress,
+            remark,
+            UserId: parseInt(UserId),
+          });
+        }
+      }
+
+      if (parseInt(boxcount4) !== 0) {
+        for (let i = 0; i < parseInt(boxcount4); i++) {
+          const createResult = await KeepBox.create({
+            boxcount1: 0,
+            boxcount2: 0,
+            boxcount3: 0,
+            boxcount4,
+            period,
+            isFilming,
+            pickWay,
+            price1: 0,
+            price2: 0,
+            price3: 0,
+            price4,
+            totalPrice: boxcount4 * price4,
+            name,
+            mobile,
+            address,
+            detailAddress,
+            remark,
+            UserId: parseInt(UserId),
+          });
+        }
+      }
+
+      return res.status(201).json({ result: true });
+    }
+  } catch (error) {
+    console.error(error);
+    return res.status(401).send("박스를 추가할 수 없습니다.");
+  }
+});
 
 // 픽업 여부 변경
-router.patch("/update", async (req, res, next) => {
-  const { id } = req.body;
+router.patch("/update", isAdminCheck, async (req, res, next) => {
+  const { id, deliveryCom, deliveryCode } = req.body;
+
+  if (isNanCheck(id)) {
+    return res.status(401).send("잘못된 요청입니다.");
+  }
   try {
     const exBox = await KeepBox.findOne({
       where: { id: parseInt(id) },
@@ -382,6 +382,8 @@ router.patch("/update", async (req, res, next) => {
     const updateResult = await KeepBox.update(
       {
         isPickup: true,
+        deliveryCom,
+        deliveryCode,
       },
       {
         where: { id: parseInt(id) },
@@ -447,6 +449,11 @@ router.post("/image/create", async (req, res, next) => {
 // 상자 보관 물건촬영 사진 수정
 router.patch("/image/update", async (req, res, next) => {
   const { id, imagePath } = req.body;
+
+  if (isNanCheck(id)) {
+    return res.status(401).send("잘못된 요청입니다.");
+  }
+
   try {
     const exImage = await BoxImage.findOne({
       where: { id: parseInt(id) },
@@ -479,6 +486,11 @@ router.patch("/image/update", async (req, res, next) => {
 // 상자 보관 물건촬영 사진 삭제
 router.delete("/image/delete/:imageId", async (req, res, next) => {
   const { imageId } = req.params;
+
+  if (isNanCheck(imageId)) {
+    return res.status(401).send("잘못된 요청입니다.");
+  }
+
   try {
     const exImage = await BoxImage.findOne({
       where: { id: parseInt(imageId) },
