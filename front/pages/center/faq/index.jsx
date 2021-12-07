@@ -19,6 +19,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { FAQ_LIST_REQUEST } from "../../../reducers/faq";
 import useInput from "../../../hooks/useInput";
 import { Pagination } from "antd";
+import Footer from "../../../components/Footer";
 
 const TableWrapper = styled(Wrapper)`
   border-bottom: 1px solid ${Theme.lightGrey_C};
@@ -192,6 +193,7 @@ const Index = () => {
             </Wrapper>
           </Wrapper>
         </RsWrapper>
+        <Footer />
       </Wrapper>
     </WholeWrapper>
   );

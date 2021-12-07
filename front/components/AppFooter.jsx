@@ -8,7 +8,7 @@ import {
   RsWrapper,
 } from "./commonComponents";
 import Theme from "./Theme";
-import styled from "styled-components";
+import styled, { ThemeContext } from "styled-components";
 import { Drawer, notification } from "antd";
 import useWidth from "../hooks/useWidth";
 import { useRouter } from "next/dist/client/router";
@@ -257,435 +257,463 @@ const AppFooter = () => {
         <RotateMenu dataSource={data} onClick={(e, d) => console.log(d, e)} />
       </Wrapper> */}
 
-      <Wrapper
-        position={`fixed`}
-        bottom={`0`}
-        left={width < 700 ? `0` : `50%`}
-        margin={width < 700 ? `0` : `0 0 0 -250px`}
-        width={width < 700 ? `100%` : `500px`}
-        height={tab ? `100vh` : `auto`}
-        bgColor={tab ? `rgba(0,0,0,0.8)` : ``}
-        zIndex={`1000`}
-        overflow={tab ? `hidden` : ``}
-        onClick={() => {
-          if (tab) {
-            tabToggle();
-          } else {
-            return;
-          }
-        }}
-      >
+      <Wrapper bgColor={width < 700 ? Theme.white_C : Theme.lightGrey_C}>
         <Wrapper
-          width={`auto`}
-          al={`flex-start`}
-          display={tab ? `flex` : `none`}
-          margin={width < 700 ? `0 0 170px` : `0 0 150px`}
+          position={tab ? `fixed` : ``}
+          bottom={`0`}
+          left={width < 700 ? `0` : `50%`}
+          margin={tab ? (width < 700 ? `0` : `0 0 0 -250px`) : ``}
+          width={width < 700 ? `100%` : `500px`}
+          height={tab ? `100vh` : `auto`}
+          bgColor={tab ? `rgba(0,0,0,0.8)` : Theme.white_C}
+          zIndex={`1000`}
+          overflow={tab ? `hidden` : ``}
+          onClick={() => {
+            if (tab) {
+              tabToggle();
+            } else {
+              return;
+            }
+          }}
         >
-          <Image
-            width={`60px`}
-            src={`https://4leaf-s3.s3.ap-northeast-2.amazonaws.com/iobox/assets/images/main/paperbox.png`}
-          />
-
-          <GradientText bold={true} fontSize={`2rem`} margin={`10px 0 0`}>
-            종이박스 배송
-          </GradientText>
-
-          <Text
-            color={Theme.white_C}
-            bold={true}
-            fontSize={`1.5rem`}
-            margin={`15px 0`}
+          <Wrapper
+            width={`auto`}
+            al={`flex-start`}
+            display={tab ? `flex` : `none`}
+            margin={width < 700 ? `0 0 170px` : `0 0 150px`}
           >
-            의류,물건,서류,책
-          </Text>
-          <Text color={Theme.white_C} bold={true} fontSize={`1.5rem`}>
-            각종 내 방안의 짐
-          </Text>
-          <Text
-            color={Theme.white_C}
-            bold={true}
-            fontSize={`1.5rem`}
-            margin={`15px 0 0`}
-          >
-            원할 때 맡기고 원할 때 찾기
-          </Text>
-        </Wrapper>
+            <Image
+              width={`60px`}
+              src={`https://4leaf-s3.s3.ap-northeast-2.amazonaws.com/iobox/assets/images/main/paperbox.png`}
+            />
 
-        <Wrapper
-          dr={`row`}
-          height={`100px`}
-          shadow={tab ? `none` : `0px -3px 10px ${Theme.grey_C}`}
-        >
-          <ButtonWrapper
-            bottom={tab ? (width < 700 ? `230px` : `280px`) : `150px`}
-            transition={`0.5s`}
-          >
-            <GradientText
-              className="gradient"
-              fontWeight={`900`}
-              opacity={tab ? `0` : `1`}
-              padding={`0`}
-            >
-              내 물건 맡기기
+            <GradientText bold={true} fontSize={`2rem`} margin={`10px 0 0`}>
+              종이박스 배송
             </GradientText>
 
-            <Wrapper margin={`0 0 0 -100px`} transition={`0.5s`} zIndex={`100`}>
-              <Planet
-                tension={200}
-                centerContent={
-                  <Wrapper
-                    width={`100px`}
-                    height={`100px`}
-                    radius={`50%`}
-                    bgColor={`linear-gradient(90deg,rgb(249, 2, 80),rgb(247, 141, 150),rgb(242, 146, 98),rgb(241, 115, 80))`}
-                  >
-                    <Wrapper
-                      width={`45px`}
-                      height={`45px`}
-                      radius={`50%`}
-                      bgColor={Theme.white_C}
-                      className="circle"
-                    ></Wrapper>
-                  </Wrapper>
-                }
-                bounce={false}
-                friction={0}
-                orbitStyle={(defaultStyle) => ({
-                  ...defaultStyle,
-                  borderWidth: 0,
-                  background: "rgba(255,255,255,0.8)",
-                })}
-                open={tab}
-                onClick={tabToggle}
-                autoClose
-                orbitRadius={width < 700 ? 170 : 200}
-                rotation={-30}
-              >
-                <IconBox
-                  display={tab ? `flex` : `none`}
-                  margin={`-70px 0 0`}
-                  width={width < 700 ? `100px !important` : `130px`}
-                  onClick={() => {
-                    moveLinkHandler(`/iobox?type=tentBox`);
-                  }}
-                >
-                  <Image
-                    src={`https://4leaf-s3.s3.ap-northeast-2.amazonaws.com/iobox/assets/images/main/box_dial.png`}
-                    alt={`icon`}
-                    width={width < 700 ? `60px` : `70px`}
-                  />
-                  <Text fontSize={width < 700 ? `0.8rem` : `1rem`}>
-                    텐트보관 박스
-                  </Text>
-                </IconBox>
-
-                <IconBox
-                  display={tab ? `flex` : `none`}
-                  margin={`-30px 0 0 100px`}
-                  onClick={() => {
-                    moveLinkHandler("/bullet");
-                  }}
-                >
-                  <Image
-                    src={`https://4leaf-s3.s3.ap-northeast-2.amazonaws.com/iobox/assets/images/main/bullet_dial.png`}
-                    alt={`icon`}
-                    width={width < 700 ? `60px` : `70px`}
-                  />
-                  <Text fontSize={width < 700 ? `0.8rem` : `1rem`}>
-                    총알배송
-                  </Text>
-                </IconBox>
-
-                <IconBox
-                  display={tab ? `flex` : `none`}
-                  margin={`50px 0 0 100px`}
-                  onClick={() => {
-                    moveLinkHandler(`/locker`);
-                  }}
-                >
-                  <Image
-                    src={`https://4leaf-s3.s3.ap-northeast-2.amazonaws.com/iobox/assets/images/main/truck_dial.png`}
-                    alt={`icon`}
-                    width={width < 700 ? `40px` : `50px`}
-                  />
-                  <Text fontSize={width < 700 ? `0.8rem` : `1rem`}>
-                    배송현황
-                  </Text>
-                </IconBox>
-
-                <IconBox
-                  display={tab ? `flex` : `none`}
-                  margin={`70px 0 0`}
-                  width={width < 700 ? `100px !important` : `130px`}
-                  onClick={() => {
-                    moveLinkHandler(`/iobox?type=iobox`);
-                  }}
-                >
-                  <Image
-                    src={`https://4leaf-s3.s3.ap-northeast-2.amazonaws.com/iobox/assets/images/main/iobox_dial.png`}
-                    alt={`icon`}
-                    width={width < 700 ? `40px` : `50px`}
-                  />
-                  <Text fontSize={width < 700 ? `0.8rem` : `1rem`}>
-                    아이오 박스
-                  </Text>
-                </IconBox>
-
-                <IconBox
-                  display={tab ? `flex` : `none`}
-                  margin={width < 700 ? `50px 0 0 -80px` : `50px 100px 0 0`}
-                  onClick={() => {
-                    moveLinkHandler(`/iobox?type=hangerBox`);
-                  }}
-                >
-                  <Image
-                    src={`https://4leaf-s3.s3.ap-northeast-2.amazonaws.com/iobox/assets/images/main/hagner_dial.png`}
-                    alt={`icon`}
-                    width={width < 700 ? `40px` : `50px`}
-                  />
-                  <Text fontSize={width < 700 ? `0.8rem` : `1rem`}>
-                    행거박스
-                  </Text>
-                </IconBox>
-
-                <IconBox
-                  display={tab ? `flex` : `none`}
-                  margin={width < 700 ? `-30px 0 0 -80px` : `-30px 100px 0 0`}
-                >
-                  <Image
-                    src={`https://4leaf-s3.s3.ap-northeast-2.amazonaws.com/iobox/assets/images/main/large_dial.png`}
-                    alt={`icon`}
-                    width={width < 700 ? `40px` : `50px`}
-                  />
-                  <Text
-                    fontSize={width < 700 ? `0.8rem` : `1rem`}
-                    onClick={() => {
-                      moveLinkHandler(`/iobox?type=bigBox`);
-                    }}
-                  >
-                    대용량 박스
-                  </Text>
-                </IconBox>
-              </Planet>
-            </Wrapper>
-          </ButtonWrapper>
+            <Text
+              color={Theme.white_C}
+              bold={true}
+              fontSize={`1.5rem`}
+              margin={`15px 0`}
+            >
+              의류,물건,서류,책
+            </Text>
+            <Text color={Theme.white_C} bold={true} fontSize={`1.5rem`}>
+              각종 내 방안의 짐
+            </Text>
+            <Text
+              color={Theme.white_C}
+              bold={true}
+              fontSize={`1.5rem`}
+              margin={`15px 0 0`}
+            >
+              원할 때 맡기고 원할 때 찾기
+            </Text>
+          </Wrapper>
 
           <Wrapper
             dr={`row`}
-            ju={`space-around`}
-            display={tab ? `none` : `flex`}
+            height={`100px`}
+            shadow={tab ? `none` : `0px -3px 10px ${Theme.grey_C}`}
           >
-            <TextWrapper width={`auto`} onClick={drawarToggle}>
-              <Wrapper
-                fontSize={`30px`}
-                width={`auto`}
-                margin={`0 0 5px`}
-                color={`rgb(224,222,222)`}
-                height={`35px`}
-                className="noHoverIcon"
-              >
-                <MenuOutlined />
-              </Wrapper>
-
-              <Image
-                margin={`0 0 5px`}
-                height={`35px`}
-                width={`30px`}
-                objectFit={`contain`}
-                className="hoverIcon"
-                src={`https://4leaf-s3.s3.ap-northeast-2.amazonaws.com/iobox/assets/images/main/menu_gra.png`}
-              />
-
-              <GradientText fontSize={`0.8rem`} bold={true} padding={`0`}>
-                메 뉴
-              </GradientText>
-            </TextWrapper>
-            <TextWrapper
-              width={`auto`}
-              onClick={() => {
-                moveLinkHandler("/locker");
-              }}
+            <ButtonWrapper
+              bottom={tab ? (width < 700 ? `230px` : `280px`) : `50px`}
+              transition={`0.5s`}
             >
-              <Image
-                src={`https://4leaf-s3.s3.ap-northeast-2.amazonaws.com/iobox/assets/images/main/grey_box.png`}
-                alt={`menuIcon`}
-                className="noHoverIcon"
-                height={`30px`}
-                width={`auto`}
-                margin={`0 0 11px`}
-              />
-              <Image
-                src={`https://4leaf-s3.s3.ap-northeast-2.amazonaws.com/iobox/assets/images/main/iobox_dial.png`}
-                alt={`menuIcon`}
-                className="hoverIcon"
-                height={`30px`}
-                width={`auto`}
-                margin={`0 0 11px`}
-              />
-              <GradientText fontSize={`0.8rem`} bold={true} padding={`0`}>
-                내 보관함
-              </GradientText>
-            </TextWrapper>
-          </Wrapper>
-
-          {drawar && (
-            <Drawer
-              placement="left"
-              closable={true}
-              onClose={drawarToggle}
-              // visible={drawarToggle}
-              visible={true}
-              getContainer={false}
-            >
-              <Wrapper
-                height={`100vh !important`}
-                ju={`space-between`}
-                overflowX={`hidden`}
+              <GradientText
+                className="gradient"
+                fontWeight={`900`}
+                opacity={tab ? `0` : `1`}
+                padding={`0`}
               >
-                <RsWrapper
-                  al={`flex-start`}
-                  height={`auto`}
-                  margin={width < 700 ? `50px 0 0` : `20px 0 0`}
-                >
-                  <Image
-                    src={`https://4leaf-s3.s3.ap-northeast-2.amazonaws.com/iobox/assets/images/icon/logo_square.png`}
-                    width={width < 1350 ? `80px` : `100px`}
-                    alt={`logo`}
-                    margin={`0 0 50px`}
-                  />
+                내 물건 맡기기
+              </GradientText>
 
-                  <Wrapper ju={`flex-start`} al={`flex-start`}>
-                    <Wrapper al={`flex-start`}>
-                      <TextHover
-                        onClick={() => {
-                          moveLinkHandler("/guide?type=iobox");
-                        }}
-                      >
-                        아이오 박스란?
-                      </TextHover>
-                    </Wrapper>
-
-                    <Wrapper al={`flex-start`}>
-                      <TextHover
-                        onClick={() => {
-                          moveLinkHandler("/guide?type=way");
-                        }}
-                      >
-                        서비스 이용방법
-                      </TextHover>
-                    </Wrapper>
-
-                    <Wrapper al={`flex-start`}>
-                      <TextHover
-                        onClick={() => {
-                          moveLinkHandler("/guide?type=pay");
-                        }}
-                      >
-                        서비스 이용료
-                      </TextHover>
-                    </Wrapper>
-
-                    <Wrapper al={`flex-start`}>
-                      <TextHover
-                        onClick={() => {
-                          moveLinkHandler("/guide?type=center");
-                        }}
-                      >
-                        IO박스 보관센터
-                      </TextHover>
-                    </Wrapper>
-                    <Wrapper al={`flex-start`}>
-                      <TextHover
-                        onClick={() => {
-                          moveLinkHandler(`/locker`);
-                        }}
-                      >
-                        배송현황
-                      </TextHover>
-                    </Wrapper>
-                    <Wrapper al={`flex-start`}>
-                      <TextHover
-                        onClick={() => {
-                          moveLinkHandler(`/locker/mylocker`);
-                        }}
-                      >
-                        내 물건 찾기
-                      </TextHover>
-                    </Wrapper>
-                  </Wrapper>
-                </RsWrapper>
-
-                <Wrapper>
-                  <Wrapper al={`flex-start`}>
-                    <BoxWrapper
-                      onClick={() => moveLinkHandler(`/center/event`)}
+              <Wrapper
+                margin={`0 0 0 -100px`}
+                transition={`0.5s`}
+                zIndex={`100`}
+              >
+                <Planet
+                  tension={200}
+                  centerContent={
+                    <Wrapper
+                      width={`100px`}
+                      height={`100px`}
+                      radius={`50%`}
+                      bgColor={`linear-gradient(90deg,rgb(249, 2, 80),rgb(247, 141, 150),rgb(242, 146, 98),rgb(241, 115, 80))`}
                     >
-                      <Text>io박스 이벤트 보기</Text>
-                      <Image
-                        width={width < 700 ? `30px` : `40px`}
-                        src={`https://4leaf-s3.s3.ap-northeast-2.amazonaws.com/iobox/assets/images/sidemenu/event.png`}
-                        alt={`event_image`}
-                      />
-                    </BoxWrapper>
-                    <BoxWrapper onClick={() => moveLinkHandler(`/calculate`)}>
-                      <Text>1초만에 보관료 계산하기</Text>
-                      <Image
-                        width={width < 700 ? `30px` : `40px`}
-                        src={`https://4leaf-s3.s3.ap-northeast-2.amazonaws.com/iobox/assets/images/sidemenu/calculator.png`}
-                        alt={`calculate_image`}
-                      />
-                    </BoxWrapper>
-                    <BoxWrapper>
-                      <Text>실시간 카톡문의</Text>
-                      <Image
-                        width={width < 700 ? `30px` : `40px`}
-                        src={`https://4leaf-s3.s3.ap-northeast-2.amazonaws.com/iobox/assets/images/sidemenu/kakao.png`}
-                        alt={`kakao_image`}
-                      />
-                    </BoxWrapper>
-                  </Wrapper>
+                      <Wrapper
+                        width={`45px`}
+                        height={`45px`}
+                        radius={`50%`}
+                        bgColor={Theme.white_C}
+                        className="circle"
+                      ></Wrapper>
+                    </Wrapper>
+                  }
+                  bounce={false}
+                  friction={0}
+                  orbitStyle={(defaultStyle) => ({
+                    ...defaultStyle,
+                    borderWidth: 0,
+                    background: "rgba(255,255,255,0.8)",
+                  })}
+                  open={tab}
+                  onClick={tabToggle}
+                  autoClose
+                  orbitRadius={width < 700 ? 170 : 200}
+                  rotation={-30}
+                >
+                  <IconBox
+                    display={tab ? `flex` : `none`}
+                    margin={`-70px 0 0`}
+                    width={width < 700 ? `100px !important` : `130px`}
+                    onClick={() => {
+                      moveLinkHandler(`/iobox?type=tentBox`);
+                    }}
+                  >
+                    <Image
+                      src={`https://4leaf-s3.s3.ap-northeast-2.amazonaws.com/iobox/assets/images/main/box_dial.png`}
+                      alt={`icon`}
+                      width={width < 700 ? `60px` : `70px`}
+                    />
+                    <Text fontSize={width < 700 ? `0.8rem` : `1rem`}>
+                      텐트보관 박스
+                    </Text>
+                  </IconBox>
 
-                  <Wrapper dr={`row`} ju={`flex-end`} padding={`10px`}>
-                    {!me ? (
+                  <IconBox
+                    display={tab ? `flex` : `none`}
+                    margin={`-30px 0 0 100px`}
+                    onClick={() => {
+                      moveLinkHandler("/bullet");
+                    }}
+                  >
+                    <Image
+                      src={`https://4leaf-s3.s3.ap-northeast-2.amazonaws.com/iobox/assets/images/main/bullet_dial.png`}
+                      alt={`icon`}
+                      width={width < 700 ? `60px` : `70px`}
+                    />
+                    <Text fontSize={width < 700 ? `0.8rem` : `1rem`}>
+                      총알배송
+                    </Text>
+                  </IconBox>
+
+                  <IconBox
+                    display={tab ? `flex` : `none`}
+                    margin={`50px 0 0 100px`}
+                    onClick={() => {
+                      moveLinkHandler(`/locker`);
+                    }}
+                  >
+                    <Image
+                      src={`https://4leaf-s3.s3.ap-northeast-2.amazonaws.com/iobox/assets/images/main/truck_dial.png`}
+                      alt={`icon`}
+                      width={width < 700 ? `40px` : `50px`}
+                    />
+                    <Text fontSize={width < 700 ? `0.8rem` : `1rem`}>
+                      배송현황
+                    </Text>
+                  </IconBox>
+
+                  <IconBox
+                    display={tab ? `flex` : `none`}
+                    margin={`70px 0 0`}
+                    width={width < 700 ? `100px !important` : `130px`}
+                    onClick={() => {
+                      moveLinkHandler(`/iobox?type=iobox`);
+                    }}
+                  >
+                    <Image
+                      src={`https://4leaf-s3.s3.ap-northeast-2.amazonaws.com/iobox/assets/images/main/iobox_dial.png`}
+                      alt={`icon`}
+                      width={width < 700 ? `40px` : `50px`}
+                    />
+                    <Text fontSize={width < 700 ? `0.8rem` : `1rem`}>
+                      아이오 박스
+                    </Text>
+                  </IconBox>
+
+                  <IconBox
+                    display={tab ? `flex` : `none`}
+                    margin={width < 700 ? `50px 0 0 -80px` : `50px 100px 0 0`}
+                    onClick={() => {
+                      moveLinkHandler(`/iobox?type=hangerBox`);
+                    }}
+                  >
+                    <Image
+                      src={`https://4leaf-s3.s3.ap-northeast-2.amazonaws.com/iobox/assets/images/main/hagner_dial.png`}
+                      alt={`icon`}
+                      width={width < 700 ? `40px` : `50px`}
+                    />
+                    <Text fontSize={width < 700 ? `0.8rem` : `1rem`}>
+                      행거박스
+                    </Text>
+                  </IconBox>
+
+                  <IconBox
+                    display={tab ? `flex` : `none`}
+                    margin={width < 700 ? `-30px 0 0 -80px` : `-30px 100px 0 0`}
+                  >
+                    <Image
+                      src={`https://4leaf-s3.s3.ap-northeast-2.amazonaws.com/iobox/assets/images/main/large_dial.png`}
+                      alt={`icon`}
+                      width={width < 700 ? `40px` : `50px`}
+                    />
+                    <Text
+                      fontSize={width < 700 ? `0.8rem` : `1rem`}
+                      onClick={() => {
+                        moveLinkHandler(`/iobox?type=bigBox`);
+                      }}
+                    >
+                      대용량 박스
+                    </Text>
+                  </IconBox>
+                </Planet>
+              </Wrapper>
+            </ButtonWrapper>
+
+            <Wrapper
+              dr={`row`}
+              ju={`space-around`}
+              display={tab ? `none` : `flex`}
+            >
+              <TextWrapper width={`auto`} onClick={drawarToggle}>
+                <Wrapper
+                  fontSize={`30px`}
+                  width={`auto`}
+                  margin={`0 0 5px`}
+                  color={`rgb(224,222,222)`}
+                  height={`35px`}
+                  className="noHoverIcon"
+                >
+                  <MenuOutlined />
+                </Wrapper>
+
+                <Image
+                  margin={`0 0 5px`}
+                  height={`35px`}
+                  width={`30px`}
+                  objectFit={`contain`}
+                  className="hoverIcon"
+                  src={`https://4leaf-s3.s3.ap-northeast-2.amazonaws.com/iobox/assets/images/main/menu_gra.png`}
+                />
+
+                <GradientText fontSize={`0.8rem`} bold={true} padding={`0`}>
+                  메 뉴
+                </GradientText>
+              </TextWrapper>
+              <TextWrapper
+                width={`auto`}
+                onClick={() => {
+                  moveLinkHandler("/locker");
+                }}
+              >
+                <Image
+                  src={`https://4leaf-s3.s3.ap-northeast-2.amazonaws.com/iobox/assets/images/main/grey_box.png`}
+                  alt={`menuIcon`}
+                  className="noHoverIcon"
+                  height={`30px`}
+                  width={`auto`}
+                  margin={`0 0 11px`}
+                />
+                <Image
+                  src={`https://4leaf-s3.s3.ap-northeast-2.amazonaws.com/iobox/assets/images/main/iobox_dial.png`}
+                  alt={`menuIcon`}
+                  className="hoverIcon"
+                  height={`30px`}
+                  width={`auto`}
+                  margin={`0 0 11px`}
+                />
+                <GradientText fontSize={`0.8rem`} bold={true} padding={`0`}>
+                  내 보관함
+                </GradientText>
+              </TextWrapper>
+            </Wrapper>
+
+            {drawar && (
+              <Drawer
+                placement="left"
+                closable={true}
+                onClose={drawarToggle}
+                // visible={drawarToggle}
+                visible={true}
+                getContainer={false}
+              >
+                <Wrapper
+                  height={`100vh !important`}
+                  ju={`space-between`}
+                  overflowX={`hidden`}
+                >
+                  <RsWrapper
+                    al={`flex-start`}
+                    height={`auto`}
+                    margin={width < 700 ? `50px 0 0` : `20px 0 0`}
+                  >
+                    <Image
+                      src={`https://4leaf-s3.s3.ap-northeast-2.amazonaws.com/iobox/assets/images/icon/logo_square.png`}
+                      width={width < 1350 ? `80px` : `100px`}
+                      alt={`logo`}
+                      margin={`0 0 50px`}
+                    />
+
+                    <Wrapper ju={`flex-start`} al={`flex-start`}>
+                      <Wrapper al={`flex-start`}>
+                        <TextHover
+                          onClick={() => {
+                            moveLinkHandler("/guide?type=iobox");
+                          }}
+                        >
+                          아이오 박스란?
+                        </TextHover>
+                      </Wrapper>
+
+                      <Wrapper al={`flex-start`}>
+                        <TextHover
+                          onClick={() => {
+                            moveLinkHandler("/guide?type=way");
+                          }}
+                        >
+                          서비스 이용방법
+                        </TextHover>
+                      </Wrapper>
+
+                      <Wrapper al={`flex-start`}>
+                        <TextHover
+                          onClick={() => {
+                            moveLinkHandler("/guide?type=pay");
+                          }}
+                        >
+                          서비스 이용료
+                        </TextHover>
+                      </Wrapper>
+
+                      <Wrapper al={`flex-start`}>
+                        <TextHover
+                          onClick={() => {
+                            moveLinkHandler("/guide?type=center");
+                          }}
+                        >
+                          IO박스 보관센터
+                        </TextHover>
+                      </Wrapper>
+                      <Wrapper al={`flex-start`}>
+                        <TextHover
+                          onClick={() => {
+                            moveLinkHandler(`/locker`);
+                          }}
+                        >
+                          배송현황
+                        </TextHover>
+                      </Wrapper>
+                      <Wrapper al={`flex-start`}>
+                        <TextHover
+                          onClick={() => {
+                            moveLinkHandler(`/locker/mylocker`);
+                          }}
+                        >
+                          내 물건 찾기
+                        </TextHover>
+                      </Wrapper>
+                    </Wrapper>
+                  </RsWrapper>
+
+                  <Wrapper>
+                    <Wrapper al={`flex-start`}>
+                      <BoxWrapper
+                        onClick={() => moveLinkHandler(`/center/event`)}
+                      >
+                        <Text>io박스 이벤트 보기</Text>
+                        <Image
+                          width={width < 700 ? `30px` : `40px`}
+                          src={`https://4leaf-s3.s3.ap-northeast-2.amazonaws.com/iobox/assets/images/sidemenu/event.png`}
+                          alt={`event_image`}
+                        />
+                      </BoxWrapper>
+                      <BoxWrapper onClick={() => moveLinkHandler(`/calculate`)}>
+                        <Text>1초만에 보관료 계산하기</Text>
+                        <Image
+                          width={width < 700 ? `30px` : `40px`}
+                          src={`https://4leaf-s3.s3.ap-northeast-2.amazonaws.com/iobox/assets/images/sidemenu/calculator.png`}
+                          alt={`calculate_image`}
+                        />
+                      </BoxWrapper>
+                      <BoxWrapper>
+                        <Text>실시간 카톡문의</Text>
+                        <Image
+                          width={width < 700 ? `30px` : `40px`}
+                          src={`https://4leaf-s3.s3.ap-northeast-2.amazonaws.com/iobox/assets/images/sidemenu/kakao.png`}
+                          alt={`kakao_image`}
+                        />
+                      </BoxWrapper>
+                    </Wrapper>
+
+                    <Wrapper dr={`row`} ju={`flex-end`} padding={`10px`}>
+                      {!me ? (
+                        <Text
+                          cursor={`pointer`}
+                          display={`flex`}
+                          margin={`0 10px 0 0`}
+                          onClick={() => moveLinkHandler(`/login`)}
+                        >
+                          로그인
+                        </Text>
+                      ) : (
+                        <>
+                          <Text
+                            cursor={`pointer`}
+                            margin={`0 10px 0 0`}
+                            onClick={() => moveLinkHandler(`/myInfo`)}
+                          >
+                            내 정보
+                          </Text>
+                          <Text
+                            onClick={logoutHandler}
+                            cursor={`pointer`}
+                            margin={`0 10px 0 0`}
+                          >
+                            로그아웃
+                          </Text>
+                        </>
+                      )}
+
+                      {/* 공통 */}
                       <Text
                         cursor={`pointer`}
-                        display={`flex`}
-                        margin={`0 10px 0 0`}
-                        onClick={() => moveLinkHandler(`/login`)}
+                        onClick={() => moveLinkHandler(`/center`)}
                       >
-                        로그인
+                        고객센터
                       </Text>
-                    ) : (
-                      <>
-                        <Text
-                          cursor={`pointer`}
-                          margin={`0 10px 0 0`}
-                          onClick={() => moveLinkHandler(`/myInfo`)}
-                        >
-                          내 정보
-                        </Text>
-                        <Text
-                          onClick={logoutHandler}
-                          cursor={`pointer`}
-                          margin={`0 10px 0 0`}
-                        >
-                          로그아웃
-                        </Text>
-                      </>
-                    )}
-
-                    {/* 공통 */}
-                    <Text
-                      cursor={`pointer`}
-                      onClick={() => moveLinkHandler(`/center`)}
-                    >
-                      고객센터
-                    </Text>
+                    </Wrapper>
                   </Wrapper>
                 </Wrapper>
-              </Wrapper>
-            </Drawer>
-          )}
+              </Drawer>
+            )}
+          </Wrapper>
+          <Wrapper
+            bgColor={Theme.basicTheme_C}
+            padding={`50px`}
+            color={Theme.white_C}
+            dr={`row`}
+            ju={`space-between`}
+            display={tab ? `none` : `flex`}
+          >
+            <Image
+              width={`50px`}
+              src={`https://4leaf-s3.s3.ap-northeast-2.amazonaws.com/iobox/assets/images/logo/LOGO_W.png`}
+            />
+
+            <Wrapper width={`auto`} al={`flex-start`}>
+              <Text>상호명 : io박스</Text>
+              <Text>사업자등록번호 : 0000000</Text>
+              <Text>대표자명 : io박스</Text>
+              <Text>주소 : io박스</Text>
+              <Text>대표번호 : io박스</Text>
+              <Text>통신판매업번호 : io박스</Text>
+            </Wrapper>
+          </Wrapper>
         </Wrapper>
       </Wrapper>
     </>

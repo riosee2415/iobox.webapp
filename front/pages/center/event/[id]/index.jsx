@@ -21,6 +21,7 @@ import {
   EVENT_DETAIL_REQUEST,
   EVENT_NEXT_REQUEST,
 } from "../../../../reducers/event";
+import Footer from "../../../../components/Footer";
 
 const TableWrapper = styled(Wrapper)`
   border-bottom: 1px solid ${Theme.lightGrey_C};
@@ -180,6 +181,7 @@ const Index = () => {
             )}
           </Wrapper>
         </RsWrapper>
+        <Footer />
       </Wrapper>
     </WholeWrapper>
   );

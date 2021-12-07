@@ -21,6 +21,7 @@ import {
   FAQ_DETAIL_REQUEST,
   FAQ_NEXT_REQUEST,
 } from "../../../../reducers/faq";
+import Footer from "../../../../components/Footer";
 
 const TableWrapper = styled(Wrapper)`
   border-bottom: 1px solid ${Theme.lightGrey_C};
@@ -174,6 +175,7 @@ const Index = () => {
             )}
           </Wrapper>
         </RsWrapper>
+        <Footer />
       </Wrapper>
     </WholeWrapper>
   );

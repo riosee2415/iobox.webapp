@@ -41,6 +41,7 @@ import {
 } from "antd";
 import locale from "antd/lib/locale/zh_CN";
 import ElevatorSlider from "../../components/slide/ElevatorSlider";
+import Footer from "../../components/Footer";
 
 const TextHover = styled(Wrapper)`
   width: 80px;
@@ -337,7 +338,9 @@ const Index = () => {
               right={`30px`}
               fontSize={`20px`}
               cursor={`pointer`}
-              onClick={moveBackHandler}
+              onClick={() => {
+                moveLinkHandler("/");
+              }}
               zIndex={`100`}
             >
               <CloseOutlined />
@@ -416,6 +419,7 @@ const Index = () => {
                 </CommonButton>
               </Wrapper>
             </RsWrapper>
+            <Footer />
           </Wrapper>
         </>
       )}
@@ -1055,6 +1059,7 @@ const Index = () => {
               </CommonButton>
             </RsWrapper>
           </Wrapper>
+          <Footer />
         </>
       )}
       <Modal

@@ -19,6 +19,7 @@ import {
 } from "@ant-design/icons";
 import { useRouter } from "next/dist/client/router";
 import { Checkbox } from "antd";
+import Footer from "../../../components/Footer";
 
 const CheckboxGroup = styled(Checkbox.Group)`
   width: 100%;
@@ -817,6 +818,9 @@ const Index = () => {
             </CommonButton>
           </RsWrapper>
         </Wrapper>
+      </Wrapper>
+      <Wrapper bgColor={Theme.lightGrey_C}>
+        <Footer />
       </Wrapper>
 
       {modal && (

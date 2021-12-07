@@ -21,6 +21,7 @@ import KakaoLogin from "react-kakao-login";
 import { useRouter } from "next/router";
 import naver from "naver-id-login";
 import { Link } from "@material-ui/core";
+import Footer from "../../components/Footer";
 
 const CustomButton = styled.button`
   width: ${(props) => props.width};
@@ -102,12 +103,6 @@ const Home = ({}) => {
       JSON.stringify({ ...info })
     );
 
-    console.log(req);
-
-    console.log(userId);
-    console.log(req.profile.kakao_account.email);
-    console.log(req.profile.kakao_account.profile.nickname + "5호기");
-
     dispatch({
       type: LOGIN_REQUEST,
       data: {
@@ -135,15 +130,11 @@ const Home = ({}) => {
       email: profile.response.email,
     };
 
-    console.log(profile);
-
     localStorage.setItem("platform", "3r5sKGMdgUoNasdaverJej5TtN");
     localStorage.setItem(
       "3r5sKGMdgUoNasdaverJej5TtN",
       JSON.stringify({ ...info })
     );
-
-    console.log(me);
 
     // setSnsPlatform(info.userId);
     // setLoginSkipPlatform(false);
@@ -156,7 +147,7 @@ const Home = ({}) => {
 
   return (
     <WholeWrapper
-      height={`100vh`}
+      minHeight={`100vh`}
       bgColor={width < 700 ? Theme.white_C : Theme.lightGrey_C}
     >
       <Wrapper
@@ -244,6 +235,7 @@ const Home = ({}) => {
             </CustomButton>
           </RsWrapper>
         </Wrapper>
+        <Footer />
       </Wrapper>
     </WholeWrapper>
   );

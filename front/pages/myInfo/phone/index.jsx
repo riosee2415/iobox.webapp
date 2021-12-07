@@ -20,6 +20,7 @@ import {
 } from "@ant-design/icons";
 import { useRouter } from "next/dist/client/router";
 import { useDispatch } from "react-redux";
+import Footer from "../../../components/Footer";
 
 const Button = styled(CommonButton)`
   width: 100%;
@@ -211,6 +212,8 @@ const Index = () => {
             {reqTab === 0 ? `인증 요청` : `인증`}
           </Button>
         </RsWrapper>
+
+        <Footer />
       </Wrapper>
     </WholeWrapper>
   );

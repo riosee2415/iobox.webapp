@@ -17,6 +17,7 @@ import { CloseOutlined, DownOutlined, UpOutlined } from "@ant-design/icons";
 import { useRouter } from "next/dist/client/router";
 import { Radio, Spin } from "antd";
 import { numberWithCommas } from "../../../components/commonUtils";
+import Footer from "../../../components/Footer";
 
 const PayButtton = styled(Wrapper)`
   color: ${Theme.basicTheme_C};
@@ -297,7 +298,7 @@ const Index = () => {
       </WholeWrapper>
 
       <Wrapper
-        position={`fixed`}
+        position={`sticky`}
         bottom={`0`}
         left={`0`}
         bgColor={Theme.lightGrey_C}
@@ -345,6 +346,10 @@ const Index = () => {
             </CommonButton>
           </RsWrapper>
         </Wrapper>
+      </Wrapper>
+
+      <Wrapper bgColor={Theme.lightGrey_C}>
+        <Footer />
       </Wrapper>
     </>
   );

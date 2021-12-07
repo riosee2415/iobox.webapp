@@ -18,6 +18,7 @@ import { Switch } from "antd";
 import { LOGOUT_REQUEST, LOAD_MY_INFO_REQUEST } from "../../reducers/user";
 import { useDispatch, useSelector } from "react-redux";
 import { notification } from "antd";
+import Footer from "../../components/Footer";
 
 const TableWrapper = styled(Wrapper)`
   flex-direction: row;
@@ -340,6 +341,7 @@ const Index = () => {
           </Wrapper>
         </Wrapper>
       </Wrapper>
+      <Footer />
     </WholeWrapper>
   );
 };

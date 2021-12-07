@@ -19,6 +19,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { EVENT_LIST_REQUEST } from "../../../reducers/event";
 import useInput from "../../../hooks/useInput";
 import { Pagination } from "antd";
+import Footer from "../../../components/Footer";
 
 const ImageBox = styled(Wrapper)`
   height: 150px;
@@ -189,6 +190,7 @@ const Index = () => {
             </Wrapper>
           </Wrapper>
         </RsWrapper>
+        <Footer />
       </Wrapper>
     </WholeWrapper>
   );

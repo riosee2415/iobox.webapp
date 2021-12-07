@@ -14,6 +14,7 @@ import ClientLayout from "../../../components/ClientLayout";
 import useWidth from "../../../hooks/useWidth";
 import { CloseOutlined, DownOutlined, UpOutlined } from "@ant-design/icons";
 import { useRouter } from "next/dist/client/router";
+import Footer from "../../../components/Footer";
 
 const FocusInput = styled(TextInput)`
   width: ${(props) => props.width || `calc(100% / 4)`};
@@ -192,6 +193,7 @@ const Index = () => {
           </CommonButton>
         </RsWrapper>
       </Wrapper>
+      <Footer />
     </WholeWrapper>
   );
 };

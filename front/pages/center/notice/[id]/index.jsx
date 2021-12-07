@@ -21,6 +21,7 @@ import {
   NOTICE_DETAIL_REQUEST,
   NOTICE_NEXT_REQUEST,
 } from "../../../../reducers/notice";
+import Footer from "../../../../components/Footer";
 
 const TableWrapper = styled(Wrapper)`
   border-bottom: 1px solid ${Theme.lightGrey_C};
@@ -156,6 +157,7 @@ const Index = () => {
             )}
           </Wrapper>
         </RsWrapper>
+        <Footer />
       </Wrapper>
     </WholeWrapper>
   );

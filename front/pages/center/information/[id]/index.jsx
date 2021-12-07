@@ -21,6 +21,7 @@ import {
   INFORMATION_NEXT_REQUEST,
 } from "../../../../reducers/info";
 import { useDispatch, useSelector } from "react-redux";
+import Footer from "../../../../components/Footer";
 
 const TableWrapper = styled(Wrapper)`
   border-bottom: 1px solid ${Theme.lightGrey_C};
@@ -168,6 +169,7 @@ const Index = () => {
             )}
           </Wrapper>
         </RsWrapper>
+        <Footer />
       </Wrapper>
     </WholeWrapper>
   );

@@ -24,6 +24,7 @@ import { numberWithCommas } from "../../../components/commonUtils";
 import axios from "axios";
 import { useDispatch } from "react-redux";
 import { SUBSCRIPTION_CREATE_REQUEST } from "../../../reducers/subscription";
+import Footer from "../../../components/Footer";
 
 const PayButtton = styled(Wrapper)`
   color: ${Theme.basicTheme_C};
@@ -462,6 +463,10 @@ const Index = () => {
             </Wrapper>
           </RsWrapper>
         </Wrapper>
+      </Wrapper>
+
+      <Wrapper bgColor={Theme.lightGrey_C}>
+        <Footer />
       </Wrapper>
 
       <PostCode

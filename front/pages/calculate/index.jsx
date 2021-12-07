@@ -14,6 +14,7 @@ import useWidth from "../../hooks/useWidth";
 import { CloseOutlined, DownOutlined, UpOutlined } from "@ant-design/icons";
 import { useRouter } from "next/dist/client/router";
 import { MinusOutlined, PlusOutlined } from "@ant-design/icons";
+import Footer from "../../components/Footer";
 
 const Box = styled(Wrapper)`
   width: 30px;
@@ -597,6 +598,7 @@ const Index = () => {
             </Wrapper>
           </RsWrapper>
         </Wrapper>
+        <Footer />
       </Wrapper>
     </WholeWrapper>
   );

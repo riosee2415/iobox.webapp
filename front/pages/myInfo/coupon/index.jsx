@@ -14,6 +14,7 @@ import ClientLayout from "../../../components/ClientLayout";
 import useWidth from "../../../hooks/useWidth";
 import { CloseOutlined, DownOutlined, UpOutlined } from "@ant-design/icons";
 import { useRouter } from "next/dist/client/router";
+import Footer from "../../../components/Footer";
 
 const CouponWrapper = styled(Wrapper)`
   height: 150px;
@@ -267,6 +268,7 @@ const Index = () => {
           </Wrapper> */}
         </RsWrapper>
       </Wrapper>
+      <Footer />
     </WholeWrapper>
   );
 };

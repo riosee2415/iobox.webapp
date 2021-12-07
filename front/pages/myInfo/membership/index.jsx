@@ -13,6 +13,7 @@ import ClientLayout from "../../../components/ClientLayout";
 import useWidth from "../../../hooks/useWidth";
 import { CloseOutlined, DownOutlined, UpOutlined } from "@ant-design/icons";
 import { useRouter } from "next/dist/client/router";
+import Footer from "../../../components/Footer";
 
 const Index = () => {
   const width = useWidth();
@@ -74,6 +75,7 @@ const Index = () => {
           bgColor={Theme.white_C}
         ></RsWrapper>
       </Wrapper>
+      <Footer />
     </WholeWrapper>
   );
 };

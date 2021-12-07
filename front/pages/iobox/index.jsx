@@ -25,6 +25,7 @@ import { useRouter } from "next/dist/client/router";
 import BoxSlider from "../../components/slide/BoxSlider";
 import { Checkbox, Radio } from "antd";
 import { numberWithCommas } from "../../components/commonUtils";
+import Footer from "../../components/Footer";
 
 const Box = styled(Wrapper)`
   width: 30px;
@@ -405,6 +406,9 @@ const Index = () => {
             </CommonButton>
           </RsWrapper>
         </Wrapper>
+      </Wrapper>
+      <Wrapper bgColor={Theme.lightGrey_C}>
+        <Footer />
       </Wrapper>
 
       {moreTab && (

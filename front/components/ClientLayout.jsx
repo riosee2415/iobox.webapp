@@ -7,6 +7,7 @@ import { withResizeDetector } from "react-resize-detector";
 import { AlignRightOutlined } from "@ant-design/icons";
 import AppHeader from "./AppHeader";
 import AppFooter from "./AppFooter";
+import Footer from "./Footer";
 
 const ClientLayout = ({ children, width }) => {
   return (
