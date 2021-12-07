@@ -423,42 +423,6 @@ router.post("/cardCreate", isLoggedIn, async (req, res, next) => {
   }
 });
 
-router.patch("/cardUpdate", isLoggedIn, async (req, res, next) => {
-  const { cardNum, cardPeriod, cardIden, cardPassword } = req.body;
-
-  try {
-    const exUser = await User.findOne({
-      where: { id: parseInt(req.user.id) },
-    });
-
-    if (!exUser) {
-      return res.status(401).send("존재하지 않는 사용자입니다.");
-    }
-
-    const updateResult = await User.update(
-      {
-        cardNum,
-        cardPeriod,
-        cardIden,
-        cardPassword,
-        // cardCode :
-      },
-      {
-        where: { id: parseInt(req.user.id) },
-      }
-    );
-
-    if (updateResult[0] > 0) {
-      return res.status(200).json({ result: true });
-    } else {
-      return res.status(200).json({ result: false });
-    }
-  } catch (error) {
-    console.error(error);
-    return res.status(401).send("카드 정보를 수정할 수 없습니다.");
-  }
-});
-
 router.get("/logout", function (req, res) {
   req.logout();
   req.session.save(() => {
