@@ -89,9 +89,7 @@ const Index = () => {
         "-" +
         inputCardNum4.value
     );
-    console.log(inputCardPeriodMM.value + "/" + inputCardPeriodYY.value);
-    console.log(inputCardIden.value);
-    console.log(inputCardNumPassword.value);
+
     dispatch({
       type: USER_CARD_CREATE_REQUEST,
       data: {
@@ -103,7 +101,8 @@ const Index = () => {
           inputCardNum3.value +
           "-" +
           inputCardNum4.value,
-        cardPeriod: inputCardPeriodMM.value + "/" + inputCardPeriodYY.value,
+        cardPeriod:
+          "20" + inputCardPeriodYY.value + "-" + inputCardPeriodMM.value,
         cardIden: inputCardIden.value,
         cardPassword: inputCardNumPassword.value,
       },

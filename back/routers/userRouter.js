@@ -114,6 +114,8 @@ router.post("/signin", (req, res, next) => {
   passport.authenticate("local", async (err, user, info) => {
     const { userId, password, nickname } = req.body;
 
+    console.log(userId, password, nickname, user);
+
     if (user) {
       if (err) {
         console.error(err);
@@ -198,6 +200,8 @@ router.post("/signin/admin", (req, res, next) => {
         where: { id: user.id },
         attributes: ["id", "nickname", "userId", "level"],
       });
+
+      console.log("????");
 
       return res.status(200).json(fullUserWithoutPassword);
     });
@@ -367,6 +371,12 @@ router.post("/cardCreate", isLoggedIn, async (req, res, next) => {
     mSec = mSec < 10 ? "0" + mSec : mSec;
 
     let orderPK = "USER_C" + year + month + date + hour + min + sec + mSec;
+
+    console.log(process.env.IMP_KEY, process.env.IMP_SECRET);
+    console.log(process.env.IMP_KEY, process.env.IMP_SECRET);
+    console.log(process.env.IMP_KEY, process.env.IMP_SECRET);
+    console.log(process.env.IMP_KEY, process.env.IMP_SECRET);
+    console.log(process.env.IMP_KEY, process.env.IMP_SECRET);
 
     const getToken = await axios({
       url: "https://api.iamport.kr/users/getToken",
