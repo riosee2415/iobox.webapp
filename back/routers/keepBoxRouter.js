@@ -152,6 +152,9 @@ router.get(["/list", "/list/:listType"], async (req, res, next) => {
             {
               model: BoxImage,
             },
+            {
+              model: User,
+            },
           ],
         });
         break;
@@ -166,6 +169,9 @@ router.get(["/list", "/list/:listType"], async (req, res, next) => {
           include: [
             {
               model: BoxImage,
+            },
+            {
+              model: User,
             },
           ],
         });
@@ -185,6 +191,9 @@ router.get(["/list", "/list/:listType"], async (req, res, next) => {
           include: [
             {
               model: BoxImage,
+            },
+            {
+              model: User,
             },
           ],
         });
@@ -211,7 +220,7 @@ router.post(
   }
 );
 
-router.post("/create", isLoggedIn, async (req, res, next) => {
+router.post("/create", async (req, res, next) => {
   const {
     boxcount1,
     boxcount2,
