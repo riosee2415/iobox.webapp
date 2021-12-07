@@ -17,7 +17,7 @@ import { useRouter } from "next/dist/client/router";
 import Footer from "../../../components/Footer";
 import useOnlyNumberInput from "../../../hooks/useOnlyNumberInput";
 import { USER_CARD_CREATE_REQUEST } from "../../../reducers/user";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 
 const FocusInput = styled(TextInput)`
   width: ${(props) => props.width || `calc(100% / 4)`};
@@ -48,6 +48,7 @@ const Index = () => {
   ////// REDUX //////
 
   const dispatch = useDispatch();
+  const { me } = useSelector((state) => state.user);
 
   ////// USEEFFECT //////
 
