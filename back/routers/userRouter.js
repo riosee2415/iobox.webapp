@@ -410,7 +410,7 @@ router.post("/cardCreate", isLoggedIn, async (req, res, next) => {
           cardPeriod,
           cardIden,
           cardPassword,
-          cardCode: orderPK,
+          userCode: orderPK,
         },
         {
           where: { id: parseInt(req.user.id) },
