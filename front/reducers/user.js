@@ -35,6 +35,14 @@ export const initailState = {
   st_loadMyInfoLoading: false, // 로그인 정보 가져오기 시도 중
   st_loadMyInfoDone: false,
   st_loadMyInfoError: null,
+  //
+  st_userCardCreateLoading: false,
+  st_userCardCreateDone: false,
+  st_userCardCreateError: null,
+  //
+  st_userCardUpdateLoading: false,
+  st_userCardUpdateDone: false,
+  st_userCardUpdateError: null,
 };
 
 export const LOGIN_REQUEST = "LOGIN_REQUEST";
@@ -64,6 +72,14 @@ export const USERLIST_UPDATE_FAILURE = "USERLIST_UPDATE_FAILURE";
 export const LOAD_MY_INFO_REQUEST = "LOAD_MY_INFO_REQUEST";
 export const LOAD_MY_INFO_SUCCESS = "LOAD_MY_INFO_SUCCESS";
 export const LOAD_MY_INFO_FAILURE = "LOAD_MY_INFO_FAILURE";
+
+export const USER_CARD_CREATE_REQUEST = "USER_CARD_CREATE_REQUEST";
+export const USER_CARD_CREATE_SUCCESS = "USER_CARD_CREATE_SUCCESS";
+export const USER_CARD_CREATE_FAILURE = "USER_CARD_CREATE_FAILURE";
+
+export const USER_CARD_UPDATE_REQUEST = "USER_CARD_UPDATE_REQUEST";
+export const USER_CARD_UPDATE_SUCCESS = "USER_CARD_UPDATE_SUCCESS";
+export const USER_CARD_UPDATE_FAILURE = "USER_CARD_UPDATE_FAILURE";
 
 export const UPDATE_MODAL_OPEN_REQUEST = "UPDATE_MODAL_OPEN_REQUEST";
 export const UPDATE_MODAL_CLOSE_REQUEST = "UPDATE_MODAL_CLOSE_REQUEST";
@@ -166,6 +182,44 @@ const reducer = (state = initailState, action) =>
         draft.st_signUpLoading = false;
         draft.st_signUpDone = false;
         draft.st_signUpError = action.error;
+        break;
+      }
+      //////////////////////////////////////////////
+
+      case USER_CARD_CREATE_REQUEST: {
+        draft.st_userCardCreateLoading = true;
+        draft.st_userCardCreateDone = null;
+        draft.st_userCardCreateError = false;
+        break;
+      }
+      case USER_CARD_CREATE_SUCCESS: {
+        draft.st_userCardCreateLoading = false;
+        draft.st_userCardCreateDone = true;
+        break;
+      }
+      case USER_CARD_CREATE_FAILURE: {
+        draft.st_userCardCreateLoading = false;
+        draft.st_userCardCreateDone = false;
+        draft.st_userCardCreateError = action.error;
+        break;
+      }
+      //////////////////////////////////////////////
+
+      case USER_CARD_UPDATE_REQUEST: {
+        draft.st_userCardUpdateLoading = true;
+        draft.st_userCardUpdateDone = null;
+        draft.st_userCardUpdateError = false;
+        break;
+      }
+      case USER_CARD_UPDATE_SUCCESS: {
+        draft.st_userCardUpdateLoading = false;
+        draft.st_userCardUpdateDone = true;
+        break;
+      }
+      case USER_CARD_UPDATE_FAILURE: {
+        draft.st_userCardUpdateLoading = false;
+        draft.st_userCardUpdateDone = false;
+        draft.st_userCardUpdateError = action.error;
         break;
       }
       //////////////////////////////////////////////

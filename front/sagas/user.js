@@ -29,6 +29,14 @@ import {
   LOAD_MY_INFO_SUCCESS,
   LOAD_MY_INFO_FAILURE,
   /////////////////////////////
+  USER_CARD_CREATE_REQUEST,
+  USER_CARD_CREATE_SUCCESS,
+  USER_CARD_CREATE_FAILURE,
+  /////////////////////////////
+  USER_CARD_UPDATE_REQUEST,
+  USER_CARD_UPDATE_SUCCESS,
+  USER_CARD_UPDATE_FAILURE,
+  /////////////////////////////
 } from "../reducers/user";
 
 // SAGA AREA ********************************************************************************************************
@@ -211,6 +219,58 @@ function* userListUpdate(action) {
 // ******************************************************************************************************************
 // ******************************************************************************************************************
 
+// SAGA AREA ********************************************************************************************************
+// ******************************************************************************************************************
+function userCardUpdateAPI(data) {
+  return axios.patch(`/api/user/cardUpdate`, data);
+}
+
+function* userCardUpdate(action) {
+  try {
+    const result = yield call(userCardUpdateAPI, action.data);
+    yield put({
+      type: USER_CARD_UPDATE_SUCCESS,
+      data: result.data,
+    });
+  } catch (err) {
+    console.error(err);
+    yield put({
+      type: USER_CARD_UPDATE_FAILURE,
+      error: err.response.data,
+    });
+  }
+}
+
+// ******************************************************************************************************************
+// ******************************************************************************************************************
+// ******************************************************************************************************************
+
+// SAGA AREA ********************************************************************************************************
+// ******************************************************************************************************************
+function userCardCreateAPI(data) {
+  return axios.post(`/api/user/cardCreate`, data);
+}
+
+function* userCardCreate(action) {
+  try {
+    const result = yield call(userCardCreateAPI, action.data);
+    yield put({
+      type: USER_CARD_CREATE_SUCCESS,
+      data: result.data,
+    });
+  } catch (err) {
+    console.error(err);
+    yield put({
+      type: USER_CARD_CREATE_FAILURE,
+      error: err.response.data,
+    });
+  }
+}
+
+// ******************************************************************************************************************
+// ******************************************************************************************************************
+// ******************************************************************************************************************
+
 //////////////////////////////////////////////////////////////
 
 function* watchLoadMyInfo() {
@@ -240,6 +300,13 @@ function* watchSignOut() {
   yield takeLatest(LOGOUT_REQUEST, signout);
 }
 
+function* watchCardCreate() {
+  yield takeLatest(USER_CARD_CREATE_REQUEST, userCardCreate);
+}
+function* watchCardUpdate() {
+  yield takeLatest(USER_CARD_UPDATE_REQUEST, userCardUpdate);
+}
+
 //////////////////////////////////////////////////////////////
 export default function* userSaga() {
   yield all([
@@ -250,6 +317,8 @@ export default function* userSaga() {
     fork(watchUserList),
     fork(watchUserListUpdate),
     fork(watchSignOut),
+    fork(watchCardCreate),
+    fork(watchCardUpdate),
     //
   ]);
 }

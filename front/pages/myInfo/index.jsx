@@ -1,4 +1,9 @@
-import React, { useCallback, useEffect, useState } from "react";
+import React, {
+  useCallback,
+  useEffect,
+  useLayoutEffect,
+  useState,
+} from "react";
 import Theme from "../../components/Theme";
 import {
   Wrapper,
@@ -15,10 +20,18 @@ import { CloseOutlined, DownOutlined, UpOutlined } from "@ant-design/icons";
 import { useRouter } from "next/dist/client/router";
 import { RightOutlined } from "@ant-design/icons";
 import { Switch } from "antd";
-import { LOGOUT_REQUEST, LOAD_MY_INFO_REQUEST } from "../../reducers/user";
+import {
+  LOGOUT_REQUEST,
+  LOAD_MY_INFO_REQUEST,
+  USERLIST_REQUEST,
+} from "../../reducers/user";
 import { useDispatch, useSelector } from "react-redux";
 import { notification } from "antd";
 import Footer from "../../components/Footer";
+
+import axios from "axios";
+import wrapper from "../../store/configureStore";
+import { END } from "redux-saga";
 
 const TableWrapper = styled(Wrapper)`
   flex-direction: row;
@@ -50,15 +63,14 @@ const Index = () => {
   const width = useWidth();
   const router = useRouter();
 
-  const dispatch = useDispatch();
-
   const { st_logoutDone } = useSelector((state) => state.user);
 
   ////// HOOKS //////
   const [tab, setTab] = useState(false);
 
   ////// REDUX //////
-
+  const dispatch = useDispatch();
+  const { me, users } = useSelector((state) => state.user);
   ////// USEEFFECT //////
 
   useEffect(() => {
@@ -145,9 +157,11 @@ const Index = () => {
               }}
             >
               <Wrapper width={`auto`} al={`flex-start`}>
-                <Text>김우현</Text>
+                <Text>{me && me.nickname}</Text>
                 <Text bold={true} color={Theme.basicTheme_C}>
-                  kakao
+                  {/* {me && me.userId.split("_")[0]} */}
+                  {console.log(me && me, users)}
+                  {console.log(users)}
                 </Text>
               </Wrapper>
 
@@ -345,5 +359,27 @@ const Index = () => {
     </WholeWrapper>
   );
 };
+
+export const getServerSideProps = wrapper.getServerSideProps(
+  async (context) => {
+    // SSR Cookie Settings For Data Load/////////////////////////////////////
+    const cookie = context.req ? context.req.headers.cookie : "";
+    axios.defaults.headers.Cookie = "";
+    if (context.req && cookie) {
+      axios.defaults.headers.Cookie = cookie;
+    }
+    ////////////////////////////////////////////////////////////////////////
+    // 구현부
+
+    context.store.dispatch({
+      type: LOAD_MY_INFO_REQUEST,
+    });
+
+    // 구현부 종료
+    context.store.dispatch(END);
+    console.log("🍀 SERVER SIDE PROPS END");
+    await context.store.sagaTask.toPromise();
+  }
+);
 
 export default Index;

@@ -15,6 +15,9 @@ import useWidth from "../../../hooks/useWidth";
 import { CloseOutlined, DownOutlined, UpOutlined } from "@ant-design/icons";
 import { useRouter } from "next/dist/client/router";
 import Footer from "../../../components/Footer";
+import useOnlyNumberInput from "../../../hooks/useOnlyNumberInput";
+import { USER_CARD_CREATE_REQUEST } from "../../../reducers/user";
+import { useDispatch } from "react-redux";
 
 const FocusInput = styled(TextInput)`
   width: ${(props) => props.width || `calc(100% / 4)`};
@@ -33,7 +36,18 @@ const Index = () => {
   const [cardInput, setCardInput] = useState(false);
   const [dayInput, setDayInput] = useState(false);
 
+  const inputCardNum1 = useOnlyNumberInput(``);
+  const inputCardNum2 = useOnlyNumberInput(``);
+  const inputCardNum3 = useOnlyNumberInput(``);
+  const inputCardNum4 = useOnlyNumberInput(``);
+  const inputCardPeriodMM = useOnlyNumberInput(``);
+  const inputCardPeriodYY = useOnlyNumberInput(``);
+  const inputCardIden = useOnlyNumberInput(``);
+  const inputCardNumPassword = useOnlyNumberInput(``);
+
   ////// REDUX //////
+
+  const dispatch = useDispatch();
 
   ////// USEEFFECT //////
 
@@ -64,6 +78,46 @@ const Index = () => {
   const tabToggle = useCallback(() => {
     setTab(!tab);
   }, [tab]);
+
+  const cardInfoHandler = useCallback(() => {
+    console.log(
+      inputCardNum1.value +
+        "-" +
+        inputCardNum2.value +
+        "-" +
+        inputCardNum3.value +
+        "-" +
+        inputCardNum4.value
+    );
+    console.log(inputCardPeriodMM.value + "/" + inputCardPeriodYY.value);
+    console.log(inputCardIden.value);
+    console.log(inputCardNumPassword.value);
+    dispatch({
+      type: USER_CARD_CREATE_REQUEST,
+      data: {
+        cardNum:
+          inputCardNum1.value +
+          "-" +
+          inputCardNum2.value +
+          "-" +
+          inputCardNum3.value +
+          "-" +
+          inputCardNum4.value,
+        cardPeriod: inputCardPeriodMM.value + "/" + inputCardPeriodYY.value,
+        cardIden: inputCardIden.value,
+        cardPassword: inputCardNumPassword.value,
+      },
+    });
+  }, [
+    inputCardNum1,
+    inputCardNum2,
+    inputCardNum3,
+    inputCardNum4,
+    inputCardPeriodMM,
+    inputCardPeriodYY,
+    inputCardIden,
+    inputCardNumPassword,
+  ]);
 
   ////// DATAVIEW //////
   return (
@@ -118,21 +172,29 @@ const Index = () => {
                   onBlur={blurHandler}
                   onClick={cardInputToggle}
                   placeholder="0000"
+                  maxLength={4}
+                  {...inputCardNum1}
                 />
                 <FocusInput
                   onBlur={blurHandler}
                   onClick={cardInputToggle}
                   placeholder="0000"
+                  maxLength={4}
+                  {...inputCardNum2}
                 />
                 <FocusInput
                   onBlur={blurHandler}
                   onClick={cardInputToggle}
                   placeholder="0000"
+                  maxLength={4}
+                  {...inputCardNum3}
                 />
                 <FocusInput
                   onBlur={blurHandler}
                   onClick={cardInputToggle}
                   placeholder="0000"
+                  maxLength={4}
+                  {...inputCardNum4}
                 />
               </Wrapper>
             </Wrapper>
@@ -154,6 +216,8 @@ const Index = () => {
                   onBlur={blurHandler}
                   onClick={dayInputToggle}
                   placeholder="MM"
+                  maxLength={2}
+                  {...inputCardPeriodMM}
                 />
                 <Text>/</Text>
                 <FocusInput
@@ -161,6 +225,8 @@ const Index = () => {
                   onBlur={blurHandler}
                   onClick={dayInputToggle}
                   placeholder="YY"
+                  maxLength={2}
+                  {...inputCardPeriodYY}
                 />
               </Wrapper>
             </Wrapper>
@@ -173,6 +239,8 @@ const Index = () => {
                 margin={`10px 0 0`}
                 border={`1px solid ${Theme.grey_C}`}
                 placeholder="주민번호 또는 사업자번호"
+                maxLength={10}
+                {...inputCardIden}
               />
             </Wrapper>
 
@@ -184,11 +252,18 @@ const Index = () => {
                 margin={`10px 0 0`}
                 border={`1px solid ${Theme.grey_C}`}
                 placeholder="00"
+                maxLength={2}
+                {...inputCardNumPassword}
               />
             </Wrapper>
           </Wrapper>
 
-          <CommonButton radius={`0`} width={`100%`} height={`50px`}>
+          <CommonButton
+            onClick={cardInfoHandler}
+            radius={`0`}
+            width={`100%`}
+            height={`50px`}
+          >
             저장하기
           </CommonButton>
         </RsWrapper>
