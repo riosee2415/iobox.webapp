@@ -354,6 +354,7 @@ router.post("/cardCreate", isLoggedIn, async (req, res, next) => {
         cardPeriod,
         cardIden,
         cardPassword,
+        // cardCode :
       },
       {
         where: { id: parseInt(req.user.id) },
@@ -389,6 +390,7 @@ router.patch("/cardUpdate", isLoggedIn, async (req, res, next) => {
         cardPeriod,
         cardIden,
         cardPassword,
+        // cardCode :
       },
       {
         where: { id: parseInt(req.user.id) },

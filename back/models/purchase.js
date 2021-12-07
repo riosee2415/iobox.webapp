@@ -5,18 +5,9 @@ module.exports = class Purchase extends Model {
   static init(sequelize) {
     return super.init(
       {
-        type: {
-          type: DataTypes.STRING(100),
-          allowNull: false,
-        },
-        price: {
-          type: DataTypes.INTEGER,
-          allowNull: false,
-        },
-        isComplete: {
-          type: DataTypes.BOOLEAN,
-          allowNull: false,
-          defaultValue: false,
+        boxCode: {
+          type: DataTypes.STRING(300),
+          allowNull: true,
         },
       },
       {
@@ -29,7 +20,6 @@ module.exports = class Purchase extends Model {
     );
   }
   static associate(db) {
-    db.Purchase.belongsTo(db.User);
-    // db.Purchase.belongsTo(db.KeepBox);
+    db.Purchase.belongsTo(db.KeepBox);
   }
 };

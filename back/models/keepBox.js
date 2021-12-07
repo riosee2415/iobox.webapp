@@ -96,6 +96,15 @@ module.exports = class KeepBox extends Model {
           type: DataTypes.STRING(100), // 송장 번호
           allowNull: true,
         },
+        deliveryPay: {
+          type: DataTypes.STRING(100), // 송장 번호
+          allowNull: false,
+        },
+        isEnd: {
+          type: DataTypes.BOOLEAN,
+          allowNull: false,
+          defaultValue: false,
+        },
       },
       {
         modelName: "KeepBox",

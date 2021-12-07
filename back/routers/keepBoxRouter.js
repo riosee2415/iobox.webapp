@@ -1,6 +1,6 @@
 const express = require("express");
 const isAdminCheck = require("../middlewares/isAdminCheck");
-const { KeepBox, BoxImage } = require("../models");
+const { KeepBox, BoxImage, User } = require("../models");
 const fs = require("fs");
 const { Op } = require("sequelize");
 const multer = require("multer");
@@ -111,6 +111,9 @@ router.get(["/list", "/list/:listType"], async (req, res, next) => {
             {
               model: BoxImage,
             },
+            {
+              model: User,
+            },
           ],
         });
         break;
@@ -125,6 +128,9 @@ router.get(["/list", "/list/:listType"], async (req, res, next) => {
           include: [
             {
               model: BoxImage,
+            },
+            {
+              model: User,
             },
           ],
         });
@@ -214,10 +220,8 @@ router.post("/create", isLoggedIn, async (req, res, next) => {
     period,
     isFilming,
     pickWay,
-    price1,
-    price2,
-    price3,
-    price4,
+    price,
+    deliveryPay,
     name,
     mobile,
     address,
@@ -261,11 +265,8 @@ router.post("/create", isLoggedIn, async (req, res, next) => {
             period,
             isFilming,
             pickWay,
-            price1,
-            price2: 0,
-            price3: 0,
-            price4: 0,
-            totalPrice: boxcount1 * price1,
+            price,
+            deliveryPay,
             name,
             mobile,
             address,
@@ -286,11 +287,8 @@ router.post("/create", isLoggedIn, async (req, res, next) => {
             period,
             isFilming,
             pickWay,
-            price1: 0,
-            price2,
-            price3: 0,
-            price4: 0,
-            totalPrice: boxcount2 * price2,
+            price,
+            deliveryPay,
             name,
             mobile,
             address,
@@ -311,11 +309,8 @@ router.post("/create", isLoggedIn, async (req, res, next) => {
             period,
             isFilming,
             pickWay,
-            price1: 0,
-            price2: 0,
-            price3,
-            price4: 0,
-            totalPrice: boxcount3 * price3,
+            price,
+            deliveryPay,
             name,
             mobile,
             address,
@@ -336,11 +331,8 @@ router.post("/create", isLoggedIn, async (req, res, next) => {
             period,
             isFilming,
             pickWay,
-            price1: 0,
-            price2: 0,
-            price3: 0,
-            price4,
-            totalPrice: boxcount4 * price4,
+            price,
+            deliveryPay,
             name,
             mobile,
             address,
@@ -398,6 +390,43 @@ router.patch("/update", isAdminCheck, async (req, res, next) => {
   } catch (error) {
     console.error(error);
     return res.status(401).send("픽업상태를 변경할 수 없습니다.");
+  }
+});
+
+// 정기결제 End 처리
+router.patch("/subscription", isAdminCheck, async (req, res, next) => {
+  const { id, isEnd } = req.body;
+
+  if (isNanCheck(id)) {
+    return res.status(401).send("잘못된 요청입니다.");
+  }
+
+  try {
+    const exBox = await KeepBox.findOne({
+      where: { id: parseInt(id) },
+    });
+
+    if (!exBox) {
+      return res.status(401).send("존재하지 않는 박스입니다.");
+    }
+
+    const updateResult = await KeepBox.update(
+      {
+        isEnd,
+      },
+      {
+        where: { id: parseInt(id) },
+      }
+    );
+
+    if (updateResult[0] > 0) {
+      return res.status(200).json({ result: true });
+    } else {
+      return res.status(200).json({ result: false });
+    }
+  } catch (error) {
+    console.error(error);
+    return res.status(401).send("정기 결제처리를 할 수 없습니다.");
   }
 });
 

@@ -58,6 +58,10 @@ module.exports = class User extends Model {
           allowNull: true,
           defaultValue: null,
         },
+        userCode: {
+          type: DataTypes.STRING(300), // 카드정보를 등록했을 때
+          allowNull: true,
+        },
       },
       {
         modelName: "User",
