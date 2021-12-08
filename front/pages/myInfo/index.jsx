@@ -70,26 +70,22 @@ const Index = () => {
 
   ////// REDUX //////
   const dispatch = useDispatch();
-  const { me, users } = useSelector((state) => state.user);
+  const { me } = useSelector((state) => state.user);
   ////// USEEFFECT //////
-
-  useEffect(() => {
-    if (st_logoutDone) {
-      dispatch({
-        type: LOAD_MY_INFO_REQUEST,
-      });
-
-      router.push("/");
-
-      return LoadNotification("LOGOUT SUCCESS", "로그아웃 되었습니다.");
-    }
-  }, [st_logoutDone]);
 
   useEffect(() => {
     dispatch({
       type: LOAD_MY_INFO_REQUEST,
     });
   }, [router.query]);
+
+  useEffect(() => {
+    if (!me) {
+      router.push("/");
+
+      return LoadNotification("로그인 후 이용해주세요.");
+    }
+  }, [me]);
 
   ////// TOGGLE ///////
 
@@ -164,7 +160,8 @@ const Index = () => {
                 <Text>{me && me.nickname}</Text>
                 <Text bold={true} color={Theme.basicTheme_C}>
                   {/* {me && me.userId.split("_")[0]} */}
-                  {me && me.userId.split("_")[0]}
+                  {me && me.userId && me.userId.split("_")[0]}
+                  {/* {console.log(me)} */}
                 </Text>
               </Wrapper>
 
@@ -186,7 +183,7 @@ const Index = () => {
                   fontWeight={`700`}
                   margin={`0 5px 0 0`}
                 >
-                  {me.mobile ? me.mobile : `휴대폰인증을 완료해주세요.`}
+                  {me && me.mobile ? me.mobile : `휴대폰인증을 완료해주세요.`}
                 </Text>
                 <Wrapper width={`auto`} color={Theme.darkGrey_C}>
                   <RightOutlined />
@@ -207,7 +204,12 @@ const Index = () => {
                   fontWeight={`700`}
                   margin={`0 5px 0 0`}
                 >
-                  {me.cardNum ? me.cardNum : `휴대폰인증을 완료해주세요.`}
+                  {me && me.cardNum
+                    ? me.cardNum.substring(0, 4) +
+                      me.cardNum.substring(4, 8) +
+                      me.cardNum.substring(8, 12) +
+                      "****"
+                    : `결제카드를 입력해주세요.`}
                 </Text>
                 <Wrapper width={`auto`} color={Theme.darkGrey_C}>
                   <RightOutlined />
