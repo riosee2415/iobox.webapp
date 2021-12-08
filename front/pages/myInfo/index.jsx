@@ -75,8 +75,6 @@ const Index = () => {
 
   useEffect(() => {
     if (st_logoutDone) {
-      LoadNotification;
-
       dispatch({
         type: LOAD_MY_INFO_REQUEST,
       });
@@ -86,6 +84,12 @@ const Index = () => {
       return LoadNotification("LOGOUT SUCCESS", "로그아웃 되었습니다.");
     }
   }, [st_logoutDone]);
+
+  useEffect(() => {
+    dispatch({
+      type: LOAD_MY_INFO_REQUEST,
+    });
+  }, [router.query]);
 
   ////// TOGGLE ///////
 
@@ -182,7 +186,7 @@ const Index = () => {
                   fontWeight={`700`}
                   margin={`0 5px 0 0`}
                 >
-                  {me ? me.mobile : `휴대폰인증을 완료해주세요.`}
+                  {me.mobile ? me.mobile : `휴대폰인증을 완료해주세요.`}
                 </Text>
                 <Wrapper width={`auto`} color={Theme.darkGrey_C}>
                   <RightOutlined />
@@ -203,7 +207,7 @@ const Index = () => {
                   fontWeight={`700`}
                   margin={`0 5px 0 0`}
                 >
-                  {me ? me.cardNum : `휴대폰인증을 완료해주세요.`}
+                  {me.cardNum ? me.cardNum : `휴대폰인증을 완료해주세요.`}
                 </Text>
                 <Wrapper width={`auto`} color={Theme.darkGrey_C}>
                   <RightOutlined />

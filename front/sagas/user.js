@@ -33,9 +33,9 @@ import {
   USER_CARD_CREATE_SUCCESS,
   USER_CARD_CREATE_FAILURE,
   /////////////////////////////
-  USER_CARD_UPDATE_REQUEST,
-  USER_CARD_UPDATE_SUCCESS,
-  USER_CARD_UPDATE_FAILURE,
+  USER_NICKNAME_UPDATE_REQUEST,
+  USER_NICKNAME_UPDATE_SUCCESS,
+  USER_NICKNAME_UPDATE_FAILURE,
   /////////////////////////////
 } from "../reducers/user";
 
@@ -222,21 +222,21 @@ function* userListUpdate(action) {
 
 // SAGA AREA ********************************************************************************************************
 // ******************************************************************************************************************
-function userCardUpdateAPI(data) {
-  return axios.patch(`/api/user/cardUpdate`, data);
+function userNickNameUpdateAPI(data) {
+  return axios.post(`/api/user/me/updateNick`, data);
 }
 
-function* userCardUpdate(action) {
+function* userNickNameUpdate(action) {
   try {
-    const result = yield call(userCardUpdateAPI, action.data);
+    const result = yield call(userNickNameUpdateAPI, action.data);
     yield put({
-      type: USER_CARD_UPDATE_SUCCESS,
+      type: USER_NICKNAME_UPDATE_SUCCESS,
       data: result.data,
     });
   } catch (err) {
     console.error(err);
     yield put({
-      type: USER_CARD_UPDATE_FAILURE,
+      type: USER_NICKNAME_UPDATE_FAILURE,
       error: err.response.data,
     });
   }
@@ -304,8 +304,8 @@ function* watchSignOut() {
 function* watchCardCreate() {
   yield takeLatest(USER_CARD_CREATE_REQUEST, userCardCreate);
 }
-function* watchCardUpdate() {
-  yield takeLatest(USER_CARD_UPDATE_REQUEST, userCardUpdate);
+function* watchNickNameUpdate() {
+  yield takeLatest(USER_NICKNAME_UPDATE_REQUEST, userNickNameUpdate);
 }
 
 //////////////////////////////////////////////////////////////
@@ -319,7 +319,7 @@ export default function* userSaga() {
     fork(watchUserListUpdate),
     fork(watchSignOut),
     fork(watchCardCreate),
-    fork(watchCardUpdate),
+    fork(watchNickNameUpdate),
     //
   ]);
 }

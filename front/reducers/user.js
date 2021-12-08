@@ -40,9 +40,9 @@ export const initailState = {
   st_userCardCreateDone: false,
   st_userCardCreateError: null,
   //
-  st_userCardUpdateLoading: false,
-  st_userCardUpdateDone: false,
-  st_userCardUpdateError: null,
+  st_userNickNameUpdateLoading: false,
+  st_userNickNameUpdateDone: false,
+  st_userNickNameUpdateError: null,
 };
 
 export const LOGIN_REQUEST = "LOGIN_REQUEST";
@@ -77,9 +77,9 @@ export const USER_CARD_CREATE_REQUEST = "USER_CARD_CREATE_REQUEST";
 export const USER_CARD_CREATE_SUCCESS = "USER_CARD_CREATE_SUCCESS";
 export const USER_CARD_CREATE_FAILURE = "USER_CARD_CREATE_FAILURE";
 
-export const USER_CARD_UPDATE_REQUEST = "USER_CARD_UPDATE_REQUEST";
-export const USER_CARD_UPDATE_SUCCESS = "USER_CARD_UPDATE_SUCCESS";
-export const USER_CARD_UPDATE_FAILURE = "USER_CARD_UPDATE_FAILURE";
+export const USER_NICKNAME_UPDATE_REQUEST = "USER_NICKNAME_UPDATE_REQUEST";
+export const USER_NICKNAME_UPDATE_SUCCESS = "USER_NICKNAME_UPDATE_SUCCESS";
+export const USER_NICKNAME_UPDATE_FAILURE = "USER_NICKNAME_UPDATE_FAILURE";
 
 export const UPDATE_MODAL_OPEN_REQUEST = "UPDATE_MODAL_OPEN_REQUEST";
 export const UPDATE_MODAL_CLOSE_REQUEST = "UPDATE_MODAL_CLOSE_REQUEST";
@@ -205,21 +205,21 @@ const reducer = (state = initailState, action) =>
       }
       //////////////////////////////////////////////
 
-      case USER_CARD_UPDATE_REQUEST: {
-        draft.st_userCardUpdateLoading = true;
-        draft.st_userCardUpdateDone = null;
-        draft.st_userCardUpdateError = false;
+      case USER_NICKNAME_UPDATE_REQUEST: {
+        draft.st_userNickNameUpdateLoading = true;
+        draft.st_userNickNameUpdateDone = null;
+        draft.st_userNickNameUpdateError = false;
         break;
       }
-      case USER_CARD_UPDATE_SUCCESS: {
-        draft.st_userCardUpdateLoading = false;
-        draft.st_userCardUpdateDone = true;
+      case USER_NICKNAME_UPDATE_SUCCESS: {
+        draft.st_userNickNameUpdateLoading = false;
+        draft.st_userNickNameUpdateDone = true;
         break;
       }
-      case USER_CARD_UPDATE_FAILURE: {
-        draft.st_userCardUpdateLoading = false;
-        draft.st_userCardUpdateDone = false;
-        draft.st_userCardUpdateError = action.error;
+      case USER_NICKNAME_UPDATE_FAILURE: {
+        draft.st_userNickNameUpdateLoading = false;
+        draft.st_userNickNameUpdateDone = false;
+        draft.st_userNickNameUpdateError = action.error;
         break;
       }
       //////////////////////////////////////////////
