@@ -150,8 +150,8 @@ const Index = () => {
           minHeight={`100vh`}
         >
           <Wrapper
-            minHeight={`calc(100% - 100px)`}
-            ju={`flex-start`}
+            minHeight={`calc(100vh - 100px)`}
+            ju={`space-between`}
             al={`flex-start`}
           >
             <Wrapper al={`flex-start`}>
