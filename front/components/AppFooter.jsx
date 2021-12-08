@@ -325,18 +325,27 @@ const AppFooter = () => {
             dr={`row`}
             height={`100px`}
             shadow={tab ? `none` : `0px -3px 10px ${Theme.grey_C}`}
+            position={width < 700 ? `relative` : ``}
           >
             <ButtonWrapper
               margin={
                 width < 700
                   ? tab
-                    ? `0 0 -50px -60px`
-                    : `0 0 0 -60px`
+                    ? `0 0 -100px -60px`
+                    : `0 0 100px -60px`
                   : tab
                   ? `0 0 -50px -65px`
                   : `0 0 0 -65px`
               }
-              bottom={tab ? (width < 700 ? `230px` : `280px`) : `50px`}
+              bottom={
+                tab
+                  ? width < 700
+                    ? `100px`
+                    : `280px`
+                  : width < 700
+                  ? `150px`
+                  : `50px`
+              }
               transition={`0.5s`}
             >
               <GradientText
