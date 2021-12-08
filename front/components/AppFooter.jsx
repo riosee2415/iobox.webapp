@@ -194,6 +194,7 @@ const LoadNotification = (msg, content) => {
 const AppFooter = () => {
   const width = useWidth();
   const router = useRouter();
+  const Vue = router.Vue;
 
   ////// HOOKS //////
 
