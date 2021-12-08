@@ -79,13 +79,13 @@ const Index = () => {
     });
   }, [router.query]);
 
-  // useEffect(() => {
-  //   if (!me) {
-  //     router.push("/");
+  useEffect(() => {
+    if (!me) {
+      router.push("/");
 
-  //     return LoadNotification("로그인 후 이용해주세요.");
-  //   }
-  // }, [me]);
+      return LoadNotification("로그인 후 이용해주세요.");
+    }
+  }, [me]);
 
   ////// TOGGLE ///////
 
