@@ -150,43 +150,37 @@ const Index = () => {
           minHeight={`100vh`}
         >
           <Wrapper
+            minHeight={`calc(100% - 100px)`}
+            ju={`flex-start`}
             al={`flex-start`}
-            minHeight={`calc(100vh - 60px)`}
-            ju={`space-between`}
           >
-            <Wrapper
-              minHeight={`calc(100% - 100px)`}
-              ju={`flex-start`}
-              al={`flex-start`}
-            >
-              <Wrapper al={`flex-start`}>
-                <Text bold={true} fontSize={`2rem`} margin={`0 0 10px`}>
-                  이벤트
-                </Text>
+            <Wrapper al={`flex-start`}>
+              <Text bold={true} fontSize={`2rem`} margin={`0 0 10px`}>
+                이벤트
+              </Text>
 
-                {events &&
-                  events.map((data) => {
-                    return (
-                      <ImageBox
-                        key={data.id}
-                        onClick={() =>
-                          moveLinkHandler(`/center/event/${data.id}`)
-                        }
-                      >
-                        <Image src={data.imagePath} alt={`thumbnail`} />
-                      </ImageBox>
-                    );
-                  })}
-              </Wrapper>
+              {events &&
+                events.map((data) => {
+                  return (
+                    <ImageBox
+                      key={data.id}
+                      onClick={() =>
+                        moveLinkHandler(`/center/event/${data.id}`)
+                      }
+                    >
+                      <Image src={data.imagePath} alt={`thumbnail`} />
+                    </ImageBox>
+                  );
+                })}
+            </Wrapper>
 
-              <Wrapper margin={`50px 0 0`}>
-                <Pagination
-                  defaultCurrent={1}
-                  current={parseInt(currentPage)}
-                  total={maxPage * 10}
-                  onChange={(page) => otherPageCall(page)}
-                />
-              </Wrapper>
+            <Wrapper margin={`50px 0 0`}>
+              <Pagination
+                defaultCurrent={1}
+                current={parseInt(currentPage)}
+                total={maxPage * 10}
+                onChange={(page) => otherPageCall(page)}
+              />
             </Wrapper>
           </Wrapper>
         </RsWrapper>
