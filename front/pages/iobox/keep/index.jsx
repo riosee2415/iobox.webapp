@@ -55,6 +55,7 @@ const Index = () => {
 
   ////// HOOKS //////
   const [tab, setTab] = useState(false);
+  const [cardNum, setCardNum] = useState(null);
 
   const inputName = useInput("");
   const inputMobile = useInput("");
@@ -88,20 +89,19 @@ const Index = () => {
     });
   }, [router.query]);
 
-  // useEffect(() => {
-  //   if (me) {
-  //     if()
-  //     inputCardNum1.setValue(me.cardNum.substring(0, 4));
-  //     inputCardNum2.setValue(me.cardNum.substring(4, 8));
-  //     inputCardNum3.setValue(me.cardNum.substring(8, 12));
-  //     inputCardNum4.setValue(me.cardNum.substring(12, 16));
+  useEffect(() => {
+    if (me) {
+      if (me.cardNum) {
+        setCardNum(
+          me.cardNum.substring(0, 4) + me.cardNum.substring(4, 8) + "********"
+        );
+      }
 
-  //     inputCardPeriodMM.setValue(me.cardPeriod.substring(5, 7));
-  //     inputCardPeriodYY.setValue(me.cardPeriod.substring(2, 4));
-  //     inputCardIden.setValue(me.cardIden);
-  //     inputCardNumPassword.setValue(me.cardPassword);
-  //   }
-  // }, [me]);
+      if (me.nickname) {
+        inputName.setValue(me.nickname);
+      }
+    }
+  }, [me]);
 
   ////// TOGGLE ///////
 
@@ -285,7 +285,7 @@ const Index = () => {
                 <TextInput
                   width={`100%`}
                   height={`50px`}
-                  placeholder="전화번호를 적어주세요."
+                  placeholder="이름을 적어주세요."
                   {...inputName}
                 />
 
@@ -408,7 +408,7 @@ const Index = () => {
               border={`1px solid ${Theme.grey_C}`}
               ju={`space-between`}
             >
-              <Text>413*********</Text>
+              <Text>{cardNum && cardNum}</Text>
               <CommonButton width={`60px`} height={`30px`}>
                 변경
               </CommonButton>
