@@ -50,6 +50,26 @@ const Index = () => {
   ////// USEEFFECT //////
 
   useEffect(() => {
+    dispatch({
+      type: LOAD_MY_INFO_REQUEST,
+    });
+  }, [router.query]);
+
+  useEffect(() => {
+    if (!me) {
+      router.push("/");
+
+      return LoadNotification("로그인 후 이용해주세요.");
+    }
+  }, [me]);
+
+  useEffect(() => {
+    if (me) {
+      inputName.setValue(me.nickname);
+    }
+  }, [me, inputName]);
+
+  useEffect(() => {
     if (st_userNickNameUpdateError) {
     }
   }, [st_userNickNameUpdateError]);
@@ -139,6 +159,7 @@ const Index = () => {
               height={`50px`}
               placeholder="이름을 적어주세요."
               {...inputName}
+              defaultValue={``}
             />
           </Wrapper>
 

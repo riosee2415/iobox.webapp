@@ -22,9 +22,10 @@ import useInput from "../../../hooks/useInput";
 import PostCode from "../../../components/postCode/PostCode";
 import { numberWithCommas } from "../../../components/commonUtils";
 import axios from "axios";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { SUBSCRIPTION_CREATE_REQUEST } from "../../../reducers/subscription";
 import Footer from "../../../components/Footer";
+import { LOAD_MY_INFO_REQUEST } from "../../../reducers/user";
 
 const PayButtton = styled(Wrapper)`
   color: ${Theme.basicTheme_C};
@@ -67,6 +68,7 @@ const Index = () => {
 
   ////// REDUX //////
   const dispatch = useDispatch();
+  const { me } = useSelector((state) => state.user);
 
   ////// USEEFFECT //////
   useEffect(() => {
@@ -79,6 +81,27 @@ const Index = () => {
 
     setStoreData(data);
   }, []);
+
+  useEffect(() => {
+    dispatch({
+      type: LOAD_MY_INFO_REQUEST,
+    });
+  }, [router.query]);
+
+  // useEffect(() => {
+  //   if (me) {
+  //     if()
+  //     inputCardNum1.setValue(me.cardNum.substring(0, 4));
+  //     inputCardNum2.setValue(me.cardNum.substring(4, 8));
+  //     inputCardNum3.setValue(me.cardNum.substring(8, 12));
+  //     inputCardNum4.setValue(me.cardNum.substring(12, 16));
+
+  //     inputCardPeriodMM.setValue(me.cardPeriod.substring(5, 7));
+  //     inputCardPeriodYY.setValue(me.cardPeriod.substring(2, 4));
+  //     inputCardIden.setValue(me.cardIden);
+  //     inputCardNumPassword.setValue(me.cardPassword);
+  //   }
+  // }, [me]);
 
   ////// TOGGLE ///////
 

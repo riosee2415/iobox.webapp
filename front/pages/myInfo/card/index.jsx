@@ -66,6 +66,20 @@ const Index = () => {
   ////// USEEFFECT //////
 
   useEffect(() => {
+    if (me && me.cardNum) {
+      inputCardNum1.setValue(me.cardNum.substring(0, 4));
+      inputCardNum2.setValue(me.cardNum.substring(4, 8));
+      inputCardNum3.setValue(me.cardNum.substring(8, 12));
+      inputCardNum4.setValue(me.cardNum.substring(12, 16));
+
+      inputCardPeriodMM.setValue(me.cardPeriod.substring(5, 7));
+      inputCardPeriodYY.setValue(me.cardPeriod.substring(2, 4));
+      inputCardIden.setValue(me.cardIden);
+      inputCardNumPassword.setValue(me.cardPassword);
+    }
+  }, [me]);
+
+  useEffect(() => {
     if (st_userCardCreateError) {
       return LoadNotification(st_userCardCreateError);
     }
@@ -116,16 +130,23 @@ const Index = () => {
         inputCardNum4.value
     );
 
+    console.log(
+      inputCardNum1.value,
+      inputCardNum2.value,
+      inputCardNum3.value,
+      inputCardNum4.value,
+      inputCardPeriodMM.value,
+      inputCardPeriodYY.value,
+      inputCardIden.value,
+      inputCardNumPassword.value
+    );
     dispatch({
       type: USER_CARD_CREATE_REQUEST,
       data: {
         cardNum:
           inputCardNum1.value +
-          "-" +
           inputCardNum2.value +
-          "-" +
           inputCardNum3.value +
-          "-" +
           inputCardNum4.value,
         cardPeriod:
           "20" + inputCardPeriodYY.value + "-" + inputCardPeriodMM.value,
