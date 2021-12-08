@@ -197,21 +197,26 @@ const GlobalStyles = createGlobalStyle`
 .ant-pagination-item-active a{
   color : ${(props) => props.theme.white_C};
 }
-.ant-pagination-item-active a:hover{
-  color : ${(props) => props.theme.basicTheme_C} !important;
-}
-.ant-pagination-item-active:focus-visible, .ant-pagination-item-active:hover{
-  border-color : ${(props) => props.theme.basicTheme_C};
+.ant-pagination-item-active a:hover , .ant-pagination-item a:hover{
+  color : ${(props) => props.theme.subTheme_C} !important;
 }
 
-.ant-pagination-item-active:focus-visible a, .ant-pagination-item-active:hover a{
-  color : ${(props) => props.theme.basicTheme_C};
-  
+
+.ant-pagination-item-active:focus-visible, .ant-pagination-item-active:hover{
+  border-color : ${(props) => props.theme.basicTheme_C};
 }
 
 .ant-pagination-item-active{
   border-color : ${(props) => props.theme.basicTheme_C};
   background : ${(props) => props.theme.basicTheme_C};
+}
+.ant-pagination-item:hover{
+  border-color : ${(props) => props.theme.basicTheme_C};
+  color : ${(props) => props.theme.subTheme_C} !important;
+}
+.ant-pagination-prev .ant-pagination-item-link:hover, .ant-pagination-next .ant-pagination-item-link:hover{
+  border-color : ${(props) => props.theme.basicTheme_C};
+  color : ${(props) => props.theme.subTheme_C} !important;
 }
 
 
