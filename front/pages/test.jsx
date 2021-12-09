@@ -21,6 +21,25 @@ import { useRouter } from "next/dist/client/router";
 import { KEEPBOX_LIST_REQUEST } from "../reducers/keepBox";
 import { useCountUp, CountUp } from "use-count-up";
 import styled from "styled-components";
+
+const IconBox = styled(Wrapper)`
+  width: ${(props) => props.width || `130px`};
+  cursor: pointer;
+
+  ${Image} {
+    transition: 0.5s;
+    margin: 0 0 5px;
+  }
+
+  &:hover ${Image} {
+    transform: scale(1.2);
+  }
+
+  @media (max-width: 700px) {
+    width: auto;
+  }
+`;
+
 const FirstWrapper = styled(Wrapper)`
   width: 100%;
   height: 100vh;
@@ -122,15 +141,17 @@ const FirstDisplay = styled(Wrapper)`
     background: white;
     list-style-type: none;
     text-align: center;
-    font: 20px/50px Helvetica, Arial, sans-serif;
     top: 0;
     left: 0;
+    transition: none !important;
   }
 
   .circle li:nth-child(1) {
     transition: none;
     top: 15px;
     left: 125px;
+    transition: none !important;
+
     -webkit-transform: ${(props) => `rotate(${props.rotate * -1}deg)`};
     -moz-transform: ${(props) => `rotate(${props.rotate * -1}deg)`};
     -ms-transform: ${(props) => `rotate(${props.rotate * -1}deg)`};
@@ -142,6 +163,8 @@ const FirstDisplay = styled(Wrapper)`
     transition: none;
     top: 70px;
     left: 220px;
+    transition: none !important;
+
     -webkit-transform: ${(props) => `rotate(${props.rotate * -1}deg)`};
     -moz-transform: ${(props) => `rotate(${props.rotate * -1}deg)`};
     -ms-transform: ${(props) => `rotate(${props.rotate * -1}deg)`};
@@ -153,6 +176,8 @@ const FirstDisplay = styled(Wrapper)`
     transition: none;
     top: 175px;
     left: 220px;
+    transition: none !important;
+
     -webkit-transform: ${(props) => `rotate(${props.rotate * -1}deg)`};
     -moz-transform: ${(props) => `rotate(${props.rotate * -1}deg)`};
     -ms-transform: ${(props) => `rotate(${props.rotate * -1}deg)`};
@@ -164,6 +189,8 @@ const FirstDisplay = styled(Wrapper)`
     transition: none;
     top: 235px;
     left: 125px;
+    transition: none !important;
+
     -webkit-transform: ${(props) => `rotate(${props.rotate * -1}deg)`};
     -moz-transform: ${(props) => `rotate(${props.rotate * -1}deg)`};
     -ms-transform: ${(props) => `rotate(${props.rotate * -1}deg)`};
@@ -175,6 +202,8 @@ const FirstDisplay = styled(Wrapper)`
     transition: none;
     top: 175px;
     left: 25px;
+    transition: none !important;
+
     -webkit-transform: ${(props) => `rotate(${props.rotate * -1}deg)`};
     -moz-transform: ${(props) => `rotate(${props.rotate * -1}deg)`};
     -ms-transform: ${(props) => `rotate(${props.rotate * -1}deg)`};
@@ -186,6 +215,8 @@ const FirstDisplay = styled(Wrapper)`
     transition: none;
     top: 70px;
     left: 25px;
+    transition: none !important;
+
     -webkit-transform: ${(props) => `rotate(${props.rotate * -1}deg)`};
     -moz-transform: ${(props) => `rotate(${props.rotate * -1}deg)`};
     -ms-transform: ${(props) => `rotate(${props.rotate * -1}deg)`};
@@ -228,6 +259,8 @@ const FirstDisplay = styled(Wrapper)`
 `;
 
 const Home = () => {
+  const width = useWidth();
+
   const data = {
     1: [
       [6, 5],
@@ -269,7 +302,6 @@ const Home = () => {
   ///// HANDLER //////
 
   ////// DATAVIEW //////
-  console.log(rotate, rotate - rotate);
 
   return (
     <FirstDisplay className="wrapper" rotate={rotate}>
@@ -287,7 +319,6 @@ const Home = () => {
           Four
         </a>
 
-        {/* {console.log(currentMenu)} */}
         <div className="circle">
           <ul>
             <li
@@ -297,7 +328,6 @@ const Home = () => {
                 if (firIndex !== -1) {
                   setRotate(rotate + 60 * (firIndex + 1));
                 } else {
-                  console.log(secIndex);
                   const secIndex = data[currentMenu][1].indexOf(1);
                   setRotate(rotate - 60 * (secIndex + 1));
                 }
@@ -305,11 +335,7 @@ const Home = () => {
                 setCurrentMenu(1);
               }}
             >
-              <Image
-                src={`https://4leaf-s3.s3.ap-northeast-2.amazonaws.com/iobox/assets/images/main/box_dial.png`}
-                alt={`icon`}
-                width={`70px`}
-              />
+              3
             </li>
             <li
               onClick={() => {
