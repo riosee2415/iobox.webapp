@@ -1,29 +1,209 @@
-import React, { useCallback, useEffect, useState } from "react";
+import React, { useCallback, useState, useEffect } from "react";
+import {
+  Image,
+  Wrapper,
+  Text,
+  GradientText,
+  WholeWrapper,
+  RsWrapper,
+} from "../components/commonComponents";
+import Theme from "../components/Theme";
+import styled, { ThemeContext } from "styled-components";
+import { Drawer, notification } from "antd";
+import useWidth from "../hooks/useWidth";
+import { useRouter } from "next/dist/client/router";
+import { Planet } from "react-planet";
+import { MenuOutlined } from "@ant-design/icons";
+import { LOAD_MY_INFO_REQUEST, LOGOUT_REQUEST } from "../reducers/user";
 import { useDispatch, useSelector } from "react-redux";
-import { LOAD_MY_INFO_REQUEST, LOGIN_REQUEST } from "../reducers/user";
-import useInput from "../hooks/useInput";
-import ClientLayout from "../components/ClientLayout";
+import Link from "next/link";
+import Footer from "../components/Footer";
 
 import axios from "axios";
 import wrapper from "../store/configureStore";
 import { END } from "redux-saga";
 
-import {
-  Image,
-  WholeWrapper,
-  RsWrapper,
-  Wrapper,
-  Text,
-} from "../components/commonComponents";
-import useWidth from "../hooks/useWidth";
-import Theme from "../components/Theme";
-import { useRouter } from "next/dist/client/router";
-import { KEEPBOX_LIST_REQUEST } from "../reducers/keepBox";
-import { useCountUp, CountUp } from "use-count-up";
-import styled from "styled-components";
+const FirstDisplay = styled(Wrapper)`
+  width: auto;
+
+  position: absolute;
+  top: -40px;
+  left: -110px;
+  z-index: -1;
+  * {
+    margin: 0;
+    padding: 0;
+    -webkit-backface-visibility: hidden;
+  }
+
+  /*MAIN CIRCLE*/
+  .circle {
+    position: relative;
+    width: 420px;
+    height: 420px;
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.5);
+    /* rotate */
+    -webkit-transform: ${(props) => `rotate(${props.rotate}deg)`};
+    -moz-transform: ${(props) => `rotate(${props.rotate}deg)`};
+    -ms-transform: ${(props) => `rotate(${props.rotate}deg)`};
+    -o-transform: ${(props) => `rotate(${props.rotate}deg)`};
+    transform: ${(props) => `rotate(${props.rotate}deg)`};
+
+    -webkit-transition: all 0.5s ease;
+    -moz-transition: all 0.5s ease;
+    -ms-transition: all 0.5s ease;
+    -o-transition: all 0.5s ease;
+    transition: all 0.5s ease;
+  }
+
+  /*LITTLE CIRCLES*/
+  .circle ${Wrapper} {
+    position: absolute;
+    width: 70px;
+    height: 70px;
+    border-radius: 50%;
+    list-style-type: none;
+    text-align: center;
+    top: 0;
+    left: 0;
+    transition: none !important;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .circle .box:nth-child(1) {
+    top: 21px;
+    left: 175px;
+    transition: none !important;
+
+    -webkit-transform: ${(props) => `rotate(${props.rotate * -1}deg)`};
+    -moz-transform: ${(props) => `rotate(${props.rotate * -1}deg)`};
+    -ms-transform: ${(props) => `rotate(${props.rotate * -1}deg)`};
+    -o-transform: ${(props) => `rotate(${props.rotate * -1}deg)`};
+    transform: ${(props) => `rotate(${props.rotate * -1}deg)`};
+  }
+
+  .circle .box:nth-child(2) {
+    top: 98px;
+    left: 308px;
+    transition: none !important;
+
+    -webkit-transform: ${(props) => `rotate(${props.rotate * -1}deg)`};
+    -moz-transform: ${(props) => `rotate(${props.rotate * -1}deg)`};
+    -ms-transform: ${(props) => `rotate(${props.rotate * -1}deg)`};
+    -o-transform: ${(props) => `rotate(${props.rotate * -1}deg)`};
+    transform: ${(props) => `rotate(${props.rotate * -1}deg)`};
+  }
+
+  .circle .box:nth-child(3) {
+    top: 245px;
+    left: 308px;
+    transition: none !important;
+
+    -webkit-transform: ${(props) => `rotate(${props.rotate * -1}deg)`};
+    -moz-transform: ${(props) => `rotate(${props.rotate * -1}deg)`};
+    -ms-transform: ${(props) => `rotate(${props.rotate * -1}deg)`};
+    -o-transform: ${(props) => `rotate(${props.rotate * -1}deg)`};
+    transform: ${(props) => `rotate(${props.rotate * -1}deg)`};
+  }
+
+  .circle .box:nth-child(4) {
+    top: 329px;
+    left: 175px;
+    transition: none !important;
+
+    -webkit-transform: ${(props) => `rotate(${props.rotate * -1}deg)`};
+    -moz-transform: ${(props) => `rotate(${props.rotate * -1}deg)`};
+    -ms-transform: ${(props) => `rotate(${props.rotate * -1}deg)`};
+    -o-transform: ${(props) => `rotate(${props.rotate * -1}deg)`};
+    transform: ${(props) => `rotate(${props.rotate * -1}deg)`};
+  }
+
+  .circle .box:nth-child(5) {
+    top: 245px;
+    left: 35px;
+    transition: none !important;
+
+    -webkit-transform: ${(props) => `rotate(${props.rotate * -1}deg)`};
+    -moz-transform: ${(props) => `rotate(${props.rotate * -1}deg)`};
+    -ms-transform: ${(props) => `rotate(${props.rotate * -1}deg)`};
+    -o-transform: ${(props) => `rotate(${props.rotate * -1}deg)`};
+    transform: ${(props) => `rotate(${props.rotate * -1}deg)`};
+  }
+
+  .circle .box:nth-child(6) {
+    top: 98px;
+    left: 35px;
+    transition: none !important;
+
+    -webkit-transform: ${(props) => `rotate(${props.rotate * -1}deg)`};
+    -moz-transform: ${(props) => `rotate(${props.rotate * -1}deg)`};
+    -ms-transform: ${(props) => `rotate(${props.rotate * -1}deg)`};
+    -o-transform: ${(props) => `rotate(${props.rotate * -1}deg)`};
+    transform: ${(props) => `rotate(${props.rotate * -1}deg)`};
+  }
+`;
+
+const BoxWrapper = styled(Wrapper)`
+  padding: 0 30px;
+  flex-direction: row;
+  justify-content: space-between;
+  height: 70px;
+  margin: 0 0 5px;
+  background: ${Theme.lightGrey_C};
+  cursor: pointer;
+
+  &:hover {
+    background: ${Theme.basicTheme_C};
+    color: ${Theme.white_C};
+  }
+
+  @media (max-width: 700px) {
+    height: 50px;
+  }
+`;
+
+const TextHover = styled(Text)`
+  font-size: 1.4rem;
+  margin: 0 0 15px;
+  position: relative;
+  cursor: pointer;
+  transition: 0.5s;
+
+  &:before {
+    content: "";
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 0;
+    height: 1px;
+    background: ${Theme.basicTheme_C};
+    transition: 0.5s;
+  }
+
+  &:hover {
+    font-weight: 700;
+    &:before {
+      width: 100%;
+    }
+  }
+
+  @media (max-width: 1350px) {
+    font-size: 1.2rem;
+    margin: 0 0 25px;
+  }
+
+  @media (max-width: 700px) {
+    font-size: 1rem;
+    margin: 0 0 20px;
+  }
+`;
 
 const IconBox = styled(Wrapper)`
-  width: ${(props) => props.width || `130px`};
+  width: ${(props) => props.width || `70px`};
   cursor: pointer;
 
   ${Image} {
@@ -40,226 +220,106 @@ const IconBox = styled(Wrapper)`
   }
 `;
 
-const FirstWrapper = styled(Wrapper)`
-  width: 100%;
-  height: 100vh;
+const CircleWrapper = styled(Wrapper)`
+  cursor: pointer;
+  width: 150px;
+  height: 150px;
+  border-radius: 50%;
+  opacity: 0.5;
+
+  &:hover {
+    opacity: 1;
+  }
+
+  @media (max-width: 700px) {
+    width: 110px;
+    height: 110px;
+  }
 `;
 
-const FirstDisplay = styled(Wrapper)`
-  * {
-    margin: 0;
-    padding: 0;
-    -webkit-backface-visibility: hidden;
+const ButtonWrapper = styled(Wrapper)`
+  position: absolute;
+
+  left: 50%;
+  cursor: pointer;
+  width: auto;
+  margin: 0 0 0 -65px;
+
+  &:hover {
+    .circle2 {
+      width: 30px;
+      height: 30px;
+    }
   }
 
-  /*HEADER*/
-  .header {
-    height: 25px;
-    background: #222;
-    color: #eee;
-    text-align: center;
-    font: 10px/25px Helvetica, Verdana, sans-serif;
+  @media (max-width: 700px) {
+    margin: 0 0 0 -60px;
   }
-
-  .header a {
-    color: #999;
-  }
-
-  /*WRAPPER*/
-  .wrapper {
-    position: relative;
-    overflow: hidden;
-    margin: 20px auto;
-    width: 370px;
-  }
-
-  .menu a {
-    margin-right: -4px;
-    padding: 10px 30px;
-    width: 50px;
-    color: #333;
-    text-decoration: none;
-    font: 15px/25px Helvetica, Arial, sans-serif;
-  }
-
-  .menu a:hover {
-    background: #eee;
-  }
-
-  /*INNER CIRCLE*/
-  .wrapper:before {
-    content: "DS";
-    text-align: center;
-    font: 70px/135px Georgia, Times, serif;
-    color: #efefef;
-    position: absolute;
-    top: 140px;
-    left: 110px;
-    z-index: 10;
-    width: 130px;
-    height: 130px;
-    border-radius: 50%;
-    background: #fff;
-
-    -webkit-box-shadow: 3px 3px 10px rgba(0, 0, 0, 0.3);
-    box-shadow: 3px 3px 10px rgba(0, 0, 0, 0.3);
-  }
-
-  /*MAIN CIRCLE*/
-  .circle {
-    position: relative;
-    margin-top: 30px;
-    margin-bottom: 20px;
-    margin-left: 25px;
-    width: 300px;
-    height: 300px;
-    border-radius: 50%;
-    background: #093b62;
-    /* rotate */
-    -webkit-transform: ${(props) => `rotate(${props.rotate}deg)`};
-    -moz-transform: ${(props) => `rotate(${props.rotate}deg)`};
-    -ms-transform: ${(props) => `rotate(${props.rotate}deg)`};
-    -o-transform: ${(props) => `rotate(${props.rotate}deg)`};
-    transform: ${(props) => `rotate(${props.rotate}deg)`};
-
-    box-shadow: inset 0px 0px 30px rgba(0, 0, 0, 0.3);
-    -webkit-box-shadow: inset 0px 0px 30px rgba(0, 0, 0, 0.3);
-
-    -webkit-transition: all 0.5s ease;
-    -moz-transition: all 0.5s ease;
-    -ms-transition: all 0.5s ease;
-    -o-transition: all 0.5s ease;
-    transition: all 0.5s ease;
-  }
-
-  /*LITTLE CIRCLES*/
-  .circle li {
-    position: absolute;
-    width: 50px;
-    height: 50px;
-    border-radius: 50%;
-    background: white;
-    list-style-type: none;
-    text-align: center;
-    top: 0;
-    left: 0;
-    transition: none !important;
-  }
-
-  .circle li:nth-child(1) {
-    transition: none;
-    top: 15px;
-    left: 125px;
-    transition: none !important;
-
-    -webkit-transform: ${(props) => `rotate(${props.rotate * -1}deg)`};
-    -moz-transform: ${(props) => `rotate(${props.rotate * -1}deg)`};
-    -ms-transform: ${(props) => `rotate(${props.rotate * -1}deg)`};
-    -o-transform: ${(props) => `rotate(${props.rotate * -1}deg)`};
-    transform: ${(props) => `rotate(${props.rotate * -1}deg)`};
-  }
-
-  .circle li:nth-child(2) {
-    transition: none;
-    top: 70px;
-    left: 220px;
-    transition: none !important;
-
-    -webkit-transform: ${(props) => `rotate(${props.rotate * -1}deg)`};
-    -moz-transform: ${(props) => `rotate(${props.rotate * -1}deg)`};
-    -ms-transform: ${(props) => `rotate(${props.rotate * -1}deg)`};
-    -o-transform: ${(props) => `rotate(${props.rotate * -1}deg)`};
-    transform: ${(props) => `rotate(${props.rotate * -1}deg)`};
-  }
-
-  .circle li:nth-child(3) {
-    transition: none;
-    top: 175px;
-    left: 220px;
-    transition: none !important;
-
-    -webkit-transform: ${(props) => `rotate(${props.rotate * -1}deg)`};
-    -moz-transform: ${(props) => `rotate(${props.rotate * -1}deg)`};
-    -ms-transform: ${(props) => `rotate(${props.rotate * -1}deg)`};
-    -o-transform: ${(props) => `rotate(${props.rotate * -1}deg)`};
-    transform: ${(props) => `rotate(${props.rotate * -1}deg)`};
-  }
-
-  .circle li:nth-child(4) {
-    transition: none;
-    top: 235px;
-    left: 125px;
-    transition: none !important;
-
-    -webkit-transform: ${(props) => `rotate(${props.rotate * -1}deg)`};
-    -moz-transform: ${(props) => `rotate(${props.rotate * -1}deg)`};
-    -ms-transform: ${(props) => `rotate(${props.rotate * -1}deg)`};
-    -o-transform: ${(props) => `rotate(${props.rotate * -1}deg)`};
-    transform: ${(props) => `rotate(${props.rotate * -1}deg)`};
-  }
-
-  .circle li:nth-child(5) {
-    transition: none;
-    top: 175px;
-    left: 25px;
-    transition: none !important;
-
-    -webkit-transform: ${(props) => `rotate(${props.rotate * -1}deg)`};
-    -moz-transform: ${(props) => `rotate(${props.rotate * -1}deg)`};
-    -ms-transform: ${(props) => `rotate(${props.rotate * -1}deg)`};
-    -o-transform: ${(props) => `rotate(${props.rotate * -1}deg)`};
-    transform: ${(props) => `rotate(${props.rotate * -1}deg)`};
-  }
-
-  .circle li:nth-child(6) {
-    transition: none;
-    top: 70px;
-    left: 25px;
-    transition: none !important;
-
-    -webkit-transform: ${(props) => `rotate(${props.rotate * -1}deg)`};
-    -moz-transform: ${(props) => `rotate(${props.rotate * -1}deg)`};
-    -ms-transform: ${(props) => `rotate(${props.rotate * -1}deg)`};
-    -o-transform: ${(props) => `rotate(${props.rotate * -1}deg)`};
-    transform: ${(props) => `rotate(${props.rotate * -1}deg)`};
-  }
-  /* 
-
-  .menu > .one:hover ~ .circle {
-    -webkit-transform: rotate(0deg);
-    -moz-transform: rotate(0deg);
-    -ms-transform: rotate(0deg);
-    -o-transform: rotate(0deg);
-    transform: rotate(0deg);
-  }
-
-  .menu > .two:hover ~ .circle {
-    -webkit-transform: rotate(-60deg);
-    -moz-transform: rotate(-60deg);
-    -ms-transform: rotate(-60deg);
-    -o-transform: rotate(-60deg);
-    transform: rotate(-60deg);
-  }
-
-  .menu > .three:hover ~ .circle {
-    -webkit-transform: rotate(-120deg);
-    -moz-transform: rotate(-120deg);
-    -ms-transform: rotate(-120deg);
-    -o-transform: rotate(-120deg);
-    transform: rotate(-120deg);
-  }
-
-  .menu > .four:hover ~ .circle {
-    -webkit-transform: rotate(-180deg);
-    -moz-transform: rotate(-180deg);
-    -ms-transform: rotate(-180deg);
-    -o-transform: rotate(-180deg);
-    transform: rotate(-180deg);
-  } */
 `;
 
-const Home = () => {
+const TextWrapper = styled(Wrapper)`
+  width: auto;
+  cursor: pointer;
+  transition: 0.5s;
+
+  & h2 {
+    color: ${Theme.darkGrey_C} !important;
+    background: initial;
+    -webkit-text-fill-color: initial !important;
+    -webkit-background-clip: initial !important;
+
+    transition: 0.5s;
+  }
+
+  .hoverIcon {
+    display: none;
+  }
+
+  &:hover {
+    .noHoverIcon {
+      display: none;
+    }
+
+    .hoverIcon {
+      display: flex;
+    }
+
+    h2 {
+      background: linear-gradient(
+        90deg,
+        rgb(249, 2, 80),
+        rgb(247, 141, 150),
+        rgb(242, 146, 98),
+        rgb(241, 115, 80)
+      );
+
+      -webkit-text-fill-color: transparent !important;
+      -webkit-background-clip: text !important;
+    }
+  }
+`;
+
+const Logo = styled(Image)`
+  width: 200px !important;
+
+  @media (max-width: 700px) {
+    width: 150px !important;
+    margin-top: 10px;
+  }
+`;
+
+const LoadNotification = (msg, content) => {
+  notification.open({
+    message: msg,
+    description: content,
+    onClick: () => {},
+  });
+};
+
+const AppFooter = () => {
   const width = useWidth();
+  const router = useRouter();
+  const Vue = router.Vue;
 
   const data = {
     1: [
@@ -290,160 +350,730 @@ const Home = () => {
 
   ////// HOOKS //////
 
+  const [tab, setTab] = useState(false);
+
+  const [top, setTop] = useState(0);
+
+  const [drawar, setDrawar] = useState(false);
+
+  const { me, st_logoutDone } = useSelector((state) => state.user);
+  const dispatch = useDispatch();
+
   const [rotate, setRotate] = useState(0);
   const [currentMenu, setCurrentMenu] = useState(1);
 
   ////// REDUX //////
 
   ////// USEEFFECT //////
+  useEffect(() => {
+    setDrawar(false);
+  }, [router.asPath]);
+
+  useEffect(() => {
+    dispatch({
+      type: LOAD_MY_INFO_REQUEST,
+    });
+  }, []);
+
+  useEffect(() => {
+    if (st_logoutDone) {
+      LoadNotification;
+
+      dispatch({
+        type: LOAD_MY_INFO_REQUEST,
+      });
+
+      router.push("/");
+
+      return LoadNotification("LOGOUT SUCCESS", "로그아웃 되었습니다.");
+    }
+  }, [st_logoutDone]);
 
   ////// TOGGLE ///////
 
+  const tabToggle = useCallback(() => {
+    setTab(!tab);
+  }, [tab]);
+
+  const drawarToggle = useCallback(() => {
+    setDrawar(!drawar);
+  }, [drawar]);
   ///// HANDLER //////
 
+  const moveLinkHandler = useCallback((link) => {
+    router.push(link);
+  }, []);
+
+  const logoutHandler = useCallback(() => {
+    dispatch({
+      type: LOGOUT_REQUEST,
+    });
+  }, []);
+
   ////// DATAVIEW //////
+  if (!width) {
+    return null;
+  }
 
   return (
-    <FirstDisplay className="wrapper" rotate={rotate}>
-      <div className="menu">
-        <a href="#" className="one">
-          One
-        </a>
-        <a href="#" className="two">
-          Two
-        </a>
-        <a href="#" className="three">
-          Three
-        </a>
-        <a href="#" className="four">
-          Four
-        </a>
+    <>
+      {/* <Wrapper zIndex={`100000`} bgColor={Theme.black2_C} height={`300px`}>
+        <RotateMenu dataSource={data} onClick={(e, d) => console.log(d, e)} />
+      </Wrapper> */}
 
-        <div className="circle">
-          <ul>
-            <li
-              onClick={() => {
-                const firIndex = data[currentMenu][0].indexOf(1);
+      <Wrapper bgColor={width < 700 ? Theme.white_C : Theme.lightGrey_C}>
+        <Wrapper
+          position={tab ? `fixed` : ``}
+          bottom={`0`}
+          left={width < 700 ? `0` : `50%`}
+          margin={tab ? (width < 700 ? `0` : `0 0 0 -250px`) : ``}
+          width={width < 700 ? `100%` : `500px`}
+          height={tab ? `100vh` : `auto`}
+          bgColor={tab ? `rgba(0,0,0,0.8)` : Theme.white_C}
+          zIndex={`1000`}
+          overflow={tab ? `hidden` : ``}
+          // onClick={() => {
+          //   if (tab) {
+          //     tabToggle();
+          //   } else {
+          //     return;
+          //   }
+          // }}
+        >
+          <Wrapper
+            width={`auto`}
+            al={`flex-start`}
+            display={tab ? `flex` : `none`}
+            margin={width < 700 ? `0 0 200px` : `0 0 170px`}
+          >
+            <Image
+              width={`60px`}
+              src={`https://4leaf-s3.s3.ap-northeast-2.amazonaws.com/iobox/assets/images/main/paperbox.png`}
+            />
 
-                if (firIndex !== -1) {
-                  setRotate(rotate + 60 * (firIndex + 1));
-                } else {
-                  const secIndex = data[currentMenu][1].indexOf(1);
-                  setRotate(rotate - 60 * (secIndex + 1));
-                }
+            <GradientText bold={true} fontSize={`2rem`} margin={`10px 0 0`}>
+              종이박스 배송
+            </GradientText>
 
-                setCurrentMenu(1);
-              }}
+            <Text
+              color={Theme.white_C}
+              bold={true}
+              fontSize={`1.5rem`}
+              margin={`15px 0`}
             >
-              3
-            </li>
-            <li
-              onClick={() => {
-                const firIndex = data[currentMenu][0].indexOf(2);
-
-                if (firIndex !== -1) {
-                  setRotate(rotate + 60 * (firIndex + 1));
-                } else {
-                  const secIndex = data[currentMenu][1].indexOf(2);
-
-                  setRotate(rotate - 60 * (secIndex + 1));
-                }
-
-                setCurrentMenu(2);
-              }}
+              의류,물건,서류,책
+            </Text>
+            <Text color={Theme.white_C} bold={true} fontSize={`1.5rem`}>
+              각종 내 방안의 짐
+            </Text>
+            <Text
+              color={Theme.white_C}
+              bold={true}
+              fontSize={`1.5rem`}
+              margin={`15px 0 0`}
             >
-              <Image
-                src={`https://4leaf-s3.s3.ap-northeast-2.amazonaws.com/iobox/assets/images/main/box_dial.png`}
-                alt={`icon`}
-                width={`70px`}
-              />
-            </li>
-            <li
-              onClick={() => {
-                const firIndex = data[currentMenu][0].indexOf(3);
-                if (firIndex !== -1) {
-                  setRotate(rotate + 60 * (firIndex + 1));
-                } else {
-                  const secIndex = data[currentMenu][1].indexOf(3);
-                  setRotate(rotate - 60 * (secIndex + 1));
-                }
+              원할 때 맡기고 원할 때 찾기
+            </Text>
+          </Wrapper>
 
-                setCurrentMenu(3);
-              }}
+          <Wrapper
+            dr={`row`}
+            height={`100px`}
+            shadow={tab ? `none` : `0px -3px 10px ${Theme.grey_C}`}
+            position={width < 700 ? `relative` : ``}
+          >
+            <ButtonWrapper
+              margin={
+                width < 700
+                  ? tab
+                    ? `0 0 -100px -60px`
+                    : `0 0 100px -60px`
+                  : tab
+                  ? `0 0 -50px -65px`
+                  : `0 0 0 -65px`
+              }
+              bottom={
+                tab
+                  ? width < 700
+                    ? `100px`
+                    : `280px`
+                  : width < 700
+                  ? `150px`
+                  : `50px`
+              }
+              transition={`0.5s`}
             >
-              <Image
-                src={`https://4leaf-s3.s3.ap-northeast-2.amazonaws.com/iobox/assets/images/main/box_dial.png`}
-                alt={`icon`}
-                width={`70px`}
-              />
-            </li>
-            <li
-              onClick={() => {
-                const firIndex = data[currentMenu][0].indexOf(4);
-                if (firIndex !== -1) {
-                  setRotate(rotate + 60 * (firIndex + 1));
-                } else {
-                  const secIndex = data[currentMenu][1].indexOf(4);
-                  setRotate(rotate - 60 * (secIndex + 1));
-                }
+              <GradientText
+                className="gradient"
+                fontWeight={`900`}
+                opacity={tab ? `0` : `1`}
+                padding={`0`}
+              >
+                내 물건 맡기기
+              </GradientText>
 
-                setCurrentMenu(4);
-              }}
-            >
-              <Image
-                src={`https://4leaf-s3.s3.ap-northeast-2.amazonaws.com/iobox/assets/images/main/box_dial.png`}
-                alt={`icon`}
-                width={`70px`}
-              />
-            </li>
-            {/* 
-            1 => 5, 6 
-            2 => 6
-            5 => 1 
-            6 => 1, 2 
-            */}
-            <li
-              onClick={() => {
-                const firIndex = data[currentMenu][0].indexOf(5);
-                if (firIndex !== -1) {
-                  setRotate(rotate + 60 * (firIndex + 1));
-                } else {
-                  const secIndex = data[currentMenu][1].indexOf(5);
-                  setRotate(rotate - 60 * (secIndex + 1));
-                }
+              <Wrapper
+                margin={`0 0 0 -100px`}
+                transition={`0.5s`}
+                zIndex={`100`}
+              >
+                <Planet
+                  tension={200}
+                  centerContent={
+                    <Wrapper
+                      opacity={tab ? `0` : `1`}
+                      width={`100px`}
+                      height={`100px`}
+                      radius={`50%`}
+                      className={"ajklsuajksdnajksdnajksdn"}
+                      bgColor={`linear-gradient(90deg,rgb(249, 2, 80),rgb(247, 141, 150),rgb(242, 146, 98),rgb(241, 115, 80))`}
+                    >
+                      <Wrapper
+                        width={`45px`}
+                        height={`45px`}
+                        radius={`50%`}
+                        bgColor={Theme.white_C}
+                        className="circle2"
+                      ></Wrapper>
+                    </Wrapper>
+                  }
+                  bounce={false}
+                  friction={0}
+                  orbitStyle={(defaultStyle) => ({
+                    ...defaultStyle,
+                    borderWidth: 0,
+                  })}
+                  open={tab}
+                  onClick={tabToggle}
+                  autoClose
+                  orbitRadius={width < 700 ? 170 : 200}
+                  rotation={-30}
+                >
+                  {/* <IconBox
+                    display={tab ? `flex` : `none`}
+                    margin={`-70px 0 0`}
+                    width={width < 700 ? `100px !important` : `130px`}
+                    onClick={() => {
+                      moveLinkHandler(`/iobox?type=tentBox`);
+                    }}
+                  >
+                    <Image
+                      src={`https://4leaf-s3.s3.ap-northeast-2.amazonaws.com/iobox/assets/images/main/box_dial.png`}
+                      alt={`icon`}
+                      width={width < 700 ? `60px` : `70px`}
+                    />
+                    <Text fontSize={width < 700 ? `0.8rem` : `1rem`}>
+                      텐트보관 박스
+                    </Text>
+                  </IconBox>
 
-                setCurrentMenu(5);
-              }}
-            >
-              <Image
-                src={`https://4leaf-s3.s3.ap-northeast-2.amazonaws.com/iobox/assets/images/main/box_dial.png`}
-                alt={`icon`}
-                width={`70px`}
-              />
-            </li>
-            <li
-              onClick={() => {
-                const firIndex = data[currentMenu][0].indexOf(6);
-                if (firIndex !== -1) {
-                  setRotate(rotate + 60 * (firIndex + 1));
-                } else {
-                  const secIndex = data[currentMenu][1].indexOf(6);
-                  setRotate(rotate - 60 * (secIndex + 1));
-                }
+                  <IconBox
+                    display={tab ? `flex` : `none`}
+                    margin={`-30px 0 0 100px`}
+                    onClick={() => {
+                      moveLinkHandler("/bullet");
+                    }}
+                  >
+                    <Image
+                      src={`https://4leaf-s3.s3.ap-northeast-2.amazonaws.com/iobox/assets/images/main/bullet_dial.png`}
+                      alt={`icon`}
+                      width={width < 700 ? `60px` : `70px`}
+                    />
+                    <Text fontSize={width < 700 ? `0.8rem` : `1rem`}>
+                      총알배송
+                    </Text>
+                  </IconBox>
 
-                setCurrentMenu(6);
-              }}
+                  <IconBox
+                    display={tab ? `flex` : `none`}
+                    margin={`50px 0 0 100px`}
+                    onClick={() => {
+                      moveLinkHandler(`/locker`);
+                    }}
+                  >
+                    <Image
+                      src={`https://4leaf-s3.s3.ap-northeast-2.amazonaws.com/iobox/assets/images/main/truck_dial.png`}
+                      alt={`icon`}
+                      width={width < 700 ? `40px` : `50px`}
+                    />
+                    <Text fontSize={width < 700 ? `0.8rem` : `1rem`}>
+                      배송현황
+                    </Text>
+                  </IconBox>
+
+                  <IconBox
+                    display={tab ? `flex` : `none`}
+                    margin={`70px 0 0`}
+                    width={width < 700 ? `100px !important` : `130px`}
+                    onClick={() => {
+                      moveLinkHandler(`/iobox?type=iobox`);
+                    }}
+                  >
+                    <Image
+                      src={`https://4leaf-s3.s3.ap-northeast-2.amazonaws.com/iobox/assets/images/main/iobox_dial.png`}
+                      alt={`icon`}
+                      width={width < 700 ? `40px` : `50px`}
+                    />
+                    <Text fontSize={width < 700 ? `0.8rem` : `1rem`}>
+                      아이오 박스
+                    </Text>
+                  </IconBox>
+
+                  <IconBox
+                    display={tab ? `flex` : `none`}
+                    margin={width < 700 ? `50px 0 0 -80px` : `50px 100px 0 0`}
+                    onClick={() => {
+                      moveLinkHandler(`/iobox?type=hangerBox`);
+                    }}
+                  >
+                    <Image
+                      src={`https://4leaf-s3.s3.ap-northeast-2.amazonaws.com/iobox/assets/images/main/hagner_dial.png`}
+                      alt={`icon`}
+                      width={width < 700 ? `40px` : `50px`}
+                    />
+                    <Text fontSize={width < 700 ? `0.8rem` : `1rem`}>
+                      행거박스
+                    </Text>
+                  </IconBox>
+
+                  <IconBox
+                    display={tab ? `flex` : `none`}
+                    margin={width < 700 ? `-30px 0 0 -80px` : `-30px 100px 0 0`}
+                  >
+                    <Image
+                      src={`https://4leaf-s3.s3.ap-northeast-2.amazonaws.com/iobox/assets/images/main/large_dial.png`}
+                      alt={`icon`}
+                      width={width < 700 ? `40px` : `50px`}
+                    />
+                    <Text
+                      fontSize={width < 700 ? `0.8rem` : `1rem`}
+                      onClick={() => {
+                        moveLinkHandler(`/iobox?type=bigBox`);
+                      }}
+                    >
+                      대용량 박스
+                    </Text>
+                  </IconBox> */}
+
+                  <FirstDisplay
+                    className="wrapper"
+                    rotate={rotate}
+                    zIndex={`1000 !important`}
+                    position={`relative`}
+                  >
+                    <Wrapper className="circle" position={`relative`}>
+                      <Wrapper
+                        className="box"
+                        onClick={() => {
+                          const firIndex = data[currentMenu][0].indexOf(1);
+
+                          if (firIndex !== -1) {
+                            setRotate(rotate + 60 * (firIndex + 1));
+                          } else {
+                            const secIndex = data[currentMenu][1].indexOf(1);
+                            setRotate(rotate - 60 * (secIndex + 1));
+                          }
+
+                          setCurrentMenu(1);
+                        }}
+                      >
+                        <IconBox>
+                          <Image
+                            src={`https://4leaf-s3.s3.ap-northeast-2.amazonaws.com/iobox/assets/images/main/iobox_dial.png`}
+                            alt={`icon`}
+                            width={`40px`}
+                          />
+                          <Text fontSize={`0.8rem`}>아이오 박스</Text>
+                        </IconBox>
+                      </Wrapper>
+                      <Wrapper
+                        className="box"
+                        onClick={() => {
+                          const firIndex = data[currentMenu][0].indexOf(2);
+
+                          if (firIndex !== -1) {
+                            setRotate(rotate + 60 * (firIndex + 1));
+                          } else {
+                            const secIndex = data[currentMenu][1].indexOf(2);
+
+                            setRotate(rotate - 60 * (secIndex + 1));
+                          }
+
+                          setCurrentMenu(2);
+                        }}
+                      >
+                        <IconBox>
+                          <Image
+                            src={`https://4leaf-s3.s3.ap-northeast-2.amazonaws.com/iobox/assets/images/main/hagner_dial.png`}
+                            alt={`icon`}
+                            width={`32px`}
+                          />
+                          <Text fontSize={`0.8rem`}>행거박스</Text>
+                        </IconBox>
+                      </Wrapper>
+                      <Wrapper
+                        className="box"
+                        onClick={() => {
+                          const firIndex = data[currentMenu][0].indexOf(3);
+                          if (firIndex !== -1) {
+                            setRotate(rotate + 60 * (firIndex + 1));
+                          } else {
+                            const secIndex = data[currentMenu][1].indexOf(3);
+                            setRotate(rotate - 60 * (secIndex + 1));
+                          }
+
+                          setCurrentMenu(3);
+                        }}
+                      >
+                        <IconBox>
+                          <Image
+                            src={`https://4leaf-s3.s3.ap-northeast-2.amazonaws.com/iobox/assets/images/main/large_dial.png`}
+                            alt={`icon`}
+                            width={`40px`}
+                          />
+                          <Text fontSize={`0.8rem`}>대용량 박스</Text>
+                        </IconBox>
+                      </Wrapper>
+                      <Wrapper
+                        className="box"
+                        onClick={() => {
+                          const firIndex = data[currentMenu][0].indexOf(4);
+                          if (firIndex !== -1) {
+                            setRotate(rotate + 60 * (firIndex + 1));
+                          } else {
+                            const secIndex = data[currentMenu][1].indexOf(4);
+                            setRotate(rotate - 60 * (secIndex + 1));
+                          }
+
+                          setCurrentMenu(4);
+                        }}
+                      >
+                        <IconBox>
+                          <Image
+                            src={`https://4leaf-s3.s3.ap-northeast-2.amazonaws.com/iobox/assets/images/main/box_dial.png`}
+                            alt={`icon`}
+                            width={`60px`}
+                          />
+                          <Text fontSize={`0.7rem`}>텐트보관 박스</Text>
+                        </IconBox>
+                      </Wrapper>
+
+                      <Wrapper
+                        className="box"
+                        onClick={() => {
+                          const firIndex = data[currentMenu][0].indexOf(5);
+                          if (firIndex !== -1) {
+                            setRotate(rotate + 60 * (firIndex + 1));
+                          } else {
+                            const secIndex = data[currentMenu][1].indexOf(5);
+                            setRotate(rotate - 60 * (secIndex + 1));
+                          }
+
+                          setCurrentMenu(5);
+                        }}
+                      >
+                        <IconBox>
+                          <Image
+                            src={`https://4leaf-s3.s3.ap-northeast-2.amazonaws.com/iobox/assets/images/main/bullet_dial.png`}
+                            alt={`icon`}
+                            width={`60px`}
+                          />
+                          <Text fontSize={`0.8rem`}>총알배송</Text>
+                        </IconBox>
+                      </Wrapper>
+                      <Wrapper
+                        className="box"
+                        onClick={() => {
+                          const firIndex = data[currentMenu][0].indexOf(6);
+                          if (firIndex !== -1) {
+                            setRotate(rotate + 60 * (firIndex + 1));
+                          } else {
+                            const secIndex = data[currentMenu][1].indexOf(6);
+                            setRotate(rotate - 60 * (secIndex + 1));
+                          }
+
+                          setCurrentMenu(6);
+                        }}
+                      >
+                        <IconBox>
+                          <Image
+                            src={`https://4leaf-s3.s3.ap-northeast-2.amazonaws.com/iobox/assets/images/main/truck_dial.png`}
+                            alt={`icon`}
+                            width={`50px`}
+                          />
+                          <Text fontSize={`0.8rem`}>배송현황</Text>
+                        </IconBox>
+                      </Wrapper>
+                    </Wrapper>
+
+                    <Wrapper
+                      onClick={tabToggle}
+                      position={`absolute`}
+                      top={`calc(50% - 50px)`}
+                      left={`calc(50% - 50px)`}
+                      width={`100px`}
+                      height={`100px`}
+                      radius={`50%`}
+                      zIndex={`1000 !important`}
+                      className={"ajklsuajksdnajksdnajksdn"}
+                      bgColor={`linear-gradient(90deg,rgb(249, 2, 80),rgb(247, 141, 150),rgb(242, 146, 98),rgb(241, 115, 80))`}
+                    >
+                      <Wrapper
+                        width={`45px`}
+                        height={`45px`}
+                        radius={`50%`}
+                        bgColor={Theme.white_C}
+                        className="circle2"
+                      ></Wrapper>
+                    </Wrapper>
+                  </FirstDisplay>
+                </Planet>
+              </Wrapper>
+            </ButtonWrapper>
+
+            <Wrapper
+              dr={`row`}
+              ju={`space-around`}
+              display={tab ? `none` : `flex`}
             >
-              <Image
-                src={`https://4leaf-s3.s3.ap-northeast-2.amazonaws.com/iobox/assets/images/main/box_dial.png`}
-                alt={`icon`}
-                width={`70px`}
-              />
-            </li>
-          </ul>
-        </div>
-      </div>
-    </FirstDisplay>
+              <TextWrapper width={`auto`} onClick={drawarToggle}>
+                <Wrapper
+                  fontSize={`30px`}
+                  width={`auto`}
+                  margin={`0 0 5px`}
+                  color={`rgb(224,222,222)`}
+                  height={`35px`}
+                  className="noHoverIcon"
+                >
+                  <MenuOutlined />
+                </Wrapper>
+
+                <Image
+                  margin={`0 0 5px`}
+                  height={`35px`}
+                  width={`30px`}
+                  objectFit={`contain`}
+                  className="hoverIcon"
+                  src={`https://4leaf-s3.s3.ap-northeast-2.amazonaws.com/iobox/assets/images/main/menu_gra.png`}
+                />
+
+                <GradientText fontSize={`0.8rem`} bold={true} padding={`0`}>
+                  메 뉴
+                </GradientText>
+              </TextWrapper>
+              <TextWrapper
+                width={`auto`}
+                onClick={() => {
+                  moveLinkHandler("/locker");
+                }}
+              >
+                <Image
+                  src={`https://4leaf-s3.s3.ap-northeast-2.amazonaws.com/iobox/assets/images/main/grey_box.png`}
+                  alt={`menuIcon`}
+                  className="noHoverIcon"
+                  height={`30px`}
+                  width={`auto`}
+                  margin={`0 0 11px`}
+                />
+                <Image
+                  src={`https://4leaf-s3.s3.ap-northeast-2.amazonaws.com/iobox/assets/images/main/iobox_dial.png`}
+                  alt={`menuIcon`}
+                  className="hoverIcon"
+                  height={`30px`}
+                  width={`auto`}
+                  margin={`0 0 11px`}
+                />
+                <GradientText fontSize={`0.8rem`} bold={true} padding={`0`}>
+                  내 보관함
+                </GradientText>
+              </TextWrapper>
+            </Wrapper>
+
+            {drawar && (
+              <Drawer
+                placement="left"
+                closable={true}
+                onClose={drawarToggle}
+                // visible={drawarToggle}
+                visible={true}
+                getContainer={false}
+              >
+                <Wrapper
+                  height={`100vh !important`}
+                  ju={`space-between`}
+                  overflowX={`hidden`}
+                >
+                  <RsWrapper
+                    al={`flex-start`}
+                    height={`auto`}
+                    margin={width < 700 ? `50px 0 0` : `20px 0 0`}
+                  >
+                    <Image
+                      src={`https://4leaf-s3.s3.ap-northeast-2.amazonaws.com/iobox/assets/images/icon/logo_square.png`}
+                      width={width < 1350 ? `80px` : `100px`}
+                      alt={`logo`}
+                      margin={`0 0 20px`}
+                    />
+
+                    <Wrapper ju={`flex-start`} al={`flex-start`}>
+                      <Wrapper al={`flex-start`}>
+                        <TextHover
+                          onClick={() => {
+                            moveLinkHandler("/guide?type=iobox");
+                          }}
+                        >
+                          아이오 박스란?
+                        </TextHover>
+                      </Wrapper>
+
+                      <Wrapper al={`flex-start`}>
+                        <TextHover
+                          onClick={() => {
+                            moveLinkHandler("/guide?type=way");
+                          }}
+                        >
+                          서비스 이용방법
+                        </TextHover>
+                      </Wrapper>
+
+                      <Wrapper al={`flex-start`}>
+                        <TextHover
+                          onClick={() => {
+                            moveLinkHandler("/guide?type=pay");
+                          }}
+                        >
+                          서비스 이용료
+                        </TextHover>
+                      </Wrapper>
+
+                      <Wrapper al={`flex-start`}>
+                        <TextHover
+                          onClick={() => {
+                            moveLinkHandler("/guide?type=center");
+                          }}
+                        >
+                          IO박스 보관센터
+                        </TextHover>
+                      </Wrapper>
+                      <Wrapper al={`flex-start`}>
+                        <TextHover
+                          onClick={() => {
+                            moveLinkHandler(`/locker`);
+                          }}
+                        >
+                          배송현황
+                        </TextHover>
+                      </Wrapper>
+                      <Wrapper al={`flex-start`}>
+                        <TextHover
+                          onClick={() => {
+                            moveLinkHandler(`/locker/mylocker`);
+                          }}
+                        >
+                          내 물건 찾기
+                        </TextHover>
+                      </Wrapper>
+                    </Wrapper>
+                  </RsWrapper>
+
+                  <Wrapper>
+                    <Wrapper al={`flex-start`}>
+                      <BoxWrapper
+                        onClick={() => moveLinkHandler(`/center/event`)}
+                      >
+                        <Text>io박스 이벤트 보기</Text>
+                        <Image
+                          width={width < 700 ? `30px` : `40px`}
+                          src={`https://4leaf-s3.s3.ap-northeast-2.amazonaws.com/iobox/assets/images/sidemenu/event.png`}
+                          alt={`event_image`}
+                        />
+                      </BoxWrapper>
+                      <BoxWrapper onClick={() => moveLinkHandler(`/calculate`)}>
+                        <Text>1초만에 보관료 계산하기</Text>
+                        <Image
+                          width={width < 700 ? `30px` : `40px`}
+                          src={`https://4leaf-s3.s3.ap-northeast-2.amazonaws.com/iobox/assets/images/sidemenu/calculator.png`}
+                          alt={`calculate_image`}
+                        />
+                      </BoxWrapper>
+                      <BoxWrapper>
+                        <Text>실시간 카톡문의</Text>
+                        <Image
+                          width={width < 700 ? `30px` : `40px`}
+                          src={`https://4leaf-s3.s3.ap-northeast-2.amazonaws.com/iobox/assets/images/sidemenu/kakao.png`}
+                          alt={`kakao_image`}
+                        />
+                      </BoxWrapper>
+                    </Wrapper>
+
+                    <Wrapper dr={`row`} ju={`flex-end`} padding={`10px`}>
+                      {!me ? (
+                        <Text
+                          cursor={`pointer`}
+                          display={`flex`}
+                          margin={`0 10px 0 0`}
+                          onClick={() => moveLinkHandler(`/login`)}
+                        >
+                          로그인
+                        </Text>
+                      ) : (
+                        <>
+                          <Text
+                            cursor={`pointer`}
+                            margin={`0 10px 0 0`}
+                            onClick={() => moveLinkHandler(`/myInfo`)}
+                          >
+                            내 정보
+                          </Text>
+                          <Text
+                            onClick={logoutHandler}
+                            cursor={`pointer`}
+                            margin={`0 10px 0 0`}
+                          >
+                            로그아웃
+                          </Text>
+                        </>
+                      )}
+
+                      {/* 공통 */}
+                      <Text
+                        cursor={`pointer`}
+                        onClick={() => moveLinkHandler(`/center`)}
+                      >
+                        고객센터
+                      </Text>
+                    </Wrapper>
+                  </Wrapper>
+                </Wrapper>
+              </Drawer>
+            )}
+          </Wrapper>
+          <Footer />
+          {/* <Wrapper
+            bgColor={Theme.basicTheme_C}
+            padding={`50px`}
+            color={Theme.white_C}
+            dr={`row`}
+            ju={`space-between`}
+            display={tab ? `none` : `flex`}
+          >
+            <Image
+              width={`50px`}
+              src={`https://4leaf-s3.s3.ap-northeast-2.amazonaws.com/iobox/assets/images/logo/LOGO_W.png`}
+            />
+
+            <Wrapper width={`auto`} al={`flex-start`}>
+              <Text>상호명 : io박스</Text>
+              <Text>사업자등록번호 : 283-87-02507</Text>
+              <Text>대표자명 : 박성찬, 김우현</Text>
+              <Text>주소 : 경기도 의정부시 오목로225번길 105, 5층</Text>
+              <Text>대표번호 : 1644-2753</Text>
+              <Text>이메일 : ebone0910@gmail.com</Text>
+            </Wrapper>
+          </Wrapper> */}
+        </Wrapper>
+      </Wrapper>
+    </>
   );
 };
 
@@ -468,4 +1098,5 @@ export const getServerSideProps = wrapper.getServerSideProps(
     await context.store.sagaTask.toPromise();
   }
 );
-export default Home;
+
+export default AppFooter;

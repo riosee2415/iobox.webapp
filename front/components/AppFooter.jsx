@@ -23,6 +23,174 @@ import axios from "axios";
 import wrapper from "../store/configureStore";
 import { END } from "redux-saga";
 
+const FirstDisplay = styled(Wrapper)`
+  width: auto;
+
+  position: absolute;
+  top: -40px;
+  left: -110px;
+  z-index: -1;
+
+  @media (max-width: 700px) {
+    left: -93px;
+  }
+  * {
+    margin: 0;
+    padding: 0;
+    -webkit-backface-visibility: hidden;
+  }
+
+  /*MAIN CIRCLE*/
+  .circle {
+    position: relative;
+    width: 420px;
+    height: 420px;
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.5);
+    /* rotate */
+    -webkit-transform: ${(props) => `rotate(${props.rotate}deg)`};
+    -moz-transform: ${(props) => `rotate(${props.rotate}deg)`};
+    -ms-transform: ${(props) => `rotate(${props.rotate}deg)`};
+    -o-transform: ${(props) => `rotate(${props.rotate}deg)`};
+    transform: ${(props) => `rotate(${props.rotate}deg)`};
+
+    -webkit-transition: all 0.5s ease;
+    -moz-transition: all 0.5s ease;
+    -ms-transition: all 0.5s ease;
+    -o-transition: all 0.5s ease;
+    transition: all 0.5s ease;
+
+    @media (max-width: 700px) {
+      width: 360px;
+      height: 360px;
+    }
+  }
+
+  /*LITTLE CIRCLES*/
+  .circle ${Wrapper} {
+    position: absolute;
+    width: 70px;
+    height: 70px;
+    border-radius: 50%;
+    list-style-type: none;
+    text-align: center;
+    top: 0;
+    left: 0;
+    transition: none !important;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+
+    @media (max-width: 700px) {
+      width: 60px;
+      height: 60px;
+    }
+  }
+
+  .circle .box:nth-child(1) {
+    top: 21px;
+    left: 175px;
+    transition: none !important;
+
+    -webkit-transform: ${(props) => `rotate(${props.rotate * -1}deg)`};
+    -moz-transform: ${(props) => `rotate(${props.rotate * -1}deg)`};
+    -ms-transform: ${(props) => `rotate(${props.rotate * -1}deg)`};
+    -o-transform: ${(props) => `rotate(${props.rotate * -1}deg)`};
+    transform: ${(props) => `rotate(${props.rotate * -1}deg)`};
+
+    @media (max-width: 700px) {
+      top: 18px;
+      left: 150px;
+    }
+  }
+
+  .circle .box:nth-child(2) {
+    top: 98px;
+    left: 308px;
+    transition: none !important;
+
+    -webkit-transform: ${(props) => `rotate(${props.rotate * -1}deg)`};
+    -moz-transform: ${(props) => `rotate(${props.rotate * -1}deg)`};
+    -ms-transform: ${(props) => `rotate(${props.rotate * -1}deg)`};
+    -o-transform: ${(props) => `rotate(${props.rotate * -1}deg)`};
+    transform: ${(props) => `rotate(${props.rotate * -1}deg)`};
+
+    @media (max-width: 700px) {
+      top: 84px;
+      left: 264px;
+    }
+  }
+
+  .circle .box:nth-child(3) {
+    top: 245px;
+    left: 308px;
+    transition: none !important;
+
+    -webkit-transform: ${(props) => `rotate(${props.rotate * -1}deg)`};
+    -moz-transform: ${(props) => `rotate(${props.rotate * -1}deg)`};
+    -ms-transform: ${(props) => `rotate(${props.rotate * -1}deg)`};
+    -o-transform: ${(props) => `rotate(${props.rotate * -1}deg)`};
+    transform: ${(props) => `rotate(${props.rotate * -1}deg)`};
+
+    @media (max-width: 700px) {
+      top: 210px;
+      left: 264px;
+    }
+  }
+
+  .circle .box:nth-child(4) {
+    top: 329px;
+    left: 175px;
+    transition: none !important;
+
+    -webkit-transform: ${(props) => `rotate(${props.rotate * -1}deg)`};
+    -moz-transform: ${(props) => `rotate(${props.rotate * -1}deg)`};
+    -ms-transform: ${(props) => `rotate(${props.rotate * -1}deg)`};
+    -o-transform: ${(props) => `rotate(${props.rotate * -1}deg)`};
+    transform: ${(props) => `rotate(${props.rotate * -1}deg)`};
+
+    @media (max-width: 700px) {
+      top: 282px;
+      left: 150px;
+    }
+  }
+
+  .circle .box:nth-child(5) {
+    top: 245px;
+    left: 35px;
+    transition: none !important;
+
+    -webkit-transform: ${(props) => `rotate(${props.rotate * -1}deg)`};
+    -moz-transform: ${(props) => `rotate(${props.rotate * -1}deg)`};
+    -ms-transform: ${(props) => `rotate(${props.rotate * -1}deg)`};
+    -o-transform: ${(props) => `rotate(${props.rotate * -1}deg)`};
+    transform: ${(props) => `rotate(${props.rotate * -1}deg)`};
+
+    @media (max-width: 700px) {
+      top: 210px;
+      left: 30px;
+    }
+  }
+
+  .circle .box:nth-child(6) {
+    top: 98px;
+    left: 35px;
+    transition: none !important;
+
+    -webkit-transform: ${(props) => `rotate(${props.rotate * -1}deg)`};
+    -moz-transform: ${(props) => `rotate(${props.rotate * -1}deg)`};
+    -ms-transform: ${(props) => `rotate(${props.rotate * -1}deg)`};
+    -o-transform: ${(props) => `rotate(${props.rotate * -1}deg)`};
+    transform: ${(props) => `rotate(${props.rotate * -1}deg)`};
+
+    @media (max-width: 700px) {
+      top: 84px;
+      left: 30px;
+    }
+  }
+`;
+
 const BoxWrapper = styled(Wrapper)`
   padding: 0 30px;
   flex-direction: row;
@@ -79,7 +247,7 @@ const TextHover = styled(Text)`
 `;
 
 const IconBox = styled(Wrapper)`
-  width: ${(props) => props.width || `130px`};
+  width: ${(props) => props.width || `70px`};
   cursor: pointer;
 
   ${Image} {
@@ -122,7 +290,7 @@ const ButtonWrapper = styled(Wrapper)`
   margin: 0 0 0 -65px;
 
   &:hover {
-    .circle {
+    .circle2 {
       width: 30px;
       height: 30px;
     }
@@ -197,6 +365,33 @@ const AppFooter = () => {
   const router = useRouter();
   const Vue = router.Vue;
 
+  const data = {
+    1: [
+      [6, 5],
+      [2, 3, 4],
+    ],
+    2: [
+      [1, 6],
+      [3, 4, 5],
+    ],
+    3: [
+      [2, 1],
+      [4, 5, 6],
+    ],
+    4: [
+      [3, 2],
+      [5, 6, 1],
+    ],
+    5: [
+      [4, 3],
+      [6, 1, 2],
+    ],
+    6: [
+      [5, 4],
+      [1, 2, 3],
+    ],
+  };
+
   ////// HOOKS //////
 
   const [tab, setTab] = useState(false);
@@ -207,6 +402,9 @@ const AppFooter = () => {
 
   const { me, st_logoutDone } = useSelector((state) => state.user);
   const dispatch = useDispatch();
+
+  const [rotate, setRotate] = useState(0);
+  const [currentMenu, setCurrentMenu] = useState(1);
 
   ////// REDUX //////
 
@@ -263,10 +461,6 @@ const AppFooter = () => {
 
   return (
     <>
-      {/* <Wrapper zIndex={`100000`} bgColor={Theme.black2_C} height={`300px`}>
-        <RotateMenu dataSource={data} onClick={(e, d) => console.log(d, e)} />
-      </Wrapper> */}
-
       <Wrapper bgColor={width < 700 ? Theme.white_C : Theme.lightGrey_C}>
         <Wrapper
           position={tab ? `fixed` : ``}
@@ -278,13 +472,13 @@ const AppFooter = () => {
           bgColor={tab ? `rgba(0,0,0,0.8)` : Theme.white_C}
           zIndex={`1000`}
           overflow={tab ? `hidden` : ``}
-          onClick={() => {
-            if (tab) {
-              tabToggle();
-            } else {
-              return;
-            }
-          }}
+          // onClick={() => {
+          //   if (tab) {
+          //     tabToggle();
+          //   } else {
+          //     return;
+          //   }
+          // }}
         >
           <Wrapper
             width={`auto`}
@@ -367,6 +561,7 @@ const AppFooter = () => {
                   tension={200}
                   centerContent={
                     <Wrapper
+                      opacity={tab ? `0` : `1`}
                       width={`100px`}
                       height={`100px`}
                       radius={`50%`}
@@ -378,7 +573,7 @@ const AppFooter = () => {
                         height={`45px`}
                         radius={`50%`}
                         bgColor={Theme.white_C}
-                        className="circle"
+                        className="circle2"
                       ></Wrapper>
                     </Wrapper>
                   }
@@ -387,7 +582,6 @@ const AppFooter = () => {
                   orbitStyle={(defaultStyle) => ({
                     ...defaultStyle,
                     borderWidth: 0,
-                    background: "rgba(255,255,255,0.8)",
                   })}
                   open={tab}
                   onClick={tabToggle}
@@ -395,7 +589,7 @@ const AppFooter = () => {
                   orbitRadius={width < 700 ? 170 : 200}
                   rotation={-30}
                 >
-                  <IconBox
+                  {/* <IconBox
                     display={tab ? `flex` : `none`}
                     margin={`-70px 0 0`}
                     width={width < 700 ? `100px !important` : `130px`}
@@ -499,7 +693,181 @@ const AppFooter = () => {
                     >
                       대용량 박스
                     </Text>
-                  </IconBox>
+                  </IconBox> */}
+
+                  <FirstDisplay
+                    className="wrapper"
+                    rotate={rotate}
+                    zIndex={`1000 !important`}
+                    position={`relative`}
+                    display={tab ? `flex` : `none`}
+                  >
+                    <Wrapper className="circle" position={`relative`}>
+                      <Wrapper
+                        className="box"
+                        onClick={() => {
+                          const firIndex = data[currentMenu][0].indexOf(1);
+
+                          if (firIndex !== -1) {
+                            setRotate(rotate + 60 * (firIndex + 1));
+                          } else {
+                            const secIndex = data[currentMenu][1].indexOf(1);
+                            setRotate(rotate - 60 * (secIndex + 1));
+                          }
+
+                          setCurrentMenu(1);
+                        }}
+                      >
+                        <IconBox>
+                          <Image
+                            src={`https://4leaf-s3.s3.ap-northeast-2.amazonaws.com/iobox/assets/images/main/iobox_dial.png`}
+                            alt={`icon`}
+                            width={width < 700 ? `30px` : `40px`}
+                          />
+                          <Text fontSize={`0.8rem`}>아이오 박스</Text>
+                        </IconBox>
+                      </Wrapper>
+                      <Wrapper
+                        className="box"
+                        onClick={() => {
+                          const firIndex = data[currentMenu][0].indexOf(2);
+
+                          if (firIndex !== -1) {
+                            setRotate(rotate + 60 * (firIndex + 1));
+                          } else {
+                            const secIndex = data[currentMenu][1].indexOf(2);
+
+                            setRotate(rotate - 60 * (secIndex + 1));
+                          }
+
+                          setCurrentMenu(2);
+                        }}
+                      >
+                        <IconBox>
+                          <Image
+                            src={`https://4leaf-s3.s3.ap-northeast-2.amazonaws.com/iobox/assets/images/main/hagner_dial.png`}
+                            alt={`icon`}
+                            width={width < 700 ? `25px` : `32px`}
+                          />
+                          <Text fontSize={`0.8rem`}>행거박스</Text>
+                        </IconBox>
+                      </Wrapper>
+                      <Wrapper
+                        className="box"
+                        onClick={() => {
+                          const firIndex = data[currentMenu][0].indexOf(3);
+                          if (firIndex !== -1) {
+                            setRotate(rotate + 60 * (firIndex + 1));
+                          } else {
+                            const secIndex = data[currentMenu][1].indexOf(3);
+                            setRotate(rotate - 60 * (secIndex + 1));
+                          }
+
+                          setCurrentMenu(3);
+                        }}
+                      >
+                        <IconBox>
+                          <Image
+                            src={`https://4leaf-s3.s3.ap-northeast-2.amazonaws.com/iobox/assets/images/main/large_dial.png`}
+                            alt={`icon`}
+                            width={width < 700 ? `30px` : `40px`}
+                          />
+                          <Text fontSize={`0.8rem`}>대용량 박스</Text>
+                        </IconBox>
+                      </Wrapper>
+                      <Wrapper
+                        className="box"
+                        onClick={() => {
+                          const firIndex = data[currentMenu][0].indexOf(4);
+                          if (firIndex !== -1) {
+                            setRotate(rotate + 60 * (firIndex + 1));
+                          } else {
+                            const secIndex = data[currentMenu][1].indexOf(4);
+                            setRotate(rotate - 60 * (secIndex + 1));
+                          }
+
+                          setCurrentMenu(4);
+                        }}
+                      >
+                        <IconBox>
+                          <Image
+                            src={`https://4leaf-s3.s3.ap-northeast-2.amazonaws.com/iobox/assets/images/main/box_dial.png`}
+                            alt={`icon`}
+                            width={width < 700 ? `50px` : `60px`}
+                          />
+                          <Text fontSize={`0.7rem`}>텐트보관 박스</Text>
+                        </IconBox>
+                      </Wrapper>
+
+                      <Wrapper
+                        className="box"
+                        onClick={() => {
+                          const firIndex = data[currentMenu][0].indexOf(5);
+                          if (firIndex !== -1) {
+                            setRotate(rotate + 60 * (firIndex + 1));
+                          } else {
+                            const secIndex = data[currentMenu][1].indexOf(5);
+                            setRotate(rotate - 60 * (secIndex + 1));
+                          }
+
+                          setCurrentMenu(5);
+                        }}
+                      >
+                        <IconBox>
+                          <Image
+                            src={`https://4leaf-s3.s3.ap-northeast-2.amazonaws.com/iobox/assets/images/main/bullet_dial.png`}
+                            alt={`icon`}
+                            width={width < 700 ? `50px` : `60px`}
+                          />
+                          <Text fontSize={`0.8rem`}>총알배송</Text>
+                        </IconBox>
+                      </Wrapper>
+                      <Wrapper
+                        className="box"
+                        onClick={() => {
+                          const firIndex = data[currentMenu][0].indexOf(6);
+                          if (firIndex !== -1) {
+                            setRotate(rotate + 60 * (firIndex + 1));
+                          } else {
+                            const secIndex = data[currentMenu][1].indexOf(6);
+                            setRotate(rotate - 60 * (secIndex + 1));
+                          }
+
+                          setCurrentMenu(6);
+                        }}
+                      >
+                        <IconBox>
+                          <Image
+                            src={`https://4leaf-s3.s3.ap-northeast-2.amazonaws.com/iobox/assets/images/main/truck_dial.png`}
+                            alt={`icon`}
+                            width={width < 700 ? `40px` : `50px`}
+                          />
+                          <Text fontSize={`0.8rem`}>배송현황</Text>
+                        </IconBox>
+                      </Wrapper>
+                    </Wrapper>
+
+                    <Wrapper
+                      onClick={tabToggle}
+                      position={`absolute`}
+                      top={`calc(50% - 50px)`}
+                      left={`calc(50% - 50px)`}
+                      width={`100px`}
+                      height={`100px`}
+                      radius={`50%`}
+                      zIndex={`1000 !important`}
+                      className={"ajklsuajksdnajksdnajksdn"}
+                      bgColor={`linear-gradient(90deg,rgb(249, 2, 80),rgb(247, 141, 150),rgb(242, 146, 98),rgb(241, 115, 80))`}
+                    >
+                      <Wrapper
+                        width={`45px`}
+                        height={`45px`}
+                        radius={`50%`}
+                        bgColor={Theme.white_C}
+                        className="circle2"
+                      ></Wrapper>
+                    </Wrapper>
+                  </FirstDisplay>
                 </Planet>
               </Wrapper>
             </ButtonWrapper>
@@ -722,28 +1090,6 @@ const AppFooter = () => {
             )}
           </Wrapper>
           <Footer />
-          {/* <Wrapper
-            bgColor={Theme.basicTheme_C}
-            padding={`50px`}
-            color={Theme.white_C}
-            dr={`row`}
-            ju={`space-between`}
-            display={tab ? `none` : `flex`}
-          >
-            <Image
-              width={`50px`}
-              src={`https://4leaf-s3.s3.ap-northeast-2.amazonaws.com/iobox/assets/images/logo/LOGO_W.png`}
-            />
-
-            <Wrapper width={`auto`} al={`flex-start`}>
-              <Text>상호명 : io박스</Text>
-              <Text>사업자등록번호 : 283-87-02507</Text>
-              <Text>대표자명 : 박성찬, 김우현</Text>
-              <Text>주소 : 경기도 의정부시 오목로225번길 105, 5층</Text>
-              <Text>대표번호 : 1644-2753</Text>
-              <Text>이메일 : ebone0910@gmail.com</Text>
-            </Wrapper>
-          </Wrapper> */}
         </Wrapper>
       </Wrapper>
     </>
