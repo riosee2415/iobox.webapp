@@ -84,10 +84,9 @@ const GlobalStyles = createGlobalStyle`
   }
 
 
-  .slick-active {
+  .center .slick-active  {
     font-size : 20px !important;
     border-bottom : 1px solid ${(props) => props.theme.basicTheme_C} !important;
-
   }
 
   .ant-drawer-content-wrapper{
