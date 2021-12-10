@@ -124,41 +124,62 @@ const Index = () => {
   }, [tab]);
 
   const handleFormSubmit = () => {
-    dispatch({
-      type: SUBSCRIPTION_CREATE_REQUEST,
-      data: {
-        // 카드번호
-        cardNumber: "4092160302741999",
-        // 유효기간
-        expiry: "2024-07",
-        // 생년월일
-        birth: "920131",
-        // 비밀번호 앞 두자리
-        pwd2Digit: "74",
-        // 고유 코드
-        customer_uid: "gildong_0001_1234",
-      },
-    });
-    // axios({
-    //   url: "https://apis.tracker.delivery/carriers/kr.cjlogistics/tracks/1111111111111",
-    //   method: "get",
-    //   // url: "{빌링키 발급 요청을 받을 서비스 URL}", // 예: https://www.myservice.com/subscription/issue-billing
-    //   // method: "post",
-    //   // data: {
-    //   //   // 카드번호
-    //   //   cardNumber: "4092160302741999",
-    //   //   // 유효기간
-    //   //   expiry: "0724",
-    //   //   // 생년월일
-    //   //   birth: "920131",
-    //   //   // 비밀번호 앞 두자리
-    //   //   pwd2Digit: "74",
-    //   //   // 고유 코드
-    //   //   customer_uid: "gildong_0001_1234",
-    //   // },
-    // }).then((rsp) => {
-    //   console.log(rsp);
+    // dispatch({
+    //   type: SUBSCRIPTION_CREATE_REQUEST,
+    //   data: {
+    //     // 카드번호
+    //     cardNumber: "4092160302741999",
+    //     // 유효기간
+    //     expiry: "2024-07",
+    //     // 생년월일
+    //     birth: "920131",
+    //     // 비밀번호 앞 두자리
+    //     pwd2Digit: "74",
+    //     // 고유 코드
+    //     customer_uid: "gildong_0001_1234",
+    //   },
     // });
+
+    const d = new Date();
+
+    let year = d.getFullYear() + "";
+    let month = d.getMonth() + 1 + "";
+    let date = d.getDate() + "";
+    let hour = d.getHours() + "";
+    let min = d.getMinutes() + "";
+    let sec = d.getSeconds() + "";
+    let mSec = d.getMilliseconds() + "";
+
+    month = month < 10 ? "0" + month : month;
+    date = date < 10 ? "0" + date : date;
+    hour = hour < 10 ? "0" + hour : hour;
+    min = min < 10 ? "0" + min : min;
+    sec = sec < 10 ? "0" + sec : sec;
+    mSec = mSec < 10 ? "0" + mSec : mSec;
+
+    let orderPK = "ORD" + year + month + date + hour + min + sec + mSec;
+
+    const IMP = window.IMP;
+
+    IMP.request_pay(
+      {
+        pay_method: "card",
+        buyer_name: inputName.value,
+        buyer_mobile: inputMobile.value,
+        merchant_uid: orderPK,
+        name: "상자",
+        amount: storeData.totalPay + "",
+      },
+      async (rsp) => {
+        if (rsp.success) {
+          console.log(rsp.success);
+        } else {
+          console.log(rsp.error_msg);
+          if (rsp.error_msg !== "사용자가 결제를 취소하셨습니다") {
+          }
+        }
+      }
+    );
   };
 
   ////// DATAVIEW //////

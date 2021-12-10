@@ -88,6 +88,10 @@ const FirstDisplay = styled(Wrapper)`
     }
   }
 
+  .box {
+    transition: all;
+  }
+
   .circle .box:nth-child(1) {
     top: 21px;
     left: 175px;
@@ -706,16 +710,20 @@ const AppFooter = () => {
                       <Wrapper
                         className="box"
                         onClick={() => {
-                          const firIndex = data[currentMenu][0].indexOf(1);
-
-                          if (firIndex !== -1) {
-                            setRotate(rotate + 60 * (firIndex + 1));
+                          if (currentMenu === 1) {
+                            moveLinkHandler(`/iobox?type=iobox`);
                           } else {
-                            const secIndex = data[currentMenu][1].indexOf(1);
-                            setRotate(rotate - 60 * (secIndex + 1));
-                          }
+                            const firIndex = data[currentMenu][0].indexOf(1);
 
-                          setCurrentMenu(1);
+                            if (firIndex !== -1) {
+                              setRotate(rotate + 60 * (firIndex + 1));
+                            } else {
+                              const secIndex = data[currentMenu][1].indexOf(1);
+                              setRotate(rotate - 60 * (secIndex + 1));
+                            }
+
+                            setCurrentMenu(1);
+                          }
                         }}
                       >
                         <IconBox>
@@ -730,17 +738,21 @@ const AppFooter = () => {
                       <Wrapper
                         className="box"
                         onClick={() => {
-                          const firIndex = data[currentMenu][0].indexOf(2);
-
-                          if (firIndex !== -1) {
-                            setRotate(rotate + 60 * (firIndex + 1));
+                          if (currentMenu === 2) {
+                            moveLinkHandler(`/iobox?type=hangerBox`);
                           } else {
-                            const secIndex = data[currentMenu][1].indexOf(2);
+                            const firIndex = data[currentMenu][0].indexOf(2);
 
-                            setRotate(rotate - 60 * (secIndex + 1));
+                            if (firIndex !== -1) {
+                              setRotate(rotate + 60 * (firIndex + 1));
+                            } else {
+                              const secIndex = data[currentMenu][1].indexOf(2);
+
+                              setRotate(rotate - 60 * (secIndex + 1));
+                            }
+
+                            setCurrentMenu(2);
                           }
-
-                          setCurrentMenu(2);
                         }}
                       >
                         <IconBox>
@@ -755,15 +767,19 @@ const AppFooter = () => {
                       <Wrapper
                         className="box"
                         onClick={() => {
-                          const firIndex = data[currentMenu][0].indexOf(3);
-                          if (firIndex !== -1) {
-                            setRotate(rotate + 60 * (firIndex + 1));
+                          if (currentMenu === 3) {
+                            moveLinkHandler(`/iobox?type=tentBox`);
                           } else {
-                            const secIndex = data[currentMenu][1].indexOf(3);
-                            setRotate(rotate - 60 * (secIndex + 1));
-                          }
+                            const firIndex = data[currentMenu][0].indexOf(3);
+                            if (firIndex !== -1) {
+                              setRotate(rotate + 60 * (firIndex + 1));
+                            } else {
+                              const secIndex = data[currentMenu][1].indexOf(3);
+                              setRotate(rotate - 60 * (secIndex + 1));
+                            }
 
-                          setCurrentMenu(3);
+                            setCurrentMenu(3);
+                          }
                         }}
                       >
                         <IconBox>
@@ -778,15 +794,19 @@ const AppFooter = () => {
                       <Wrapper
                         className="box"
                         onClick={() => {
-                          const firIndex = data[currentMenu][0].indexOf(4);
-                          if (firIndex !== -1) {
-                            setRotate(rotate + 60 * (firIndex + 1));
+                          if (currentMenu === 4) {
+                            moveLinkHandler(`/iobox?type=bigBox`);
                           } else {
-                            const secIndex = data[currentMenu][1].indexOf(4);
-                            setRotate(rotate - 60 * (secIndex + 1));
-                          }
+                            const firIndex = data[currentMenu][0].indexOf(4);
+                            if (firIndex !== -1) {
+                              setRotate(rotate + 60 * (firIndex + 1));
+                            } else {
+                              const secIndex = data[currentMenu][1].indexOf(4);
+                              setRotate(rotate - 60 * (secIndex + 1));
+                            }
 
-                          setCurrentMenu(4);
+                            setCurrentMenu(4);
+                          }
                         }}
                       >
                         <IconBox>
@@ -802,15 +822,19 @@ const AppFooter = () => {
                       <Wrapper
                         className="box"
                         onClick={() => {
-                          const firIndex = data[currentMenu][0].indexOf(5);
-                          if (firIndex !== -1) {
-                            setRotate(rotate + 60 * (firIndex + 1));
+                          if (currentMenu === 5) {
+                            moveLinkHandler(`/iobox?type=tentBox`);
                           } else {
-                            const secIndex = data[currentMenu][1].indexOf(5);
-                            setRotate(rotate - 60 * (secIndex + 1));
-                          }
+                            const firIndex = data[currentMenu][0].indexOf(5);
+                            if (firIndex !== -1) {
+                              setRotate(rotate + 60 * (firIndex + 1));
+                            } else {
+                              const secIndex = data[currentMenu][1].indexOf(5);
+                              setRotate(rotate - 60 * (secIndex + 1));
+                            }
 
-                          setCurrentMenu(5);
+                            setCurrentMenu(5);
+                          }
                         }}
                       >
                         <IconBox>
@@ -825,15 +849,19 @@ const AppFooter = () => {
                       <Wrapper
                         className="box"
                         onClick={() => {
-                          const firIndex = data[currentMenu][0].indexOf(6);
-                          if (firIndex !== -1) {
-                            setRotate(rotate + 60 * (firIndex + 1));
+                          if (currentMenu === 6) {
+                            moveLinkHandler(`/locker`);
                           } else {
-                            const secIndex = data[currentMenu][1].indexOf(6);
-                            setRotate(rotate - 60 * (secIndex + 1));
-                          }
+                            const firIndex = data[currentMenu][0].indexOf(6);
+                            if (firIndex !== -1) {
+                              setRotate(rotate + 60 * (firIndex + 1));
+                            } else {
+                              const secIndex = data[currentMenu][1].indexOf(6);
+                              setRotate(rotate - 60 * (secIndex + 1));
+                            }
 
-                          setCurrentMenu(6);
+                            setCurrentMenu(6);
+                          }
                         }}
                       >
                         <IconBox>
