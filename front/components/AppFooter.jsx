@@ -47,6 +47,7 @@ const FirstDisplay = styled(Wrapper)`
     height: 420px;
     border-radius: 50%;
     background: rgba(255, 255, 255, 0.5);
+    z-index: 1000 !important;
     /* rotate */
     -webkit-transform: ${(props) => `rotate(${props.rotate}deg)`};
     -moz-transform: ${(props) => `rotate(${props.rotate}deg)`};
@@ -77,6 +78,7 @@ const FirstDisplay = styled(Wrapper)`
     top: 0;
     left: 0;
     transition: none !important;
+    cursor: pointer;
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -92,6 +94,7 @@ const FirstDisplay = styled(Wrapper)`
     top: 21px;
     left: 175px;
     transition: none !important;
+    cursor: pointer;
 
     -webkit-transform: ${(props) => `rotate(${props.rotate * -1}deg)`};
     -moz-transform: ${(props) => `rotate(${props.rotate * -1}deg)`};
@@ -109,6 +112,7 @@ const FirstDisplay = styled(Wrapper)`
     top: 98px;
     left: 308px;
     transition: none !important;
+    cursor: pointer;
 
     -webkit-transform: ${(props) => `rotate(${props.rotate * -1}deg)`};
     -moz-transform: ${(props) => `rotate(${props.rotate * -1}deg)`};
@@ -126,6 +130,7 @@ const FirstDisplay = styled(Wrapper)`
     top: 245px;
     left: 308px;
     transition: none !important;
+    cursor: pointer;
 
     -webkit-transform: ${(props) => `rotate(${props.rotate * -1}deg)`};
     -moz-transform: ${(props) => `rotate(${props.rotate * -1}deg)`};
@@ -143,6 +148,7 @@ const FirstDisplay = styled(Wrapper)`
     top: 329px;
     left: 175px;
     transition: none !important;
+    cursor: pointer;
 
     -webkit-transform: ${(props) => `rotate(${props.rotate * -1}deg)`};
     -moz-transform: ${(props) => `rotate(${props.rotate * -1}deg)`};
@@ -160,6 +166,7 @@ const FirstDisplay = styled(Wrapper)`
     top: 245px;
     left: 35px;
     transition: none !important;
+    cursor: pointer;
 
     -webkit-transform: ${(props) => `rotate(${props.rotate * -1}deg)`};
     -moz-transform: ${(props) => `rotate(${props.rotate * -1}deg)`};
@@ -177,6 +184,7 @@ const FirstDisplay = styled(Wrapper)`
     top: 98px;
     left: 35px;
     transition: none !important;
+    cursor: pointer;
 
     -webkit-transform: ${(props) => `rotate(${props.rotate * -1}deg)`};
     -moz-transform: ${(props) => `rotate(${props.rotate * -1}deg)`};
@@ -469,16 +477,9 @@ const AppFooter = () => {
           margin={tab ? (width < 700 ? `0` : `0 0 0 -250px`) : ``}
           width={width < 700 ? `100%` : `500px`}
           height={tab ? `100vh` : `auto`}
-          bgColor={tab ? `rgba(0,0,0,0.8)` : Theme.white_C}
           zIndex={`1000`}
           overflow={tab ? `hidden` : ``}
-          // onClick={() => {
-          //   if (tab) {
-          //     tabToggle();
-          //   } else {
-          //     return;
-          //   }
-          // }}
+          bgColor={tab ? `rgba(0,0,0,0.8)` : Theme.white_C}
         >
           <Wrapper
             width={`auto`}
@@ -555,7 +556,7 @@ const AppFooter = () => {
               <Wrapper
                 margin={`0 0 0 -100px`}
                 transition={`0.5s`}
-                zIndex={`100`}
+                zIndex={`1000`}
               >
                 <Planet
                   tension={200}
@@ -577,6 +578,7 @@ const AppFooter = () => {
                       ></Wrapper>
                     </Wrapper>
                   }
+                  hideOrbit={true}
                   bounce={false}
                   friction={0}
                   orbitStyle={(defaultStyle) => ({
@@ -585,7 +587,6 @@ const AppFooter = () => {
                   })}
                   open={tab}
                   onClick={tabToggle}
-                  autoClose
                   orbitRadius={width < 700 ? 170 : 200}
                   rotation={-30}
                 >
@@ -694,180 +695,181 @@ const AppFooter = () => {
                       대용량 박스
                     </Text>
                   </IconBox> */}
-
-                  <FirstDisplay
-                    className="wrapper"
-                    rotate={rotate}
-                    zIndex={`1000 !important`}
-                    position={`relative`}
-                    display={tab ? `flex` : `none`}
-                  >
-                    <Wrapper className="circle" position={`relative`}>
-                      <Wrapper
-                        className="box"
-                        onClick={() => {
-                          const firIndex = data[currentMenu][0].indexOf(1);
-
-                          if (firIndex !== -1) {
-                            setRotate(rotate + 60 * (firIndex + 1));
-                          } else {
-                            const secIndex = data[currentMenu][1].indexOf(1);
-                            setRotate(rotate - 60 * (secIndex + 1));
-                          }
-
-                          setCurrentMenu(1);
-                        }}
-                      >
-                        <IconBox>
-                          <Image
-                            src={`https://4leaf-s3.s3.ap-northeast-2.amazonaws.com/iobox/assets/images/main/iobox_dial.png`}
-                            alt={`icon`}
-                            width={width < 700 ? `30px` : `40px`}
-                          />
-                          <Text fontSize={`0.8rem`}>아이오 박스</Text>
-                        </IconBox>
-                      </Wrapper>
-                      <Wrapper
-                        className="box"
-                        onClick={() => {
-                          const firIndex = data[currentMenu][0].indexOf(2);
-
-                          if (firIndex !== -1) {
-                            setRotate(rotate + 60 * (firIndex + 1));
-                          } else {
-                            const secIndex = data[currentMenu][1].indexOf(2);
-
-                            setRotate(rotate - 60 * (secIndex + 1));
-                          }
-
-                          setCurrentMenu(2);
-                        }}
-                      >
-                        <IconBox>
-                          <Image
-                            src={`https://4leaf-s3.s3.ap-northeast-2.amazonaws.com/iobox/assets/images/main/hagner_dial.png`}
-                            alt={`icon`}
-                            width={width < 700 ? `25px` : `32px`}
-                          />
-                          <Text fontSize={`0.8rem`}>행거박스</Text>
-                        </IconBox>
-                      </Wrapper>
-                      <Wrapper
-                        className="box"
-                        onClick={() => {
-                          const firIndex = data[currentMenu][0].indexOf(3);
-                          if (firIndex !== -1) {
-                            setRotate(rotate + 60 * (firIndex + 1));
-                          } else {
-                            const secIndex = data[currentMenu][1].indexOf(3);
-                            setRotate(rotate - 60 * (secIndex + 1));
-                          }
-
-                          setCurrentMenu(3);
-                        }}
-                      >
-                        <IconBox>
-                          <Image
-                            src={`https://4leaf-s3.s3.ap-northeast-2.amazonaws.com/iobox/assets/images/main/large_dial.png`}
-                            alt={`icon`}
-                            width={width < 700 ? `30px` : `40px`}
-                          />
-                          <Text fontSize={`0.8rem`}>대용량 박스</Text>
-                        </IconBox>
-                      </Wrapper>
-                      <Wrapper
-                        className="box"
-                        onClick={() => {
-                          const firIndex = data[currentMenu][0].indexOf(4);
-                          if (firIndex !== -1) {
-                            setRotate(rotate + 60 * (firIndex + 1));
-                          } else {
-                            const secIndex = data[currentMenu][1].indexOf(4);
-                            setRotate(rotate - 60 * (secIndex + 1));
-                          }
-
-                          setCurrentMenu(4);
-                        }}
-                      >
-                        <IconBox>
-                          <Image
-                            src={`https://4leaf-s3.s3.ap-northeast-2.amazonaws.com/iobox/assets/images/main/box_dial.png`}
-                            alt={`icon`}
-                            width={width < 700 ? `50px` : `60px`}
-                          />
-                          <Text fontSize={`0.7rem`}>텐트보관 박스</Text>
-                        </IconBox>
-                      </Wrapper>
-
-                      <Wrapper
-                        className="box"
-                        onClick={() => {
-                          const firIndex = data[currentMenu][0].indexOf(5);
-                          if (firIndex !== -1) {
-                            setRotate(rotate + 60 * (firIndex + 1));
-                          } else {
-                            const secIndex = data[currentMenu][1].indexOf(5);
-                            setRotate(rotate - 60 * (secIndex + 1));
-                          }
-
-                          setCurrentMenu(5);
-                        }}
-                      >
-                        <IconBox>
-                          <Image
-                            src={`https://4leaf-s3.s3.ap-northeast-2.amazonaws.com/iobox/assets/images/main/bullet_dial.png`}
-                            alt={`icon`}
-                            width={width < 700 ? `50px` : `60px`}
-                          />
-                          <Text fontSize={`0.8rem`}>총알배송</Text>
-                        </IconBox>
-                      </Wrapper>
-                      <Wrapper
-                        className="box"
-                        onClick={() => {
-                          const firIndex = data[currentMenu][0].indexOf(6);
-                          if (firIndex !== -1) {
-                            setRotate(rotate + 60 * (firIndex + 1));
-                          } else {
-                            const secIndex = data[currentMenu][1].indexOf(6);
-                            setRotate(rotate - 60 * (secIndex + 1));
-                          }
-
-                          setCurrentMenu(6);
-                        }}
-                      >
-                        <IconBox>
-                          <Image
-                            src={`https://4leaf-s3.s3.ap-northeast-2.amazonaws.com/iobox/assets/images/main/truck_dial.png`}
-                            alt={`icon`}
-                            width={width < 700 ? `40px` : `50px`}
-                          />
-                          <Text fontSize={`0.8rem`}>배송현황</Text>
-                        </IconBox>
-                      </Wrapper>
-                    </Wrapper>
-
-                    <Wrapper
-                      onClick={tabToggle}
-                      position={`absolute`}
-                      top={`calc(50% - 50px)`}
-                      left={`calc(50% - 50px)`}
-                      width={`100px`}
-                      height={`100px`}
-                      radius={`50%`}
-                      zIndex={`1000 !important`}
-                      className={"ajklsuajksdnajksdnajksdn"}
-                      bgColor={`linear-gradient(90deg,rgb(249, 2, 80),rgb(247, 141, 150),rgb(242, 146, 98),rgb(241, 115, 80))`}
+                  {tab && (
+                    <FirstDisplay
+                      className="wrapper"
+                      rotate={rotate}
+                      zIndex={`10000 !important`}
+                      position={`relative`}
+                      display={tab ? `flex` : `none`}
                     >
+                      <Wrapper className="circle" position={`relative`}>
+                        <Wrapper
+                          className="box"
+                          onClick={() => {
+                            const firIndex = data[currentMenu][0].indexOf(1);
+
+                            if (firIndex !== -1) {
+                              setRotate(rotate + 60 * (firIndex + 1));
+                            } else {
+                              const secIndex = data[currentMenu][1].indexOf(1);
+                              setRotate(rotate - 60 * (secIndex + 1));
+                            }
+
+                            setCurrentMenu(1);
+                          }}
+                        >
+                          <IconBox>
+                            <Image
+                              src={`https://4leaf-s3.s3.ap-northeast-2.amazonaws.com/iobox/assets/images/main/iobox_dial.png`}
+                              alt={`icon`}
+                              width={width < 700 ? `30px` : `40px`}
+                            />
+                            <Text fontSize={`0.8rem`}>아이오 박스</Text>
+                          </IconBox>
+                        </Wrapper>
+                        <Wrapper
+                          className="box"
+                          onClick={() => {
+                            const firIndex = data[currentMenu][0].indexOf(2);
+
+                            if (firIndex !== -1) {
+                              setRotate(rotate + 60 * (firIndex + 1));
+                            } else {
+                              const secIndex = data[currentMenu][1].indexOf(2);
+
+                              setRotate(rotate - 60 * (secIndex + 1));
+                            }
+
+                            setCurrentMenu(2);
+                          }}
+                        >
+                          <IconBox>
+                            <Image
+                              src={`https://4leaf-s3.s3.ap-northeast-2.amazonaws.com/iobox/assets/images/main/hagner_dial.png`}
+                              alt={`icon`}
+                              width={width < 700 ? `25px` : `32px`}
+                            />
+                            <Text fontSize={`0.8rem`}>행거박스</Text>
+                          </IconBox>
+                        </Wrapper>
+                        <Wrapper
+                          className="box"
+                          onClick={() => {
+                            const firIndex = data[currentMenu][0].indexOf(3);
+                            if (firIndex !== -1) {
+                              setRotate(rotate + 60 * (firIndex + 1));
+                            } else {
+                              const secIndex = data[currentMenu][1].indexOf(3);
+                              setRotate(rotate - 60 * (secIndex + 1));
+                            }
+
+                            setCurrentMenu(3);
+                          }}
+                        >
+                          <IconBox>
+                            <Image
+                              src={`https://4leaf-s3.s3.ap-northeast-2.amazonaws.com/iobox/assets/images/main/large_dial.png`}
+                              alt={`icon`}
+                              width={width < 700 ? `30px` : `40px`}
+                            />
+                            <Text fontSize={`0.8rem`}>대용량 박스</Text>
+                          </IconBox>
+                        </Wrapper>
+                        <Wrapper
+                          className="box"
+                          onClick={() => {
+                            const firIndex = data[currentMenu][0].indexOf(4);
+                            if (firIndex !== -1) {
+                              setRotate(rotate + 60 * (firIndex + 1));
+                            } else {
+                              const secIndex = data[currentMenu][1].indexOf(4);
+                              setRotate(rotate - 60 * (secIndex + 1));
+                            }
+
+                            setCurrentMenu(4);
+                          }}
+                        >
+                          <IconBox>
+                            <Image
+                              src={`https://4leaf-s3.s3.ap-northeast-2.amazonaws.com/iobox/assets/images/main/box_dial.png`}
+                              alt={`icon`}
+                              width={width < 700 ? `50px` : `60px`}
+                            />
+                            <Text fontSize={`0.7rem`}>텐트보관 박스</Text>
+                          </IconBox>
+                        </Wrapper>
+
+                        <Wrapper
+                          className="box"
+                          onClick={() => {
+                            const firIndex = data[currentMenu][0].indexOf(5);
+                            if (firIndex !== -1) {
+                              setRotate(rotate + 60 * (firIndex + 1));
+                            } else {
+                              const secIndex = data[currentMenu][1].indexOf(5);
+                              setRotate(rotate - 60 * (secIndex + 1));
+                            }
+
+                            setCurrentMenu(5);
+                          }}
+                        >
+                          <IconBox>
+                            <Image
+                              src={`https://4leaf-s3.s3.ap-northeast-2.amazonaws.com/iobox/assets/images/main/bullet_dial.png`}
+                              alt={`icon`}
+                              width={width < 700 ? `50px` : `60px`}
+                            />
+                            <Text fontSize={`0.8rem`}>총알배송</Text>
+                          </IconBox>
+                        </Wrapper>
+                        <Wrapper
+                          className="box"
+                          onClick={() => {
+                            const firIndex = data[currentMenu][0].indexOf(6);
+                            if (firIndex !== -1) {
+                              setRotate(rotate + 60 * (firIndex + 1));
+                            } else {
+                              const secIndex = data[currentMenu][1].indexOf(6);
+                              setRotate(rotate - 60 * (secIndex + 1));
+                            }
+
+                            setCurrentMenu(6);
+                          }}
+                        >
+                          <IconBox>
+                            <Image
+                              src={`https://4leaf-s3.s3.ap-northeast-2.amazonaws.com/iobox/assets/images/main/truck_dial.png`}
+                              alt={`icon`}
+                              width={width < 700 ? `40px` : `50px`}
+                            />
+                            <Text fontSize={`0.8rem`}>배송현황</Text>
+                          </IconBox>
+                        </Wrapper>
+                      </Wrapper>
+
                       <Wrapper
-                        width={`45px`}
-                        height={`45px`}
+                        onClick={tabToggle}
+                        position={`absolute`}
+                        top={`calc(50% - 50px)`}
+                        left={`calc(50% - 50px)`}
+                        width={`100px`}
+                        height={`100px`}
                         radius={`50%`}
-                        bgColor={Theme.white_C}
-                        className="circle2"
-                      ></Wrapper>
-                    </Wrapper>
-                  </FirstDisplay>
+                        zIndex={`1000 !important`}
+                        className={"ajklsuajksdnajksdnajksdn"}
+                        bgColor={`linear-gradient(90deg,rgb(249, 2, 80),rgb(247, 141, 150),rgb(242, 146, 98),rgb(241, 115, 80))`}
+                      >
+                        <Wrapper
+                          width={`45px`}
+                          height={`45px`}
+                          radius={`50%`}
+                          bgColor={Theme.white_C}
+                          className="circle2"
+                        ></Wrapper>
+                      </Wrapper>
+                    </FirstDisplay>
+                  )}
                 </Planet>
               </Wrapper>
             </ButtonWrapper>
