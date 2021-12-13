@@ -43,8 +43,6 @@ const Fourleaf = ({ Component }) => {
           src="https://cdn.iamport.kr/js/iamport.payment-1.1.5.js"
         ></script>
 
-        <script src="rotatingMenu.js"></script>
-
         <script type="text/javascript" src="./customScript.js"></script>
       </Head>
       <Component />
