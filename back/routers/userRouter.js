@@ -405,12 +405,6 @@ router.post("/cardCreate", isLoggedIn, async (req, res, next) => {
 
     let orderPK = "USER_C" + year + month + date + hour + min + sec + mSec;
 
-    console.log(process.env.IMP_KEY, process.env.IMP_SECRET);
-    console.log(process.env.IMP_KEY, process.env.IMP_SECRET);
-    console.log(process.env.IMP_KEY, process.env.IMP_SECRET);
-    console.log(process.env.IMP_KEY, process.env.IMP_SECRET);
-    console.log(process.env.IMP_KEY, process.env.IMP_SECRET);
-
     const getToken = await axios({
       url: "https://api.iamport.kr/users/getToken",
       method: "post", // POST method
@@ -458,7 +452,7 @@ router.post("/cardCreate", isLoggedIn, async (req, res, next) => {
     } else {
       console.log(message);
       // 빌링키 발급 실패
-      res.send({ status: "failed", message });
+      return res.status(401).send("카드정보를 등록할 수 없습니다.");
     }
   } catch (error) {
     console.error(error);
