@@ -287,7 +287,6 @@ const CircleWrapper = styled(Wrapper)`
 
 const ButtonWrapper = styled(Wrapper)`
   position: absolute;
-
   left: 50%;
   cursor: pointer;
   width: auto;
@@ -477,12 +476,12 @@ const AppFooter = () => {
           height={tab ? `100vh` : `auto`}
           bgColor={tab ? `rgba(0,0,0,0.8)` : Theme.white_C}
           overflow={tab ? `hidden` : ``}
+          ju={tab ? `space-around` : `center`}
         >
           <Wrapper
             width={`auto`}
             al={`flex-start`}
             display={tab ? `flex` : `none`}
-            margin={width < 700 ? `0 0 200px` : `0 0 170px`}
           >
             <Image
               width={`60px`}
@@ -516,9 +515,9 @@ const AppFooter = () => {
 
           <Wrapper
             dr={`row`}
-            height={`100px`}
+            height={tab ? `150px` : `100px`}
             shadow={tab ? `none` : `0px -3px 10px ${Theme.grey_C}`}
-            position={width < 700 ? `relative` : ``}
+            position={`relative`}
           >
             <ButtonWrapper
               margin={
@@ -530,15 +529,7 @@ const AppFooter = () => {
                   ? `0 0 -50px -65px`
                   : `0 0 0 -65px`
               }
-              bottom={
-                tab
-                  ? width < 700
-                    ? `100px`
-                    : `280px`
-                  : width < 700
-                  ? `150px`
-                  : `50px`
-              }
+              bottom={`150px`}
               transition={`0.5s`}
             >
               <GradientText
