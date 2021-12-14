@@ -178,7 +178,7 @@ const Home = () => {
                   bold={true}
                   color={Theme.white_C}
                   fontSize={`3rem`}
-                  margin={width < 700 ? `0` : `30px 0 0`}
+                  margin={width < 700 ? `0` : `10px 0 0`}
                 >
                   맡아줘 내 짐!
                 </Text>
