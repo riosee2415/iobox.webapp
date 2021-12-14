@@ -26,13 +26,13 @@ import { END } from "redux-saga";
 const FirstDisplay = styled(Wrapper)`
   width: auto;
   position: absolute;
-  top: 0;
+  top: 20px;
   left: -210px;
   z-index: -1;
 
   @media (max-width: 700px) {
     top: -40px;
-    left: -93px;
+    left: -175px;
   }
   * {
     margin: 0;
@@ -465,15 +465,17 @@ const AppFooter = () => {
 
   return (
     <>
-      <Wrapper bgColor={width < 700 ? Theme.white_C : Theme.lightGrey_C}>
+      <Wrapper
+        bgColor={width < 700 ? Theme.white_C : Theme.lightGrey_C}
+        zIndex={`1000`}
+      >
         <Wrapper
           position={tab ? `fixed` : ``}
-          bottom={`0`}
-          left={`32.1%`}
+          top={`0`}
+          zIndex={`1000`}
           width={width < 700 ? `100%` : `500px`}
           height={tab ? `100vh` : `auto`}
           bgColor={tab ? `rgba(0,0,0,0.8)` : Theme.white_C}
-          zIndex={`1000`}
           overflow={tab ? `hidden` : ``}
         >
           <Wrapper
