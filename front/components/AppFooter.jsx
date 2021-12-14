@@ -469,8 +469,7 @@ const AppFooter = () => {
         <Wrapper
           position={tab ? `fixed` : ``}
           bottom={`0`}
-          left={width < 700 ? `0` : `50%`}
-          margin={width < 700 ? `0` : `0 0 0 -250px`}
+          left={`32.1%`}
           width={width < 700 ? `100%` : `500px`}
           height={tab ? `100vh` : `auto`}
           bgColor={tab ? `rgba(0,0,0,0.8)` : Theme.white_C}
