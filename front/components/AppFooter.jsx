@@ -515,7 +515,7 @@ const AppFooter = () => {
 
           <Wrapper
             dr={`row`}
-            height={tab ? `150px` : `100px`}
+            height={`100px`}
             shadow={tab ? `none` : `0px -3px 10px ${Theme.grey_C}`}
             position={`relative`}
           >
