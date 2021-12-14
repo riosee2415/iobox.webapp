@@ -25,13 +25,13 @@ import { END } from "redux-saga";
 
 const FirstDisplay = styled(Wrapper)`
   width: auto;
-
   position: absolute;
-  top: -40px;
-  left: -110px;
+  top: 0;
+  left: -210px;
   z-index: -1;
 
   @media (max-width: 700px) {
+    top: -40px;
     left: -93px;
   }
   * {
@@ -470,19 +470,12 @@ const AppFooter = () => {
           position={tab ? `fixed` : ``}
           bottom={`0`}
           left={width < 700 ? `0` : `50%`}
-          margin={tab ? (width < 700 ? `0` : `0 0 0 -250px`) : ``}
+          margin={width < 700 ? `0` : `0 0 0 -250px`}
           width={width < 700 ? `100%` : `500px`}
           height={tab ? `100vh` : `auto`}
           bgColor={tab ? `rgba(0,0,0,0.8)` : Theme.white_C}
           zIndex={`1000`}
           overflow={tab ? `hidden` : ``}
-          // onClick={() => {
-          //   if (tab) {
-          //     tabToggle();
-          //   } else {
-          //     return;
-          //   }
-          // }}
         >
           <Wrapper
             width={`auto`}
@@ -556,11 +549,7 @@ const AppFooter = () => {
                 내 물건 맡기기
               </GradientText>
 
-              <Wrapper
-                margin={`0 0 0 -100px`}
-                transition={`0.5s`}
-                zIndex={`100`}
-              >
+              <Wrapper margin={`0 0 0 -100px`} zIndex={`100`}>
                 <Planet
                   tension={200}
                   centerContent={
@@ -581,8 +570,6 @@ const AppFooter = () => {
                       ></Wrapper>
                     </Wrapper>
                   }
-                  bounce={false}
-                  friction={0}
                   orbitStyle={(defaultStyle) => ({
                     ...defaultStyle,
                     borderWidth: 0,
@@ -590,7 +577,6 @@ const AppFooter = () => {
                   open={tab}
                   onClick={tabToggle}
                   orbitRadius={width < 700 ? 170 : 200}
-                  rotation={-30}
                 >
                   <FirstDisplay
                     className="wrapper"
