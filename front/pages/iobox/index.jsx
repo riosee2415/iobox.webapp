@@ -23,7 +23,7 @@ import {
 } from "@ant-design/icons";
 import { useRouter } from "next/dist/client/router";
 import BoxSlider from "../../components/slide/BoxSlider";
-import { Checkbox, Radio } from "antd";
+import { Checkbox, message, Radio } from "antd";
 import { numberWithCommas } from "../../components/commonUtils";
 import Footer from "../../components/Footer";
 
@@ -142,6 +142,19 @@ const Index = () => {
     setTotalPay(tempPay);
   }, [currentBuy]);
 
+  useEffect(() => {
+    const data = JSON.parse(sessionStorage.getItem("DATA"));
+
+    console.log(data);
+    if (data) {
+      setCurrentBuy(data.boxs ? data.boxs : [0, 0, 0, 0]);
+      setTotalPay(data.totalPay);
+      setType(data.type);
+    }
+
+    sessionStorage.setItem("DATA", null);
+  }, []);
+
   ////// TOGGLE ///////
 
   const moreTabToggle = useCallback(() => {
@@ -149,6 +162,24 @@ const Index = () => {
   }, [moreTab]);
 
   ///// HANDLER //////
+  const nextStepHandler = useCallback(() => {
+    if (!type || type.trim() === "") {
+      return message.error("보관 기간을 선택해주세요.");
+    }
+    if (totalPay === 0) {
+      return message.error("박스를 선택해주세요.");
+    }
+
+    moveLinkHandler("/iobox/service");
+    sessionStorage.setItem(
+      "DATA",
+      JSON.stringify({
+        boxs: currentBuy,
+        type,
+        totalPay,
+      })
+    );
+  }, [type, totalPay]);
   const numberHandler = useCallback(
     (value) => {
       let tempArr = currentBuy.map((data, idx) => {
@@ -390,17 +421,7 @@ const Index = () => {
             <CommonButton
               width={`130px`}
               height={`50px`}
-              onClick={() => {
-                moveLinkHandler("/iobox/service");
-                sessionStorage.setItem(
-                  "DATA",
-                  JSON.stringify({
-                    boxs: currentBuy,
-                    type,
-                    totalPay,
-                  })
-                );
-              }}
+              onClick={nextStepHandler}
             >
               다음
             </CommonButton>

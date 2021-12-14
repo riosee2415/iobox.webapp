@@ -57,8 +57,10 @@ const Index = () => {
 
   const [storeData, setStoreData] = useState(null);
 
-  const [isCapture, setIsCapture] = useState(false);
+  const [isCapture, setIsCapture] = useState(true);
   const [pickUp, setPickUp] = useState("");
+
+  const [pickUpPrice, setPickUpPrice] = useState(0);
 
   ////// REDUX //////
 
@@ -72,12 +74,30 @@ const Index = () => {
     }
 
     console.log(data);
-    setStoreData(data);
+    if (data) {
+      setIsCapture(data.isCapture ? data.isCapture : true);
+      setPickUp(data.pickUp);
+      setPickUpPrice(data.pickUpPrice ? data.pickUpPrice : 0);
+      setStoreData(data);
+    }
   }, []);
+
+  useEffect(() => {
+    if (pickUp) {
+      let count = 0;
+
+      storeData.boxs.map((data) => (count += data));
+
+      console.log(count);
+      setPickUpPrice(count * dataArr[pickUp]);
+    }
+  }, [pickUp, storeData]);
 
   ////// TOGGLE ///////
 
   ///// HANDLER //////
+  const nextStepHandler 
+
   const moveBackHandler = useCallback(() => {
     router.back();
   }, []);
@@ -94,6 +114,8 @@ const Index = () => {
   if (!storeData) {
     return <Spin />;
   }
+
+  console.log(storeData);
 
   return (
     <>
@@ -313,7 +335,7 @@ const Index = () => {
           <RsWrapper dr={`row`} ju={`space-between`}>
             <Wrapper width={`auto`} al={`flex-start`}>
               <Text bold={true} fontSize={`1.2rem`}>
-                월 {numberWithCommas(storeData.totalPay)}원
+                월 {numberWithCommas(storeData.totalPay + pickUpPrice)}원
               </Text>
               <PayButtton bold={true} fontSize={`1.2rem`} cursor={`pointer`}>
                 예상금액 상세
@@ -337,6 +359,7 @@ const Index = () => {
                   JSON.stringify({
                     ...storeData,
                     pickUp,
+                    pickUpPrice,
                     isCapture,
                   })
                 );
