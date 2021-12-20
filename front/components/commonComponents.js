@@ -175,6 +175,11 @@ export const RsWrapper = styled.article`
 
   padding-left: 30px;
   padding-right: 30px;
+
+  @media (max-width: 700px) {
+    padding-left: 20px;
+    padding-right: 20px;
+  }
 `;
 
 export const CommonButton = styled(Button)`
