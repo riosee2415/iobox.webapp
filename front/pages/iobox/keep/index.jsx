@@ -430,7 +430,7 @@ const Index = () => {
               ju={`space-between`}
             >
               <Text>{cardNum && cardNum}</Text>
-              <CommonButton width={`60px`} height={`30px`}>
+              <CommonButton width={`60px`} height={`30px`} onClick>
                 변경
               </CommonButton>
             </Wrapper>

@@ -15,7 +15,7 @@ import ClientLayout from "../../../components/ClientLayout";
 import useWidth from "../../../hooks/useWidth";
 import { CloseOutlined, DownOutlined, UpOutlined } from "@ant-design/icons";
 import { useRouter } from "next/dist/client/router";
-import { Radio, Spin } from "antd";
+import { message, Radio, Spin } from "antd";
 import { numberWithCommas } from "../../../components/commonUtils";
 import Footer from "../../../components/Footer";
 
@@ -73,7 +73,6 @@ const Index = () => {
       return;
     }
 
-    console.log(data);
     if (data) {
       setIsCapture(data.isCapture ? data.isCapture : true);
       setPickUp(data.pickUp);
@@ -96,7 +95,22 @@ const Index = () => {
   ////// TOGGLE ///////
 
   ///// HANDLER //////
-  const nextStepHandler 
+  const nextStepHandler = useCallback(() => {
+    if (!pickUp) {
+      return message.error("픽업 방식을 선택해주세요.");
+    }
+
+    moveLinkHandler("/iobox/keep");
+    sessionStorage.setItem(
+      "DATA",
+      JSON.stringify({
+        ...storeData,
+        pickUp,
+        pickUpPrice,
+        isCapture,
+      })
+    );
+  }, [pickUp]);
 
   const moveBackHandler = useCallback(() => {
     router.back();
@@ -352,18 +366,7 @@ const Index = () => {
             <CommonButton
               width={width < 700 ? `80px` : `130px`}
               height={width < 700 ? `40px` : `50px`}
-              onClick={() => {
-                moveLinkHandler("/iobox/keep");
-                sessionStorage.setItem(
-                  "DATA",
-                  JSON.stringify({
-                    ...storeData,
-                    pickUp,
-                    pickUpPrice,
-                    isCapture,
-                  })
-                );
-              }}
+              onClick={nextStepHandler}
             >
               다음
             </CommonButton>
