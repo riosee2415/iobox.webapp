@@ -96,7 +96,7 @@ const Index = () => {
   ////// TOGGLE ///////
 
   ///// HANDLER //////
-  const nextStepHandler 
+  // const nextStepHandler
 
   const moveBackHandler = useCallback(() => {
     router.back();
