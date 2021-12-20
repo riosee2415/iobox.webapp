@@ -66,6 +66,7 @@ const Index = () => {
   const [storeData, setStoreData] = useState(null);
 
   const [isPostCode, setIsPostCode] = useState(false);
+  const [test, setTest] = useState(false);
 
   ////// REDUX //////
   const dispatch = useDispatch();
@@ -89,8 +90,11 @@ const Index = () => {
     //   customer_uid: "gildong_0001_1234",
     // },
   }).then((rsp) => {
-    console.log(rsp.data);
+    console.log("asdjkajklsdnk");
+    setTest(rsp.data);
   });
+
+  console.log(test);
 
   ////// USEEFFECT //////
   useEffect(() => {
