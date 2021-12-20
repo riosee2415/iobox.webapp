@@ -542,7 +542,10 @@ const AppFooter = () => {
                 내 물건 맡기기
               </GradientText>
 
-              <Wrapper margin={`0 0 0 -100px`} zIndex={`100`}>
+              <Wrapper
+                margin={tab ? `0 0 -50px -100px` : `0 0 0 -100px`}
+                zIndex={`100`}
+              >
                 <Planet
                   tension={200}
                   centerContent={
