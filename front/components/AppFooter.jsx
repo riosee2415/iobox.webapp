@@ -482,7 +482,7 @@ const AppFooter = () => {
             width={`auto`}
             al={`flex-start`}
             display={tab ? `flex` : `none`}
-            margin={`0 0 100px`}
+            margin={`-100px 0 0`}
           >
             <Image
               width={`60px`}
@@ -516,7 +516,7 @@ const AppFooter = () => {
 
           <Wrapper
             dr={`row`}
-            height={`100px`}
+            height={tab ? `50px` : `100px`}
             shadow={tab ? `none` : `0px -3px 10px ${Theme.grey_C}`}
             position={`relative`}
           >
