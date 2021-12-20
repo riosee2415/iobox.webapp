@@ -173,8 +173,8 @@ export const RsWrapper = styled.article`
   font-size: ${(props) => props.fontSize};
   position: ${(props) => props.position};
 
-  padding-left: 50px;
-  padding-right: 50px;
+  padding-left: 30px;
+  padding-right: 30px;
 `;
 
 export const CommonButton = styled(Button)`
