@@ -177,8 +177,8 @@ const Home = () => {
                 <Text
                   bold={true}
                   color={Theme.white_C}
-                  fontSize={`3rem`}
-                  margin={width < 700 ? `0` : `30px 0 0`}
+                  fontSize={`3.5rem`}
+                  margin={width < 700 ? `0` : `10px 0 0`}
                 >
                   맡아줘 내 짐!
                 </Text>
@@ -205,9 +205,9 @@ const Home = () => {
                   position={`absolute`}
                   bottom={`0`}
                   left={`50%`}
-                  width={`100px`}
+                  width={`28%`}
                   zIndex={`2`}
-                  margin={`0 0 0 -50px`}
+                  margin={`0 0 0 -14%`}
                 />
               </RsWrapper>
             </Wrapper>

@@ -173,8 +173,13 @@ export const RsWrapper = styled.article`
   font-size: ${(props) => props.fontSize};
   position: ${(props) => props.position};
 
-  padding-left: 50px;
-  padding-right: 50px;
+  padding-left: 30px;
+  padding-right: 30px;
+
+  @media (max-width: 700px) {
+    padding-left: 20px;
+    padding-right: 20px;
+  }
 `;
 
 export const CommonButton = styled(Button)`
@@ -283,16 +288,17 @@ export const Text = styled.p`
   opacity: ${(props) => props.opacity};
   letter-spacing: ${(props) => props.letterSpacing};
   font-family: ${(props) => (props.bold && `SBAggroB` ? `SBAggroB` : ``)};
-
-  ${(props) =>
-    props.isEllipsis
-      ? `
+  font-family: ${(props) =>
+      props.bold2 && `GmarketSansBold` ? `GmarketSansBold` : ``}
+    ${(props) =>
+      props.isEllipsis
+        ? `
     // display: block;
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
   `
-      : ``}
+        : ``};
 `;
 
 export const PagenationWrapper = styled.div`
@@ -507,6 +513,8 @@ export const GradientText = styled.h2`
   );
 
   font-family: ${(props) => (props.bold && `SBAggroB` ? `SBAggroB` : ``)};
+  font-family: ${(props) =>
+    props.bold2 && `GmarketSansBold` ? `GmarketSansBold` : ``};
 `;
 
 export const Question = styled(Wrapper)`

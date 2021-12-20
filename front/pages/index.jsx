@@ -4,11 +4,9 @@ import { LOAD_MY_INFO_REQUEST, LOGIN_REQUEST } from "../reducers/user";
 import useInput from "../hooks/useInput";
 import ClientLayout from "../components/ClientLayout";
 
-
 import axios from "axios";
 import wrapper from "../store/configureStore";
 import { END } from "redux-saga";
-
 
 import {
   Image,
@@ -23,9 +21,11 @@ import { useRouter } from "next/dist/client/router";
 import { KEEPBOX_LIST_REQUEST } from "../reducers/keepBox";
 import { useCountUp, CountUp } from "use-count-up";
 import styled from "styled-components";
+
 const FirstWrapper = styled(Wrapper)`
   width: 100%;
   height: 100vh;
+  overflow: hidden;
 `;
 
 const FirstDisplay = styled(Wrapper)`
