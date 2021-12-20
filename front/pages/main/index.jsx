@@ -161,7 +161,7 @@ const Home = () => {
             shadow={`0px 0px 10px ${Theme.grey_C}`}
           >
             <Wrapper
-              height={`40%`}
+              height={`45%`}
               bgColor={Theme.basicTheme_C}
               ju={`flex-start`}
             >
@@ -182,10 +182,7 @@ const Home = () => {
                 >
                   맡아줘 내 짐!
                 </Text>
-                <Wrapper
-                  al={`flex-start`}
-                  margin={width < 700 ? `20px 0 0` : `45px 0 0`}
-                >
+                <Wrapper al={`flex-start`} margin={`20px 0 0`}>
                   <Text fontWeight={`900`} color={Theme.white_C}>
                     원할 때 맡겨!
                   </Text>
@@ -205,13 +202,13 @@ const Home = () => {
                   position={`absolute`}
                   bottom={`0`}
                   left={`50%`}
-                  width={`28%`}
+                  width={`32%`}
                   zIndex={`2`}
-                  margin={`0 0 0 -14%`}
+                  margin={`0 0 0 -16%`}
                 />
               </RsWrapper>
             </Wrapper>
-            <Wrapper height={`60%`} bgColor={Theme.white_C}>
+            <Wrapper height={`55%`} bgColor={Theme.white_C}>
               <RsWrapper ju={`flex-start`}>
                 <Wrapper
                   al={`flex-start`}
