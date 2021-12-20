@@ -283,16 +283,17 @@ export const Text = styled.p`
   opacity: ${(props) => props.opacity};
   letter-spacing: ${(props) => props.letterSpacing};
   font-family: ${(props) => (props.bold && `SBAggroB` ? `SBAggroB` : ``)};
-
-  ${(props) =>
-    props.isEllipsis
-      ? `
+  font-family: ${(props) =>
+      props.bold2 && `GmarketSansBold` ? `GmarketSansBold` : ``}
+    ${(props) =>
+      props.isEllipsis
+        ? `
     // display: block;
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
   `
-      : ``}
+        : ``};
 `;
 
 export const PagenationWrapper = styled.div`
@@ -507,6 +508,8 @@ export const GradientText = styled.h2`
   );
 
   font-family: ${(props) => (props.bold && `SBAggroB` ? `SBAggroB` : ``)};
+  font-family: ${(props) =>
+    props.bold2 && `GmarketSansBold` ? `GmarketSansBold` : ``};
 `;
 
 export const Question = styled(Wrapper)`

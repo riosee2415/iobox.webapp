@@ -482,6 +482,7 @@ const AppFooter = () => {
             width={`auto`}
             al={`flex-start`}
             display={tab ? `flex` : `none`}
+            margin={`0 0 100px`}
           >
             <Image
               width={`60px`}
@@ -515,7 +516,7 @@ const AppFooter = () => {
 
           <Wrapper
             dr={`row`}
-            height={tab ? `50px` : `100px`}
+            height={`100px`}
             shadow={tab ? `none` : `0px -3px 10px ${Theme.grey_C}`}
             position={`relative`}
           >
@@ -523,7 +524,7 @@ const AppFooter = () => {
               margin={
                 width < 700
                   ? tab
-                    ? `0 0 -100px -60px`
+                    ? `0 0 -60px -60px`
                     : `0 0 100px -60px`
                   : tab
                   ? `0 0 -50px -65px`
@@ -797,7 +798,7 @@ const AppFooter = () => {
                   src={`https://4leaf-s3.s3.ap-northeast-2.amazonaws.com/iobox/assets/images/main/menu_gra.png`}
                 />
 
-                <GradientText fontSize={`0.8rem`} bold={true} padding={`0`}>
+                <GradientText fontSize={`0.8rem`} bold2={true} padding={`0`}>
                   메 뉴
                 </GradientText>
               </TextWrapper>
@@ -823,7 +824,7 @@ const AppFooter = () => {
                   width={`auto`}
                   margin={`0 0 11px`}
                 />
-                <GradientText fontSize={`0.8rem`} bold={true} padding={`0`}>
+                <GradientText fontSize={`0.8rem`} bold2={true} padding={`0`}>
                   내 보관함
                 </GradientText>
               </TextWrapper>
