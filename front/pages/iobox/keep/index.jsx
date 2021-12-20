@@ -71,6 +71,15 @@ const Index = () => {
   const dispatch = useDispatch();
   const { me } = useSelector((state) => state.user);
 
+  axios
+    .get({
+      url: "https://apis.tracker.delivery/carriers/kr.cjlogistics/tracks/559494482616",
+      method: "get",
+    })
+    .then((data) => {
+      console.log(data);
+    });
+
   ////// USEEFFECT //////
   useEffect(() => {
     const data = JSON.parse(sessionStorage.getItem("DATA"));
