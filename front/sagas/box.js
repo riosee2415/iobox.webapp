@@ -79,7 +79,7 @@ function* boxThumbnail(action) {
 // SAGA AREA ********************************************************************************************************
 // ******************************************************************************************************************
 function boxCreateAPI(data) {
-  return axios.post(`/api/box/create`, data);
+  return axios.post(`/api/keepBox/create`, data);
 }
 
 function* boxCreate(action) {
