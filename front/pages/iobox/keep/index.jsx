@@ -66,35 +66,10 @@ const Index = () => {
   const [storeData, setStoreData] = useState(null);
 
   const [isPostCode, setIsPostCode] = useState(false);
-  const [test, setTest] = useState(false);
 
   ////// REDUX //////
   const dispatch = useDispatch();
   const { me } = useSelector((state) => state.user);
-
-  axios({
-    url: "https://apis.tracker.delivery/carriers/kr.cjlogistics/tracks/559494482616",
-    method: "get",
-    // url: "{빌링키 발급 요청을 받을 서비스 URL}", // 예: https://www.myservice.com/subscription/issue-billing
-    // method: "post",
-    // data: {
-    //   // 카드번호
-    //   cardNumber: "4092160302741999",
-    //   // 유효기간
-    //   expiry: "0724",
-    //   // 생년월일
-    //   birth: "920131",
-    //   // 비밀번호 앞 두자리
-    //   pwd2Digit: "74",
-    //   // 고유 코드
-    //   customer_uid: "gildong_0001_1234",
-    // },
-  }).then((rsp) => {
-    console.log("asdjkajklsdnk");
-    setTest(rsp.data);
-  });
-
-  console.log(test);
 
   ////// USEEFFECT //////
   useEffect(() => {
