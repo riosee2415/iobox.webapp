@@ -766,7 +766,7 @@ const AppFooter = () => {
                         width={`45px`}
                         height={`45px`}
                         radius={`50%`}
-                        bgColor={Theme.white_C}
+                        bgColor={`rgba(255,255,255,0.5)`}
                         className="circle2"
                       ></Wrapper>
                     </Wrapper>
