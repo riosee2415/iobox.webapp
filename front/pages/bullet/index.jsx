@@ -42,6 +42,9 @@ import {
 import locale from "antd/lib/locale/zh_CN";
 import ElevatorSlider from "../../components/slide/ElevatorSlider";
 import Footer from "../../components/Footer";
+import { numberWithCommas } from "../../components/commonUtils";
+import PostCode from "../../components/postCode/PostCode";
+import useInput from "../../hooks/useInput";
 
 const TextHover = styled(Wrapper)`
   width: 80px;
@@ -174,8 +177,24 @@ const Index = () => {
   const width = useWidth();
   const router = useRouter();
 
+  const dataArr = [
+    //
+    ["io박스", "https://via.placeholder.com/100x100", "iO 베이직 월", 9000],
+    ["행거박스", "https://via.placeholder.com/100x100", "iO 베이직 월", 19000],
+    ["텐트박스", "https://via.placeholder.com/100x100", "iO 베이직 월", 29000],
+    [
+      "대용량 박스",
+      "https://via.placeholder.com/100x100",
+      "iO 베이직 월",
+      39000,
+    ],
+  ];
+
   ////// HOOKS //////
   const [tab, setTab] = useState(false);
+
+  const [price, setPrice] = useState(0);
+  const [currentBuy, setCurrentBuy] = useState([0, 0, 0, 0]);
 
   const [cardInput, setCardInput] = useState(false);
   const [dayInput, setDayInput] = useState(false);
@@ -193,6 +212,19 @@ const Index = () => {
   const [datePickerOpen2, setDatePickerOpen2] = useState(false);
 
   const [radioValue, setRadioValue] = useState(0);
+
+  const [isPostCode, setIsPostCode] = useState(false);
+
+  const [address, setAddress] = useState(null);
+
+  const inputStartAddress = useInput("");
+  const inputStartZoneCode = useInput("");
+  const inputStartDetail = useInput("");
+
+  const inputEndAddress = useInput("");
+  const inputEndZoneCode = useInput("");
+  const inputEndDetail = useInput("");
+
   // const [floorModal, setFloorModal] = useState(false);
 
   const [currentTab, setCurrentTab] = useState(0);
@@ -200,6 +232,15 @@ const Index = () => {
   ////// REDUX //////
 
   ////// USEEFFECT //////
+  useEffect(() => {
+    let currentPay = 0;
+
+    currentBuy.map((data, idx) => {
+      currentPay += data * dataArr[idx][3];
+    });
+
+    setPrice(currentPay);
+  }, [currentBuy]);
 
   ////// DATE //////////
   const now = new Date();
@@ -208,19 +249,18 @@ const Index = () => {
   //한달 후
 
   ////// TOGGLE ///////
+  const togglePostCodeDialogHandler = () => {
+    setIsPostCode(!isPostCode);
+  };
 
   const currentHangerHandler = useCallback(
-    (pm) => {
-      if (pm === `plus`) {
-        setCurrentHanger(currentHanger + 1);
-      } else if (pm === `minus`) {
-        if (currentHanger <= 0) {
-          return;
-        }
-        setCurrentHanger(currentHanger - 1);
-      }
+    (pm, index) => {
+      const tempArr = currentBuy.map((data, idx) => {
+        return idx === index ? (data + pm * 1 >= 0 ? data + pm * 1 : 0) : data;
+      });
+      setCurrentBuy(tempArr);
     },
-    [currentHanger]
+    [currentBuy]
   );
   const currentIoHandler = useCallback(
     (pm) => {
@@ -235,46 +275,10 @@ const Index = () => {
     },
     [currentIo]
   );
-  const currentBigHandler = useCallback(
-    (pm) => {
-      if (pm === `plus`) {
-        setCurrentBig(currentBig + 1);
-      } else if (pm === `minus`) {
-        if (currentBig <= 0) {
-          return;
-        }
-        setCurrentBig(currentBig - 1);
-      }
-    },
-    [currentBig]
-  );
-  const currentTentHandler = useCallback(
-    (pm) => {
-      if (pm === `plus`) {
-        setCurrentTent(currentTent + 1);
-      } else if (pm === `minus`) {
-        if (currentTent <= 0) {
-          return;
-        }
-        setCurrentTent(currentTent - 1);
-      }
-    },
-    [currentTent]
-  );
+
   const deleteAllBoxHandler = useCallback(() => {
-    setCurrentHanger(0);
-    setCurrentIo(0);
-    setCurrentBig(0);
-    setCurrentTent(0);
-  }, [currentHanger, currentIo, currentBig, currentTent]);
-
-  const cardInputToggle = useCallback(() => {
-    setCardInput(true);
-  }, [cardInput]);
-
-  const dayInputToggle = useCallback(() => {
-    setDayInput(true);
-  }, [dayInput]);
+    setCurrentBuy([0, 0, 0, 0]);
+  }, []);
 
   const dateChangeHandler = useCallback(
     (e) => {
@@ -489,7 +493,7 @@ const Index = () => {
                   borderBottom={`3px solid ${Theme.lightGrey_C}`}
                 >
                   <Text fontSize={`1.4rem`} fontWeight={`700`}>
-                    월 00,000원
+                    월 {numberWithCommas(price)}원
                   </Text>
 
                   <Question>
@@ -506,7 +510,11 @@ const Index = () => {
                 >
                   <Text fontSize={`1rem`} fontWeight={`700`}>
                     상자 총{" "}
-                    {currentHanger + currentIo + currentBig + currentTent}개
+                    {currentBuy[0] +
+                      currentBuy[1] +
+                      currentBuy[2] +
+                      currentBuy[3]}
+                    개
                   </Text>
                   <Wrapper width={`auto`} dr={`row`} color={Theme.red_C}>
                     <Text
@@ -521,155 +529,52 @@ const Index = () => {
                 </Wrapper>
 
                 <Wrapper>
-                  <Wrapper dr={`row`} ju={`space-between`} margin={`0 0 40px`}>
-                    <Wrapper dr={`row`} width={`auto`}>
-                      <Image
-                        src={`https://via.placeholder.com/100x100`}
-                        alt={`hanger_image`}
-                        width={width < 700 ? `40px` : `60px`}
-                        margin={width < 700 ? `0 15px 0 0` : `0 30px 0 0`}
-                      />
-                      <Text fontSize={`1,2rem`}>행거박스(의류용)</Text>
-                    </Wrapper>
-                    <Wrapper
-                      width={width < 700 ? `100px` : `150px`}
-                      height={width < 700 ? `45px` : `60px`}
-                      radius={`35px`}
-                      padding={`0 15px`}
-                      dr={`row`}
-                      촘
-                      ju={`space-between`}
-                      bgColor={Theme.lightGrey_C}
-                    >
-                      <MinusOutlined
-                        style={
-                          currentHanger === 0
-                            ? { color: "GrayText" }
-                            : { color: "black" }
-                        }
-                        onClick={() => {
-                          currentHangerHandler(`minus`);
-                        }}
-                      />
-                      <Text>{currentHanger}</Text>
-                      <PlusOutlined
-                        onClick={() => {
-                          currentHangerHandler(`plus`);
-                        }}
-                      />
-                    </Wrapper>
-                  </Wrapper>
-                  <Wrapper dr={`row`} ju={`space-between`} margin={`0 0 40px`}>
-                    <Wrapper dr={`row`} width={`auto`}>
-                      <Image
-                        src={`https://via.placeholder.com/100x100`}
-                        alt={`iobox_image`}
-                        width={width < 700 ? `40px` : `60px`}
-                        margin={width < 700 ? `0 15px 0 0` : `0 30px 0 0`}
-                      />
-                      <Text fontSize={`1,2rem`}>io박스</Text>
-                    </Wrapper>
-                    <Wrapper
-                      width={width < 700 ? `100px` : `150px`}
-                      height={width < 700 ? `45px` : `60px`}
-                      radius={`35px`}
-                      padding={`0 15px`}
-                      dr={`row`}
-                      ju={`space-between`}
-                      bgColor={Theme.lightGrey_C}
-                    >
-                      <MinusOutlined
-                        style={
-                          currentIo === 0
-                            ? { color: "GrayText" }
-                            : { color: "black" }
-                        }
-                        onClick={() => {
-                          currentIoHandler(`minus`);
-                        }}
-                      />
-                      <Text>{currentIo}</Text>
-                      <PlusOutlined
-                        onClick={() => {
-                          currentIoHandler(`plus`);
-                        }}
-                      />
-                    </Wrapper>
-                  </Wrapper>
-                  <Wrapper dr={`row`} ju={`space-between`} margin={`0 0 40px`}>
-                    <Wrapper dr={`row`} width={`auto`}>
-                      <Image
-                        src={`https://via.placeholder.com/100x100`}
-                        alt={`bigbox_image`}
-                        width={width < 700 ? `40px` : `60px`}
-                        margin={width < 700 ? `0 15px 0 0` : `0 30px 0 0`}
-                      />
-                      <Text fontSize={`1,2rem`}>대형박스</Text>
-                    </Wrapper>
-                    <Wrapper
-                      width={width < 700 ? `100px` : `150px`}
-                      height={width < 700 ? `45px` : `60px`}
-                      radius={`35px`}
-                      padding={`0 15px`}
-                      dr={`row`}
-                      ju={`space-between`}
-                      bgColor={Theme.lightGrey_C}
-                    >
-                      <MinusOutlined
-                        style={
-                          currentBig === 0
-                            ? { color: "GrayText" }
-                            : { color: "black" }
-                        }
-                        onClick={() => {
-                          currentBigHandler(`minus`);
-                        }}
-                      />
-                      <Text>{currentBig}</Text>
-                      <PlusOutlined
-                        onClick={() => {
-                          currentBigHandler(`plus`);
-                        }}
-                      />
-                    </Wrapper>
-                  </Wrapper>
-                  <Wrapper dr={`row`} ju={`space-between`} margin={`0 0 40px`}>
-                    <Wrapper dr={`row`} width={`auto`}>
-                      <Image
-                        src={`https://via.placeholder.com/100x100`}
-                        alt={`tentbox_image`}
-                        width={width < 700 ? `40px` : `60px`}
-                        margin={width < 700 ? `0 15px 0 0` : `0 30px 0 0`}
-                      />
-                      <Text fontSize={`1,2rem`}>텐트박스(캠핑용품)</Text>
-                    </Wrapper>
-                    <Wrapper
-                      width={width < 700 ? `100px` : `150px`}
-                      height={width < 700 ? `45px` : `60px`}
-                      radius={`35px`}
-                      padding={`0 15px`}
-                      dr={`row`}
-                      ju={`space-between`}
-                      bgColor={Theme.lightGrey_C}
-                    >
-                      <MinusOutlined
-                        style={
-                          currentTent === 0
-                            ? { color: "GrayText" }
-                            : { color: "black" }
-                        }
-                        onClick={() => {
-                          currentTentHandler(`minus`);
-                        }}
-                      />
-                      <Text>{currentTent}</Text>
-                      <PlusOutlined
-                        onClick={() => {
-                          currentTentHandler(`plus`);
-                        }}
-                      />
-                    </Wrapper>
-                  </Wrapper>
+                  {dataArr.map((data, idx) => {
+                    return (
+                      <Wrapper
+                        dr={`row`}
+                        ju={`space-between`}
+                        margin={`0 0 40px`}
+                      >
+                        <Wrapper dr={`row`} width={`auto`}>
+                          <Image
+                            src={data[1]}
+                            alt={`hanger_image`}
+                            width={width < 700 ? `40px` : `60px`}
+                            margin={width < 700 ? `0 15px 0 0` : `0 30px 0 0`}
+                          />
+                          <Text fontSize={`1,2rem`}>{data[0]}</Text>
+                        </Wrapper>
+                        <Wrapper
+                          width={width < 700 ? `100px` : `150px`}
+                          height={width < 700 ? `45px` : `60px`}
+                          radius={`35px`}
+                          padding={`0 15px`}
+                          dr={`row`}
+                          촘
+                          ju={`space-between`}
+                          bgColor={Theme.lightGrey_C}
+                        >
+                          <MinusOutlined
+                            style={
+                              currentHanger === 0
+                                ? { color: "GrayText" }
+                                : { color: "black" }
+                            }
+                            onClick={() => {
+                              currentHangerHandler(-1, idx);
+                            }}
+                          />
+                          <Text>{currentBuy[idx]}</Text>
+                          <PlusOutlined
+                            onClick={() => {
+                              currentHangerHandler(+1, idx);
+                            }}
+                          />
+                        </Wrapper>
+                      </Wrapper>
+                    );
+                  })}
                 </Wrapper>
 
                 <Wrapper margin={`0 0 60px`}>
@@ -701,8 +606,16 @@ const Index = () => {
                       height={width < 700 ? `50px` : `80px`}
                       placeholder={`기본 주소`}
                       border={`none`}
+                      readOnly
+                      value={inputStartAddress.value}
                     />
-                    <SearchOutlined style={{ fontSize: `2rem` }} />
+                    <SearchOutlined
+                      style={{ fontSize: `2rem` }}
+                      onClick={() => {
+                        setIsPostCode(true);
+                        setAddress("start");
+                      }}
+                    />
                   </Wrapper>
                   <Wrapper
                     dr={`row`}
@@ -716,6 +629,7 @@ const Index = () => {
                       placeholder={`상세 주소 입력(필수/20자이내)`}
                       border={`none`}
                       allowClear={true}
+                      {...inputStartDetail}
                     />
                     {/* <SearchOutlined style={{ fontSize: `2rem` }} /> */}
                   </Wrapper>
@@ -975,10 +889,17 @@ const Index = () => {
                       height={width < 700 ? `50px` : `80px`}
                       placeholder={`기본 주소`}
                       border={`none`}
+                      readOnly
+                      value={inputEndAddress.value}
                     />
 
                     <Wrapper width={`auto`} fontSize={`2rem`}>
-                      <SearchOutlined />
+                      <SearchOutlined
+                        onClick={() => {
+                          setIsPostCode(true);
+                          setAddress("end");
+                        }}
+                      />
                     </Wrapper>
                   </Wrapper>
 
@@ -994,6 +915,7 @@ const Index = () => {
                       placeholder={`상세 주소 입력(필수/20자이내)`}
                       border={`none`}
                       allowClear={true}
+                      {...inputEndDetail}
                     />
                   </Wrapper>
 
@@ -1078,6 +1000,24 @@ const Index = () => {
           </Wrapper>
         </Wrapper>
       </Modal>
+
+      <PostCode
+        width={width}
+        //
+        isPostCode={isPostCode}
+        //
+        toggleDialogHandler={togglePostCodeDialogHandler}
+        onCompleteHandler={async (data) => {
+          if (address === "start") {
+            inputStartAddress.setValue(data.address);
+            inputStartZoneCode.setValue(data.zonecode);
+          } else {
+            inputEndAddress.setValue(data.address);
+            inputEndZoneCode.setValue(data.zonecode);
+          }
+          setIsPostCode(false);
+        }}
+      />
     </WholeWrapper>
   );
 };

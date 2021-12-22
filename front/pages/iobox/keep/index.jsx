@@ -141,24 +141,6 @@ const Index = () => {
     //   },
     // });
 
-    console.log({
-      boxcount1: storeData.boxs[0],
-      boxcount2: storeData.boxs[1],
-      boxcount3: storeData.boxs[2],
-      boxcount4: storeData.boxs[3],
-      period: "",
-      isFilming: storeData.isCapture,
-      pickWay: storeData.pickUp,
-      price: storeData.totalPay,
-      deliveryPay: storeData.pickUpPrice,
-      name: inputName.value,
-      mobile: inputMobile.value,
-      address: inputAddress.value,
-      detailAddress: inputDetail.value,
-      remark: inputContent.value,
-      UserId: me.id,
-    });
-
     dispatch({
       type: KEEPBOX_CREATE_REQUEST,
       data: {
