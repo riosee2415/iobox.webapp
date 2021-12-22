@@ -419,8 +419,6 @@ router.post("/create", async (req, res, next) => {
 
         const { code, message } = paymentResult.data;
 
-        console.log(code, paymentResult);
-
         if (code === 0) {
           // 카드사 통신에 성공(실제 승인 성공 여부는 추가 판단이 필요함)
           if (paymentResult.data.response.status === "paid") {
