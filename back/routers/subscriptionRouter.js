@@ -7,8 +7,6 @@ router.post(`/`, async (req, res, next) => {
   try {
     const { cardNumber, expiry, birth, pwd2Digit, customer_uid } = req.body;
 
-    console.log(cardNumber, expiry, birth, pwd2Digit, customer_uid);
-
     const d = new Date();
 
     let year = d.getFullYear() + "";
