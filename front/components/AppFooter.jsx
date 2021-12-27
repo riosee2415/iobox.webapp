@@ -483,7 +483,7 @@ const AppFooter = () => {
             width={`auto`}
             al={`flex-start`}
             display={tab ? `flex` : `none`}
-            margin={`-100px 0 100px`}
+            margin={width < 700 ? `-100px 0 120px` : `-100px 0 200px`}
           >
             <Image
               width={`60px`}
@@ -517,7 +517,7 @@ const AppFooter = () => {
 
           <Wrapper
             dr={`row`}
-            height={tab ? `20%` : `100px`}
+            height={tab ? `25%` : `100px`}
             shadow={tab ? `none` : `0px -3px 10px ${Theme.grey_C}`}
             position={`relative`}
           >
@@ -583,9 +583,7 @@ const AppFooter = () => {
                       alt={`icon`}
                       width={width < 700 ? `60px` : `70px`}
                     />
-                    <Text fontSize={width < 700 ? `0.8rem` : `1rem`}>
-                      텐트보관 박스
-                    </Text>
+                    <Text fontSize={`0.8rem`}>텐트보관 박스</Text>
                   </IconBox>
 
                   <IconBox
@@ -600,9 +598,7 @@ const AppFooter = () => {
                       alt={`icon`}
                       width={width < 700 ? `60px` : `70px`}
                     />
-                    <Text fontSize={width < 700 ? `0.8rem` : `1rem`}>
-                      총알배송
-                    </Text>
+                    <Text fontSize={`0.8rem`}>총알배송</Text>
                   </IconBox>
 
                   <IconBox
@@ -617,9 +613,7 @@ const AppFooter = () => {
                       alt={`icon`}
                       width={`50px`}
                     />
-                    <Text fontSize={width < 700 ? `0.8rem` : `1rem`}>
-                      배송현황
-                    </Text>
+                    <Text fontSize={`0.8rem`}>배송현황</Text>
                   </IconBox>
 
                   <IconBox
@@ -635,9 +629,7 @@ const AppFooter = () => {
                       alt={`icon`}
                       width={width < 700 ? `40px` : `50px`}
                     />
-                    <Text fontSize={width < 700 ? `0.8rem` : `1rem`}>
-                      아이오 박스
-                    </Text>
+                    <Text fontSize={`0.8rem`}>아이오 박스</Text>
                   </IconBox>
 
                   <IconBox
@@ -652,9 +644,7 @@ const AppFooter = () => {
                       alt={`icon`}
                       width={width < 700 ? `40px` : `50px`}
                     />
-                    <Text fontSize={width < 700 ? `0.8rem` : `1rem`}>
-                      행거박스
-                    </Text>
+                    <Text fontSize={`0.8rem`}>행거박스</Text>
                   </IconBox>
 
                   <IconBox
@@ -667,7 +657,7 @@ const AppFooter = () => {
                       width={width < 700 ? `40px` : `50px`}
                     />
                     <Text
-                      fontSize={width < 700 ? `0.8rem` : `1rem`}
+                      fontSize={`0.8rem`}
                       onClick={() => {
                         moveLinkHandler(`/iobox?type=bigBox`);
                       }}
