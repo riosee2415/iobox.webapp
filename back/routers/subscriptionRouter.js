@@ -3,7 +3,7 @@ const axios = require("axios");
 
 const router = express.Router();
 
-router.get(`/test`, async (req, res, next) => {
+router.post(`/test`, async (req, res, next) => {
   try {
     console.log(req.body);
   } catch (e) {

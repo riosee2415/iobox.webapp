@@ -556,21 +556,74 @@ router.patch("/update", isAdminCheck, async (req, res, next) => {
       },
     });
 
-    const updateResult = await KeepBox.update(
-      {
-        // isPickup: true,
-        deliveryCom,
-        deliveryCode,
-      },
-      {
-        where: { id: parseInt(id) },
-      }
-    );
+    const { code, message } = paymentResult.data;
 
-    if (updateResult[0] > 0) {
-      return res.status(200).json({ result: true });
+    if (code === 0) {
+      // 카드사 통신에 성공(실제 승인 성공 여부는 추가 판단이 필요함)
+      if (paymentResult.data.response.status === "paid") {
+        //카드 정상 승인
+
+        const d = new Date();
+        let year = d.getFullYear() + "";
+        let month = d.getMonth() + 1 + "";
+        let date = d.getDate() + "";
+        let hour = d.getHours() + "";
+        let min = d.getMinutes() + "";
+        let sec = d.getSeconds() + "";
+        let mSec = d.getMilliseconds() + "";
+        month = month < 10 ? "0" + month : month;
+        date = date < 10 ? "0" + date : date;
+        hour = hour < 10 ? "0" + hour : hour;
+        min = min < 10 ? "0" + min : min;
+        sec = sec < 10 ? "0" + sec : sec;
+        mSec = mSec < 10 ? "0" + mSec : mSec;
+        let orderPK = "ORD" + year + month + date + hour + min + sec + mSec;
+
+        let time = moment().add(1, `m`).unix();
+
+        axios({
+          url: "https://api.iamport.kr/subscribe/payments/schedule", // 예:
+          method: "post",
+          headers: { Authorization: access_token }, // 인증 토큰 Authorization header에 추가
+          data: {
+            customer_uid: userCode, // 카드(빌링키)와 1:1로 대응하는 값
+            schedules: [
+              {
+                merchant_uid: orderPK, // 주문 번호
+                schedule_at: time, // 결제 시도 시각 in Unix Time Stamp. 예: 다음 달 1일
+                amount: 1000,
+                name: "tezt",
+              },
+            ],
+          },
+        });
+
+        const updateResult = await KeepBox.update(
+          {
+            // isPickup: true,
+            deliveryCom,
+            deliveryCode,
+          },
+          {
+            where: { id: parseInt(id) },
+          }
+        );
+
+        if (updateResult[0] > 0) {
+          return res.status(200).json({ result: true });
+        } else {
+          return res.status(200).json({ result: false });
+        }
+      } else {
+        //카드 승인 실패 (예: 고객 카드 한도초과, 거래정지카드, 잔액부족 등)
+        //paymentResult.status : failed 로 수신됨
+        // console.log("실패", paymentResult);
+        return res.status(401).send("카드 결제를 진행할 수 없습니다.");
+      }
     } else {
-      return res.status(200).json({ result: false });
+      // 카드사 요청에 실패 (paymentResult is null)
+      console.log("요청 실패", paymentResult);
+      return res.status(401).send("카드 결제를 진행할 수 없습니다.");
     }
   } catch (error) {
     console.error(error);
