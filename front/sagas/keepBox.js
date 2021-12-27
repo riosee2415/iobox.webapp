@@ -5,6 +5,10 @@ import {
   KEEPBOX_LIST_FAILURE,
   KEEPBOX_LIST_REQUEST,
   //
+  KEEPBOX_DATE_LIST_SUCCESS,
+  KEEPBOX_DATE_LIST_FAILURE,
+  KEEPBOX_DATE_LIST_REQUEST,
+  //
   KEEPBOX_CREATE_REQUEST,
   KEEPBOX_CREATE_SUCCESS,
   KEEPBOX_CREATE_FAILURE,
@@ -36,6 +40,33 @@ function* keepBoxList(action) {
     console.error(err);
     yield put({
       type: KEEPBOX_LIST_FAILURE,
+      error: err.response.data,
+    });
+  }
+}
+
+// ******************************************************************************************************************
+// ******************************************************************************************************************
+// ******************************************************************************************************************
+
+// SAGA AREA ********************************************************************************************************
+// ******************************************************************************************************************
+function keepBoxDateListAPI(data) {
+  return axios.post(`/api/keepBox/list/date`, data);
+}
+
+function* keepBoxDateList(action) {
+  try {
+    const result = yield call(keepBoxDateListAPI, action.data);
+
+    yield put({
+      type: KEEPBOX_DATE_LIST_SUCCESS,
+      data: result.data,
+    });
+  } catch (err) {
+    console.error(err);
+    yield put({
+      type: KEEPBOX_DATE_LIST_FAILURE,
       error: err.response.data,
     });
   }
@@ -131,6 +162,10 @@ function* watchKeepBoxList() {
   yield takeLatest(KEEPBOX_LIST_REQUEST, keepBoxList);
 }
 
+function* watchKeepBoxDateList() {
+  yield takeLatest(KEEPBOX_DATE_LIST_REQUEST, keepBoxDateList);
+}
+
 function* watchKeepBoxCreate() {
   yield takeLatest(KEEPBOX_CREATE_REQUEST, keepBoxCreate);
 }
@@ -147,6 +182,7 @@ function* watchKeepBoxDelete() {
 export default function* keepBoxSaga() {
   yield all([
     fork(watchKeepBoxList),
+    fork(watchKeepBoxDateList),
     fork(watchKeepBoxCreate),
     fork(watchKeepBoxUpdate),
     fork(watchKeepBoxDelete),

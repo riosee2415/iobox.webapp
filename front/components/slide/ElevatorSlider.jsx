@@ -29,8 +29,20 @@ const CustomWrapper = styled(Wrapper)`
   animation: ${widthAni} 5s infinite;
 `;
 
-const ElevatorSlider = ({}) => {
+const ElevatorSlider = ({ setValue }) => {
   const width = useWidth();
+
+  const dataArr = [
+    "지하 2층",
+    "지하 1층",
+    "1층",
+    "2층",
+    "3층",
+    "4층",
+    "5층",
+    "6층",
+    "직접 입력",
+  ];
 
   const ref = useRef();
 
@@ -43,7 +55,7 @@ const ElevatorSlider = ({}) => {
     dots: false,
     arrows: false,
     infinite: false,
-    slidesToShow: 2.5,
+    slidesToShow: 1,
     slidesToScroll: 1,
     vertical: true,
     cneterMode: false,
@@ -55,132 +67,61 @@ const ElevatorSlider = ({}) => {
     return null;
   }
 
+  {
+    console.log(dataArr);
+  }
+
   return (
-    <>
-      <SlideWrapper>
-        <Slider {...settings} ref={ref}>
-          <Wrapper
-            display={`flex !important`}
-            al={`center`}
-            cursor={`pointer`}
-            height={`50px`}
-            className="active"
-          >
-            지하 2층
-          </Wrapper>
-
-          <Wrapper
-            display={`flex !important`}
-            al={`center`}
-            cursor={`pointer`}
-            height={`50px`}
-            className="active"
-          >
-            지하 1층
-          </Wrapper>
-
-          <Wrapper
-            display={`flex !important`}
-            al={`center`}
-            cursor={`pointer`}
-            height={`50px`}
-            className="active"
-          >
-            1층
-          </Wrapper>
-
-          <Wrapper
-            display={`flex !important`}
-            al={`center`}
-            cursor={`pointer`}
-            height={`50px`}
-            className="active"
-          >
-            2층
-          </Wrapper>
-
-          <Wrapper
-            display={`flex !important`}
-            al={`center`}
-            cursor={`pointer`}
-            height={`50px`}
-            className="active"
-          >
-            3층
-          </Wrapper>
-
-          <Wrapper
-            display={`flex !important`}
-            al={`center`}
-            cursor={`pointer`}
-            height={`50px`}
-            className="active"
-          >
-            4층
-          </Wrapper>
-
-          <Wrapper
-            display={`flex !important`}
-            al={`center`}
-            cursor={`pointer`}
-            height={`50px`}
-            className="active"
-          >
-            5층
-          </Wrapper>
-
-          <Wrapper
-            display={`flex !important`}
-            al={`center`}
-            cursor={`pointer`}
-            height={`50px`}
-            className="active"
-          >
-            6층
-          </Wrapper>
-
-          <Wrapper
-            display={`flex !important`}
-            al={`center`}
-            cursor={`pointer`}
-            height={`50px`}
-            className="active"
-          >
-            직접 입력
-          </Wrapper>
-
-          <Wrapper
-            display={`flex !important`}
-            al={`center`}
-            cursor={`pointer`}
-            height={`50px`}
-            className="active"
-          >
-            -
-          </Wrapper>
-
-          <Wrapper
-            display={`flex !important`}
-            al={`center`}
-            cursor={`pointer`}
-            height={`50px`}
-            className="active"
-          >
-            -
-          </Wrapper>
-
-          <Wrapper
-            display={`flex !important`}
-            al={`center`}
-            cursor={`pointer`}
-            height={`50px`}
-            className="active"
-          >
-            -
-          </Wrapper>
-        </Slider>
-      </SlideWrapper>
-    </>
+    <SlideWrapper>
+      <Slider
+        ref={ref}
+        afterChange={(to, from) => {
+          setValue(dataArr[to]);
+        }}
+      >
+        <Wrapper
+          display={`flex !important`}
+          al={`center`}
+          cursor={`pointer`}
+          height={`50px`}
+          className="active"
+        >
+          asdjka
+        </Wrapper>
+        <Wrapper
+          display={`flex !important`}
+          al={`center`}
+          cursor={`pointer`}
+          height={`50px`}
+          className="active"
+        >
+          asdjka
+        </Wrapper>
+        <Wrapper
+          display={`flex !important`}
+          al={`center`}
+          cursor={`pointer`}
+          height={`50px`}
+          className="active"
+        >
+          asdjka
+        </Wrapper>
+        {dataArr.map((data, idx) => {
+          return (
+            <Wrapper
+              key={idx}
+              display={`flex !important`}
+              al={`center`}
+              cursor={`pointer`}
+              height={`50px`}
+              className="active"
+            >
+              {data}
+            </Wrapper>
+          );
+        })}
+      </Slider>
+    </SlideWrapper>
   );
 };
 

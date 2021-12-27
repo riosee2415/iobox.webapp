@@ -4,9 +4,15 @@ export const initailState = {
   keepBoxes: null,
   maxPage: 1,
   //
+  modal: false,
+  //
   st_keepBoxListLoading: false, // 공지사항 가져오기
   st_keepBoxListDone: false,
   st_keepBoxListError: null,
+  //
+  st_keepBoxDateListLoading: false, // 공지사항 날짜별 가져오기
+  st_keepBoxDateListDone: false,
+  st_keepBoxDateListError: null,
   //
   st_keepBoxCreateLoading: false, // 공지사항 가져오기
   st_keepBoxCreateDone: false,
@@ -26,6 +32,10 @@ export const KEEPBOX_LIST_REQUEST = "KEEPBOX_LIST_REQUEST";
 export const KEEPBOX_LIST_SUCCESS = "KEEPBOX_LIST_SUCCESS";
 export const KEEPBOX_LIST_FAILURE = "KEEPBOX_LIST_FAILURE";
 //
+export const KEEPBOX_DATE_LIST_REQUEST = "KEEPBOX_DATE_LIST_REQUEST";
+export const KEEPBOX_DATE_LIST_SUCCESS = "KEEPBOX_DATE_LIST_SUCCESS";
+export const KEEPBOX_DATE_LIST_FAILURE = "KEEPBOX_DATE_LIST_FAILURE";
+//
 export const KEEPBOX_CREATE_REQUEST = "KEEPBOX_CREATE_REQUEST";
 export const KEEPBOX_CREATE_SUCCESS = "KEEPBOX_CREATE_SUCCESS";
 export const KEEPBOX_CREATE_FAILURE = "KEEPBOX_CREATE_FAILURE";
@@ -38,6 +48,8 @@ export const KEEPBOX_DELETE_REQUEST = "KEEPBOX_DELETE_REQUEST";
 export const KEEPBOX_DELETE_SUCCESS = "KEEPBOX_DELETE_SUCCESS";
 export const KEEPBOX_DELETE_FAILURE = "KEEPBOX_DELETE_FAILURE";
 //
+export const MODAL_OPEN_REQUEST = "MODAL_OPEN_REQUEST";
+export const MODAL_CLOSE_REQUEST = "MODAL_CLOSE_REQUEST";
 
 const reducer = (state = initailState, action) =>
   produce(state, (draft) => {
@@ -59,6 +71,26 @@ const reducer = (state = initailState, action) =>
         draft.st_keepBoxListLoading = false;
         draft.st_keepBoxListDone = false;
         draft.st_keepBoxListError = action.error;
+        break;
+      }
+      ///////////////////////////////////////////////////////
+      case KEEPBOX_DATE_LIST_REQUEST: {
+        draft.st_keepBoxDateListLoading = true;
+        draft.st_keepBoxDateListDone = null;
+        draft.st_keepBoxDateListError = false;
+        break;
+      }
+      case KEEPBOX_DATE_LIST_SUCCESS: {
+        draft.st_keepBoxDateListLoading = false;
+        draft.st_keepBoxDateListDone = true;
+        draft.keepBoxes = action.data;
+        draft.maxPage = action.data.lastPage;
+        break;
+      }
+      case KEEPBOX_DATE_LIST_FAILURE: {
+        draft.st_keepBoxDateListLoading = false;
+        draft.st_keepBoxDateListDone = false;
+        draft.st_keepBoxDateListError = action.error;
         break;
       }
       ///////////////////////////////////////////////////////
@@ -118,6 +150,14 @@ const reducer = (state = initailState, action) =>
       ///////////////////////////////////////////////////////
       ///////////////////////////////////////////////////////
       ///////////////////////////////////////////////////////
+
+      case MODAL_OPEN_REQUEST:
+        draft.modal = true;
+        break;
+
+      case MODAL_CLOSE_REQUEST:
+        draft.modal = false;
+        break;
 
       default:
         break;

@@ -8,6 +8,7 @@ import {
   UserOutlined,
   BookOutlined,
   PhoneOutlined,
+  FolderOutlined,
 } from "@ant-design/icons";
 import styled from "styled-components";
 import { useRouter } from "next/router";
@@ -99,7 +100,7 @@ const AdminMenu = () => {
             <MenuName>접속자 통계</MenuName>
           </Menu.Item>
         </SubMenu>
-        <SubMenu
+        {/* <SubMenu
           key="sub2"
           icon={<InfoCircleOutlined />}
           title="기초 관리"
@@ -112,10 +113,20 @@ const AdminMenu = () => {
             <MenuName>팝업 관리</MenuName>
           </Menu.Item>
 
-          {/* <SubMenu key="sub3" title="Submenu">
+          <SubMenu key="sub3" title="Submenu">
             <Menu.Item key="7">Option 7</Menu.Item>
             <Menu.Item key="8">Option 8</Menu.Item>
-          </SubMenu> */}
+          </SubMenu>
+        </SubMenu> */}
+        <SubMenu
+          key="sub7"
+          icon={<FolderOutlined />}
+          title="박스 관리"
+          onTitleClick={titleClickHandler("sub7")}
+        >
+          <Menu.Item key="/admin/keepBox/list">
+            <MenuName>박스 리스트</MenuName>
+          </Menu.Item>
         </SubMenu>
         <SubMenu
           key="sub3"
