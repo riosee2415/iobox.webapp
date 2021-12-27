@@ -80,6 +80,10 @@ module.exports = class KeepBox extends Model {
           type: DataTypes.STRING(100), // 송장 번호
           allowNull: false,
         },
+        merchantUid: {
+          type: DataTypes.STRING(100),
+          allowNull: true,
+        },
         isEnd: {
           type: DataTypes.BOOLEAN,
           allowNull: false,
