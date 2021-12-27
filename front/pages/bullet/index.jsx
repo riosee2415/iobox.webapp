@@ -208,6 +208,9 @@ const Index = () => {
   const [endDate, setEndDate] = useState(null);
   const [floorModal, setFloorModal] = useState(false);
 
+  const [startFloor, setStartFloor] = useState(false);
+  const [endFloor, setEndFloor] = useState(false);
+
   const [datePickerOpen1, setDatePickerOpen1] = useState(false);
   const [datePickerOpen2, setDatePickerOpen2] = useState(false);
 
@@ -648,9 +651,13 @@ const Index = () => {
                     width={`95%`}
                     height={width < 700 ? `50px` : `70px`}
                     border={`2px solid ${Theme.lightGrey_C}`}
-                    onClick={() => setFloorModal(true)}
+                    onClick={() => {
+                      setFloorModal("start");
+                    }}
                     cursor={`pointer`}
-                  ></Wrapper>
+                  >
+                    {startFloor}
+                  </Wrapper>
                 </Wrapper>
                 <Wrapper>
                   <Wrapper
@@ -984,15 +991,18 @@ const Index = () => {
           <Footer />
         </>
       )}
+
       <Modal
-        visible={floorModal}
+        visible={floorModal ? true : false}
         closable={false}
         footer={null}
         width={width < 700 ? 250 : 400}
       >
         <Wrapper>
           <Wrapper width={`30%`} ju={`flex-start`}>
-            <ElevatorSlider />
+            <ElevatorSlider
+              setValue={floorModal === "start" ? setStartFloor : setEndFloor}
+            />
           </Wrapper>
           <Wrapper dr={`row`} ju={`flex-end`} padding={`30px 0`}>
             <TextHover onClick={() => setFloorModal(false)}>취소</TextHover>
