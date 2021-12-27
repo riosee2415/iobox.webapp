@@ -476,13 +476,14 @@ const AppFooter = () => {
           height={tab ? `100vh` : `auto`}
           bgColor={tab ? `rgba(0,0,0,0.8)` : Theme.white_C}
           overflow={tab ? `hidden` : ``}
-          ju={tab ? `space-around` : `center`}
+          ju={`flex-end`}
+          padding={`0 0 100px`}
         >
           <Wrapper
             width={`auto`}
             al={`flex-start`}
             display={tab ? `flex` : `none`}
-            margin={`-100px 0 0`}
+            margin={`-100px 0 100px`}
           >
             <Image
               width={`60px`}
@@ -516,265 +517,10 @@ const AppFooter = () => {
 
           <Wrapper
             dr={`row`}
-            height={tab ? `50%` : `100px`}
+            height={tab ? `20%` : `100px`}
             shadow={tab ? `none` : `0px -3px 10px ${Theme.grey_C}`}
             position={`relative`}
           >
-            {/* <ButtonWrapper
-              margin={
-                width < 700
-                  ? tab
-                    ? `0 0 -60px -60px`
-                    : `0 0 100px -60px`
-                  : tab
-                  ? `0 0 -50px -65px`
-                  : `0 0 0 -65px`
-              }
-              bottom={`150px`}
-              transition={`0.5s`}
-            >
-              <GradientText
-                className="gradient"
-                fontWeight={`900`}
-                opacity={tab ? `0` : `1`}
-                padding={`0`}
-              >
-                내 물건 맡기기
-              </GradientText>
-
-              <Wrapper
-                margin={tab ? `0 0 -50px -100px` : `0 0 0 -100px`}
-                zIndex={`100`}
-              >
-                <Planet
-                  tension={200}
-                  centerContent={
-                    <Wrapper
-                      opacity={tab ? `0` : `1`}
-                      width={`100px`}
-                      height={`100px`}
-                      radius={`50%`}
-                      className={"ajklsuajksdnajksdnajksdn"}
-                      bgColor={`linear-gradient(90deg,rgb(249, 2, 80),rgb(247, 141, 150),rgb(242, 146, 98),rgb(241, 115, 80))`}
-                    >
-                      <Wrapper
-                        width={`45px`}
-                        height={`45px`}
-                        radius={`50%`}
-                        bgColor={Theme.white_C}
-                        className="circle2"
-                      ></Wrapper>
-                    </Wrapper>
-                  }
-                  orbitStyle={(defaultStyle) => ({
-                    ...defaultStyle,
-                    borderWidth: 0,
-                  })}
-                  open={tab}
-                  onClick={tabToggle}
-                  orbitRadius={width < 700 ? 170 : 200}
-                >
-                  <FirstDisplay
-                    className="wrapper"
-                    rotate={rotate}
-                    zIndex={`1000 !important`}
-                    position={`relative`}
-                    display={tab ? `flex` : `none`}
-                  >
-                    <Wrapper className="circle" position={`relative`}>
-                      <Wrapper
-                        className="box"
-                        onClick={() => {
-                          if (currentMenu === 1) {
-                            moveLinkHandler(`/iobox?type=iobox`);
-                          } else {
-                            const firIndex = data[currentMenu][0].indexOf(1);
-
-                            if (firIndex !== -1) {
-                              setRotate(rotate + 60 * (firIndex + 1));
-                            } else {
-                              const secIndex = data[currentMenu][1].indexOf(1);
-                              setRotate(rotate - 60 * (secIndex + 1));
-                            }
-
-                            setCurrentMenu(1);
-                          }
-                        }}
-                      >
-                        <IconBox>
-                          <Image
-                            src={`https://4leaf-s3.s3.ap-northeast-2.amazonaws.com/iobox/assets/images/main/iobox_dial.png`}
-                            alt={`icon`}
-                            width={width < 700 ? `30px` : `40px`}
-                          />
-                          <Text fontSize={`0.8rem`}>아이오 박스</Text>
-                        </IconBox>
-                      </Wrapper>
-                      <Wrapper
-                        className="box"
-                        onClick={() => {
-                          if (currentMenu === 2) {
-                            moveLinkHandler(`/iobox?type=hangerBox`);
-                          } else {
-                            const firIndex = data[currentMenu][0].indexOf(2);
-
-                            if (firIndex !== -1) {
-                              setRotate(rotate + 60 * (firIndex + 1));
-                            } else {
-                              const secIndex = data[currentMenu][1].indexOf(2);
-
-                              setRotate(rotate - 60 * (secIndex + 1));
-                            }
-
-                            setCurrentMenu(2);
-                          }
-                        }}
-                      >
-                        <IconBox>
-                          <Image
-                            src={`https://4leaf-s3.s3.ap-northeast-2.amazonaws.com/iobox/assets/images/main/hagner_dial.png`}
-                            alt={`icon`}
-                            width={width < 700 ? `25px` : `32px`}
-                          />
-                          <Text fontSize={`0.8rem`}>행거박스</Text>
-                        </IconBox>
-                      </Wrapper>
-                      <Wrapper
-                        className="box"
-                        onClick={() => {
-                          if (currentMenu === 3) {
-                            moveLinkHandler(`/iobox?type=tentBox`);
-                          } else {
-                            const firIndex = data[currentMenu][0].indexOf(3);
-                            if (firIndex !== -1) {
-                              setRotate(rotate + 60 * (firIndex + 1));
-                            } else {
-                              const secIndex = data[currentMenu][1].indexOf(3);
-                              setRotate(rotate - 60 * (secIndex + 1));
-                            }
-
-                            setCurrentMenu(3);
-                          }
-                        }}
-                      >
-                        <IconBox>
-                          <Image
-                            src={`https://4leaf-s3.s3.ap-northeast-2.amazonaws.com/iobox/assets/images/main/large_dial.png`}
-                            alt={`icon`}
-                            width={width < 700 ? `30px` : `40px`}
-                          />
-                          <Text fontSize={`0.8rem`}>대용량 박스</Text>
-                        </IconBox>
-                      </Wrapper>
-                      <Wrapper
-                        className="box"
-                        onClick={() => {
-                          if (currentMenu === 4) {
-                            moveLinkHandler(`/iobox?type=bigBox`);
-                          } else {
-                            const firIndex = data[currentMenu][0].indexOf(4);
-                            if (firIndex !== -1) {
-                              setRotate(rotate + 60 * (firIndex + 1));
-                            } else {
-                              const secIndex = data[currentMenu][1].indexOf(4);
-                              setRotate(rotate - 60 * (secIndex + 1));
-                            }
-
-                            setCurrentMenu(4);
-                          }
-                        }}
-                      >
-                        <IconBox>
-                          <Image
-                            src={`https://4leaf-s3.s3.ap-northeast-2.amazonaws.com/iobox/assets/images/main/box_dial.png`}
-                            alt={`icon`}
-                            width={width < 700 ? `50px` : `60px`}
-                          />
-                          <Text fontSize={`0.7rem`}>텐트보관 박스</Text>
-                        </IconBox>
-                      </Wrapper>
-
-                      <Wrapper
-                        className="box"
-                        onClick={() => {
-                          if (currentMenu === 5) {
-                            moveLinkHandler(`/iobox?type=tentBox`);
-                          } else {
-                            const firIndex = data[currentMenu][0].indexOf(5);
-                            if (firIndex !== -1) {
-                              setRotate(rotate + 60 * (firIndex + 1));
-                            } else {
-                              const secIndex = data[currentMenu][1].indexOf(5);
-                              setRotate(rotate - 60 * (secIndex + 1));
-                            }
-
-                            setCurrentMenu(5);
-                          }
-                        }}
-                      >
-                        <IconBox>
-                          <Image
-                            src={`https://4leaf-s3.s3.ap-northeast-2.amazonaws.com/iobox/assets/images/main/bullet_dial.png`}
-                            alt={`icon`}
-                            width={width < 700 ? `50px` : `60px`}
-                          />
-                          <Text fontSize={`0.8rem`}>총알배송</Text>
-                        </IconBox>
-                      </Wrapper>
-                      <Wrapper
-                        className="box"
-                        onClick={() => {
-                          if (currentMenu === 6) {
-                            moveLinkHandler(`/locker`);
-                          } else {
-                            const firIndex = data[currentMenu][0].indexOf(6);
-                            if (firIndex !== -1) {
-                              setRotate(rotate + 60 * (firIndex + 1));
-                            } else {
-                              const secIndex = data[currentMenu][1].indexOf(6);
-                              setRotate(rotate - 60 * (secIndex + 1));
-                            }
-
-                            setCurrentMenu(6);
-                          }
-                        }}
-                      >
-                        <IconBox>
-                          <Image
-                            src={`https://4leaf-s3.s3.ap-northeast-2.amazonaws.com/iobox/assets/images/main/truck_dial.png`}
-                            alt={`icon`}
-                            width={width < 700 ? `40px` : `50px`}
-                          />
-                          <Text fontSize={`0.8rem`}>배송현황</Text>
-                        </IconBox>
-                      </Wrapper>
-                    </Wrapper>
-
-                    <Wrapper
-                      onClick={tabToggle}
-                      position={`absolute`}
-                      top={`calc(50% - 50px)`}
-                      left={`calc(50% - 50px)`}
-                      width={`100px`}
-                      height={`100px`}
-                      radius={`50%`}
-                      zIndex={`1000 !important`}
-                      className={"ajklsuajksdnajksdnajksdn"}
-                      bgColor={`linear-gradient(90deg,rgb(249, 2, 80),rgb(247, 141, 150),rgb(242, 146, 98),rgb(241, 115, 80))`}
-                    >
-                      <Wrapper
-                        width={`45px`}
-                        height={`45px`}
-                        radius={`50%`}
-                        bgColor={`rgba(255,255,255,0.5)`}
-                        className="circle2"
-                      ></Wrapper>
-                    </Wrapper>
-                  </FirstDisplay>
-                </Planet>
-              </Wrapper>
-            </ButtonWrapper> */}
-
             <ButtonWrapper
               bottom={tab ? `` : `150px`}
               top={tab ? `0` : ``}
@@ -807,7 +553,7 @@ const AppFooter = () => {
                         width={`45px`}
                         height={`45px`}
                         radius={`50%`}
-                        bgColor={Theme.white_C}
+                        bgColor={tab ? `rgba(255,255,255,0.5)` : Theme.white_C}
                         className="circle"
                       ></Wrapper>
                     </Wrapper>
@@ -817,7 +563,7 @@ const AppFooter = () => {
                   orbitStyle={(defaultStyle) => ({
                     ...defaultStyle,
                     borderWidth: 0,
-                    background: "rgba(255,255,255,0.8)",
+                    background: "rgba(255,255,255,0.7)",
                   })}
                   open={tab}
                   onClick={tabToggle}
@@ -869,7 +615,7 @@ const AppFooter = () => {
                     <Image
                       src={`https://4leaf-s3.s3.ap-northeast-2.amazonaws.com/iobox/assets/images/main/truck_dial.png`}
                       alt={`icon`}
-                      width={width < 700 ? `40px` : `50px`}
+                      width={`50px`}
                     />
                     <Text fontSize={width < 700 ? `0.8rem` : `1rem`}>
                       배송현황
