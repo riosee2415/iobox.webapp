@@ -477,7 +477,6 @@ const AppFooter = () => {
           bgColor={tab ? `rgba(0,0,0,0.8)` : Theme.white_C}
           overflow={tab ? `hidden` : ``}
           ju={`flex-end`}
-          padding={`0 0 100px`}
         >
           <Wrapper
             width={`auto`}
@@ -536,7 +535,13 @@ const AppFooter = () => {
               </GradientText>
 
               <Wrapper
-                margin={`0 0 0 -100px`}
+                margin={
+                  tab
+                    ? width < 700
+                      ? `0 0 0 -112px`
+                      : `0 0 0 -115px`
+                    : `0 0 0 -100px`
+                }
                 transition={`0.5s`}
                 zIndex={`100`}
               >
@@ -544,14 +549,14 @@ const AppFooter = () => {
                   tension={200}
                   centerContent={
                     <Wrapper
-                      width={`100px`}
-                      height={`100px`}
+                      width={tab ? (width < 700 ? `120px` : `130px`) : `100px`}
+                      height={tab ? (width < 700 ? `120px` : `130px`) : `100px`}
                       radius={`50%`}
                       bgColor={`linear-gradient(90deg,rgb(249, 2, 80),rgb(247, 141, 150),rgb(242, 146, 98),rgb(241, 115, 80))`}
                     >
                       <Wrapper
-                        width={`45px`}
-                        height={`45px`}
+                        width={tab ? (width < 700 ? `50px` : `60px`) : `45px`}
+                        height={tab ? (width < 700 ? `50px` : `60px`) : `45px`}
                         radius={`50%`}
                         bgColor={tab ? `rgba(255,255,255,0.5)` : Theme.white_C}
                         className="circle"
@@ -567,12 +572,12 @@ const AppFooter = () => {
                   })}
                   open={tab}
                   onClick={tabToggle}
-                  orbitRadius={width < 700 ? 170 : 200}
+                  orbitRadius={width < 700 ? 190 : 200}
                   rotation={-30}
                 >
                   <IconBox
                     display={tab ? `flex` : `none`}
-                    margin={`-70px 0 0`}
+                    margin={`-60px 0 0`}
                     width={width < 700 ? `100px !important` : `130px`}
                     onClick={() => {
                       moveLinkHandler(`/iobox?type=tentBox`);
@@ -581,9 +586,11 @@ const AppFooter = () => {
                     <Image
                       src={`https://4leaf-s3.s3.ap-northeast-2.amazonaws.com/iobox/assets/images/main/box_dial.png`}
                       alt={`icon`}
-                      width={width < 700 ? `60px` : `70px`}
+                      width={width < 700 ? `55px` : `60px`}
                     />
-                    <Text fontSize={`0.8rem`}>텐트보관 박스</Text>
+                    <Text fontSize={width < 700 ? `1rem` : `0.8rem`}>
+                      텐트보관 박스
+                    </Text>
                   </IconBox>
 
                   <IconBox
@@ -596,9 +603,11 @@ const AppFooter = () => {
                     <Image
                       src={`https://4leaf-s3.s3.ap-northeast-2.amazonaws.com/iobox/assets/images/main/bullet_dial.png`}
                       alt={`icon`}
-                      width={width < 700 ? `60px` : `70px`}
+                      width={width < 700 ? `55px` : `60px`}
                     />
-                    <Text fontSize={`0.8rem`}>총알배송</Text>
+                    <Text fontSize={width < 700 ? `1rem` : `0.8rem`}>
+                      총알배송
+                    </Text>
                   </IconBox>
 
                   <IconBox
@@ -611,14 +620,16 @@ const AppFooter = () => {
                     <Image
                       src={`https://4leaf-s3.s3.ap-northeast-2.amazonaws.com/iobox/assets/images/main/truck_dial.png`}
                       alt={`icon`}
-                      width={`50px`}
+                      width={width < 700 ? `45px` : `50px`}
                     />
-                    <Text fontSize={`0.8rem`}>배송현황</Text>
+                    <Text fontSize={width < 700 ? `1rem` : `0.8rem`}>
+                      배송현황
+                    </Text>
                   </IconBox>
 
                   <IconBox
                     display={tab ? `flex` : `none`}
-                    margin={`70px 0 0`}
+                    margin={`65px 0 0`}
                     width={width < 700 ? `100px !important` : `130px`}
                     onClick={() => {
                       moveLinkHandler(`/iobox?type=iobox`);
@@ -629,7 +640,9 @@ const AppFooter = () => {
                       alt={`icon`}
                       width={width < 700 ? `40px` : `50px`}
                     />
-                    <Text fontSize={`0.8rem`}>아이오 박스</Text>
+                    <Text fontSize={width < 700 ? `1rem` : `0.8rem`}>
+                      아이오 박스
+                    </Text>
                   </IconBox>
 
                   <IconBox
@@ -642,9 +655,11 @@ const AppFooter = () => {
                     <Image
                       src={`https://4leaf-s3.s3.ap-northeast-2.amazonaws.com/iobox/assets/images/main/hagner_dial.png`}
                       alt={`icon`}
-                      width={width < 700 ? `40px` : `50px`}
+                      width={width < 700 ? `35px` : `40px`}
                     />
-                    <Text fontSize={`0.8rem`}>행거박스</Text>
+                    <Text fontSize={width < 700 ? `1rem` : `0.8rem`}>
+                      행거박스
+                    </Text>
                   </IconBox>
 
                   <IconBox
@@ -654,10 +669,10 @@ const AppFooter = () => {
                     <Image
                       src={`https://4leaf-s3.s3.ap-northeast-2.amazonaws.com/iobox/assets/images/main/large_dial.png`}
                       alt={`icon`}
-                      width={width < 700 ? `40px` : `50px`}
+                      width={width < 700 ? `35px` : `40px`}
                     />
                     <Text
-                      fontSize={`0.8rem`}
+                      fontSize={width < 700 ? `1rem` : `0.8rem`}
                       onClick={() => {
                         moveLinkHandler(`/iobox?type=bigBox`);
                       }}
