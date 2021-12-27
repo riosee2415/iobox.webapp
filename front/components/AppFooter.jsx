@@ -482,7 +482,7 @@ const AppFooter = () => {
             width={`auto`}
             al={`flex-start`}
             display={tab ? `flex` : `none`}
-            margin={width < 700 ? `-100px 0 120px` : `-100px 0 200px`}
+            margin={width < 700 ? `-150px 0 120px` : `-100px 0 200px`}
           >
             <Image
               width={`60px`}
@@ -516,7 +516,7 @@ const AppFooter = () => {
 
           <Wrapper
             dr={`row`}
-            height={tab ? `25%` : `100px`}
+            height={tab ? `35%` : `100px`}
             shadow={tab ? `none` : `0px -3px 10px ${Theme.grey_C}`}
             position={`relative`}
           >
@@ -572,7 +572,7 @@ const AppFooter = () => {
                   })}
                   open={tab}
                   onClick={tabToggle}
-                  orbitRadius={width < 700 ? 190 : 200}
+                  orbitRadius={width < 700 ? 180 : 200}
                   rotation={-30}
                 >
                   <IconBox
