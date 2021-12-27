@@ -10,6 +10,7 @@ const multerS3 = require("multer-s3");
 const isLoggedIn = require("../middlewares/isLoggedIn");
 const isNanCheck = require("../middlewares/isNanCheck");
 const axios = require("axios");
+const moment = require("moment");
 
 const router = express.Router();
 
@@ -399,11 +400,18 @@ router.post("/create", async (req, res, next) => {
               "786198908d47a63ad00927cece057a617666d0a2436b56a731a6f857fa1cd72c57035d200ac6df0a", // REST API Secret
           },
         });
-        console.log("???");
 
         const { access_token } = getToken.data.response;
 
-        console.log(access_token);
+        let time = moment().add(1, `m`).unix();
+
+        console.log(
+          "개꿀",
+
+          time
+        );
+
+        return res.status(401).send("카드 결제를 진행할 수 없습니다.");
 
         const paymentResult = await axios({
           url: `https://api.iamport.kr/subscribe/payments/again`,
@@ -423,16 +431,6 @@ router.post("/create", async (req, res, next) => {
           // 카드사 통신에 성공(실제 승인 성공 여부는 추가 판단이 필요함)
           if (paymentResult.data.response.status === "paid") {
             //카드 정상 승인
-
-            let time = new Date();
-
-            time.setMinutes(time.getSeconds() + 30);
-
-            console.log(
-              "개꿀",
-
-              Math.floor(time.getTime() / 1000)
-            );
 
             return res.status(401).send("카드 결제를 진행할 수 없습니다.");
           } else {
