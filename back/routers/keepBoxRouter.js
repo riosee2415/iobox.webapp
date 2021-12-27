@@ -217,6 +217,8 @@ router.post("/list/date", async (req, res, next) => {
   const { searchDate } = req.body;
 
   try {
+    console.log(searchDate);
+
     const dateParsingData = new Date(searchDate);
 
     const nextMonth = new Date(searchDate);
@@ -496,7 +498,7 @@ router.post("/create", async (req, res, next) => {
 
 // 픽업 여부 변경
 router.patch("/update", isAdminCheck, async (req, res, next) => {
-  const { id, deliveryCom, deliveryCode } = req.body;
+  const { id, userCode, deliveryCom, deliveryCode } = req.body;
 
   if (isNanCheck(id)) {
     return res.status(401).send("잘못된 요청입니다.");
@@ -514,9 +516,49 @@ router.patch("/update", isAdminCheck, async (req, res, next) => {
       return res.status(401).send("이미 픽업이 완료된 박스입니다.");
     }
 
+    const getToken = await axios({
+      url: "https://api.iamport.kr/users/getToken",
+      method: "post", // POST method
+      headers: { "Content-Type": "application/json" }, // "Content-Type": "application/json"
+      data: {
+        imp_key: "9134198546040290", // REST API 키
+        imp_secret:
+          "786198908d47a63ad00927cece057a617666d0a2436b56a731a6f857fa1cd72c57035d200ac6df0a", // REST API Secret
+      },
+    });
+    const { access_token } = getToken.data.response; // 인증 토큰
+
+    const d = new Date();
+    let year = d.getFullYear() + "";
+    let month = d.getMonth() + 1 + "";
+    let date = d.getDate() + "";
+    let hour = d.getHours() + "";
+    let min = d.getMinutes() + "";
+    let sec = d.getSeconds() + "";
+    let mSec = d.getMilliseconds() + "";
+    month = month < 10 ? "0" + month : month;
+    date = date < 10 ? "0" + date : date;
+    hour = hour < 10 ? "0" + hour : hour;
+    min = min < 10 ? "0" + min : min;
+    sec = sec < 10 ? "0" + sec : sec;
+    mSec = mSec < 10 ? "0" + mSec : mSec;
+    let orderPK = "ORD" + year + month + date + hour + min + sec + mSec;
+
+    const paymentResult = await axios({
+      url: `https://api.iamport.kr/subscribe/payments/again`,
+      method: "post",
+      headers: { Authorization: access_token }, // 인증 토큰을 Authorization header에 추가
+      data: {
+        customer_uid: userCode,
+        merchant_uid: orderPK, // 새로 생성한 결제(재결제)용 주문 번호
+        amount: 1000,
+        name: "카드 도용 zz",
+      },
+    });
+
     const updateResult = await KeepBox.update(
       {
-        isPickup: true,
+        // isPickup: true,
         deliveryCom,
         deliveryCode,
       },

@@ -3,6 +3,14 @@ const axios = require("axios");
 
 const router = express.Router();
 
+router.get(`/test`, async (req, res, next) => {
+  try {
+    console.log(req.body);
+  } catch (e) {
+    console.log(e);
+  }
+});
+
 router.post(`/`, async (req, res, next) => {
   try {
     const { cardNumber, expiry, birth, pwd2Digit, customer_uid } = req.body;
