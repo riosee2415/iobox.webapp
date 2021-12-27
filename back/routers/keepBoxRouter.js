@@ -211,6 +211,43 @@ router.get(["/list", "/list/:listType"], async (req, res, next) => {
   }
 });
 
+// 입력 받은 값의 월 부터 한달
+router.post("/list/date", async (req, res, next) => {
+  const { searchDate } = req.body;
+
+  try {
+    const dateParsingData = new Date(searchDate);
+
+    const nextMonth = new Date(searchDate);
+    nextMonth.setMonth(nextMonth.getMonth() + 1);
+
+    console.log(dateParsingData);
+    console.log(nextMonth);
+
+    const results = await KeepBox.findAll({
+      where: {
+        [Op.and]: [
+          { createdAt: { [Op.gte]: dateParsingData } },
+          { createdAt: { [Op.lt]: nextMonth } },
+        ],
+      },
+      include: [
+        {
+          model: BoxImage,
+        },
+        {
+          model: User,
+        },
+      ],
+    });
+
+    return res.status(200).json(results);
+  } catch (error) {
+    console.error(error);
+    return res.status(401).send("월별 결제 내용을 불러올 수 없습니다.");
+  }
+});
+
 // 사용자가 상자보관 물건 촬영 여부를 체크 했다면 사용하는 api
 router.post(
   "/image",
