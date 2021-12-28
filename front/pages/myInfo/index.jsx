@@ -351,7 +351,7 @@ const Index = () => {
           <Wrapper height={`10px`} bgColor={Theme.lightGrey_C}></Wrapper>
 
           <Wrapper
-            padding={`15px 50px`}
+            padding={`15px 50px 15px 0`}
             al={`flex-start`}
             onClick={logoutHandler}
             cursor={`pointer`}
