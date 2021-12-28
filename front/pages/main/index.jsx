@@ -161,7 +161,7 @@ const Home = () => {
             shadow={`0px 0px 10px ${Theme.grey_C}`}
           >
             <Wrapper
-              height={width < 700 ? `340px` : `430px`}
+              height={width < 700 ? `370px` : `480px`}
               bgColor={Theme.basicTheme_C}
               ju={`flex-start`}
             >
@@ -202,14 +202,14 @@ const Home = () => {
                   position={`absolute`}
                   bottom={`0`}
                   left={`50%`}
-                  width={`30%`}
+                  width={`36%`}
                   zIndex={`2`}
-                  margin={`0 0 0 -15%`}
+                  margin={`0 0 0 -18%`}
                 />
               </RsWrapper>
             </Wrapper>
             <Wrapper
-              height={width < 700 ? `calc(100% - 340px)` : `calc(100% - 430px)`}
+              height={width < 700 ? `calc(100% - 370px)` : `calc(100% - 480px)`}
               bgColor={Theme.white_C}
             >
               <RsWrapper ju={`flex-start`}>
