@@ -202,14 +202,14 @@ const Home = () => {
                   position={`absolute`}
                   bottom={`0`}
                   left={`50%`}
-                  width={`36%`}
+                  width={width < 700 ? `30%` : `36%`}
                   zIndex={`2`}
-                  margin={`0 0 0 -18%`}
+                  margin={width < 700 ? `0 0 0 -15%` : `0 0 0 -18%`}
                 />
               </RsWrapper>
             </Wrapper>
             <Wrapper
-              height={width < 700 ? `350px` : `480px`}
+              height={width < 700 ? `400px` : `480px`}
               bgColor={Theme.white_C}
             >
               <RsWrapper ju={`flex-start`}>

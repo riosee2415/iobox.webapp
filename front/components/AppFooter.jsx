@@ -473,7 +473,7 @@ const AppFooter = () => {
           top={`0`}
           zIndex={`1000`}
           width={width < 700 ? `100%` : `500px`}
-          height={tab ? `100vh` : `auto`}
+          minHeight={tab ? `100vh` : `auto`}
           bgColor={tab ? `rgba(0,0,0,0.8)` : Theme.white_C}
           overflow={tab ? `hidden` : ``}
           ju={`flex-end`}
