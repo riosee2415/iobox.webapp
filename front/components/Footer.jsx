@@ -101,7 +101,7 @@ const Index = () => {
       >
         <Image
           width={`50px`}
-          src={`https://4leaf-s3.s3.ap-northeast-2.amazonaws.com/iobox/assets/images/logo/LOGO_W.png`}
+          src={`https://4leaf-s3.s3.ap-northeast-2.amazonaws.com/iobox/assets/images/logo/icon_w.png`}
         />
 
         <Wrapper width={`auto`} al={`flex-start`}>

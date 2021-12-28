@@ -97,7 +97,7 @@ const Index = () => {
           bgColor={`linear-gradient(160deg,rgb(249, 2, 80),rgb(247, 141, 150),rgb(242, 146, 98),rgb(241, 115, 80))`}
         >
           <Image
-            src={`https://4leaf-s3.s3.ap-northeast-2.amazonaws.com/iobox/assets/images/logo/LOGO_W.png`}
+            src={`https://4leaf-s3.s3.ap-northeast-2.amazonaws.com/iobox/assets/images/logo/icon_w.png`}
             width={`50px`}
             alt={`logo`}
           />

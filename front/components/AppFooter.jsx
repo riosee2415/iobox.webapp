@@ -762,7 +762,7 @@ const AppFooter = () => {
                     margin={width < 700 ? `50px 0 0` : `20px 0 0`}
                   >
                     <Image
-                      src={`https://4leaf-s3.s3.ap-northeast-2.amazonaws.com/iobox/assets/images/icon/logo_square.png`}
+                      src={`https://4leaf-s3.s3.ap-northeast-2.amazonaws.com/iobox/assets/images/logo/LOGO_BOX.png`}
                       width={width < 1350 ? `80px` : `100px`}
                       alt={`logo`}
                       margin={`0 0 20px`}

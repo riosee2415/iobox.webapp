@@ -146,7 +146,7 @@ const Home = () => {
         <FirstDisplay bgColor={Theme.basicTheme_C} transition={`0.5s`}>
           <Image
             width={`100px`}
-            src={`https://4leaf-s3.s3.ap-northeast-2.amazonaws.com/iobox/assets/images/logo/LOGO_W.png`}
+            src={`https://4leaf-s3.s3.ap-northeast-2.amazonaws.com/iobox/assets/images/logo/icon.png`}
           />
         </FirstDisplay>
       </FirstWrapper>

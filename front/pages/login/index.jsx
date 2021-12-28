@@ -168,7 +168,7 @@ const Home = ({}) => {
                 left={`50%`}
                 width={`90px`}
                 margin={`0 0 -45px -33px`}
-                src={`https://4leaf-s3.s3.ap-northeast-2.amazonaws.com/iobox/assets/images/logo/LOGO_W.png`}
+                src={`https://4leaf-s3.s3.ap-northeast-2.amazonaws.com/iobox/assets/images/logo/icon_w.png`}
                 alt={`logo_Image`}
               />
             </Link>
