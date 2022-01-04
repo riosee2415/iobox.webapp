@@ -22,6 +22,7 @@ import Footer from "./Footer";
 import axios from "axios";
 import wrapper from "../store/configureStore";
 import { END } from "redux-saga";
+import MenuSlider from "./slide/MenuSlider";
 
 const FirstDisplay = styled(Wrapper)`
   width: auto;
@@ -478,41 +479,17 @@ const AppFooter = () => {
           overflow={tab ? `hidden` : ``}
           ju={`flex-end`}
         >
-          <Wrapper
-            width={`auto`}
-            al={`flex-start`}
-            display={tab ? `flex` : `none`}
-            margin={width < 700 ? `-140px 0 110px` : `-100px 0 200px`}
-          >
-            <Image
-              width={`60px`}
-              src={`https://4leaf-s3.s3.ap-northeast-2.amazonaws.com/iobox/assets/images/main/paperbox.png`}
-            />
-
-            <GradientText bold={true} fontSize={`2rem`} margin={`10px 0 0`}>
-              종이박스 배송
-            </GradientText>
-
-            <Text
-              color={Theme.white_C}
-              bold={true}
-              fontSize={`1.5rem`}
-              margin={`15px 0`}
+          {tab ? (
+            <Wrapper
+              width={`auto`}
+              al={`flex-start`}
+              margin={width < 700 ? `-140px 0 110px` : `-100px 0 200px`}
             >
-              의류,물건,서류,책
-            </Text>
-            <Text color={Theme.white_C} bold={true} fontSize={`1.5rem`}>
-              각종 내 방안의 짐
-            </Text>
-            <Text
-              color={Theme.white_C}
-              bold={true}
-              fontSize={`1.5rem`}
-              margin={`15px 0 0`}
-            >
-              원할 때 맡기고 원할 때 찾기
-            </Text>
-          </Wrapper>
+              <MenuSlider datum={["1"]} tab={tab} />
+            </Wrapper>
+          ) : (
+            <Wrapper></Wrapper>
+          )}
 
           <Wrapper
             dr={`row`}
