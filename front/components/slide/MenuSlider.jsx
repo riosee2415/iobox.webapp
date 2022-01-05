@@ -144,11 +144,10 @@ const MenuSlider = ({
       {arrow && (
         <Wrapper
           position={`absolute`}
-          top={`50%`}
+          bottom={`0`}
           transform={`translateY(-50%)`}
           dr={`row`}
           ju={`space-between`}
-          padding={`0 20px`}
           zIndex={`9999`}
           cursor={`pointer`}
         >
@@ -178,7 +177,7 @@ const MenuSlider = ({
         effect={effect}
         dots={true}
         slidesToShow={1} // 한 화면에 몇개의 슬라이드가 보여지는지 결정
-        vertical={true}
+        vertical={false}
         ref={slideRef}
         autoplay={autoplay}
         centerMode={false} // 양쪽에 겹쳐서 보이는 디자인
@@ -189,21 +188,14 @@ const MenuSlider = ({
         vartical={true}
         verticalSwiping={true}
       >
-        <Wrapper display={`none`} dr={`row`}>
-          {slideDatum.map((slide, idx) => {
-            return (
-              <Wrapper
-                width={`300px`}
-                height={`300px`}
-                bgColor={Theme.basicTheme_C}
-              >
-                <Image
-                  width={`60px`}
-                  src={`https://4leaf-s3.s3.ap-northeast-2.amazonaws.com/iobox/assets/images/main/paperbox.png`}
-                />
+        {slideDatum.map((slide, idx) => {
+          return (
+            <Wrapper display={`flex !important`} dr={`row`} key={idx}>
+              <Wrapper al={`flex-start`}>
+                <Image width={`60px`} src={slide[0][0]} />
 
                 <GradientText bold={true} fontSize={`2rem`} margin={`10px 0 0`}>
-                  종이박스 배송
+                  {slide[0][1]}
                 </GradientText>
 
                 <Text
@@ -212,10 +204,10 @@ const MenuSlider = ({
                   fontSize={`1.5rem`}
                   margin={`15px 0`}
                 >
-                  의류,물건,서류,책
+                  {slide[0][2]}
                 </Text>
                 <Text color={Theme.white_C} bold={true} fontSize={`1.5rem`}>
-                  각종 내 방안의 짐
+                  {slide[0][3]}
                 </Text>
                 <Text
                   color={Theme.white_C}
@@ -223,12 +215,12 @@ const MenuSlider = ({
                   fontSize={`1.5rem`}
                   margin={`15px 0 0`}
                 >
-                  원할 때 맡기고 원할 때 찾기
+                  {slide[0][4]}
                 </Text>
               </Wrapper>
-            );
-          })}
-        </Wrapper>
+            </Wrapper>
+          );
+        })}
       </Carousel>
 
       {dots && (

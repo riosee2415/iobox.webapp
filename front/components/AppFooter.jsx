@@ -463,6 +463,23 @@ const AppFooter = () => {
     return null;
   }
 
+  const menuDatum = [
+    [
+      "https://4leaf-s3.s3.ap-northeast-2.amazonaws.com/iobox/assets/images/main/paperbox.png",
+      "종이박스 배송",
+      "의류,물건,서류,책",
+      "각종 내 방안의 짐",
+      "원할때 맡기고 원할때 찾기",
+    ],
+    [
+      "https://4leaf-s3.s3.ap-northeast-2.amazonaws.com/iobox/assets/images/main/paperbox.png",
+      "22 배송",
+      "의류,물건,서류,책",
+      "각종 내 방안의 짐",
+      "원할때 맡기고 원할때 찾기",
+    ],
+  ];
+
   return (
     <>
       <Wrapper
@@ -485,7 +502,7 @@ const AppFooter = () => {
               al={`flex-start`}
               margin={width < 700 ? `-140px 0 110px` : `-100px 0 200px`}
             >
-              <MenuSlider datum={["1"]} tab={tab} />
+              <MenuSlider datum={menuDatum} tab={tab} />
             </Wrapper>
           ) : (
             <Wrapper></Wrapper>

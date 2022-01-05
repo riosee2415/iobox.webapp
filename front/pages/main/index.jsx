@@ -152,12 +152,12 @@ const Home = () => {
       <ClientLayout>
         <WholeWrapper
           overflow={`hidden`}
-          minHeight={`90vh`}
+          minHeight={`100vh`}
           bgColor={width < 700 ? Theme.white_C : Theme.lightGrey_C}
         >
           <Wrapper
             width={width < 700 ? `100%` : `500px`}
-            height={`100%`}
+            height={`100vh`}
             shadow={`0px 0px 10px ${Theme.grey_C}`}
           >
             <Wrapper
@@ -209,7 +209,7 @@ const Home = () => {
               </RsWrapper>
             </Wrapper>
             <Wrapper
-              height={width < 700 ? `400px` : `480px`}
+              height={width < 700 ? `calc(100% - 330px)` : `calc(100% - 480px)`}
               bgColor={Theme.white_C}
             >
               <RsWrapper ju={`flex-start`}>
