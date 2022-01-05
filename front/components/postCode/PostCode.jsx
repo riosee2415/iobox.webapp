@@ -1,6 +1,6 @@
 import React from "react";
 import DaumPostCode from "react-daum-postcode";
-import Dialog from "@material-ui/core/Dialog";
+import { Modal } from "antd";
 import { Wrapper } from "../../components/commonComponents";
 import { AiOutlineClose } from "react-icons/ai";
 
@@ -17,11 +17,13 @@ const PostCode = ({
   onCompleteHandler,
 }) => {
   return (
-    <Dialog
-      fullWidth
-      maxWidth={`sm`}
-      open={isPostCode}
-      onClose={() => toggleDialogHandler()}
+    <Modal
+      width={`700px`}
+      style={{ top: 200 }}
+      footer={null}
+      closable={false}
+      visible={isPostCode}
+      onCancel={() => toggleDialogHandler()}
     >
       <Wrapper
         height={`32px`}
@@ -42,7 +44,7 @@ const PostCode = ({
         animation
         style={style}
       />
-    </Dialog>
+    </Modal>
   );
 };
 

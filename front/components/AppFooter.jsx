@@ -496,16 +496,14 @@ const AppFooter = () => {
           overflow={tab ? `hidden` : ``}
           ju={`flex-end`}
         >
-          {tab ? (
+          {tab && (
             <Wrapper
-              width={`auto`}
+              // width={`auto`}
               al={`flex-start`}
               margin={width < 700 ? `-140px 0 110px` : `-100px 0 200px`}
             >
               <MenuSlider datum={menuDatum} tab={tab} />
             </Wrapper>
-          ) : (
-            <Wrapper></Wrapper>
           )}
 
           <Wrapper
