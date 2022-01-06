@@ -656,6 +656,7 @@ const Index = () => {
                   data: {
                     id: updateData.id,
                     userCode: updateData.User.userCode,
+                    userId: updateData.User.id,
                   },
                 });
               }}
