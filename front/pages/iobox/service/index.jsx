@@ -153,6 +153,7 @@ const Index = () => {
             cursor={`pointer`}
             onClick={() => {
               moveLinkHandler("/main");
+              sessionStorage.removeItem("DATA");
             }}
             zIndex={`100`}
           >

@@ -37,6 +37,7 @@ import {
 } from "../../../../components/commonComponents";
 import { SearchOutlined } from "@ant-design/icons";
 import { numberWithCommas } from "../../../../components/commonUtils";
+import { SUBSCRIPTION_CANCEL_REQUEST } from "../../../../reducers/subscription";
 
 const AdminContent = styled.div`
   padding: 20px;
@@ -444,10 +445,13 @@ const Index = () => {
 
   const updateDelivery = useCallback(
     (value) => {
+      console.log(updateData.User);
+
       dispatch({
         type: KEEPBOX_UPDATE_REQUEST,
         data: {
           id: updateData.id,
+          userId: updateData.User.id,
           userCode: updateData.User.userCode,
           deliveryCom: value.deliveryCom,
           deliveryCode: value.deliveryCode,
@@ -642,6 +646,21 @@ const Index = () => {
 
             <Button size="small" type="primary" htmlType="submit">
               배송 시작
+            </Button>
+            <Button
+              size="small"
+              type="danger"
+              onClick={() => {
+                dispatch({
+                  type: SUBSCRIPTION_CANCEL_REQUEST,
+                  data: {
+                    id: updateData.id,
+                    userCode: updateData.User.userCode,
+                  },
+                });
+              }}
+            >
+              배송 취소
             </Button>
           </Form>
         </Wrapper>
