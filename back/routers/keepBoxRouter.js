@@ -1,6 +1,6 @@
 const express = require("express");
 const isAdminCheck = require("../middlewares/isAdminCheck");
-const { KeepBox, BoxImage, User } = require("../models");
+const { KeepBox, BoxImage, User, KeepBoxSchedule } = require("../models");
 const fs = require("fs");
 const { Op } = require("sequelize");
 const multer = require("multer");
@@ -409,86 +409,7 @@ router.post("/create", async (req, res, next) => {
         ],
       });
 
-      const d = new Date();
-      let year = d.getFullYear() + "";
-      let month = d.getMonth() + 1 + "";
-      let date = d.getDate() + "";
-      let hour = d.getHours() + "";
-      let min = d.getMinutes() + "";
-      let sec = d.getSeconds() + "";
-      let mSec = d.getMilliseconds() + "";
-      month = month < 10 ? "0" + month : month;
-      date = date < 10 ? "0" + date : date;
-      hour = hour < 10 ? "0" + hour : hour;
-      min = min < 10 ? "0" + min : min;
-      sec = sec < 10 ? "0" + sec : sec;
-      mSec = mSec < 10 ? "0" + mSec : mSec;
-      let orderPK = "ORD" + year + month + date + hour + min + sec + mSec;
-
-      console.log(userData.dataValues.userCode);
-      console.log("ASJDNRAJKLSNDJKA");
-
-      try {
-        const getToken = await axios({
-          url: "https://api.iamport.kr/users/getToken",
-          method: "post", // POST method
-          headers: { "Content-Type": "application/json" }, // "Content-Type": "application/json"
-          data: {
-            imp_key: "9134198546040290", // REST API 키
-            imp_secret:
-              "786198908d47a63ad00927cece057a617666d0a2436b56a731a6f857fa1cd72c57035d200ac6df0a", // REST API Secret
-          },
-        });
-
-        const { access_token } = getToken.data.response;
-
-        let time = moment().add(1, `m`).unix();
-
-        console.log(
-          "개꿀",
-
-          time
-        );
-
-        return res.status(401).send("카드 결제를 진행할 수 없습니다.");
-
-        const paymentResult = await axios({
-          url: `https://api.iamport.kr/subscribe/payments/again`,
-          method: "post",
-          headers: { Authorization: access_token }, // 인증 토큰을 Authorization header에 추가
-          data: {
-            customer_uid: userData.dataValues.userCode,
-            merchant_uid: orderPK, // 새로 생성한 결제(재결제)용 주문 번호
-            amount: 1000,
-            name: "카드 도용 zz",
-          },
-        });
-
-        const { code, message } = paymentResult.data;
-
-        if (code === 0) {
-          // 카드사 통신에 성공(실제 승인 성공 여부는 추가 판단이 필요함)
-          if (paymentResult.data.response.status === "paid") {
-            //카드 정상 승인
-
-            return res.status(401).send("카드 결제를 진행할 수 없습니다.");
-          } else {
-            //카드 승인 실패 (예: 고객 카드 한도초과, 거래정지카드, 잔액부족 등)
-            //paymentResult.status : failed 로 수신됨
-            // console.log("실패", paymentResult);
-            return res.status(401).send("카드 결제를 진행할 수 없습니다.");
-          }
-        } else {
-          // 카드사 요청에 실패 (paymentResult is null)
-          console.log("요청 실패", paymentResult);
-          return res.status(401).send("카드 결제를 진행할 수 없습니다.");
-        }
-      } catch (e) {
-        console.log(e);
-        return res.status(401).send("카드 결제를 진행할 수 없습니다.");
-      }
-
-      // return res.status(201).json({ result: true });
+      return res.status(201).json({ result: true });
     }
   } catch (error) {
     console.error(error);
@@ -498,7 +419,7 @@ router.post("/create", async (req, res, next) => {
 
 // 픽업 여부 변경
 router.patch("/update", isAdminCheck, async (req, res, next) => {
-  const { id, userCode, deliveryCom, deliveryCode } = req.body;
+  const { id, userCode, userId, deliveryCom, deliveryCode } = req.body;
 
   if (isNanCheck(id)) {
     return res.status(401).send("잘못된 요청입니다.");
@@ -563,6 +484,13 @@ router.patch("/update", isAdminCheck, async (req, res, next) => {
       if (paymentResult.data.response.status === "paid") {
         //카드 정상 승인
 
+        const resultPay = await KeepBoxSchedule.create({
+          merchantUid: orderPK,
+          isComplate: true,
+          UserId: parseInt(userId),
+          KeepBoxId: parseInt(id),
+        });
+
         const d = new Date();
         let year = d.getFullYear() + "";
         let month = d.getMonth() + 1 + "";
@@ -577,7 +505,7 @@ router.patch("/update", isAdminCheck, async (req, res, next) => {
         min = min < 10 ? "0" + min : min;
         sec = sec < 10 ? "0" + sec : sec;
         mSec = mSec < 10 ? "0" + mSec : mSec;
-        let orderPK = "ORD" + year + month + date + hour + min + sec + mSec;
+        let schedulePK = "ORD" + year + month + date + hour + min + sec + mSec;
 
         let time = moment().add(1, `m`).unix();
 
@@ -589,13 +517,19 @@ router.patch("/update", isAdminCheck, async (req, res, next) => {
             customer_uid: userCode, // 카드(빌링키)와 1:1로 대응하는 값
             schedules: [
               {
-                merchant_uid: orderPK, // 주문 번호
+                merchant_uid: schedulePK, // 주문 번호
                 schedule_at: time, // 결제 시도 시각 in Unix Time Stamp. 예: 다음 달 1일
                 amount: 1000,
                 name: "tezt",
               },
             ],
           },
+        });
+
+        const schedulePay = await KeepBoxSchedule.create({
+          merchantUid: schedulePK,
+          UserId: parseInt(userId),
+          KeepBoxId: parseInt(id),
         });
 
         const updateResult = await KeepBox.update(

@@ -18,6 +18,7 @@ const boxImage = require("./boxImage");
 const purchase = require("./purchase");
 const menuImage = require("./menuImage");
 const coupon = require("./coupon");
+const keepBoxSchedule = require("./keepBoxSchedule");
 
 const env = process.env.NODE_ENV || "development";
 const config = require("../config/config")[env];
@@ -49,6 +50,7 @@ db.BoxImage = boxImage;
 db.Purchase = purchase;
 db.MenuImage = menuImage;
 db.Coupon = coupon;
+db.KeepBoxSchedule = keepBoxSchedule;
 
 Object.keys(db).forEach((modelName) => {
   db[modelName].init(sequelize);

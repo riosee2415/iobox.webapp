@@ -1,11 +1,56 @@
 const express = require("express");
 const axios = require("axios");
+const { KeepBoxSchedule } = require("../models");
 
 const router = express.Router();
 
 router.post(`/test`, async (req, res, next) => {
   try {
     console.log(req.body);
+  } catch (e) {
+    console.log(e);
+  }
+});
+
+router.post("/cancel/schedule", async (req, res, next) => {
+  try {
+    const { id, userCode, userId } = req.body;
+
+    const data = await KeepBoxSchedule.findAll({
+      where: {
+        isComplate: false,
+        isCancel: false,
+        KeepBoxId: parseInt(id),
+        UserId: parseInt(userId),
+      },
+    });
+
+    const getToken = await axios({
+      url: "https://api.iamport.kr/users/getToken",
+      method: "post", // POST method
+      headers: { "Content-Type": "application/json" }, // "Content-Type": "application/json"
+      data: {
+        imp_key: "9134198546040290", // REST API 키
+        imp_secret:
+          "786198908d47a63ad00927cece057a617666d0a2436b56a731a6f857fa1cd72c57035d200ac6df0a", // REST API Secret
+      },
+    });
+    const { access_token } = getToken.data.response;
+
+    // POST /subscribe/payments/unschedule
+    await axios({
+      url: "https://api.iamport.kr/subscribe/payments/unschedule",
+      method: "post", // POST method
+      headers: { Authorization: access_token }, // "Content-Type": "application/json"
+      data: {
+        customer_uid: userCode, // REST API 키
+        merchant_uid: data[0].merchantUid, // REST API Secret
+      },
+    });
+
+    console.log(access_token);
+
+    return res.status(200);
   } catch (e) {
     console.log(e);
   }
