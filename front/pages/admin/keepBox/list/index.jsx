@@ -111,8 +111,8 @@ const LoadNotification = (msg, content) => {
 const Index = () => {
   const _WIDTH = `400`;
   const _HEIGHT = `400`;
-  //   // LOAD CURRENT INFO AREA /////////////////////////////////////////////
-  //   const { me, st_loadMyInfoDone } = useSelector((state) => state.user);
+  // LOAD CURRENT INFO AREA /////////////////////////////////////////////
+  const { me, st_loadMyInfoDone } = useSelector((state) => state.user);
 
   const router = useRouter();
 
@@ -120,14 +120,14 @@ const Index = () => {
     router.push(link);
   }, []);
 
-  //   useEffect(() => {
-  //     if (st_loadMyInfoDone) {
-  //       if (!me || parseInt(me.level) < 3) {
-  //         moveLinkHandler(`/admin`);
-  //       }
-  //     }
-  //   }, [st_loadMyInfoDone]);
-  //   /////////////////////////////////////////////////////////////////////////
+  useEffect(() => {
+    if (st_loadMyInfoDone) {
+      if (!me || parseInt(me.level) < 3) {
+        moveLinkHandler(`/admin`);
+      }
+    }
+  }, [st_loadMyInfoDone]);
+  /////////////////////////////////////////////////////////////////////////
 
   const year = [
     "2021",
