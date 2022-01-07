@@ -61,8 +61,9 @@ const TextHover = styled(Text)`
 `;
 
 const IconBox = styled(Wrapper)`
-  width: ${(props) => props.width || `70px`};
+  width: ${(props) => props.width || `auto`};
   cursor: pointer;
+  position: absolute;
 
   ${Image} {
     transition: 0.5s;
@@ -308,12 +309,17 @@ const AppFooter = () => {
           borderTop={tab ? `none` : `1px solid ${Theme.grey_C}`}
           padding={tab ? `0` : `15px 0`}
         >
-          <Wrapper height={`50%`} ju={`flex-end`}>
+          <Wrapper
+            height={`50%`}
+            ju={`flex-end`}
+            padding={`0 0 20px`}
+            display={tab ? `flex` : `none`}
+          >
             {tab && <MenuSlider datum={menuDatum} tab={tab} />}
           </Wrapper>
 
           <Wrapper position={tab ? `relative` : ``} height={`50%`}>
-            {/* 나타났을 때 */}
+            {/* 안 나타났을 때 */}
             <ButtonWrapper display={tab ? `none` : `flex`}>
               <GradientText
                 className="gradient"
@@ -341,10 +347,11 @@ const AppFooter = () => {
               </Wrapper>
             </ButtonWrapper>
 
+            {/* 나타났을때 (tab) */}
             <Wrapper
               width={tab ? `390px` : `auto`}
               height={tab ? `390px` : `auto`}
-              bgColor={`rgba(255,255,255,0.5)`}
+              bgColor={`rgba(255,255,255,0.6)`}
               position={`absolute`}
               bottom={`-10px`}
               left={`50%`}
@@ -352,18 +359,123 @@ const AppFooter = () => {
               radius={`50%`}
               display={tab ? `flex` : `none`}
             >
-              <Wrapper position={`relative`}>
+              <Wrapper position={`relative`} height={`100%`}>
+                <IconBox
+                  width={width < 700 ? `100px !important` : `130px`}
+                  onClick={() => {
+                    moveLinkHandler(`/iobox?type=iobox`);
+                  }}
+                  top={`40px`}
+                  left={`50%`}
+                  margin={width < 700 ? `0 0 0 -50px` : `0 0 0 -65px`}
+                >
+                  <Image
+                    src={`https://4leaf-s3.s3.ap-northeast-2.amazonaws.com/iobox/assets/images/main/iobox_dial.png`}
+                    alt={`icon`}
+                    width={`50px`}
+                  />
+                  <Text fontSize={width < 700 ? `1.1rem` : `1rem`}>
+                    아이오 박스
+                  </Text>
+                </IconBox>
+
+                <IconBox
+                  onClick={() => {
+                    moveLinkHandler(`/locker`);
+                  }}
+                  top={`105px`}
+                  left={width < 700 ? `60px` : `50px`}
+                >
+                  <Image
+                    src={`https://4leaf-s3.s3.ap-northeast-2.amazonaws.com/iobox/assets/images/main/truck_dial.png`}
+                    alt={`icon`}
+                    width={`50px`}
+                  />
+                  <Text fontSize={width < 700 ? `1.1rem` : `1rem`}>
+                    배송현황
+                  </Text>
+                </IconBox>
+
+                <IconBox
+                  top={`105px`}
+                  right={width < 700 ? `55px` : `50px`}
+                  onClick={() => {
+                    moveLinkHandler(`/iobox?type=hangerBox`);
+                  }}
+                >
+                  <Image
+                    src={`https://4leaf-s3.s3.ap-northeast-2.amazonaws.com/iobox/assets/images/main/hagner_dial.png`}
+                    alt={`icon`}
+                    width={`40px`}
+                  />
+                  <Text fontSize={width < 700 ? `1.1rem` : `1rem`}>
+                    행거박스
+                  </Text>
+                </IconBox>
+
+                <IconBox
+                  bottom={`115px`}
+                  left={`50px`}
+                  onClick={() => {
+                    moveLinkHandler("/bullet");
+                  }}
+                >
+                  <Image
+                    src={`https://4leaf-s3.s3.ap-northeast-2.amazonaws.com/iobox/assets/images/main/bullet_dial.png`}
+                    alt={`icon`}
+                    width={`60px`}
+                  />
+                  <Text fontSize={width < 700 ? `1.1rem` : `1rem`}>
+                    총알배송
+                  </Text>
+                </IconBox>
+
+                <IconBox bottom={`115px`} right={width < 700 ? `45px` : `50px`}>
+                  <Image
+                    src={`https://4leaf-s3.s3.ap-northeast-2.amazonaws.com/iobox/assets/images/main/large_dial.png`}
+                    alt={`icon`}
+                    width={`40px`}
+                  />
+                  <Text
+                    fontSize={width < 700 ? `1.1rem` : `1rem`}
+                    onClick={() => {
+                      moveLinkHandler(`/iobox?type=bigBox`);
+                    }}
+                  >
+                    대용량 박스
+                  </Text>
+                </IconBox>
+
+                <IconBox
+                  width={width < 700 ? `100px !important` : `130px`}
+                  onClick={() => {
+                    moveLinkHandler(`/iobox?type=tentBox`);
+                  }}
+                  bottom={`40px`}
+                  left={`50%`}
+                  margin={width < 700 ? `0 0 0 -50px` : `0 0 0 -65px`}
+                >
+                  <Image
+                    src={`https://4leaf-s3.s3.ap-northeast-2.amazonaws.com/iobox/assets/images/main/box_dial.png`}
+                    alt={`icon`}
+                    width={`60px`}
+                  />
+                  <Text fontSize={width < 700 ? `1.1rem` : `1rem`}>
+                    텐트보관 박스
+                  </Text>
+                </IconBox>
+
                 <Wrapper
-                  width={tab ? (width < 700 ? `120px` : `130px`) : `100px`}
-                  height={tab ? (width < 700 ? `120px` : `130px`) : `100px`}
+                  width={tab ? `120px` : `100px`}
+                  height={tab ? `120px` : `100px`}
                   radius={`50%`}
                   onClick={tabToggle}
                   zIndex={`1000`}
                   bgColor={`linear-gradient(90deg,rgb(249, 2, 80),rgb(247, 141, 150),rgb(242, 146, 98),rgb(241, 115, 80))`}
                 >
                   <Wrapper
-                    width={tab ? (width < 700 ? `50px` : `60px`) : `45px`}
-                    height={tab ? (width < 700 ? `50px` : `60px`) : `45px`}
+                    width={tab ? `50px` : `45px`}
+                    height={tab ? `50px` : `45px`}
                     radius={`50%`}
                     bgColor={tab ? `rgba(255,255,255,0.5)` : Theme.white_C}
                     className="circle"
@@ -586,6 +698,9 @@ const AppFooter = () => {
             </Wrapper>
           </Drawer>
         )}
+        <Wrapper display={tab ? `none` : `flex`}>
+          <Footer />
+        </Wrapper>
       </Wrapper>
 
       {/* <Wrapper
@@ -652,7 +767,6 @@ const AppFooter = () => {
 
           
           </Wrapper>
-          <Footer />
         </Wrapper>
       </Wrapper> */}
     </>

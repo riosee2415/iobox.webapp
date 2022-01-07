@@ -195,7 +195,12 @@ const MenuSlider = ({
       >
         {slideDatum.map((slide, idx) => {
           return (
-            <Wrapper display={`flex !important`} dr={`row`} key={idx}>
+            <Wrapper
+              display={`flex !important`}
+              dr={`row`}
+              key={idx}
+              padding={`0 0 0 50px`}
+            >
               <Wrapper al={`flex-start`}>
                 <Image width={`60px`} src={slide[0][0]} />
 
