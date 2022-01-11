@@ -24,6 +24,24 @@ import wrapper from "../store/configureStore";
 import { END } from "redux-saga";
 import MenuSlider from "./slide/MenuSlider";
 
+const BoxWrapper = styled(Wrapper)`
+  width: calc(100% / 4);
+  height: 500px;
+  padding: 0 12px;
+
+  &:first-child {
+    padding: 0 12px 0 0;
+  }
+
+  &:last-child {
+    padding: 0 0 0 12px;
+  }
+
+  @media (max-width: 1100px) {
+    width: calc(100% / 3);
+  }
+`;
+
 const TextHover = styled(Text)`
   font-size: 1.4rem;
   margin: 0 0 15px;
