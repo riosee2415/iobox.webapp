@@ -111,7 +111,7 @@ const Home = ({}) => {
         nickname: req.profile.kakao_account.profile.nickname,
       },
     });
-    console.log(me, "me");
+
     router.push("/");
   };
 
@@ -135,8 +135,6 @@ const Home = ({}) => {
       "3r5sKGMdgUoNasdaverJej5TtN",
       JSON.stringify({ ...info })
     );
-
-    console.log(profile);
 
     dispatch({
       type: LOGIN_REQUEST,

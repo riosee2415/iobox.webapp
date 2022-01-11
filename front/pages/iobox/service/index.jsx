@@ -87,7 +87,7 @@ const Index = () => {
 
       storeData.boxs.map((data) => (count += data));
 
-      console.log(count);
+      console.log(count, dataArr[pickUp]);
       setPickUpPrice(count * dataArr[pickUp]);
     }
   }, [pickUp, storeData]);
@@ -110,7 +110,7 @@ const Index = () => {
         isCapture,
       })
     );
-  }, [pickUp]);
+  }, [pickUp, pickUpPrice]);
 
   const moveBackHandler = useCallback(() => {
     router.back();

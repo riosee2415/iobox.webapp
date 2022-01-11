@@ -87,6 +87,7 @@ const Index = () => {
 
   useEffect(() => {
     if (st_userCardCreateDone) {
+      router.back();
       return LoadNotification("카드정보가 등록되었습니다.");
     }
   }, [st_userCardCreateDone]);

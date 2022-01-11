@@ -314,7 +314,18 @@ const Index = () => {
                 </Wrapper>
               </Wrapper>
               <Text fontSize={`1.5rem`} fontWeight={`700`}>
-                {numberWithCommas(storeData.totalPay + storeData.pickUpPrice)}원
+                {numberWithCommas(storeData.totalPay)}원
+              </Text>
+            </Wrapper>
+
+            <Wrapper dr={`row`} ju={`space-between`} padding={`10px 0`}>
+              <Wrapper dr={`row`} width={`auto`} ju={`flex-start`}>
+                <Text fontSize={`1.2rem`} fontWeight={`700`}>
+                  배송비
+                </Text>
+              </Wrapper>
+              <Text fontSize={`1.5rem`} fontWeight={`700`}>
+                {numberWithCommas(storeData.pickUpPrice)}원
               </Text>
             </Wrapper>
 
@@ -459,7 +470,11 @@ const Index = () => {
               ju={`space-between`}
             >
               <Text>{cardNum && cardNum}</Text>
-              <CommonButton width={`60px`} height={`30px`} onClick>
+              <CommonButton
+                width={`60px`}
+                height={`30px`}
+                onClick={() => moveLinkHandler("/myInfo/card")}
+              >
                 변경
               </CommonButton>
             </Wrapper>
