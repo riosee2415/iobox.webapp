@@ -17,7 +17,6 @@ module.exports = class User extends Model {
         nickname: {
           type: DataTypes.STRING(30),
           allowNull: false,
-          unique: true, // 고유한 값
         },
         mobile: {
           type: DataTypes.STRING(30),
