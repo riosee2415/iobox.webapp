@@ -202,9 +202,9 @@ const Home = () => {
                   position={`absolute`}
                   bottom={`0`}
                   left={`50%`}
-                  width={width < 700 ? `30%` : `36%`}
+                  width={width < 700 ? `110px` : `180px`}
                   zIndex={`2`}
-                  margin={width < 700 ? `0 0 0 -15%` : `0 0 0 -18%`}
+                  margin={width < 700 ? `0 0 0 -55px` : `0 0 0 -90px`}
                 />
               </RsWrapper>
             </Wrapper>

@@ -208,7 +208,6 @@ const BoxSlider = ({
         className={`slide-0`}
         initialSlide={currentBox}
         afterChange={(index) => {
-          console.log(index);
           setCurrentBox(index);
         }}
       >

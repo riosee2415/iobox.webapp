@@ -35,31 +35,21 @@ const ArrowWrapper = styled(Wrapper)`
 
 const MenuSlider = ({
   datum,
-
   //
-
   dots = false,
-
   arrow = true,
-
   effect = `scrollx`, // scrollx or fade
-
   //
-
   autoplay = false,
-
   delay = 5000,
-
   //
-
   isMix = false, // Row 슬라이드 가로 (false) 세로 (true) 정렬
-
   //
-
   row = 1,
-
   line = 1, // Row 슬라이드 행 수
-
+  //
+  setCurrentMenu,
+  currentMenu,
   //
   tab,
 }) => {
@@ -140,7 +130,7 @@ const MenuSlider = ({
   }
 
   return (
-    <Wrapper display={`block`} position={`relative`}>
+    <Wrapper display={`block`} position={`relative`} width={`80% !important`}>
       {arrow && (
         <Wrapper
           position={`absolute`}
@@ -175,7 +165,7 @@ const MenuSlider = ({
       <Carousel
         className="one-slide"
         effect={effect}
-        dots={true}
+        dots={false}
         slidesToShow={1} // 한 화면에 몇개의 슬라이드가 보여지는지 결정
         vertical={false}
         ref={slideRef}
@@ -187,10 +177,18 @@ const MenuSlider = ({
         variableWidth={false} // 각각 다른 크기를 지정할 수 있음
         vartical={true}
         verticalSwiping={true}
+        afterChange={(index) => {
+          setCurrentMenu(index);
+        }}
       >
         {slideDatum.map((slide, idx) => {
           return (
-            <Wrapper display={`flex !important`} dr={`row`} key={idx}>
+            <Wrapper
+              display={`flex !important`}
+              dr={`row`}
+              key={idx}
+              padding={`0 0 0 50px`}
+            >
               <Wrapper al={`flex-start`}>
                 <Image width={`60px`} src={slide[0][0]} />
 
