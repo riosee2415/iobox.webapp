@@ -61,9 +61,12 @@ const TextHover = styled(Text)`
 `;
 
 const IconBox = styled(Wrapper)`
-  width: ${(props) => props.width || `auto`};
+  width: 130px;
+  height: 130px;
   cursor: pointer;
   position: absolute;
+
+  border-radius: 50%;
 
   ${Image} {
     transition: 0.5s;
@@ -75,7 +78,8 @@ const IconBox = styled(Wrapper)`
   }
 
   @media (max-width: 700px) {
-    width: auto;
+    width: 105px;
+    height: 105px;
   }
 `;
 
@@ -180,33 +184,6 @@ const AppFooter = () => {
   const router = useRouter();
   const Vue = router.Vue;
 
-  const data = {
-    1: [
-      [6, 5],
-      [2, 3, 4],
-    ],
-    2: [
-      [1, 6],
-      [3, 4, 5],
-    ],
-    3: [
-      [2, 1],
-      [4, 5, 6],
-    ],
-    4: [
-      [3, 2],
-      [5, 6, 1],
-    ],
-    5: [
-      [4, 3],
-      [6, 1, 2],
-    ],
-    6: [
-      [5, 4],
-      [1, 2, 3],
-    ],
-  };
-
   ////// HOOKS //////
 
   const [tab, setTab] = useState(false);
@@ -219,7 +196,7 @@ const AppFooter = () => {
   const dispatch = useDispatch();
 
   const [rotate, setRotate] = useState(0);
-  const [currentMenu, setCurrentMenu] = useState(1);
+  const [currentMenu, setCurrentMenu] = useState(0);
 
   ////// REDUX //////
 
@@ -289,6 +266,34 @@ const AppFooter = () => {
       "각종 내 방안의 짐",
       "원할때 맡기고 원할때 찾기",
     ],
+    [
+      "https://4leaf-s3.s3.ap-northeast-2.amazonaws.com/iobox/assets/images/main/paperbox.png",
+      "33 배송",
+      "의류,물건,서류,책",
+      "각종 내 방안의 짐",
+      "원할때 맡기고 원할때 찾기",
+    ],
+    [
+      "https://4leaf-s3.s3.ap-northeast-2.amazonaws.com/iobox/assets/images/main/paperbox.png",
+      "44 배송",
+      "의류,물건,서류,책",
+      "각종 내 방안의 짐",
+      "원할때 맡기고 원할때 찾기",
+    ],
+    [
+      "https://4leaf-s3.s3.ap-northeast-2.amazonaws.com/iobox/assets/images/main/paperbox.png",
+      "55 배송",
+      "의류,물건,서류,책",
+      "각종 내 방안의 짐",
+      "원할때 맡기고 원할때 찾기",
+    ],
+    [
+      "https://4leaf-s3.s3.ap-northeast-2.amazonaws.com/iobox/assets/images/main/paperbox.png",
+      "66 배송",
+      "의류,물건,서류,책",
+      "각종 내 방안의 짐",
+      "원할때 맡기고 원할때 찾기",
+    ],
   ];
 
   return (
@@ -312,10 +317,17 @@ const AppFooter = () => {
           <Wrapper
             height={`50%`}
             ju={`flex-end`}
-            padding={`0 0 20px`}
+            padding={width < 700 ? `0 0 20px` : `0 0 50px`}
             display={tab ? `flex` : `none`}
           >
-            {tab && <MenuSlider datum={menuDatum} tab={tab} />}
+            {tab && (
+              <MenuSlider
+                datum={menuDatum}
+                tab={tab}
+                setCurrentMenu={setCurrentMenu}
+                currentMenu={currentMenu}
+              />
+            )}
           </Wrapper>
 
           <Wrapper position={tab ? `relative` : ``} height={`50%`}>
@@ -349,32 +361,45 @@ const AppFooter = () => {
 
             {/* 나타났을때 (tab) */}
             <Wrapper
-              width={tab ? `390px` : `auto`}
-              height={tab ? `390px` : `auto`}
+              width={tab ? (width < 700 ? `390px` : `510px`) : `auto`}
+              height={tab ? (width < 700 ? `390px` : `510px`) : `auto`}
               bgColor={`rgba(255,255,255,0.6)`}
               position={`absolute`}
               bottom={`-10px`}
               left={`50%`}
-              margin={`0 0 0 -195px`}
+              margin={width < 700 ? `0 0 0 -195px` : `0 0 0 -255px`}
               radius={`50%`}
               display={tab ? `flex` : `none`}
             >
               <Wrapper position={`relative`} height={`100%`}>
                 <IconBox
-                  width={width < 700 ? `100px !important` : `130px`}
                   onClick={() => {
                     moveLinkHandler(`/iobox?type=iobox`);
                   }}
-                  top={`40px`}
+                  top={`25px`}
                   left={`50%`}
-                  margin={width < 700 ? `0 0 0 -50px` : `0 0 0 -65px`}
+                  margin={width < 700 ? `0 0 0 -52.5px` : `0 0 0 -65px`}
+                  bgColor={
+                    currentMenu === 0 ? `rgba(0,0,0,0.5)` : `transparent`
+                  }
                 >
                   <Image
                     src={`https://4leaf-s3.s3.ap-northeast-2.amazonaws.com/iobox/assets/images/main/iobox_dial.png`}
                     alt={`icon`}
-                    width={`50px`}
+                    width={
+                      width < 700
+                        ? currentMenu === 0
+                          ? `55px`
+                          : `50px`
+                        : currentMenu === 0
+                        ? `65px`
+                        : `60px`
+                    }
                   />
-                  <Text fontSize={width < 700 ? `1.1rem` : `1rem`}>
+                  <Text
+                    fontSize={width < 700 ? `1.1rem` : `1.3rem`}
+                    color={currentMenu === 0 ? Theme.white_C : Theme.black_C}
+                  >
                     아이오 박스
                   </Text>
                 </IconBox>
@@ -383,94 +408,165 @@ const AppFooter = () => {
                   onClick={() => {
                     moveLinkHandler(`/locker`);
                   }}
-                  top={`105px`}
-                  left={width < 700 ? `60px` : `50px`}
+                  top={width < 700 ? `90px` : `110px`}
+                  left={width < 700 ? `30px` : `50px`}
+                  bgColor={
+                    currentMenu === 5 ? `rgba(0,0,0,0.5)` : `transparent`
+                  }
                 >
                   <Image
                     src={`https://4leaf-s3.s3.ap-northeast-2.amazonaws.com/iobox/assets/images/main/truck_dial.png`}
                     alt={`icon`}
-                    width={`50px`}
+                    width={
+                      width < 700
+                        ? currentMenu === 5
+                          ? `55px`
+                          : `50px`
+                        : currentMenu === 5
+                        ? `65px`
+                        : `60px`
+                    }
                   />
-                  <Text fontSize={width < 700 ? `1.1rem` : `1rem`}>
+                  <Text
+                    fontSize={width < 700 ? `1.1rem` : `1.3rem`}
+                    color={currentMenu === 5 ? Theme.white_C : Theme.black_C}
+                  >
                     배송현황
                   </Text>
                 </IconBox>
 
                 <IconBox
-                  top={`105px`}
-                  right={width < 700 ? `55px` : `50px`}
+                  top={width < 700 ? `90px` : `110px`}
+                  right={width < 700 ? `30px` : `50px`}
                   onClick={() => {
                     moveLinkHandler(`/iobox?type=hangerBox`);
                   }}
+                  bgColor={
+                    currentMenu === 1 ? `rgba(0,0,0,0.5)` : `transparent`
+                  }
                 >
                   <Image
                     src={`https://4leaf-s3.s3.ap-northeast-2.amazonaws.com/iobox/assets/images/main/hagner_dial.png`}
                     alt={`icon`}
-                    width={`40px`}
+                    width={
+                      width < 700
+                        ? currentMenu === 1
+                          ? `45px`
+                          : `40px`
+                        : currentMenu === 1
+                        ? `55px`
+                        : `50px`
+                    }
                   />
-                  <Text fontSize={width < 700 ? `1.1rem` : `1rem`}>
+                  <Text
+                    fontSize={width < 700 ? `1.1rem` : `1.3rem`}
+                    color={currentMenu === 1 ? Theme.white_C : Theme.black_C}
+                  >
                     행거박스
                   </Text>
                 </IconBox>
 
                 <IconBox
-                  bottom={`115px`}
-                  left={`50px`}
+                  bottom={width < 700 ? `90px` : `110px`}
+                  left={width < 700 ? `30px` : `50px`}
                   onClick={() => {
                     moveLinkHandler("/bullet");
                   }}
+                  bgColor={
+                    currentMenu === 4 ? `rgba(0,0,0,0.5)` : `transparent`
+                  }
                 >
                   <Image
                     src={`https://4leaf-s3.s3.ap-northeast-2.amazonaws.com/iobox/assets/images/main/bullet_dial.png`}
                     alt={`icon`}
-                    width={`60px`}
+                    width={
+                      width < 700
+                        ? currentMenu === 4
+                          ? `65px`
+                          : `60px`
+                        : currentMenu === 4
+                        ? `75px`
+                        : `70px`
+                    }
                   />
-                  <Text fontSize={width < 700 ? `1.1rem` : `1rem`}>
+                  <Text
+                    fontSize={width < 700 ? `1.1rem` : `1.3rem`}
+                    color={currentMenu === 4 ? Theme.white_C : Theme.black_C}
+                  >
                     총알배송
                   </Text>
                 </IconBox>
 
-                <IconBox bottom={`115px`} right={width < 700 ? `45px` : `50px`}>
+                <IconBox
+                  bottom={width < 700 ? `90px` : `110px`}
+                  right={width < 700 ? `30px` : `50px`}
+                  bgColor={
+                    currentMenu === 2 ? `rgba(0,0,0,0.5)` : `transparent`
+                  }
+                >
                   <Image
                     src={`https://4leaf-s3.s3.ap-northeast-2.amazonaws.com/iobox/assets/images/main/large_dial.png`}
                     alt={`icon`}
-                    width={`40px`}
+                    width={
+                      width < 700
+                        ? currentMenu === 2
+                          ? `45px`
+                          : `40px`
+                        : currentMenu === 2
+                        ? `55px`
+                        : `50px`
+                    }
                   />
                   <Text
-                    fontSize={width < 700 ? `1.1rem` : `1rem`}
+                    fontSize={width < 700 ? `1.1rem` : `1.3rem`}
                     onClick={() => {
                       moveLinkHandler(`/iobox?type=bigBox`);
                     }}
+                    color={currentMenu === 2 ? Theme.white_C : Theme.black_C}
                   >
                     대용량 박스
                   </Text>
                 </IconBox>
 
                 <IconBox
-                  width={width < 700 ? `100px !important` : `130px`}
                   onClick={() => {
                     moveLinkHandler(`/iobox?type=tentBox`);
                   }}
-                  bottom={`40px`}
+                  bottom={`25px`}
                   left={`50%`}
-                  margin={width < 700 ? `0 0 0 -50px` : `0 0 0 -65px`}
+                  margin={width < 700 ? `0 0 0 -52.5px` : `0 0 0 -65px`}
+                  bgColor={
+                    currentMenu === 3 ? `rgba(0,0,0,0.5)` : `transparent`
+                  }
                 >
                   <Image
                     src={`https://4leaf-s3.s3.ap-northeast-2.amazonaws.com/iobox/assets/images/main/box_dial.png`}
                     alt={`icon`}
-                    width={`60px`}
+                    width={
+                      width < 700
+                        ? currentMenu === 3
+                          ? `65px`
+                          : `60px`
+                        : currentMenu === 3
+                        ? `75px`
+                        : `70px`
+                    }
                   />
-                  <Text fontSize={width < 700 ? `1.1rem` : `1rem`}>
+                  <Text
+                    fontSize={width < 700 ? `1.1rem` : `1.3rem`}
+                    color={currentMenu === 3 ? Theme.white_C : Theme.black_C}
+                  >
                     텐트보관 박스
                   </Text>
                 </IconBox>
 
                 <Wrapper
-                  width={tab ? `120px` : `100px`}
-                  height={tab ? `120px` : `100px`}
+                  width={tab ? (width < 700 ? `120px` : `140px`) : `100px`}
+                  height={tab ? (width < 700 ? `120px` : `140px`) : `100px`}
                   radius={`50%`}
                   onClick={tabToggle}
                   zIndex={`1000`}
+                  cursor={`pointer`}
                   bgColor={`linear-gradient(90deg,rgb(249, 2, 80),rgb(247, 141, 150),rgb(242, 146, 98),rgb(241, 115, 80))`}
                 >
                   <Wrapper

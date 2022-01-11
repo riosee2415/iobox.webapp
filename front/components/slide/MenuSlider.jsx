@@ -35,39 +35,27 @@ const ArrowWrapper = styled(Wrapper)`
 
 const MenuSlider = ({
   datum,
-
   //
-
   dots = false,
-
   arrow = true,
-
   effect = `scrollx`, // scrollx or fade
-
   //
-
   autoplay = false,
-
   delay = 5000,
-
   //
-
   isMix = false, // Row 슬라이드 가로 (false) 세로 (true) 정렬
-
   //
-
   row = 1,
-
   line = 1, // Row 슬라이드 행 수
-
+  //
+  setCurrentMenu,
+  currentMenu,
   //
   tab,
 }) => {
   const width = useWidth();
 
   const [slideDatum, setSlideDatum] = useState(null);
-  const [currentPage, setCurrentPage] = useState("");
-  console.log(currentPage);
 
   const slideRef = useRef();
 
@@ -190,7 +178,7 @@ const MenuSlider = ({
         vartical={true}
         verticalSwiping={true}
         afterChange={(index) => {
-          setCurrentPage(index);
+          setCurrentMenu(index);
         }}
       >
         {slideDatum.map((slide, idx) => {
