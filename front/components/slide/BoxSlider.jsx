@@ -195,8 +195,6 @@ const BoxSlider = ({
         </Wrapper>
       )}
 
-      {console.log(currentBox)}
-
       <Carousel
         // onChange={change}
         effect={effect}

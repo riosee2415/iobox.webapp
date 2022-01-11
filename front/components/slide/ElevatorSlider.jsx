@@ -67,45 +67,15 @@ const ElevatorSlider = ({ setValue }) => {
     return null;
   }
 
-  {
-    console.log(dataArr);
-  }
-
   return (
     <SlideWrapper>
       <Slider
+        {...settings}
         ref={ref}
         afterChange={(to, from) => {
           setValue(dataArr[to]);
         }}
       >
-        <Wrapper
-          display={`flex !important`}
-          al={`center`}
-          cursor={`pointer`}
-          height={`50px`}
-          className="active"
-        >
-          asdjka
-        </Wrapper>
-        <Wrapper
-          display={`flex !important`}
-          al={`center`}
-          cursor={`pointer`}
-          height={`50px`}
-          className="active"
-        >
-          asdjka
-        </Wrapper>
-        <Wrapper
-          display={`flex !important`}
-          al={`center`}
-          cursor={`pointer`}
-          height={`50px`}
-          className="active"
-        >
-          asdjka
-        </Wrapper>
         {dataArr.map((data, idx) => {
           return (
             <Wrapper
