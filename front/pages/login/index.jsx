@@ -108,7 +108,7 @@ const Home = ({}) => {
       data: {
         userId,
         password: req.profile.kakao_account.email,
-        nickname: req.profile.kakao_account.profile.nickname + "5호기",
+        nickname: req.profile.kakao_account.profile.nickname,
       },
     });
     console.log(me, "me");
@@ -136,6 +136,18 @@ const Home = ({}) => {
       JSON.stringify({ ...info })
     );
 
+    console.log(profile);
+
+    dispatch({
+      type: LOGIN_REQUEST,
+      data: {
+        userId,
+        password: profile.response.email,
+        nickname: profile.response.name,
+      },
+    });
+
+    router.push("/");
     // setSnsPlatform(info.userId);
     // setLoginSkipPlatform(false);
   };
