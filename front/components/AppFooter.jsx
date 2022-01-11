@@ -24,6 +24,23 @@ import wrapper from "../store/configureStore";
 import { END } from "redux-saga";
 import MenuSlider from "./slide/MenuSlider";
 
+const BoxWrapper = styled(Wrapper)`
+  padding: 0 30px;
+  flex-direction: row;
+  justify-content: space-between;
+  height: 70px;
+  margin: 0 0 5px;
+  background: ${Theme.lightGrey_C};
+  cursor: pointer;
+  &:hover {
+    background: ${Theme.basicTheme_C};
+    color: ${Theme.white_C};
+  }
+  @media (max-width: 700px) {
+    height: 50px;
+  }
+`;
+
 const TextHover = styled(Text)`
   font-size: 1.4rem;
   margin: 0 0 15px;
