@@ -141,9 +141,6 @@ const Home = ({}) => {
   };
 
   ////// DATAVIEW //////
-  if (typeof window === "undefined") {
-    return null;
-  }
 
   return (
     <WholeWrapper

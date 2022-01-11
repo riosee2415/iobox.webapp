@@ -25,20 +25,19 @@ import { END } from "redux-saga";
 import MenuSlider from "./slide/MenuSlider";
 
 const BoxWrapper = styled(Wrapper)`
-  width: calc(100% / 4);
-  height: 500px;
-  padding: 0 12px;
-
-  &:first-child {
-    padding: 0 12px 0 0;
+  padding: 0 30px;
+  flex-direction: row;
+  justify-content: space-between;
+  height: 70px;
+  margin: 0 0 5px;
+  background: ${Theme.lightGrey_C};
+  cursor: pointer;
+  &:hover {
+    background: ${Theme.basicTheme_C};
+    color: ${Theme.white_C};
   }
-
-  &:last-child {
-    padding: 0 0 0 12px;
-  }
-
-  @media (max-width: 1100px) {
-    width: calc(100% / 3);
+  @media (max-width: 700px) {
+    height: 50px;
   }
 `;
 
