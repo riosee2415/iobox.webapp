@@ -36,10 +36,8 @@ const TableWrapper = styled(Wrapper)`
 
 const Index = () => {
   const width = useWidth();
-  const router = useRouter();
 
   ////// HOOKS //////
-  const [tab, setTab] = useState(false);
   const dispatch = useDispatch();
 
   const { noticeDetail, beforeData, nextData } = useSelector(
@@ -47,10 +45,13 @@ const Index = () => {
   );
 
   ////// REDUX //////
+  const router = useRouter();
 
-  console.log(nextData, "1");
-  console.log(beforeData, "2");
   ////// USEEFFECT //////
+
+  useEffect(() => {
+    scrollTo(0, 0);
+  }, [router.route]);
 
   useEffect(() => {
     dispatch({
@@ -81,17 +82,10 @@ const Index = () => {
   ////// TOGGLE ///////
 
   ///// HANDLER //////
-  const moveBackHandler = useCallback(() => {
-    router.back();
-  }, []);
 
   const moveLinkHandler = useCallback((link) => {
     router.push(link);
   }, []);
-
-  const tabToggle = useCallback(() => {
-    setTab(!tab);
-  }, [tab]);
 
   ////// DATAVIEW //////
   return (

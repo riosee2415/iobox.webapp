@@ -87,7 +87,6 @@ const PayButtton = styled(Wrapper)`
 
 const Index = () => {
   const width = useWidth();
-  const router = useRouter();
   ////// HOOKS //////
   const [tab, setTab] = useState(1);
 
@@ -114,9 +113,14 @@ const Index = () => {
   const [checkB, setCheckB] = useState(false);
 
   ////// REDUX //////
+  const router = useRouter();
 
   ////// USEEFFECT //////
-  console.log(tab, "tab");
+
+  useEffect(() => {
+    scrollTo(0, 0);
+  }, [router.route]);
+
   useEffect(() => {
     if (tab === 0) {
       setCheckA(false);
@@ -156,17 +160,6 @@ const Index = () => {
 
   const CheckBoxChangeHandler = useCallback(
     (e) => {
-      console.log(check1, "check1");
-      console.log(check2, "check2");
-      // console.log(check3, "check3");
-      // console.log(check4, "check4");
-      // console.log(check5, "check5");
-      // console.log(check6, "check6");
-      // console.log(check7, "check7");
-      // console.log(check8, "check8");
-      // console.log(checkA, "checkA");
-      // console.log(checkB, "checkB");
-
       if (e.includes("1")) {
         setCheck1(true);
       } else if (e.includes("2")) {

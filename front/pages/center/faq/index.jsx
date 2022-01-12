@@ -35,20 +35,24 @@ const TableWrapper = styled(Wrapper)`
 
 const Index = () => {
   const width = useWidth();
-  const router = useRouter();
 
   ////// HOOKS //////
-  const [tab, setTab] = useState(false);
+
   const dispatch = useDispatch();
   const { faqs, uploadFaqPath, maxPage } = useSelector((state) => state.faq);
 
   const [currentPage, setCurrentPage] = useState(1);
-  const inputSearch = useInput("");
+
   const [searchValue, setSearchValue] = useState("");
 
   ////// REDUX //////
-  // console.log(maxPage);
+  const router = useRouter();
+
   ////// USEEFFECT //////
+  useEffect(() => {
+    scrollTo(0, 0);
+  }, [router.route]);
+
   useEffect(() => {
     const qs = getQs();
     dispatch({
@@ -98,17 +102,10 @@ const Index = () => {
 
     return value;
   };
-  const moveBackHandler = useCallback(() => {
-    router.back();
-  }, []);
 
   const moveLinkHandler = useCallback((link) => {
     router.push(link);
   }, []);
-
-  const tabToggle = useCallback(() => {
-    setTab(!tab);
-  }, [tab]);
 
   ////// DATAVIEW //////
   return (

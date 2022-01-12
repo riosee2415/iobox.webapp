@@ -41,7 +41,7 @@ const Index = () => {
   const dispatch = useDispatch();
 
   ////// HOOKS //////
-  const [tab, setTab] = useState(false);
+
   const { nextData, beforeData, infoDetail } = useSelector(
     (state) => state.info
   );
@@ -49,6 +49,10 @@ const Index = () => {
   ////// REDUX //////
 
   ////// USEEFFECT //////
+
+  useEffect(() => {
+    scrollTo(0, 0);
+  }, [router.route]);
 
   useEffect(() => {
     console.log(router.query.id);
@@ -77,17 +81,10 @@ const Index = () => {
   ////// TOGGLE ///////
 
   ///// HANDLER //////
-  const moveBackHandler = useCallback(() => {
-    router.back();
-  }, []);
 
   const moveLinkHandler = useCallback((link) => {
     router.push(link);
   }, []);
-
-  const tabToggle = useCallback(() => {
-    setTab(!tab);
-  }, [tab]);
 
   ////// DATAVIEW //////
   return (

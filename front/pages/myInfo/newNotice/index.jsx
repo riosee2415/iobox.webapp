@@ -19,13 +19,16 @@ import Footer from "../../../components/Footer";
 
 const Index = () => {
   const width = useWidth();
-  const router = useRouter();
 
   ////// HOOKS //////
 
   ////// REDUX //////
+  const router = useRouter();
 
   ////// USEEFFECT //////
+  useEffect(() => {
+    scrollTo(0, 0);
+  }, [router.route]);
 
   ////// TOGGLE ///////
 

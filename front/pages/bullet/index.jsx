@@ -176,7 +176,6 @@ const CustomRadioGroup = styled(Radio.Group)`
 
 const Index = () => {
   const width = useWidth();
-  const router = useRouter();
 
   const dataArr = [
     //
@@ -192,7 +191,6 @@ const Index = () => {
   ];
 
   ////// HOOKS //////
-  const [tab, setTab] = useState(false);
 
   const [price, setPrice] = useState(0);
   const [currentBuy, setCurrentBuy] = useState([0, 0, 0, 0]);
@@ -234,8 +232,13 @@ const Index = () => {
   const [currentTab, setCurrentTab] = useState(0);
 
   ////// REDUX //////
+  const router = useRouter();
 
   ////// USEEFFECT //////
+  useEffect(() => {
+    scrollTo(0, 0);
+  }, [router.route]);
+
   useEffect(() => {
     let currentPay = 0;
 
@@ -312,17 +315,9 @@ const Index = () => {
     setDayInput(false);
   }, [cardInput]);
 
-  const moveBackHandler = useCallback(() => {
-    router.back();
-  }, []);
-
   const moveLinkHandler = useCallback((link) => {
     router.push(link);
   }, []);
-
-  const tabToggle = useCallback(() => {
-    setTab(!tab);
-  }, [tab]);
 
   ////// DATAVIEW //////
   return (

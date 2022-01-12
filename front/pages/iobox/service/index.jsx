@@ -67,6 +67,10 @@ const Index = () => {
 
   ////// USEEFFECT //////
   useEffect(() => {
+    scrollTo(0, 0);
+  }, [router.route]);
+
+  useEffect(() => {
     const data = JSON.parse(sessionStorage.getItem("DATA"));
 
     if (!data) {

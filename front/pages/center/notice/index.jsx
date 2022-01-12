@@ -35,15 +35,12 @@ const TableWrapper = styled(Wrapper)`
 
 const Index = () => {
   const width = useWidth();
-  const router = useRouter();
 
   ////// HOOKS //////
 
   const dispatch = useDispatch();
-  const [tab, setTab] = useState(false);
 
   const [currentPage, setCurrentPage] = useState(1);
-  const inputSearch = useInput("");
 
   const [searchValue, setSearchValue] = useState("");
 
@@ -66,8 +63,13 @@ const Index = () => {
   const { notices, maxPage } = useSelector((state) => state.notice);
 
   ////// REDUX //////
+  const router = useRouter();
 
   ////// USEEFFECT //////
+
+  useEffect(() => {
+    scrollTo(0, 0);
+  }, [router.route]);
 
   useEffect(() => {
     const qs = getQs();
@@ -96,18 +98,11 @@ const Index = () => {
     },
     [searchValue]
   );
-  const moveBackHandler = useCallback(() => {
-    router.back();
-  }, []);
 
   const moveLinkHandler = useCallback((link) => {
     router.push(link);
   }, []);
 
-  const tabToggle = useCallback(() => {
-    setTab(!tab);
-  }, [tab]);
-  console.log(maxPage);
   ////// DATAVIEW //////
   return (
     <WholeWrapper bgColor={width < 700 ? Theme.white_C : Theme.lightGrey_C}>

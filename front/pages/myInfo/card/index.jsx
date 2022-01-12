@@ -38,7 +38,6 @@ const LoadNotification = (msg, content) => {
 
 const Index = () => {
   const width = useWidth();
-  const router = useRouter();
 
   ////// HOOKS //////
   const [tab, setTab] = useState(false);
@@ -58,13 +57,17 @@ const Index = () => {
   ////// REDUX //////
 
   const dispatch = useDispatch();
+  const router = useRouter();
+
   const { me, st_userCardCreateDone, st_userCardCreateError } = useSelector(
     (state) => state.user
   );
 
-  console.log(me);
-
   ////// USEEFFECT //////
+
+  useEffect(() => {
+    scrollTo(0, 0);
+  }, [router.route]);
 
   useEffect(() => {
     if (me && me.cardNum) {

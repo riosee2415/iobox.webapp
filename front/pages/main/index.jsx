@@ -36,7 +36,21 @@ const FirstDisplay = styled(Wrapper)`
 
 const Home = () => {
   const width = useWidth();
-  const router = useRouter();
+
+  const { value, reset } = useCountUp({
+    isCounting: true,
+    start: 0,
+    end: 15,
+    duration: 3,
+  });
+  const { value: value2, reset: reset2 } = useCountUp({
+    isCounting: true,
+    start: 0,
+    end: 78,
+    duration: 3,
+  });
+
+  ////// HOOKS //////
 
   const [main, setMain] = useState(true);
   const [mainOpacity, setMainOpacity] = useState(`1`);
@@ -48,9 +62,17 @@ const Home = () => {
   const [lengthData4, setLengthData4] = useState(`0`);
   const [firstRender, setFirstRender] = useState(`0`);
 
-  ////// HOOKS //////
-
+  ////// REDUX //////
   const dispatch = useDispatch();
+
+  const router = useRouter();
+
+  const { keepBoxes } = useSelector((state) => state.keepBox);
+
+  ////// USEEFFECT //////
+  useEffect(() => {
+    scrollTo(0, 0);
+  }, [router.route]);
 
   useEffect(() => {
     setTimeout(() => {
@@ -75,25 +97,6 @@ const Home = () => {
 
     router.push("/main");
   }, []);
-
-  const { value, reset } = useCountUp({
-    isCounting: true,
-    start: 0,
-    end: 15,
-    duration: 3,
-  });
-  const { value: value2, reset: reset2 } = useCountUp({
-    isCounting: true,
-    start: 0,
-    end: 78,
-    duration: 3,
-  });
-
-  const { keepBoxes } = useSelector((state) => state.keepBox);
-
-  ////// REDUX //////
-
-  ////// USEEFFECT //////
 
   ////// TOGGLE ///////
 

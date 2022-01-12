@@ -66,6 +66,10 @@ const Home = ({}) => {
 
   ////// USEEFFECT //////
   useEffect(() => {
+    scrollTo(0, 0);
+  }, [router.route]);
+
+  useEffect(() => {
     if (typeof window !== "undefined") {
       console.log(window.Kakao);
       window.Kakao.init("ee41ebc5b6da97b7f6aed5ef579fa9a4");

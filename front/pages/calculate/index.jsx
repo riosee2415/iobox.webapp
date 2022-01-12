@@ -32,18 +32,19 @@ const Box = styled(Wrapper)`
 
 const Index = () => {
   const width = useWidth();
-  const router = useRouter();
 
   ////// HOOKS //////
-  const [tab, setTab] = useState(false);
-  const [number, setNumber] = useState(0);
 
   const [currentBox, setCurrentBox] = useState(0);
   const [currentBuy, setCurrentBuy] = useState([0, 0, 0, 0, 0, 0, 0, 0, 0]);
 
   ////// REDUX //////
+  const router = useRouter();
 
   ////// USEEFFECT //////
+  useEffect(() => {
+    scrollTo(0, 0);
+  }, [router.route]);
 
   ////// TOGGLE ///////
 
@@ -74,10 +75,6 @@ const Index = () => {
   const moveLinkHandler = useCallback((link) => {
     router.push(link);
   }, []);
-
-  const tabToggle = useCallback(() => {
-    setTab(!tab);
-  }, [tab]);
 
   ////// DATAVIEW //////
   return (

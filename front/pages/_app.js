@@ -9,6 +9,10 @@ import wrapper from "../store/configureStore";
 import WidthProvider from "../components/WidthProvider";
 
 const Fourleaf = ({ Component }) => {
+  useEffect(() => {
+    scroll([0]);
+  });
+
   return (
     <ThemeProvider theme={Theme}>
       <GlobalStyles />

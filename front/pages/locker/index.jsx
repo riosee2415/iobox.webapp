@@ -16,6 +16,8 @@ import { CloseOutlined, DownOutlined, UpOutlined } from "@ant-design/icons";
 import { useRouter } from "next/dist/client/router";
 import Footer from "../../components/Footer";
 
+import { useEffect } from "react";
+
 const Index = () => {
   const width = useWidth();
   const router = useRouter();
@@ -26,6 +28,9 @@ const Index = () => {
   ////// REDUX //////
 
   ////// USEEFFECT //////
+  useEffect(() => {
+    scrollTo(0, 0);
+  }, [router.route]);
 
   ////// TOGGLE ///////
 

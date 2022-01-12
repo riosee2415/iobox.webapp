@@ -56,7 +56,7 @@ const Index = () => {
   const router = useRouter();
 
   ////// HOOKS //////
-  const [tab, setTab] = useState(false);
+
   const [cardNum, setCardNum] = useState(null);
 
   const inputName = useInput("");
@@ -74,6 +74,10 @@ const Index = () => {
   const { me } = useSelector((state) => state.user);
 
   ////// USEEFFECT //////
+  useEffect(() => {
+    scrollTo(0, 0);
+  }, [router.route]);
+
   useEffect(() => {
     const data = JSON.parse(sessionStorage.getItem("DATA"));
 
@@ -120,10 +124,6 @@ const Index = () => {
   const moveLinkHandler = useCallback((link) => {
     router.push(link);
   }, []);
-
-  const tabToggle = useCallback(() => {
-    setTab(!tab);
-  }, [tab]);
 
   const handleFormSubmit = useCallback(() => {
     // dispatch({

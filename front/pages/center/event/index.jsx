@@ -40,14 +40,11 @@ const ImageBox = styled(Wrapper)`
 
 const Index = () => {
   const width = useWidth();
-  const router = useRouter();
-
-  const dispatch = useDispatch();
 
   ////// HOOKS //////
-  const [tab, setTab] = useState(false);
+
   const [currentPage, setCurrentPage] = useState(1);
-  const inputSearch = useInput("");
+
   const [searchValue, setSearchValue] = useState("");
 
   const { events, uploadEventPath, maxPage } = useSelector(
@@ -55,8 +52,14 @@ const Index = () => {
   );
 
   ////// REDUX //////
+  const router = useRouter();
+
+  const dispatch = useDispatch();
 
   ////// USEEFFECT //////
+  useEffect(() => {
+    scrollTo(0, 0);
+  }, [router.route]);
 
   useEffect(() => {
     const qs = getQs();
@@ -103,17 +106,9 @@ const Index = () => {
     return value;
   };
 
-  const moveBackHandler = useCallback(() => {
-    router.back();
-  }, []);
-
   const moveLinkHandler = useCallback((link) => {
     router.push(link);
   }, []);
-
-  const tabToggle = useCallback(() => {
-    setTab(!tab);
-  }, [tab]);
 
   ////// DATAVIEW //////
   return (

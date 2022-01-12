@@ -37,7 +37,6 @@ const LoadNotification = (msg, content) => {
 
 const Index = () => {
   const width = useWidth();
-  const router = useRouter();
 
   ////// HOOKS //////
   const [tab, setTab] = useState(false);
@@ -45,10 +44,16 @@ const Index = () => {
   const inputName = useInput(``);
 
   ////// REDUX //////
+  const router = useRouter();
+
   const { me, st_userNickNameUpdateDone, st_userNickNameUpdateError } =
     useSelector((state) => state.user);
   const dispatch = useDispatch();
   ////// USEEFFECT //////
+
+  useEffect(() => {
+    scrollTo(0, 0);
+  }, [router.route]);
 
   useEffect(() => {
     dispatch({

@@ -60,17 +60,19 @@ const LoadNotification = (msg, content) => {
 
 const Index = () => {
   const width = useWidth();
-  const router = useRouter();
-
-  const { st_logoutDone } = useSelector((state) => state.user);
 
   ////// HOOKS //////
-  const [tab, setTab] = useState(false);
 
   ////// REDUX //////
+  const router = useRouter();
+
   const dispatch = useDispatch();
   const { me } = useSelector((state) => state.user);
   ////// USEEFFECT //////
+
+  useEffect(() => {
+    scrollTo(0, 0);
+  }, [router.route]);
 
   useEffect(() => {
     dispatch({
@@ -89,25 +91,16 @@ const Index = () => {
   ////// TOGGLE ///////
 
   ///// HANDLER //////
-  const moveBackHandler = useCallback(() => {
-    router.back();
-  }, []);
 
   const moveLinkHandler = useCallback((link) => {
     router.push(link);
   }, []);
-
-  const tabToggle = useCallback(() => {
-    setTab(!tab);
-  }, [tab]);
 
   const logoutHandler = useCallback(() => {
     dispatch({
       type: LOGOUT_REQUEST,
     });
   }, []);
-
-  console.log(LOGOUT_REQUEST);
 
   ////// DATAVIEW //////
   return (

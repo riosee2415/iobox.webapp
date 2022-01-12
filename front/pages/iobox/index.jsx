@@ -116,6 +116,10 @@ const Index = () => {
 
   ////// USEEFFECT //////
   useEffect(() => {
+    scrollTo(0, 0);
+  }, [router.route]);
+
+  useEffect(() => {
     const type = router.query.type;
     if (type) {
       if (type === "iobox") {

@@ -49,18 +49,21 @@ const ImageBox = styled(Wrapper)`
 
 const Index = () => {
   const width = useWidth();
-  const router = useRouter();
 
   ////// HOOKS //////
-  const [tab, setTab] = useState(false);
+
   const dispatch = useDispatch();
 
   const { nextData, beforeData, eventDetail } = useSelector(
     (state) => state.event
   );
   ////// REDUX //////
-  console.log(eventDetail);
+  const router = useRouter();
+
   ////// USEEFFECT //////
+  useEffect(() => {
+    scrollTo(0, 0);
+  }, [router.route]);
 
   useEffect(() => {
     dispatch({
@@ -91,17 +94,10 @@ const Index = () => {
   ////// TOGGLE ///////
 
   ///// HANDLER //////
-  const moveBackHandler = useCallback(() => {
-    router.back();
-  }, []);
 
   const moveLinkHandler = useCallback((link) => {
     router.push(link);
   }, []);
-
-  const tabToggle = useCallback(() => {
-    setTab(!tab);
-  }, [tab]);
 
   ////// DATAVIEW //////
   return (

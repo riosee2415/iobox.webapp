@@ -19,18 +19,21 @@ import { Empty } from "antd";
 const Index = () => {
   const width = useWidth();
 
-  const router = useRouter();
-
-  const dispatch = useDispatch();
-
   const { menuImages } = useSelector((state) => state.menuImage);
 
   ////// HOOKS //////
   const [qs, setQs] = useState(0);
 
   ////// REDUX //////
+  const router = useRouter();
+
+  const dispatch = useDispatch();
 
   ////// USEEFFECT //////
+
+  useEffect(() => {
+    scrollTo(0, 0);
+  }, [router.route]);
 
   useEffect(() => {
     dispatch({
