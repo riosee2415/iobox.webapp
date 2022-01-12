@@ -24,6 +24,7 @@ import axios from "axios";
 import wrapper from "../store/configureStore";
 import { END } from "redux-saga";
 import MenuSlider from "./slide/MenuSlider";
+import { scaleAnimation } from "./AnimationCommon";
 
 const BoxWrapper = styled(Wrapper)`
   padding: 0 30px;
@@ -216,9 +217,16 @@ const AppFooter = () => {
   const [rotate, setRotate] = useState(0);
   const [currentMenu, setCurrentMenu] = useState(0);
 
+  const ImageBox = styled(Image)`
+    &.active {
+      animation: ${scaleAnimation} 1.5s infinite;
+    }
+  `;
+
   ////// REDUX //////
 
   ////// USEEFFECT //////
+
   useEffect(() => {
     setDrawar(false);
   }, [router.asPath]);
@@ -395,27 +403,14 @@ const AppFooter = () => {
                   top={`25px`}
                   left={`50%`}
                   margin={width < 700 ? `0 0 0 -52.5px` : `0 0 0 -65px`}
-                  bgColor={
-                    currentMenu === 0 ? `rgba(0,0,0,0.5)` : `transparent`
-                  }
                 >
-                  <Image
+                  <ImageBox
+                    className={String(currentMenu) === "0" ? "active" : ""}
                     src={`https://4leaf-s3.s3.ap-northeast-2.amazonaws.com/iobox/assets/images/main/iobox_dial.png`}
                     alt={`icon`}
-                    width={
-                      width < 700
-                        ? currentMenu === 0
-                          ? `55px`
-                          : `50px`
-                        : currentMenu === 0
-                        ? `65px`
-                        : `60px`
-                    }
+                    width={width < 700 ? `50px` : `60px`}
                   />
-                  <Text
-                    fontSize={width < 700 ? `1.1rem` : `1.3rem`}
-                    color={currentMenu === 0 ? Theme.white_C : Theme.black_C}
-                  >
+                  <Text fontSize={width < 700 ? `1.1rem` : `1.3rem`}>
                     아이오 박스
                   </Text>
                 </IconBox>
@@ -426,27 +421,14 @@ const AppFooter = () => {
                   }}
                   top={width < 700 ? `90px` : `110px`}
                   left={width < 700 ? `30px` : `50px`}
-                  bgColor={
-                    currentMenu === 5 ? `rgba(0,0,0,0.5)` : `transparent`
-                  }
                 >
-                  <Image
+                  <ImageBox
+                    className={String(currentMenu) === "5" ? "active" : ""}
                     src={`https://4leaf-s3.s3.ap-northeast-2.amazonaws.com/iobox/assets/images/main/truck_dial.png`}
                     alt={`icon`}
-                    width={
-                      width < 700
-                        ? currentMenu === 5
-                          ? `55px`
-                          : `50px`
-                        : currentMenu === 5
-                        ? `65px`
-                        : `60px`
-                    }
+                    width={width < 700 ? `50px` : `60px`}
                   />
-                  <Text
-                    fontSize={width < 700 ? `1.1rem` : `1.3rem`}
-                    color={currentMenu === 5 ? Theme.white_C : Theme.black_C}
-                  >
+                  <Text fontSize={width < 700 ? `1.1rem` : `1.3rem`}>
                     배송현황
                   </Text>
                 </IconBox>
@@ -457,27 +439,14 @@ const AppFooter = () => {
                   onClick={() => {
                     moveLinkHandler(`/iobox?type=hangerBox`);
                   }}
-                  bgColor={
-                    currentMenu === 1 ? `rgba(0,0,0,0.5)` : `transparent`
-                  }
                 >
-                  <Image
+                  <ImageBox
                     src={`https://4leaf-s3.s3.ap-northeast-2.amazonaws.com/iobox/assets/images/main/hagner_dial.png`}
                     alt={`icon`}
-                    width={
-                      width < 700
-                        ? currentMenu === 1
-                          ? `45px`
-                          : `40px`
-                        : currentMenu === 1
-                        ? `55px`
-                        : `50px`
-                    }
+                    width={width < 700 ? `40px` : `50px`}
+                    className={String(currentMenu) === "1" ? "active" : ""}
                   />
-                  <Text
-                    fontSize={width < 700 ? `1.1rem` : `1.3rem`}
-                    color={currentMenu === 1 ? Theme.white_C : Theme.black_C}
-                  >
+                  <Text fontSize={width < 700 ? `1.1rem` : `1.3rem`}>
                     행거박스
                   </Text>
                 </IconBox>
@@ -488,27 +457,14 @@ const AppFooter = () => {
                   onClick={() => {
                     moveLinkHandler("/bullet");
                   }}
-                  bgColor={
-                    currentMenu === 4 ? `rgba(0,0,0,0.5)` : `transparent`
-                  }
                 >
-                  <Image
+                  <ImageBox
+                    className={String(currentMenu) === "4" ? "active" : ""}
                     src={`https://4leaf-s3.s3.ap-northeast-2.amazonaws.com/iobox/assets/images/main/bullet_dial.png`}
                     alt={`icon`}
-                    width={
-                      width < 700
-                        ? currentMenu === 4
-                          ? `65px`
-                          : `60px`
-                        : currentMenu === 4
-                        ? `75px`
-                        : `70px`
-                    }
+                    width={width < 700 ? `60px` : `70px`}
                   />
-                  <Text
-                    fontSize={width < 700 ? `1.1rem` : `1.3rem`}
-                    color={currentMenu === 4 ? Theme.white_C : Theme.black_C}
-                  >
+                  <Text fontSize={width < 700 ? `1.1rem` : `1.3rem`}>
                     총알배송
                   </Text>
                 </IconBox>
@@ -516,29 +472,18 @@ const AppFooter = () => {
                 <IconBox
                   bottom={width < 700 ? `90px` : `110px`}
                   right={width < 700 ? `30px` : `50px`}
-                  bgColor={
-                    currentMenu === 2 ? `rgba(0,0,0,0.5)` : `transparent`
-                  }
                 >
-                  <Image
+                  <ImageBox
+                    className={String(currentMenu) === "2" ? "active" : ""}
                     src={`https://4leaf-s3.s3.ap-northeast-2.amazonaws.com/iobox/assets/images/main/large_dial.png`}
                     alt={`icon`}
-                    width={
-                      width < 700
-                        ? currentMenu === 2
-                          ? `45px`
-                          : `40px`
-                        : currentMenu === 2
-                        ? `55px`
-                        : `50px`
-                    }
+                    width={width < 700 ? `40px` : `50px`}
                   />
                   <Text
                     fontSize={width < 700 ? `1.1rem` : `1.3rem`}
                     onClick={() => {
                       moveLinkHandler(`/iobox?type=bigBox`);
                     }}
-                    color={currentMenu === 2 ? Theme.white_C : Theme.black_C}
                   >
                     대용량 박스
                   </Text>
@@ -551,27 +496,14 @@ const AppFooter = () => {
                   bottom={`25px`}
                   left={`50%`}
                   margin={width < 700 ? `0 0 0 -52.5px` : `0 0 0 -65px`}
-                  bgColor={
-                    currentMenu === 3 ? `rgba(0,0,0,0.5)` : `transparent`
-                  }
                 >
-                  <Image
+                  <ImageBox
+                    className={String(currentMenu) === "3" ? "active" : ""}
                     src={`https://4leaf-s3.s3.ap-northeast-2.amazonaws.com/iobox/assets/images/main/box_dial.png`}
                     alt={`icon`}
-                    width={
-                      width < 700
-                        ? currentMenu === 3
-                          ? `65px`
-                          : `60px`
-                        : currentMenu === 3
-                        ? `75px`
-                        : `70px`
-                    }
+                    width={width < 700 ? `60px` : `70px`}
                   />
-                  <Text
-                    fontSize={width < 700 ? `1.1rem` : `1.3rem`}
-                    color={currentMenu === 3 ? Theme.white_C : Theme.black_C}
-                  >
+                  <Text fontSize={width < 700 ? `1.1rem` : `1.3rem`}>
                     텐트보관 박스
                   </Text>
                 </IconBox>
