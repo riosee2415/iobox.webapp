@@ -601,24 +601,34 @@ const Index = () => {
                     borderLeft={`2px solid ${Theme.lightGrey_C}`}
                     borderTop={`2px solid ${Theme.lightGrey_C}`}
                     borderRight={`2px solid ${Theme.lightGrey_C}`}
-                    padding={`0 10px`}
+                    position={`relative`}
+                    height={width < 700 ? `50px` : `80px`}
                   >
                     <TextInput
                       className={`bulletInput`}
-                      width={`calc(100% - 2rem )`}
-                      height={width < 700 ? `50px` : `80px`}
+                      width={`100%`}
+                      height={`100%`}
                       placeholder={`기본 주소`}
                       border={`none`}
                       readOnly
                       value={inputStartAddress.value}
                     />
-                    <SearchOutlined
-                      style={{ fontSize: `2rem` }}
-                      onClick={() => {
-                        setIsPostCode(true);
-                        setAddress("start");
-                      }}
-                    />
+
+                    <Wrapper
+                      width={`auto`}
+                      position={`absolute`}
+                      top={`0`}
+                      right={`5px`}
+                      height={`100%`}
+                    >
+                      <SearchOutlined
+                        style={{ fontSize: `2rem` }}
+                        onClick={() => {
+                          setIsPostCode(true);
+                          setAddress("start");
+                        }}
+                      />
+                    </Wrapper>
                   </Wrapper>
                   <Wrapper
                     dr={`row`}
@@ -888,19 +898,27 @@ const Index = () => {
                     borderLeft={`2px solid ${Theme.lightGrey_C}`}
                     borderTop={`2px solid ${Theme.lightGrey_C}`}
                     borderRight={`2px solid ${Theme.lightGrey_C}`}
-                    padding={`0 10px`}
+                    height={width < 700 ? `50px` : `80px`}
+                    position={`relative`}
                   >
                     <TextInput
                       className={`bulletInput`}
-                      width={`calc(100% - 2rem )`}
-                      height={width < 700 ? `50px` : `80px`}
+                      width={`100%`}
                       placeholder={`기본 주소`}
+                      height={`100%`}
                       border={`none`}
                       readOnly
                       value={inputEndAddress.value}
                     />
 
-                    <Wrapper width={`auto`} fontSize={`2rem`}>
+                    <Wrapper
+                      width={`auto`}
+                      fontSize={`2rem`}
+                      position={`absolute`}
+                      height={`100%`}
+                      top={`0`}
+                      right={`5px`}
+                    >
                       <SearchOutlined
                         onClick={() => {
                           setIsPostCode(true);
@@ -993,7 +1011,7 @@ const Index = () => {
       )}
 
       <Modal
-        visible={floorModal ? true : false}
+        visible={floorModal}
         closable={false}
         footer={null}
         width={width < 700 ? 250 : 400}
