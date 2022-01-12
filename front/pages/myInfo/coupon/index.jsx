@@ -8,6 +8,7 @@ import {
   Image,
   CommonButton,
   TextInput,
+  IoBoxWrapper,
 } from "../../../components/commonComponents";
 import styled from "styled-components";
 import ClientLayout from "../../../components/ClientLayout";
@@ -57,10 +58,8 @@ const Index = () => {
   ////// DATAVIEW //////
   return (
     <WholeWrapper bgColor={width < 700 ? Theme.white_C : Theme.lightGrey_C}>
-      <Wrapper
-        width={width < 700 ? `100%` : `500px`}
+      <IoBoxWrapper
         minHeight={`100vh`}
-        shadow={`0px 0px 10px ${Theme.grey_C}`}
         bgColor={Theme.white_C}
         al={`flex-start`}
         ju={`flex-start`}
@@ -128,13 +127,13 @@ const Index = () => {
               radius={`0 20px 20px 0`}
               bgColor={Theme.basicTheme_C}
               ju={`flex-end`}
-              al={`flex-start`}
               padding={`10px 5px`}
               border={`1px solid  ${Theme.basicTheme_C}`}
             >
               <Image
                 src={`https://4leaf-s3.s3.ap-northeast-2.amazonaws.com/iobox/assets/images/logo/LOGO_W.png`}
                 alt={`logo`}
+                width={`30px`}
               />
             </Wrapper>
           </CouponWrapper>
@@ -158,13 +157,13 @@ const Index = () => {
               radius={`0 20px 20px 0`}
               bgColor={Theme.basicTheme_C}
               ju={`flex-end`}
-              al={`flex-start`}
               padding={`10px 5px`}
               border={`1px solid  ${Theme.basicTheme_C}`}
             >
               <Image
                 src={`https://4leaf-s3.s3.ap-northeast-2.amazonaws.com/iobox/assets/images/logo/LOGO_W.png`}
                 alt={`logo`}
+                width={`30px`}
               />
             </Wrapper>
           </CouponWrapper>
@@ -188,13 +187,13 @@ const Index = () => {
               radius={`0 20px 20px 0`}
               bgColor={Theme.basicTheme_C}
               ju={`flex-end`}
-              al={`flex-start`}
               padding={`10px 5px`}
               border={`1px solid  ${Theme.basicTheme_C}`}
             >
               <Image
                 src={`https://4leaf-s3.s3.ap-northeast-2.amazonaws.com/iobox/assets/images/logo/LOGO_W.png`}
                 alt={`logo`}
+                width={`30px`}
               />
             </Wrapper>
           </CouponWrapper>
@@ -218,13 +217,13 @@ const Index = () => {
               radius={`0 20px 20px 0`}
               bgColor={Theme.basicTheme_C}
               ju={`flex-end`}
-              al={`flex-start`}
               padding={`10px 5px`}
               border={`1px solid  ${Theme.basicTheme_C}`}
             >
               <Image
                 src={`https://4leaf-s3.s3.ap-northeast-2.amazonaws.com/iobox/assets/images/logo/LOGO_W.png`}
                 alt={`logo`}
+                width={`30px`}
               />
             </Wrapper>
           </CouponWrapper>
@@ -248,13 +247,13 @@ const Index = () => {
               radius={`0 20px 20px 0`}
               bgColor={Theme.basicTheme_C}
               ju={`flex-end`}
-              al={`flex-start`}
               padding={`10px 5px`}
               border={`1px solid  ${Theme.basicTheme_C}`}
             >
               <Image
                 src={`https://4leaf-s3.s3.ap-northeast-2.amazonaws.com/iobox/assets/images/logo/LOGO_W.png`}
                 alt={`logo`}
+                width={`30px`}
               />
             </Wrapper>
           </CouponWrapper>
@@ -267,7 +266,7 @@ const Index = () => {
             </Text>
           </Wrapper> */}
         </RsWrapper>
-      </Wrapper>
+      </IoBoxWrapper>
       <Footer />
     </WholeWrapper>
   );

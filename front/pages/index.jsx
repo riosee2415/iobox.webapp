@@ -8,13 +8,7 @@ import axios from "axios";
 import wrapper from "../store/configureStore";
 import { END } from "redux-saga";
 
-import {
-  Image,
-  WholeWrapper,
-  RsWrapper,
-  Wrapper,
-  Text,
-} from "../components/commonComponents";
+import { Image, Wrapper, IoBoxWrapper } from "../components/commonComponents";
 import useWidth from "../hooks/useWidth";
 import Theme from "../components/Theme";
 import { useRouter } from "next/dist/client/router";
@@ -26,14 +20,6 @@ const FirstWrapper = styled(Wrapper)`
   width: 100%;
   height: 100vh;
   overflow: hidden;
-`;
-
-const FirstDisplay = styled(Wrapper)`
-  width: 500px;
-  height: 100vh;
-  @media (max-width: 700px) {
-    width: 100%;
-  }
 `;
 
 const Home = () => {
@@ -100,9 +86,6 @@ const Home = () => {
   ////// TOGGLE ///////
 
   ///// HANDLER //////
-  const moveLinkHandler = useCallback((link) => {
-    router.push(link);
-  }, []);
 
   useEffect(() => {
     setLengthData1(0);
@@ -134,7 +117,6 @@ const Home = () => {
   ////// DATAVIEW //////
   return (
     <>
-      {/* {firstRender !== "true" && ( */}
       <FirstWrapper
         position={`fixed`}
         className={main ? `main` : `notMain`}
@@ -143,165 +125,17 @@ const Home = () => {
         zIndex={mainZIndex}
         height={`100vh`}
       >
-        <FirstDisplay bgColor={Theme.basicTheme_C} transition={`0.5s`}>
+        <IoBoxWrapper
+          height={`100vh`}
+          bgColor={Theme.basicTheme_C}
+          transition={`0.5s`}
+        >
           <Image
             width={`100px`}
             src={`https://4leaf-s3.s3.ap-northeast-2.amazonaws.com/iobox/assets/images/logo/icon.png`}
           />
-        </FirstDisplay>
+        </IoBoxWrapper>
       </FirstWrapper>
-      {/* )} */}
-
-      {/* <ClientLayout>
-        <WholeWrapper
-          overflow={`hidden`}
-          height={`90vh`}
-          bgColor={width < 700 ? Theme.white_C : Theme.lightGrey_C}
-        >
-          <Wrapper
-            width={width < 700 ? `100%` : `500px`}
-            height={`100%`}
-            shadow={`0px 0px 10px ${Theme.grey_C}`}
-          >
-            <Wrapper
-              height={`40%`}
-              bgColor={Theme.basicTheme_C}
-              ju={`flex-start`}
-            >
-              <RsWrapper ju={`flex-start`} position={`relative`}>
-                <Wrapper padding={`10px 0`}>
-                  <Image
-                    src={`https://4leaf-s3.s3.ap-northeast-2.amazonaws.com/iobox/assets/images/logo/LOGO_W.png`}
-                    alt={`logo`}
-                    width={`40px`}
-                  />
-                </Wrapper>
-
-                <Text
-                  bold={true}
-                  color={Theme.white_C}
-                  fontSize={`3rem`}
-                  margin={width < 700 ? `0` : `30px 0 0`}
-                >
-                  맡아줘 내 짐!
-                </Text>
-                <Wrapper
-                  al={`flex-start`}
-                  margin={width < 700 ? `20px 0 0` : `45px 0 0`}
-                >
-                  <Text bold={true} color={Theme.white_C}>
-                    원할 때 맡겨!
-                  </Text>
-                </Wrapper>
-
-                <Wrapper
-                  al={`flex-end`}
-                  margin={width < 700 ? `20px 0 0` : `35px 0 0`}
-                >
-                  <Text bold={true} color={Theme.white_C}>
-                    원할 때 찾고!
-                  </Text>
-                </Wrapper>
-
-                <Image
-                  src={`https://4leaf-s3.s3.ap-northeast-2.amazonaws.com/iobox/assets/images/main/woman.png`}
-                  position={`absolute`}
-                  bottom={`0`}
-                  left={`50%`}
-                  width={`100px`}
-                  zIndex={`2`}
-                  margin={`0 0 0 -50px`}
-                />
-              </RsWrapper>
-            </Wrapper>
-            <Wrapper height={`60%`} bgColor={Theme.white_C}>
-              <RsWrapper ju={`flex-start`}>
-                <Wrapper
-                  al={`flex-start`}
-                  margin={width < 700 ? `30px 0 0` : `50px 0 0`}
-                >
-                  <Text>3초 만에 내가 맡길 짐 가격 알아보기</Text>
-
-                  <Wrapper
-                    height={`50px`}
-                    padding={`10px`}
-                    border={`4px solid ${Theme.grey_C}`}
-                    radius={`10px`}
-                    margin={`10px 0 0s`}
-                    ju={`space-between`}
-                    dr={`row`}
-                    onClick={() => {
-                      moveLinkHandler("/calculate");
-                    }}
-                    cursor={`pointer`}
-                  >
-                    <Text fontSize={`1.2rem`} bold={true}>
-                      내 짐 맡기면 얼마일까 ?
-                    </Text>
-
-                    <Image
-                      src={`https://4leaf-s3.s3.ap-northeast-2.amazonaws.com/iobox/assets/images/main/search.png`}
-                      width={`20px`}
-                      margin={`0 0 3px`}
-                    />
-                  </Wrapper>
-                </Wrapper>
-
-                <Text margin={width < 700 ? `30px 0 0` : `40px 0 0`}>
-                  보관중인 고객님의 소중한 물건
-                </Text>
-
-                <Wrapper dr={`row`} margin={`5px 0 0`}>
-                  <Text
-                    padding={`0 5px`}
-                    bgColor={Theme.grey_C}
-                    fontWeight={`700`}
-                    fontSize={`1.3rem`}
-                  >
-                    {lengthData1 ? lengthData1 : `0`}
-                  </Text>
-                  <Text
-                    padding={`0 5px`}
-                    bgColor={Theme.grey_C}
-                    fontWeight={`700`}
-                    fontSize={`1.3rem`}
-                    margin={`0 3px`}
-                  >
-                    {lengthData2}
-                  </Text>
-                  <Text
-                    padding={`0 5px`}
-                    bgColor={Theme.grey_C}
-                    fontWeight={`700`}
-                    fontSize={`1.3rem`}
-                  >
-                    {lengthData3}
-                  </Text>
-                  <Text
-                    padding={`0 5px`}
-                    bgColor={Theme.grey_C}
-                    fontWeight={`700`}
-                    fontSize={`1.3rem`}
-                    margin={`0 3px`}
-                  >
-                    {lengthData4}
-                  </Text>
-
-                  <Text
-                    padding={`0 5px`}
-                    bgColor={Theme.grey_C}
-                    fontWeight={`700`}
-                    fontSize={`1.3rem`}
-                    margin={`0 0 0 3px`}
-                  >
-                    개
-                  </Text>
-                </Wrapper>
-              </RsWrapper>
-            </Wrapper>
-          </Wrapper>
-        </WholeWrapper>
-      </ClientLayout> */}
     </>
   );
 };

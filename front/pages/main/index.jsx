@@ -12,6 +12,7 @@ import {
   RsWrapper,
   Wrapper,
   Text,
+  IoBoxWrapper,
 } from "../../components/commonComponents";
 import useWidth from "../../hooks/useWidth";
 import Theme from "../../components/Theme";
@@ -131,35 +132,13 @@ const Home = () => {
   ////// DATAVIEW //////
   return (
     <>
-      {firstRender !== "true" && (
-        <FirstWrapper
-          position={`fixed`}
-          className={main ? `main` : `notMain`}
-          transition={`0.5s`}
-          opacity={mainOpacity}
-          zIndex={mainZIndex}
-          height={`100vh`}
-        >
-          <FirstDisplay bgColor={Theme.basicTheme_C} transition={`0.5s`}>
-            <Image
-              width={`100px`}
-              src={`https://4leaf-s3.s3.ap-northeast-2.amazonaws.com/iobox/assets/images/logo/icon.png`}
-            />
-          </FirstDisplay>
-        </FirstWrapper>
-      )}
-
       <ClientLayout>
         <WholeWrapper
           overflow={`hidden`}
           minHeight={`100vh`}
           bgColor={width < 700 ? Theme.white_C : Theme.lightGrey_C}
         >
-          <Wrapper
-            width={width < 700 ? `100%` : `500px`}
-            height={`100vh`}
-            shadow={`0px 0px 10px ${Theme.grey_C}`}
-          >
+          <IoBoxWrapper height={`100vh`}>
             <Wrapper
               height={width < 700 ? `330px` : `480px`}
               bgColor={Theme.basicTheme_C}
@@ -296,7 +275,7 @@ const Home = () => {
                 </Wrapper>
               </RsWrapper>
             </Wrapper>
-          </Wrapper>
+          </IoBoxWrapper>
         </WholeWrapper>
       </ClientLayout>
     </>

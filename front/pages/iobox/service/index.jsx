@@ -9,6 +9,7 @@ import {
   CommonButton,
   TextInput,
   Question,
+  IoBoxWrapper,
 } from "../../../components/commonComponents";
 import styled from "styled-components";
 import ClientLayout from "../../../components/ClientLayout";
@@ -134,10 +135,8 @@ const Index = () => {
   return (
     <>
       <WholeWrapper bgColor={Theme.lightGrey_C}>
-        <Wrapper
-          width={width < 700 ? `100%` : `500px`}
+        <IoBoxWrapper
           minHeight={`100vh`}
-          shadow={`0px 0px 10px ${Theme.grey_C}`}
           bgColor={Theme.white_C}
           al={`flex-start`}
           ju={`flex-start`}
@@ -331,7 +330,7 @@ const Index = () => {
               </Wrapper>
             </Wrapper>
           </RsWrapper>
-        </Wrapper>
+        </IoBoxWrapper>
       </WholeWrapper>
 
       <Wrapper
@@ -341,38 +340,36 @@ const Index = () => {
         bgColor={Theme.lightGrey_C}
         zIndex={`1000`}
       >
-        <Wrapper
-          width={width < 700 ? `100%` : `500px`}
+        <IoBoxWrapper
           bgColor={Theme.white_C}
-          borderTop={`1px solid ${Theme.grey_C}`}
-          padding={`20px 0`}
+          padding={width < 700 ? `20px 30px` : `20px 50px`}
+          dr={`row`}
+          ju={`space-between`}
         >
-          <RsWrapper dr={`row`} ju={`space-between`}>
-            <Wrapper width={`auto`} al={`flex-start`}>
-              <Text bold={true} fontSize={`1.2rem`}>
-                월 {numberWithCommas(storeData.totalPay + pickUpPrice)}원
-              </Text>
-              <PayButtton bold={true} fontSize={`1.2rem`} cursor={`pointer`}>
-                예상금액 상세
-              </PayButtton>
-            </Wrapper>
-            <CommonButton
-              width={width < 700 ? `80px` : `130px`}
-              height={width < 700 ? `40px` : `50px`}
-              onClick={moveBackHandler}
-              kindOf={`white`}
-            >
-              이전
-            </CommonButton>
-            <CommonButton
-              width={width < 700 ? `80px` : `130px`}
-              height={width < 700 ? `40px` : `50px`}
-              onClick={nextStepHandler}
-            >
-              다음
-            </CommonButton>
-          </RsWrapper>
-        </Wrapper>
+          <Wrapper width={`auto`} al={`flex-start`}>
+            <Text bold={true} fontSize={`1.2rem`}>
+              월 {numberWithCommas(storeData.totalPay + pickUpPrice)}원
+            </Text>
+            <PayButtton bold={true} fontSize={`1.2rem`} cursor={`pointer`}>
+              예상금액 상세
+            </PayButtton>
+          </Wrapper>
+          <CommonButton
+            width={width < 700 ? `95px` : `110px`}
+            height={width < 700 ? `40px` : `50px`}
+            onClick={moveBackHandler}
+            kindOf={`white`}
+          >
+            이전
+          </CommonButton>
+          <CommonButton
+            width={width < 700 ? `95px` : `110px`}
+            height={width < 700 ? `40px` : `50px`}
+            onClick={nextStepHandler}
+          >
+            다음
+          </CommonButton>
+        </IoBoxWrapper>
       </Wrapper>
 
       <Wrapper bgColor={Theme.lightGrey_C}>

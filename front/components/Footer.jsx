@@ -1,6 +1,12 @@
 import React, { useState, useCallback } from "react";
 import useWidth from "../hooks/useWidth";
-import { WholeWrapper, Wrapper, Image, Text } from "./commonComponents";
+import {
+  WholeWrapper,
+  Wrapper,
+  Image,
+  Text,
+  IoBoxWrapper,
+} from "./commonComponents";
 import Theme from "./Theme";
 import { CloseOutlined } from "@ant-design/icons";
 import styled from "styled-components";
@@ -45,11 +51,8 @@ const Index = () => {
   ////// DATAVIEW //////
 
   return (
-    <Wrapper
-      width={width < 700 ? `100%` : `500px`}
+    <IoBoxWrapper
       height={`100%`}
-      shadow={`0px 0px 10px ${Theme.grey_C}`}
-      bgColor={Theme.white_C}
       al={`flex-start`}
       ju={`flex-start`}
       position={`fixed`}
@@ -101,6 +104,7 @@ const Index = () => {
       >
         <Image
           width={`50px`}
+          margin={width < 700 ? `0 0 10px` : `0`}
           src={`https://4leaf-s3.s3.ap-northeast-2.amazonaws.com/iobox/assets/images/logo/icon_w.png`}
         />
 
@@ -125,29 +129,37 @@ const Index = () => {
           bgColor={`rgba(0,0,0,0.5)`}
         >
           <Wrapper
-            bgColor={Theme.white_C}
-            radius={`10px`}
-            shadow={`0 0 10px ${Theme.grey_C}`}
-            height={`500px`}
             width={`300px`}
-            padding={`20px`}
-            wrap={`nowrap`}
-            ju={`flex-start`}
-            overflowY={`auto`}
+            height={`500px`}
+            overflow={`hidden`}
+            radius={`10px`}
           >
-            <Wrapper al={`flex-end`} padding={`10px 0`}>
-              <Wrapper width={`auto`} cursor={`pointer`} onClick={modalToggle}>
-                <CloseOutlined />
+            <Wrapper
+              bgColor={Theme.white_C}
+              shadow={`0 0 10px ${Theme.grey_C}`}
+              height={`100%`}
+              padding={`20px`}
+              wrap={`nowrap`}
+              ju={`flex-start`}
+              overflowY={`scroll`}
+            >
+              <Wrapper al={`flex-end`} padding={`10px 0`}>
+                <Wrapper
+                  width={`auto`}
+                  cursor={`pointer`}
+                  onClick={modalToggle}
+                >
+                  <CloseOutlined />
+                </Wrapper>
               </Wrapper>
-            </Wrapper>
 
-            <Text bold={true} margin={`0 0 10px`}>
-              이용약관 &#38; 개인정보처리방침
-            </Text>
+              <Text bold={true} margin={`0 0 10px`}>
+                이용약관 &#38; 개인정보처리방침
+              </Text>
 
-            <Wrapper>
-              <PreText>
-                {`제 1장 (총칙)
+              <Wrapper>
+                <PreText>
+                  {`제 1장 (총칙)
  
 제 1 조 (목적)
 이 약관은 아이오박스(이하 “회사”)가 운영하는 인터넷 홈페이지(**********************) 및 기타 모바일 애플리케이션에서 제공하는 전자상거래 관련 서비스를 이용함에 있어 회사와 이용자의 권리, 의무, 책임사항 및 서비스 이용절차 등에 관한 사항을 규정함을 목적으로 합니다.
@@ -747,7 +759,8 @@ Chrome의 경우 : 설정 메뉴 > 개인정보 및 보안 > 쿠키 및 기타 �
 • 공고일자 : 2022년 01월 01일
  
 • 시행일자 : 2022년 01월 03일`}
-              </PreText>
+                </PreText>
+              </Wrapper>
             </Wrapper>
           </Wrapper>
         </Wrapper>
@@ -763,29 +776,39 @@ Chrome의 경우 : 설정 메뉴 > 개인정보 및 보안 > 쿠키 및 기타 �
           bgColor={`rgba(0,0,0,0.5)`}
         >
           <Wrapper
-            bgColor={Theme.white_C}
-            radius={`10px`}
-            shadow={`0 0 10px ${Theme.grey_C}`}
-            height={`500px`}
             width={`300px`}
-            padding={`20px`}
-            wrap={`nowrap`}
-            ju={`flex-start`}
-            overflowY={`auto`}
+            height={`500px`}
+            overflow={`hidden`}
+            radius={`10px`}
           >
-            <Wrapper al={`flex-end`} padding={`10px 0`}>
-              <Wrapper width={`auto`} cursor={`pointer`} onClick={modalToggle2}>
-                <CloseOutlined />
+            <Wrapper
+              bgColor={Theme.white_C}
+              radius={`10px`}
+              shadow={`0 0 10px ${Theme.grey_C}`}
+              height={`500px`}
+              width={`300px`}
+              padding={`20px`}
+              wrap={`nowrap`}
+              ju={`flex-start`}
+              overflowY={`auto`}
+            >
+              <Wrapper al={`flex-end`} padding={`10px 0`}>
+                <Wrapper
+                  width={`auto`}
+                  cursor={`pointer`}
+                  onClick={modalToggle2}
+                >
+                  <CloseOutlined />
+                </Wrapper>
               </Wrapper>
-            </Wrapper>
 
-            <Text bold={true} margin={`0 0 10px`}>
-              배송 정보
-            </Text>
+              <Text bold={true} margin={`0 0 10px`}>
+                배송 정보
+              </Text>
 
-            <Wrapper>
-              <PreText>
-                {`※ 보관 및 픽업 방법
+              <Wrapper>
+                <PreText>
+                  {`※ 보관 및 픽업 방법
  
 ◎방문 픽업 방식
  
@@ -835,7 +858,8 @@ Chrome의 경우 : 설정 메뉴 > 개인정보 및 보안 > 쿠키 및 기타 �
 개별 배송 서비스 같은 경우도 박스 찾기와 동일하게
 물류처리 및 택배비 (배송비 : 5,000원)이 발생되며,
 일반 박스 찾기와 동일하게 영업일 기준 5일 이내 배송됩니다.`}
-              </PreText>
+                </PreText>
+              </Wrapper>
             </Wrapper>
           </Wrapper>
         </Wrapper>
@@ -851,29 +875,39 @@ Chrome의 경우 : 설정 메뉴 > 개인정보 및 보안 > 쿠키 및 기타 �
           bgColor={`rgba(0,0,0,0.5)`}
         >
           <Wrapper
-            bgColor={Theme.white_C}
-            radius={`10px`}
-            shadow={`0 0 10px ${Theme.grey_C}`}
-            height={`500px`}
             width={`300px`}
-            padding={`20px`}
-            wrap={`nowrap`}
-            ju={`flex-start`}
-            overflowY={`auto`}
+            height={`500px`}
+            overflow={`hidden`}
+            radius={`10px`}
           >
-            <Wrapper al={`flex-end`} padding={`10px 0`}>
-              <Wrapper width={`auto`} cursor={`pointer`} onClick={modalToggle3}>
-                <CloseOutlined />
+            <Wrapper
+              bgColor={Theme.white_C}
+              radius={`10px`}
+              shadow={`0 0 10px ${Theme.grey_C}`}
+              height={`500px`}
+              width={`300px`}
+              padding={`20px`}
+              wrap={`nowrap`}
+              ju={`flex-start`}
+              overflowY={`auto`}
+            >
+              <Wrapper al={`flex-end`} padding={`10px 0`}>
+                <Wrapper
+                  width={`auto`}
+                  cursor={`pointer`}
+                  onClick={modalToggle3}
+                >
+                  <CloseOutlined />
+                </Wrapper>
               </Wrapper>
-            </Wrapper>
 
-            <Text bold={true} margin={`0 0 10px`}>
-              환불 정보
-            </Text>
+              <Text bold={true} margin={`0 0 10px`}>
+                환불 정보
+              </Text>
 
-            <Wrapper>
-              <PreText>
-                {`◈자동 연장 결제 및 환불정보◈
+              <Wrapper>
+                <PreText>
+                  {`◈자동 연장 결제 및 환불정보◈
 
 처음에 선택한 보관 기간이 경과하면 다음 결제 일에 자동으로 보관이 연장되며, 기존에 등록된 카드로 연장 보관료가 자동 결제됩니다.
 ( 연장 보관료는 기존 보관료와 동일합니다. )
@@ -884,12 +918,13 @@ Chrome의 경우 : 설정 메뉴 > 개인정보 및 보안 > 쿠키 및 기타 �
 
 장기보관 도중 해약 시 보관기간만큼 단기보관료로 계산 후 차액 지급됩니다. 
 (보관은 센터 도착 후 검수 완료 시점부터 날짜 적용됩니다.)`}
-              </PreText>
+                </PreText>
+              </Wrapper>
             </Wrapper>
           </Wrapper>
         </Wrapper>
       )}
-    </Wrapper>
+    </IoBoxWrapper>
   );
 };
 

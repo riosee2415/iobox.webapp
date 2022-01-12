@@ -10,6 +10,7 @@ import {
   GradientText,
   Question,
   Canceal,
+  IoBoxWrapper,
 } from "../../components/commonComponents";
 import styled from "styled-components";
 import ClientLayout from "../../components/ClientLayout";
@@ -226,12 +227,9 @@ const Index = () => {
   return (
     <>
       <WholeWrapper bgColor={width < 700 ? Theme.white_C : Theme.lightGrey_C}>
-        <Wrapper
-          width={width < 700 ? `100%` : `500px`}
-          height={`100%`}
-          shadow={`0px 0px 10px ${Theme.grey_C}`}
+        <IoBoxWrapper
+          minHeight={`100vh`}
           bgColor={Theme.white_C}
-          overflowX={`hidden`}
           al={`flex-start`}
           ju={`flex-start`}
           position={`relative`}
@@ -392,7 +390,7 @@ const Index = () => {
               </Wrapper>
             </RsWrapper>
           </Wrapper>
-        </Wrapper>
+        </IoBoxWrapper>
       </WholeWrapper>
 
       <Wrapper
@@ -403,31 +401,29 @@ const Index = () => {
         bgColor={Theme.lightGrey_C}
         zIndex={`1000`}
       >
-        <Wrapper
-          width={width < 700 ? `100%` : `500px`}
+        <IoBoxWrapper
           bgColor={Theme.white_C}
-          borderTop={`1px solid ${Theme.grey_C}`}
-          padding={`20px 0`}
+          padding={width < 700 ? `20px 30px` : `20px 50px`}
+          dr={`row`}
+          ju={`space-between`}
         >
-          <RsWrapper dr={`row`} ju={`space-between`}>
-            <Wrapper width={`auto`} al={`flex-start`}>
-              <Text bold={true} fontSize={`1.2rem`}>
-                월 {numberWithCommas(totalPay)}원
-              </Text>
-              <PayButtton bold={true} fontSize={`1.2rem`} cursor={`pointer`}>
-                예상금액 상세
-              </PayButtton>
-            </Wrapper>
+          <Wrapper width={`auto`} al={`flex-start`}>
+            <Text bold={true} fontSize={`1.2rem`}>
+              월 {numberWithCommas(totalPay)}원
+            </Text>
+            <PayButtton bold={true} fontSize={`1.2rem`} cursor={`pointer`}>
+              예상금액 상세
+            </PayButtton>
+          </Wrapper>
 
-            <CommonButton
-              width={`130px`}
-              height={`50px`}
-              onClick={nextStepHandler}
-            >
-              다음
-            </CommonButton>
-          </RsWrapper>
-        </Wrapper>
+          <CommonButton
+            width={`130px`}
+            height={`50px`}
+            onClick={nextStepHandler}
+          >
+            다음
+          </CommonButton>
+        </IoBoxWrapper>
       </Wrapper>
       <Wrapper bgColor={Theme.lightGrey_C}>
         <Footer />

@@ -8,6 +8,7 @@ import {
   Image,
   CommonButton,
   TextInput,
+  IoBoxWrapper,
 } from "../../../components/commonComponents";
 import styled from "styled-components";
 import ClientLayout from "../../../components/ClientLayout";
@@ -16,24 +17,11 @@ import { CloseOutlined, DownOutlined, UpOutlined } from "@ant-design/icons";
 import { useRouter } from "next/dist/client/router";
 import Footer from "../../../components/Footer";
 
-const CouponWrapper = styled(Wrapper)`
-  height: 150px;
-  border-radius: 20px;
-  margin: 0 0 15px;
-  box-shadow: 0px 0px 10px ${Theme.grey_C};
-  cursor: pointer;
-
-  &:hover {
-    box-shadow: 0px 0px 10px ${Theme.basicTheme_C};
-  }
-`;
-
 const Index = () => {
   const width = useWidth();
   const router = useRouter();
 
   ////// HOOKS //////
-  const [tab, setTab] = useState(false);
 
   ////// REDUX //////
 
@@ -46,21 +34,11 @@ const Index = () => {
     router.back();
   }, []);
 
-  const moveLinkHandler = useCallback((link) => {
-    router.push(link);
-  }, []);
-
-  const tabToggle = useCallback(() => {
-    setTab(!tab);
-  }, [tab]);
-
   ////// DATAVIEW //////
   return (
     <WholeWrapper bgColor={width < 700 ? Theme.white_C : Theme.lightGrey_C}>
-      <Wrapper
-        width={width < 700 ? `100%` : `500px`}
+      <IoBoxWrapper
         minHeight={`100vh`}
-        shadow={`0px 0px 10px ${Theme.grey_C}`}
         bgColor={Theme.white_C}
         al={`flex-start`}
         ju={`flex-start`}
@@ -135,7 +113,7 @@ const Index = () => {
             </Wrapper>
           </Wrapper>
         </RsWrapper>
-      </Wrapper>
+      </IoBoxWrapper>
       <Footer />
     </WholeWrapper>
   );

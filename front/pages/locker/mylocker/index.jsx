@@ -7,6 +7,7 @@ import {
   Text,
   Image,
   CommonButton,
+  IoBoxWrapper,
 } from "../../../components/commonComponents";
 import styled, { ThemeProvider } from "styled-components";
 import ClientLayout from "../../../components/ClientLayout";
@@ -262,10 +263,8 @@ const Index = () => {
   return (
     <>
       <WholeWrapper bgColor={width < 700 ? Theme.white_C : Theme.lightGrey_C}>
-        <Wrapper
-          width={width < 700 ? `100%` : `500px`}
+        <IoBoxWrapper
           height={`100%`}
-          shadow={`0px 0px 10px ${Theme.grey_C}`}
           bgColor={Theme.white_C}
           al={`flex-start`}
           ju={`flex-start`}
@@ -789,7 +788,7 @@ const Index = () => {
               </Wrapper>
             </RsWrapper>
           </Wrapper>
-        </Wrapper>
+        </IoBoxWrapper>
       </WholeWrapper>
 
       <Wrapper
@@ -804,21 +803,20 @@ const Index = () => {
         bgColor={Theme.lightGrey_C}
         zIndex={`1000`}
       >
-        <Wrapper
-          width={width < 700 ? `100%` : `500px`}
+        <IoBoxWrapper
           bgColor={Theme.white_C}
-          borderTop={`1px solid ${Theme.grey_C}`}
-          padding={`20px 0`}
+          padding={`20px 50px`}
+          shadow={`0px 0px 10px ${Theme.grey_C}`}
+          dr={`row`}
+          ju={`space-between`}
         >
-          <RsWrapper dr={`row`} ju={`space-between`}>
-            <Wrapper width={`auto`} al={`flex-start`}>
-              <PayButtton bold={true}>배송비 5,000원</PayButtton>
-            </Wrapper>
-            <CommonButton width={`130px`} height={`50px`}>
-              찾기
-            </CommonButton>
-          </RsWrapper>
-        </Wrapper>
+          <Wrapper width={`auto`} al={`flex-start`}>
+            <PayButtton bold={true}>배송비 5,000원</PayButtton>
+          </Wrapper>
+          <CommonButton width={`130px`} height={`50px`}>
+            찾기
+          </CommonButton>
+        </IoBoxWrapper>
       </Wrapper>
       <Wrapper bgColor={Theme.lightGrey_C}>
         <Footer />

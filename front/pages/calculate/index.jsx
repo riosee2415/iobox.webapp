@@ -7,6 +7,7 @@ import {
   Text,
   Image,
   CommonButton,
+  IoBoxWrapper,
 } from "../../components/commonComponents";
 import styled from "styled-components";
 import ClientLayout from "../../components/ClientLayout";
@@ -81,12 +82,9 @@ const Index = () => {
   ////// DATAVIEW //////
   return (
     <WholeWrapper bgColor={width < 700 ? Theme.white_C : Theme.lightGrey_C}>
-      <Wrapper
-        width={width < 700 ? `100%` : `500px`}
-        height={`100%`}
-        shadow={`0px 0px 10px ${Theme.grey_C}`}
+      <IoBoxWrapper
+        minHeight={`100vh`}
         bgColor={Theme.white_C}
-        overflowX={`hidden`}
         al={`flex-start`}
         ju={`flex-start`}
         position={`relative`}
@@ -599,7 +597,7 @@ const Index = () => {
           </RsWrapper>
         </Wrapper>
         <Footer />
-      </Wrapper>
+      </IoBoxWrapper>
     </WholeWrapper>
   );
 };

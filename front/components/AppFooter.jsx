@@ -6,6 +6,7 @@ import {
   GradientText,
   WholeWrapper,
   RsWrapper,
+  IoBoxWrapper,
 } from "./commonComponents";
 import Theme from "./Theme";
 import styled, { ThemeContext } from "styled-components";
@@ -319,8 +320,7 @@ const AppFooter = () => {
         bgColor={width < 700 ? Theme.white_C : Theme.lightGrey_C}
         zIndex={`1000`}
       >
-        <Wrapper
-          width={width < 700 ? `100%` : `500px`}
+        <IoBoxWrapper
           height={tab ? `100vh` : `auto`}
           position={tab ? `fixed` : `relative`}
           top={`0`}
@@ -328,7 +328,6 @@ const AppFooter = () => {
           bgColor={tab ? `rgba(0,0,0,0.8)` : Theme.white_C}
           overflow={tab ? `hidden` : ``}
           ju={`flex-end`}
-          borderTop={tab ? `none` : `1px solid ${Theme.grey_C}`}
           padding={tab ? `0` : `15px 0`}
         >
           <Wrapper
@@ -655,7 +654,7 @@ const AppFooter = () => {
               </GradientText>
             </TextWrapper>
           </Wrapper>
-        </Wrapper>
+        </IoBoxWrapper>
 
         {drawar && (
           <Drawer

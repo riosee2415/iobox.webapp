@@ -7,6 +7,7 @@ import {
   Wrapper,
   RsWrapper,
   Image,
+  IoBoxWrapper,
 } from "../../components/commonComponents";
 import useWidth from "../../hooks/useWidth";
 import Theme from "../../components/Theme";
@@ -64,11 +65,11 @@ const Index = () => {
         height={`90vh`}
         bgColor={width < 700 ? Theme.white_C : Theme.lightGrey_C}
       >
-        <Wrapper
-          width={width < 700 ? `100%` : `500px`}
+        <IoBoxWrapper
+          minHeight={`100vh`}
           bgColor={Theme.white_C}
-          height={`100%`}
-          shadow={`0px 0px 10px ${Theme.grey_C}`}
+          al={`flex-start`}
+          ju={`flex-start`}
           position={`relative`}
         >
           <Wrapper
@@ -147,7 +148,7 @@ const Index = () => {
               )}
             </>
           )}
-        </Wrapper>
+        </IoBoxWrapper>
       </WholeWrapper>
     </ClientLayout>
   );

@@ -13,6 +13,7 @@ import {
   Wrapper,
   Text,
   CommonButton,
+  IoBoxWrapper,
 } from "../../components/commonComponents";
 import useWidth from "../../hooks/useWidth";
 import Theme from "../../components/Theme";
@@ -157,11 +158,7 @@ const Home = ({}) => {
       minHeight={`100vh`}
       bgColor={width < 700 ? Theme.white_C : Theme.lightGrey_C}
     >
-      <Wrapper
-        width={width < 700 ? `100%` : `500px`}
-        height={`100%`}
-        shadow={`0px 0px 10px ${Theme.grey_C}`}
-      >
+      <IoBoxWrapper height={`100%`}>
         <Wrapper
           height={`100vh`}
           bgColor={Theme.basicTheme_C}
@@ -243,7 +240,7 @@ const Home = ({}) => {
           </RsWrapper>
         </Wrapper>
         <Footer />
-      </Wrapper>
+      </IoBoxWrapper>
     </WholeWrapper>
   );
 };

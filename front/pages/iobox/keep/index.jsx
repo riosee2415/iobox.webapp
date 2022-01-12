@@ -10,6 +10,7 @@ import {
   TextInput,
   TextArea,
   Canceal,
+  IoBoxWrapper,
 } from "../../../components/commonComponents";
 import styled from "styled-components";
 import ClientLayout from "../../../components/ClientLayout";
@@ -218,10 +219,8 @@ const Index = () => {
   return (
     <>
       <WholeWrapper bgColor={Theme.lightGrey_C}>
-        <Wrapper
-          width={width < 700 ? `100%` : `500px`}
+        <IoBoxWrapper
           minHeight={`100vh`}
-          shadow={`0px 0px 10px ${Theme.grey_C}`}
           bgColor={Theme.white_C}
           al={`flex-start`}
           ju={`flex-start`}
@@ -233,7 +232,7 @@ const Index = () => {
             position={`absolute`}
             top={`30px`}
             right={`30px`}
-            fontSize={`20px`}
+            fontSize={`18px`}
             cursor={`pointer`}
             onClick={() => {
               moveLinkHandler("/main");
@@ -355,7 +354,7 @@ const Index = () => {
                   position={`absolute`}
                   top={`15px`}
                   right={`10px`}
-                  fontSize={`20px`}
+                  fontSize={`18px`}
                   cursor={`pointer`}
                 >
                   <Canceal onClick={() => inputName.setValue("")}>
@@ -380,7 +379,7 @@ const Index = () => {
                   position={`absolute`}
                   top={`15px`}
                   right={`10px`}
-                  fontSize={`20px`}
+                  fontSize={`18px`}
                   cursor={`pointer`}
                 >
                   <Canceal onClick={() => inputMobile.setValue("")}>
@@ -429,7 +428,7 @@ const Index = () => {
                     position={`absolute`}
                     top={`15px`}
                     right={`10px`}
-                    fontSize={`20px`}
+                    fontSize={`18px`}
                     cursor={`pointer`}
                   >
                     <Canceal onClick={() => inputDetail.setValue("")}>
@@ -469,7 +468,12 @@ const Index = () => {
               border={`1px solid ${Theme.grey_C}`}
               ju={`space-between`}
             >
-              <Text>{cardNum && cardNum}</Text>
+              <Text>
+                {cardNum && cardNum === null
+                  ? "등록된 카드가 없습니다"
+                  : cardNum && cardNum}
+              </Text>
+
               <CommonButton
                 width={`60px`}
                 height={`30px`}
@@ -503,7 +507,7 @@ const Index = () => {
               <Radio checked={isCheck} onClick={() => setIsCheck(!isCheck)} />
             </Wrapper>
           </RsWrapper>
-        </Wrapper>
+        </IoBoxWrapper>
       </WholeWrapper>
 
       <Wrapper
@@ -513,12 +517,7 @@ const Index = () => {
         bgColor={Theme.lightGrey_C}
         zIndex={`1000`}
       >
-        <Wrapper
-          width={width < 700 ? `100%` : `500px`}
-          bgColor={Theme.white_C}
-          borderTop={`1px solid ${Theme.grey_C}`}
-          padding={`20px 0`}
-        >
+        <IoBoxWrapper bgColor={Theme.white_C} padding={`20px 0`}>
           <RsWrapper>
             <Wrapper
               width={`auto`}
@@ -551,7 +550,7 @@ const Index = () => {
               </CommonButton>
             </Wrapper>
           </RsWrapper>
-        </Wrapper>
+        </IoBoxWrapper>
       </Wrapper>
 
       <Wrapper bgColor={Theme.lightGrey_C}>

@@ -8,6 +8,7 @@ import {
   Image,
   CommonButton,
   TextInput,
+  IoBoxWrapper,
 } from "../../components/commonComponents";
 import styled from "styled-components";
 import ClientLayout from "../../components/ClientLayout";
@@ -63,10 +64,8 @@ const Index = () => {
           : Theme.lightGrey_C
       }
     >
-      <Wrapper
-        width={width < 700 ? `100%` : `500px`}
+      <IoBoxWrapper
         minHeight={`100vh`}
-        shadow={`0px 0px 10px ${Theme.grey_C}`}
         bgColor={Theme.white_C}
         al={`flex-start`}
         ju={`flex-start`}
@@ -219,7 +218,7 @@ const Index = () => {
           </Wrapper>
         </RsWrapper>
         <Footer />
-      </Wrapper>
+      </IoBoxWrapper>
     </WholeWrapper>
   );
 };

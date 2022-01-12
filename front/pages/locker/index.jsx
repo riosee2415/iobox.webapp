@@ -7,6 +7,7 @@ import {
   Text,
   Image,
   CommonButton,
+  IoBoxWrapper,
 } from "../../components/commonComponents";
 import styled from "styled-components";
 import ClientLayout from "../../components/ClientLayout";
@@ -29,9 +30,6 @@ const Index = () => {
   ////// TOGGLE ///////
 
   ///// HANDLER //////
-  const moveBackHandler = useCallback(() => {
-    router.back();
-  }, []);
 
   const moveLinkHandler = useCallback((link) => {
     router.push(link);
@@ -44,10 +42,8 @@ const Index = () => {
   ////// DATAVIEW //////
   return (
     <WholeWrapper bgColor={width < 700 ? Theme.white_C : Theme.lightGrey_C}>
-      <Wrapper
-        width={width < 700 ? `100%` : `500px`}
+      <IoBoxWrapper
         height={`100%`}
-        shadow={`0px 0px 10px ${Theme.grey_C}`}
         bgColor={Theme.white_C}
         al={`flex-start`}
         ju={`flex-start`}
@@ -584,7 +580,7 @@ const Index = () => {
           </RsWrapper>
         </Wrapper>
         <Footer />
-      </Wrapper>
+      </IoBoxWrapper>
     </WholeWrapper>
   );
 };

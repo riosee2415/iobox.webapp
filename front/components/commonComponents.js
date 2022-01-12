@@ -546,3 +546,30 @@ export const Canceal = styled(Wrapper)`
     color: ${(props) => props.theme.black2_C};
   }
 `;
+
+/////////////////////////////////////////////////////////////////////////////
+
+export const IoBoxWrapper = styled.div`
+  width: 500px;
+  height: ${(props) => props.height};
+  min-height: ${(props) => props.minHeight};
+  background: ${(props) => props.bgColor};
+  display: flex;
+  flex-direction: ${(props) => props.dr || `column`};
+  align-items: ${(props) => props.al || `center`};
+  justify-content: ${(props) => props.ju || `center`};
+  box-shadow: ${(props) =>
+    props.shadow || `0px 0px 10px ${props.theme.grey_C}`};
+  position: ${(props) => props.position};
+  top: ${(props) => props.top};
+  bottom: ${(props) => props.bottom};
+  right: ${(props) => props.right};
+  left: ${(props) => props.left};
+  padding: ${(props) => props.padding};
+  z-index: ${(props) => props.zIndex};
+  overflow: ${(props) => props.oberflow};
+
+  @media (max-width: 700px) {
+    width: 100%;
+  }
+`;
