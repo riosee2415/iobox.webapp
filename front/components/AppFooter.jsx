@@ -340,8 +340,14 @@ const AppFooter = () => {
         >
           <Wrapper
             height={`50%`}
-            ju={`flex-end`}
-            padding={width < 700 ? `0 0 20px` : `0 0 50px`}
+            ju={screen.height / 2 < 390 ? `flex-start` : `flex-end`}
+            padding={
+              width < 700
+                ? screen.height / 2 < 390
+                  ? `10px 0 0`
+                  : `0 0 20px`
+                : `0 0 50px`
+            }
             display={tab ? `flex` : `none`}
           >
             {tab && (
