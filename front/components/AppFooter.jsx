@@ -219,7 +219,7 @@ const AppFooter = () => {
 
   const ImageBox = styled(Image)`
     &.active {
-      animation: ${scaleAnimation} 1.5s infinite;
+      animation: ${scaleAnimation} 1.1s infinite;
     }
   `;
 
@@ -431,6 +431,7 @@ const AppFooter = () => {
                   top={screen.height / 2 < 390 ? `20px` : `25px`}
                   left={`50%`}
                   margin={width < 700 ? `0 0 0 -52.5px` : `0 0 0 -65px`}
+                  bgColor={currentMenu === 0 ? `rgba(0,0,0,0.2)` : ``}
                 >
                   <ImageBox
                     className={String(currentMenu) === "0" ? "active" : ""}
@@ -438,7 +439,10 @@ const AppFooter = () => {
                     alt={`icon`}
                     width={width < 700 ? `50px` : `60px`}
                   />
-                  <Text fontSize={width < 700 ? `1.1rem` : `1.3rem`}>
+                  <Text
+                    fontSize={width < 700 ? `1.1rem` : `1.3rem`}
+                    color={currentMenu === 0 ? Theme.white_C : ``}
+                  >
                     아이오 박스
                   </Text>
                 </IconBox>
@@ -461,6 +465,7 @@ const AppFooter = () => {
                         : `30px`
                       : `50px`
                   }
+                  bgColor={currentMenu === 5 ? `rgba(0,0,0,0.2)` : ``}
                 >
                   <ImageBox
                     className={String(currentMenu) === "5" ? "active" : ""}
@@ -468,7 +473,10 @@ const AppFooter = () => {
                     alt={`icon`}
                     width={width < 700 ? `50px` : `60px`}
                   />
-                  <Text fontSize={width < 700 ? `1.1rem` : `1.3rem`}>
+                  <Text
+                    fontSize={width < 700 ? `1.1rem` : `1.3rem`}
+                    color={currentMenu === 5 ? Theme.white_C : ``}
+                  >
                     배송현황
                   </Text>
                 </IconBox>
@@ -491,6 +499,7 @@ const AppFooter = () => {
                   onClick={() => {
                     moveLinkHandler(`/iobox?type=hangerBox`);
                   }}
+                  bgColor={currentMenu === 1 ? `rgba(0,0,0,0.2)` : ``}
                 >
                   <ImageBox
                     src={`https://4leaf-s3.s3.ap-northeast-2.amazonaws.com/iobox/assets/images/main/hagner_dial.png`}
@@ -498,7 +507,10 @@ const AppFooter = () => {
                     width={width < 700 ? `40px` : `50px`}
                     className={String(currentMenu) === "1" ? "active" : ""}
                   />
-                  <Text fontSize={width < 700 ? `1.1rem` : `1.3rem`}>
+                  <Text
+                    fontSize={width < 700 ? `1.1rem` : `1.3rem`}
+                    color={currentMenu === 1 ? Theme.white_C : ``}
+                  >
                     행거박스
                   </Text>
                 </IconBox>
@@ -521,6 +533,7 @@ const AppFooter = () => {
                   onClick={() => {
                     moveLinkHandler("/bullet");
                   }}
+                  bgColor={currentMenu === 4 ? `rgba(0,0,0,0.2)` : ``}
                 >
                   <ImageBox
                     className={String(currentMenu) === "4" ? "active" : ""}
@@ -528,7 +541,10 @@ const AppFooter = () => {
                     alt={`icon`}
                     width={width < 700 ? `60px` : `70px`}
                   />
-                  <Text fontSize={width < 700 ? `1.1rem` : `1.3rem`}>
+                  <Text
+                    fontSize={width < 700 ? `1.1rem` : `1.3rem`}
+                    color={currentMenu === 4 ? Theme.white_C : ``}
+                  >
                     총알배송
                   </Text>
                 </IconBox>
@@ -548,6 +564,7 @@ const AppFooter = () => {
                         : `30px`
                       : `50px`
                   }
+                  bgColor={currentMenu === 2 ? `rgba(0,0,0,0.2)` : ``}
                 >
                   <ImageBox
                     className={String(currentMenu) === "2" ? "active" : ""}
@@ -560,6 +577,7 @@ const AppFooter = () => {
                     onClick={() => {
                       moveLinkHandler(`/iobox?type=bigBox`);
                     }}
+                    color={currentMenu === 2 ? Theme.white_C : ``}
                   >
                     대용량 박스
                   </Text>
@@ -572,6 +590,7 @@ const AppFooter = () => {
                   bottom={screen.height / 2 < 390 ? `20px` : `25px`}
                   left={`50%`}
                   margin={width < 700 ? `0 0 0 -52.5px` : `0 0 0 -65px`}
+                  bgColor={currentMenu === 3 ? `rgba(0,0,0,0.2)` : ``}
                 >
                   <ImageBox
                     className={String(currentMenu) === "3" ? "active" : ""}
@@ -579,7 +598,10 @@ const AppFooter = () => {
                     alt={`icon`}
                     width={width < 700 ? `60px` : `70px`}
                   />
-                  <Text fontSize={width < 700 ? `1.1rem` : `1.3rem`}>
+                  <Text
+                    fontSize={width < 700 ? `1.1rem` : `1.3rem`}
+                    color={currentMenu === 3 ? Theme.white_C : ``}
+                  >
                     텐트보관 박스
                   </Text>
                 </IconBox>
