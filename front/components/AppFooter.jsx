@@ -391,13 +391,35 @@ const AppFooter = () => {
 
             {/* 나타났을때 (tab) */}
             <Wrapper
-              width={tab ? (width < 700 ? `390px` : `510px`) : `auto`}
-              height={tab ? (width < 700 ? `390px` : `510px`) : `auto`}
+              width={
+                tab
+                  ? width < 700
+                    ? screen.height / 2 < 390
+                      ? `360px`
+                      : `390px`
+                    : `510px`
+                  : `auto`
+              }
+              height={
+                tab
+                  ? width < 700
+                    ? screen.height / 2 < 390
+                      ? `360px`
+                      : `390px`
+                    : `510px`
+                  : `auto`
+              }
               bgColor={`rgba(255,255,255,0.6)`}
               position={`absolute`}
               bottom={`-10px`}
               left={`50%`}
-              margin={width < 700 ? `0 0 0 -195px` : `0 0 0 -255px`}
+              margin={
+                width < 700
+                  ? screen.height / 2 < 390
+                    ? `0 0 0 -180px`
+                    : `0 0 0 -195px`
+                  : `0 0 0 -255px`
+              }
               radius={`50%`}
               display={tab ? `flex` : `none`}
             >
@@ -406,7 +428,7 @@ const AppFooter = () => {
                   onClick={() => {
                     moveLinkHandler(`/iobox?type=iobox`);
                   }}
-                  top={`25px`}
+                  top={screen.height / 2 < 390 ? `20px` : `25px`}
                   left={`50%`}
                   margin={width < 700 ? `0 0 0 -52.5px` : `0 0 0 -65px`}
                 >
@@ -425,8 +447,20 @@ const AppFooter = () => {
                   onClick={() => {
                     moveLinkHandler(`/locker`);
                   }}
-                  top={width < 700 ? `90px` : `110px`}
-                  left={width < 700 ? `30px` : `50px`}
+                  top={
+                    width < 700
+                      ? screen.height / 2 < 390
+                        ? `70px`
+                        : `90px`
+                      : `110px`
+                  }
+                  left={
+                    width < 700
+                      ? screen.height / 2 < 390
+                        ? `25px`
+                        : `30px`
+                      : `50px`
+                  }
                 >
                   <ImageBox
                     className={String(currentMenu) === "5" ? "active" : ""}
@@ -440,8 +474,20 @@ const AppFooter = () => {
                 </IconBox>
 
                 <IconBox
-                  top={width < 700 ? `90px` : `110px`}
-                  right={width < 700 ? `30px` : `50px`}
+                  top={
+                    width < 700
+                      ? screen.height / 2 < 390
+                        ? `70px`
+                        : `90px`
+                      : `110px`
+                  }
+                  right={
+                    width < 700
+                      ? screen.height / 2 < 390
+                        ? `25px`
+                        : `30px`
+                      : `50px`
+                  }
                   onClick={() => {
                     moveLinkHandler(`/iobox?type=hangerBox`);
                   }}
@@ -458,8 +504,20 @@ const AppFooter = () => {
                 </IconBox>
 
                 <IconBox
-                  bottom={width < 700 ? `90px` : `110px`}
-                  left={width < 700 ? `30px` : `50px`}
+                  bottom={
+                    width < 700
+                      ? screen.height / 2 < 390
+                        ? `80px`
+                        : `90px`
+                      : `110px`
+                  }
+                  left={
+                    width < 700
+                      ? screen.height / 2 < 390
+                        ? `25px`
+                        : `30px`
+                      : `50px`
+                  }
                   onClick={() => {
                     moveLinkHandler("/bullet");
                   }}
@@ -476,8 +534,20 @@ const AppFooter = () => {
                 </IconBox>
 
                 <IconBox
-                  bottom={width < 700 ? `90px` : `110px`}
-                  right={width < 700 ? `30px` : `50px`}
+                  bottom={
+                    width < 700
+                      ? screen.height / 2 < 390
+                        ? `80px`
+                        : `90px`
+                      : `110px`
+                  }
+                  right={
+                    width < 700
+                      ? screen.height / 2 < 390
+                        ? `25px`
+                        : `30px`
+                      : `50px`
+                  }
                 >
                   <ImageBox
                     className={String(currentMenu) === "2" ? "active" : ""}
@@ -499,7 +569,7 @@ const AppFooter = () => {
                   onClick={() => {
                     moveLinkHandler(`/iobox?type=tentBox`);
                   }}
-                  bottom={`25px`}
+                  bottom={screen.height / 2 < 390 ? `20px` : `25px`}
                   left={`50%`}
                   margin={width < 700 ? `0 0 0 -52.5px` : `0 0 0 -65px`}
                 >
