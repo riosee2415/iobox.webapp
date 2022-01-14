@@ -352,7 +352,7 @@ const Index = () => {
         >
           <Wrapper width={`auto`} al={`flex-start`}>
             <Text bold={true} fontSize={`1.2rem`}>
-              월 {numberWithCommas(storeData.totalPay + pickUpPrice)}원
+              월 {numberWithCommas(storeData.totalPay)}원
             </Text>
             <PayButtton bold={true} fontSize={`1.2rem`} cursor={`pointer`}>
               예상금액 상세
