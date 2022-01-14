@@ -73,6 +73,7 @@ const ElevatorSlider = ({ setValue }) => {
         {...settings}
         ref={ref}
         afterChange={(to, from) => {
+          console.log(dataArr[to]);
           setValue(dataArr[to]);
         }}
       >

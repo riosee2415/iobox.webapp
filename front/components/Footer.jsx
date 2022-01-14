@@ -111,6 +111,7 @@ const Index = () => {
         <Wrapper width={`auto`} al={`flex-start`}>
           <Text>상호명 : 주식회사 이본홀딩스</Text>
           <Text>사업자등록번호 : 283-87-02507</Text>
+          <Text>통신판매업신고번호 : 2021-의정부송산-0584</Text>
           <Text>대표자명 : 박성찬, 김우현</Text>
           <Text>주소 : 경기도 의정부시 오목로225번길 105, 5층</Text>
           <Text>대표번호 : 1644-2753</Text>
