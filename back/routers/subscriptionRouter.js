@@ -71,7 +71,7 @@ router.post(`/schedule`, async (req, res, next) => {
       }
     );
 
-    axios({
+    await axios({
       url: "https://api.iamport.kr/subscribe/payments/schedule", // 예:
       method: "post",
       headers: { Authorization: access_token }, // 인증 토큰 Authorization header에 추가
@@ -94,7 +94,7 @@ router.post(`/schedule`, async (req, res, next) => {
       KeepBoxId: parseInt(data.KeepBox.id),
     });
 
-    return res.status(200);
+    return res.status(200).json({ result: true });
   } catch (e) {
     console.log(e);
   }
