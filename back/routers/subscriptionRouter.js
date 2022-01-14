@@ -1,12 +1,100 @@
 const express = require("express");
 const axios = require("axios");
-const { KeepBoxSchedule } = require("../models");
+const moment = require("moment");
+const { KeepBoxSchedule, User, KeepBox } = require("../models");
 
 const router = express.Router();
 
-router.post(`/test`, async (req, res, next) => {
+router.post(`/schedule`, async (req, res, next) => {
   try {
     console.log(req.body);
+
+    const data = await KeepBoxSchedule.findOne({
+      where: {
+        merchantUid: req.body.merchant_uid,
+        isComplate: false,
+        isCancel: false,
+      },
+      include: [
+        {
+          model: User,
+        },
+        {
+          model: KeepBox,
+        },
+      ],
+    });
+
+    const getToken = await axios({
+      url: "https://api.iamport.kr/users/getToken",
+      method: "post", // POST method
+      headers: { "Content-Type": "application/json" }, // "Content-Type": "application/json"
+      data: {
+        imp_key: "9134198546040290", // REST API 키
+        imp_secret:
+          "786198908d47a63ad00927cece057a617666d0a2436b56a731a6f857fa1cd72c57035d200ac6df0a", // REST API Secret
+      },
+    });
+    const { access_token } = getToken.data.response;
+
+    const d = new Date();
+    let year = d.getFullYear() + "";
+    let month = d.getMonth() + 1 + "";
+    let date = d.getDate() + "";
+    let hour = d.getHours() + "";
+    let min = d.getMinutes() + "";
+    let sec = d.getSeconds() + "";
+    let mSec = d.getMilliseconds() + "";
+    month = month < 10 ? "0" + month : month;
+    date = date < 10 ? "0" + date : date;
+    hour = hour < 10 ? "0" + hour : hour;
+    min = min < 10 ? "0" + min : min;
+    sec = sec < 10 ? "0" + sec : sec;
+    mSec = mSec < 10 ? "0" + mSec : mSec;
+    let schedulePK = "ORD" + year + month + date + hour + min + sec + mSec;
+
+    let time = moment().add(1, `m`).unix();
+    console.log(
+      data.id,
+      data.KeepBox,
+      data.User.userId,
+      data.User.nickname,
+      access_token
+    );
+
+    await KeepBoxSchedule.update(
+      {
+        isComplate: true,
+      },
+      {
+        where: { id: parseInt(data.id) },
+      }
+    );
+
+    axios({
+      url: "https://api.iamport.kr/subscribe/payments/schedule", // 예:
+      method: "post",
+      headers: { Authorization: access_token }, // 인증 토큰 Authorization header에 추가
+      data: {
+        customer_uid: data.User.userCode, // 카드(빌링키)와 1:1로 대응하는 값
+        schedules: [
+          {
+            merchant_uid: schedulePK, // 주문 번호
+            schedule_at: time, // 결제 시도 시각 in Unix Time Stamp. 예: 다음 달 1일
+            amount: 1000,
+            name: `(${data.User.userId})${data.User.nickname}`,
+          },
+        ],
+      },
+    });
+
+    const schedulePay = await KeepBoxSchedule.create({
+      merchantUid: schedulePK,
+      UserId: parseInt(data.User.id),
+      KeepBoxId: parseInt(data.KeepBox.id),
+    });
+
+    return res.status(200);
   } catch (e) {
     console.log(e);
   }
@@ -48,7 +136,14 @@ router.post("/cancel/schedule", async (req, res, next) => {
       },
     });
 
-    console.log(access_token);
+    await KeepBoxSchedule.update(
+      {
+        isCancel: true,
+      },
+      {
+        where: { id: parseInt(data[0].id) },
+      }
+    );
 
     return res.status(200);
   } catch (e) {
@@ -92,8 +187,6 @@ router.post(`/`, async (req, res, next) => {
     });
     const { access_token } = getToken.data.response; // 인증 토큰
 
-    console.log(access_token);
-
     // 빌링키 발급 요청 => 예약 마다 빌링키가 필요한가?
     // 빌링키의 정확한 용도가 무엇인가?
     // 빌링키는 카드정보를 넘길때 작업하고, 유저모델에 추가
@@ -110,22 +203,6 @@ router.post(`/`, async (req, res, next) => {
       },
     });
 
-    // customer_uid => 빌링키와 1:1 대응하는 값
-
-    // const { code, message } = issueBilling.data;
-    // if (code === 0) {
-    //   console.log(code, message, "?ASDASDASD", issueBilling.data);
-    //   // 빌링키 발급 성공
-    //   //   res.send({
-    //   //     status: "success",
-    //   //     message: "Billing has successfully issued",
-    //   //   });
-    // } else {
-    //   console.log(message);
-    //   // 빌링키 발급 실패
-    //   //   res.send({ status: "failed", message });
-    // }
-
     const paymentResult = await axios({
       url: `https://api.iamport.kr/subscribe/payments/again`,
       method: "post",
@@ -137,8 +214,6 @@ router.post(`/`, async (req, res, next) => {
         name: "카드 도용",
       },
     });
-
-    console.log(paymentResult.data.code);
 
     const { code, message } = paymentResult.data;
     if (code === 0) {
