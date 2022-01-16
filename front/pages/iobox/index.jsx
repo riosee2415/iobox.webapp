@@ -352,7 +352,7 @@ const Index = () => {
                 </Question>
               </Wrapper>
 
-              <Wrapper
+              {/* <Wrapper
                 padding={`20px 0`}
                 dr={`row`}
                 ju={`flex-start`}
@@ -371,7 +371,7 @@ const Index = () => {
                     </Text>
                   </Wrapper>
                 </Radio>
-              </Wrapper>
+              </Wrapper> */}
               <Wrapper
                 padding={`20px 0`}
                 dr={`row`}
