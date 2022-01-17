@@ -387,7 +387,7 @@ const Index = () => {
                   <Wrapper width={`auto`} al={`flex-start`}>
                     <Text>장기약정</Text>
                     <Text color={Theme.grey_C} fontSize={`0.8rem`}>
-                      6개월 이상, 선 결제 10% 할인
+                      {/* 6개월 이상, 선 결제 10% 할인 */}
                     </Text>
                   </Wrapper>
                 </Radio>
@@ -415,7 +415,8 @@ const Index = () => {
             <Text bold={true} fontSize={`1.2rem`}>
               월{" "}
               {numberWithCommas(
-                totalPay - (type === "정기" ? totalPay * 0.1 : 0)
+                totalPay
+                // - (type === "정기" ? totalPay * 0.1 : 0)
               )}
               원
             </Text>

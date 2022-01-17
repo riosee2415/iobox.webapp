@@ -314,8 +314,8 @@ const Index = () => {
               </Wrapper>
               <Text fontSize={`1.5rem`} fontWeight={`700`}>
                 {numberWithCommas(
-                  storeData.totalPay -
-                    (storeData.type === "정기" ? storeData.totalPay * 0.1 : 0)
+                  storeData.totalPay
+                  // -                    (storeData.type === "정기" ? storeData.totalPay * 0.1 : 0)
                 )}
                 원
               </Text>
@@ -550,8 +550,8 @@ const Index = () => {
                 onClick={handleFormSubmit}
               >
                 {numberWithCommas(
-                  storeData.totalPay -
-                    (storeData.type === "정기" ? storeData.totalPay * 0.1 : 0)
+                  storeData.totalPay
+                  // -                    (storeData.type === "정기" ? storeData.totalPay * 0.1 : 0)
                 )}{" "}
                 원 결제하기
               </CommonButton>
