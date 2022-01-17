@@ -445,6 +445,51 @@ router.patch("/update", isAdminCheck, async (req, res, next) => {
       return res.status(401).send("이미 픽업이 완료된 박스입니다.");
     }
 
+    const updateResult = await KeepBox.update(
+      {
+        // isPickup: true,
+        deliveryCom,
+        deliveryCode,
+      },
+      {
+        where: { id: parseInt(id) },
+      }
+    );
+
+    let d = new Date();
+    let year = d.getFullYear() + "";
+    let month = d.getMonth() + 1 + "";
+    let date = d.getDate() + "";
+    let hour = d.getHours() + "";
+    let min = d.getMinutes() + "";
+    let sec = d.getSeconds() + "";
+    let mSec = d.getMilliseconds() + "";
+    month = month < 10 ? "0" + month : month;
+    date = date < 10 ? "0" + date : date;
+    hour = hour < 10 ? "0" + hour : hour;
+    min = min < 10 ? "0" + min : min;
+    sec = sec < 10 ? "0" + sec : sec;
+    mSec = mSec < 10 ? "0" + mSec : mSec;
+    let fidKey = "ORD" + year + month + date + hour + min + sec + mSec;
+
+    await axios({
+      url: "http://trace-api- dev.sweettracker.net:8102/add_invoice",
+      method: "post", // POST method
+      headers: { "Content-Type": "application/json" }, // "Content-Type": "application/json"
+      data: {
+        num: deliveryCode, // REST API 키
+        code: "04",
+        callback_url: "https://api.iobox.kr/api/subscription/schedule",
+        fid: fidKey,
+        callback_type: "map",
+        tier: testuser,
+        key: testuser,
+        type: "json",
+      },
+    });
+
+    return res.status(200).json({ result: true });
+
     const getToken = await axios({
       url: "https://api.iamport.kr/users/getToken",
       method: "post", // POST method
@@ -457,14 +502,14 @@ router.patch("/update", isAdminCheck, async (req, res, next) => {
     });
     const { access_token } = getToken.data.response; // 인증 토큰
 
-    const d = new Date();
-    let year = d.getFullYear() + "";
-    let month = d.getMonth() + 1 + "";
-    let date = d.getDate() + "";
-    let hour = d.getHours() + "";
-    let min = d.getMinutes() + "";
-    let sec = d.getSeconds() + "";
-    let mSec = d.getMilliseconds() + "";
+    d = new Date();
+    year = d.getFullYear() + "";
+    month = d.getMonth() + 1 + "";
+    date = d.getDate() + "";
+    hour = d.getHours() + "";
+    min = d.getMinutes() + "";
+    sec = d.getSeconds() + "";
+    mSec = d.getMilliseconds() + "";
     month = month < 10 ? "0" + month : month;
     date = date < 10 ? "0" + date : date;
     hour = hour < 10 ? "0" + hour : hour;

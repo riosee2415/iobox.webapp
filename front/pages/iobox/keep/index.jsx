@@ -141,7 +141,6 @@ const Index = () => {
     //     customer_uid: "gildong_0001_1234",
     //   },
     // });
-
     // dispatch({
     //   type: KEEPBOX_CREATE_REQUEST,
     //   data: {
@@ -162,7 +161,6 @@ const Index = () => {
     //     UserId: me.id,
     //   },
     // });
-
     //
     //
     const d = new Date();
@@ -297,7 +295,7 @@ const Index = () => {
             <Wrapper dr={`row`} ju={`space-between`} padding={`10px 0`}>
               <Wrapper dr={`row`} width={`auto`} ju={`flex-start`}>
                 <Text fontSize={`1.2rem`} fontWeight={`700`}>
-                  예상금액
+                  월 예상 결제 금액
                 </Text>
 
                 <Wrapper

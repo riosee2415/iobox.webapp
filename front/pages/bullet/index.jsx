@@ -213,7 +213,7 @@ const Index = () => {
   const [datePickerOpen1, setDatePickerOpen1] = useState(false);
   const [datePickerOpen2, setDatePickerOpen2] = useState(false);
 
-  const [radioValue, setRadioValue] = useState(0);
+  const [radioValue, setRadioValue] = useState(1);
 
   const [isPostCode, setIsPostCode] = useState(false);
 
@@ -962,9 +962,11 @@ const Index = () => {
                       width={`95%`}
                       height={width < 700 ? `50px` : `70px`}
                       border={`2px solid ${Theme.lightGrey_C}`}
-                      onClick={() => setFloorModal(true)}
+                      onClick={() => setFloorModal("end")}
                       cursor={`pointer`}
-                    ></Wrapper>
+                    >
+                      {endFloor}
+                    </Wrapper>
                   </Wrapper>
                 </Wrapper>
               </Wrapper>
