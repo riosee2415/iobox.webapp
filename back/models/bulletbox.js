@@ -104,7 +104,7 @@ module.exports = class BulletBox extends Model {
     );
   }
   static associate(db) {
-    db.BulletBox.hasMany(db.BoxImage);
+    db.BulletBox.hasMany(db.BulletImage);
     db.BulletBox.belongsTo(db.User);
   }
 };

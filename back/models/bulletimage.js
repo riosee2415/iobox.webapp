@@ -1,7 +1,7 @@
 const DataTypes = require("sequelize");
 const { Model } = DataTypes;
 
-module.exports = class BulletBox extends Model {
+module.exports = class BulletImage extends Model {
   static init(sequelize) {
     return super.init(
       {
@@ -24,8 +24,8 @@ module.exports = class BulletBox extends Model {
         },
       },
       {
-        modelName: "BulletBox",
-        tableName: "bulletBoxs",
+        modelName: "BulletImage",
+        tableName: "bulletImages",
         charset: "utf8mb4",
         collate: "utf8mb4_general_ci", // 한글 저장
         sequelize,
@@ -33,6 +33,6 @@ module.exports = class BulletBox extends Model {
     );
   }
   static associate(db) {
-    db.BulletBox.belongsTo(db.BulletBox);
+    db.BulletImage.belongsTo(db.BulletBox);
   }
 };
