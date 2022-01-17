@@ -483,9 +483,7 @@ const Index = () => {
     },
     {
       title: "월 요금",
-      render: (data) => (
-        <div>{numberWithCommas(data.price + parseInt(data.deliveryPay))}원</div>
-      ),
+      render: (data) => <div>{numberWithCommas(data.price)}원</div>,
     },
     {
       title: "연락처",
@@ -498,8 +496,14 @@ const Index = () => {
     {
       title: "상세정보",
       render: (data) => (
+        <Button onClick={() => updateModalOpen(data)}>확인</Button>
+      ),
+    },
+    {
+      title: "배송",
+      render: (data) => (
         <Button type="primary" onClick={() => updateModalOpen(data)}>
-          UPDATE
+          배송 정보 작성
         </Button>
       ),
     },

@@ -141,63 +141,65 @@ const Index = () => {
     //     customer_uid: "gildong_0001_1234",
     //   },
     // });
-    // dispatch({
-    //   type: KEEPBOX_CREATE_REQUEST,
-    //   data: {
-    //     boxcount1: storeData.boxs[0],
-    //     boxcount2: storeData.boxs[1],
-    //     boxcount3: storeData.boxs[2],
-    //     boxcount4: storeData.boxs[3],
-    //     period: "",
-    //     isFilming: storeData.isCapture,
-    //     pickWay: storeData.pickUp,
-    //     price: storeData.totalPay,
-    //     deliveryPay: storeData.pickUpPrice,
-    //     name: inputName.value,
-    //     mobile: inputMobile.value,
-    //     address: inputAddress.value,
-    //     detailAddress: inputDetail.value,
-    //     remark: inputContent.value,
-    //     UserId: me.id,
-    //   },
-    // });
-    //
-    //
-    const d = new Date();
-    let year = d.getFullYear() + "";
-    let month = d.getMonth() + 1 + "";
-    let date = d.getDate() + "";
-    let hour = d.getHours() + "";
-    let min = d.getMinutes() + "";
-    let sec = d.getSeconds() + "";
-    let mSec = d.getMilliseconds() + "";
-    month = month < 10 ? "0" + month : month;
-    date = date < 10 ? "0" + date : date;
-    hour = hour < 10 ? "0" + hour : hour;
-    min = min < 10 ? "0" + min : min;
-    sec = sec < 10 ? "0" + sec : sec;
-    mSec = mSec < 10 ? "0" + mSec : mSec;
-    let orderPK = "ORD" + year + month + date + hour + min + sec + mSec;
-    const IMP = window.IMP;
-    IMP.request_pay(
-      {
-        pay_method: "card",
-        buyer_name: inputName.value,
-        buyer_mobile: inputMobile.value,
-        merchant_uid: orderPK,
-        name: "상자",
-        amount: storeData.totalPay + "",
+    dispatch({
+      type: KEEPBOX_CREATE_REQUEST,
+      data: {
+        boxcount1: storeData.boxs[0],
+        boxcount2: storeData.boxs[1],
+        boxcount3: storeData.boxs[2],
+        boxcount4: storeData.boxs[3],
+        period: "",
+        isFilming: storeData.isCapture,
+        pickWay: storeData.pickUp,
+        price:
+          storeData.totalPay -
+          (storeData.type === "정기" ? storeData.totalPay * 0.1 : 0),
+        deliveryPay: storeData.pickUpPrice,
+        name: inputName.value,
+        mobile: inputMobile.value,
+        address: inputAddress.value,
+        detailAddress: inputDetail.value,
+        remark: inputContent.value,
+        UserId: me.id,
       },
-      async (rsp) => {
-        if (rsp.success) {
-          console.log(rsp.success);
-        } else {
-          console.log(rsp.error_msg);
-          if (rsp.error_msg !== "사용자가 결제를 취소하셨습니다") {
-          }
-        }
-      }
-    );
+    });
+    //
+    //
+    // const d = new Date();
+    // let year = d.getFullYear() + "";
+    // let month = d.getMonth() + 1 + "";
+    // let date = d.getDate() + "";
+    // let hour = d.getHours() + "";
+    // let min = d.getMinutes() + "";
+    // let sec = d.getSeconds() + "";
+    // let mSec = d.getMilliseconds() + "";
+    // month = month < 10 ? "0" + month : month;
+    // date = date < 10 ? "0" + date : date;
+    // hour = hour < 10 ? "0" + hour : hour;
+    // min = min < 10 ? "0" + min : min;
+    // sec = sec < 10 ? "0" + sec : sec;
+    // mSec = mSec < 10 ? "0" + mSec : mSec;
+    // let orderPK = "ORD" + year + month + date + hour + min + sec + mSec;
+    // const IMP = window.IMP;
+    // IMP.request_pay(
+    //   {
+    //     pay_method: "card",
+    //     buyer_name: inputName.value,
+    //     buyer_mobile: inputMobile.value,
+    //     merchant_uid: orderPK,
+    //     name: "상자",
+    //     amount: storeData.totalPay + "",
+    //   },
+    //   async (rsp) => {
+    //     if (rsp.success) {
+    //       console.log(rsp.success);
+    //     } else {
+    //       console.log(rsp.error_msg);
+    //       if (rsp.error_msg !== "사용자가 결제를 취소하셨습니다") {
+    //       }
+    //     }
+    //   }
+    // );
   }, [
     storeData,
     inputName,
@@ -319,7 +321,7 @@ const Index = () => {
               </Text>
             </Wrapper>
 
-            <Wrapper dr={`row`} ju={`space-between`} padding={`10px 0`}>
+            {/* <Wrapper dr={`row`} ju={`space-between`} padding={`10px 0`}>
               <Wrapper dr={`row`} width={`auto`} ju={`flex-start`}>
                 <Text fontSize={`1.2rem`} fontWeight={`700`}>
                   배송비
@@ -328,7 +330,7 @@ const Index = () => {
               <Text fontSize={`1.5rem`} fontWeight={`700`}>
                 {numberWithCommas(storeData.pickUpPrice)}원
               </Text>
-            </Wrapper>
+            </Wrapper> */}
 
             <Wrapper dr={`row`} ju={`flex-start`} margin={`20px 0`}>
               <Image
@@ -547,12 +549,11 @@ const Index = () => {
                 height={`50px`}
                 onClick={handleFormSubmit}
               >
-                월 결제{" "}
                 {numberWithCommas(
                   storeData.totalPay -
                     (storeData.type === "정기" ? storeData.totalPay * 0.1 : 0)
                 )}{" "}
-                + 배송비 {numberWithCommas(storeData.pickUpPrice)}원 결제하기
+                원 결제하기
               </CommonButton>
             </Wrapper>
           </RsWrapper>

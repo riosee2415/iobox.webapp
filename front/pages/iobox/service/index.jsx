@@ -235,10 +235,10 @@ const Index = () => {
               >
                 <Wrapper width={`auto`} al={`flex-start`}>
                   <Text>방문택배</Text>
-                  <Text>(21년 11월 03일 ~ 21년 11월 05일 방문)</Text>
-                  <Text color={Theme.grey_C} fontSize={`0.8rem`}>
+                  {/* <Text>(21년 11월 03일 ~ 21년 11월 05일 방문)</Text> */}
+                  {/* <Text color={Theme.grey_C} fontSize={`0.8rem`}>
                     {numberWithCommas(dataArr["방문택배"])}원 (보관함 1개당)
-                  </Text>
+                  </Text> */}
                 </Wrapper>
               </Radio>
             </Wrapper>
@@ -257,9 +257,9 @@ const Index = () => {
               >
                 <Wrapper width={`auto`} al={`flex-start`}>
                   <Text>예약방문 - 서울 (방문일 지정)</Text>
-                  <Text color={Theme.grey_C} fontSize={`0.8rem`}>
+                  {/* <Text color={Theme.grey_C} fontSize={`0.8rem`}>
                     {numberWithCommas(dataArr["예약방문"])}원 (보관함 1개당)
-                  </Text>
+                  </Text> */}
                 </Wrapper>
               </Radio>
             </Wrapper>
@@ -278,10 +278,10 @@ const Index = () => {
                 >
                   <Wrapper width={`auto`} al={`flex-start`}>
                     <Text>편의점 셀프 접수</Text>
-                    <Text color={Theme.grey_C} fontSize={`0.8rem`}>
+                    {/* <Text color={Theme.grey_C} fontSize={`0.8rem`}>
                       {numberWithCommas(dataArr["편의점 셀프"])}원 (보관함
                       1개당)
-                    </Text>
+                    </Text> */}
                   </Wrapper>
                 </Radio>
               </Wrapper>
@@ -313,10 +313,10 @@ const Index = () => {
                 >
                   <Wrapper width={`auto`} al={`flex-start`}>
                     <Text>무인택배함 셀프 접수</Text>
-                    <Text color={Theme.grey_C} fontSize={`0.8rem`}>
+                    {/* <Text color={Theme.grey_C} fontSize={`0.8rem`}>
                       {numberWithCommas(dataArr["무인택배함 셀프"])}원 (보관함
                       1개당)
-                    </Text>
+                    </Text> */}
                   </Wrapper>
                 </Radio>
               </Wrapper>

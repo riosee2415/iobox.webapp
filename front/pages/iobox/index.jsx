@@ -387,7 +387,7 @@ const Index = () => {
                   <Wrapper width={`auto`} al={`flex-start`}>
                     <Text>장기약정</Text>
                     <Text color={Theme.grey_C} fontSize={`0.8rem`}>
-                      6개월 이상, 선 결제 30% 할인
+                      6개월 이상, 선 결제 10% 할인
                     </Text>
                   </Wrapper>
                 </Radio>
