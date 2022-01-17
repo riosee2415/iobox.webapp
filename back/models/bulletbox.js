@@ -49,7 +49,7 @@ module.exports = class BulletBox extends Model {
         },
         type: {
           type: DataTypes.STRING(30), //결제 방식
-          allowNull: false,
+          allowNull: true,
         },
         startDate: {
           type: DataTypes.STRING(50), // 보관시작일
@@ -58,6 +58,23 @@ module.exports = class BulletBox extends Model {
         endDate: {
           type: DataTypes.STRING(50), // 보관종료일
           allowNull: true,
+        },
+        reIsEle: {
+          type: DataTypes.BOOLEAN, // 도착지 엘베 유무
+          allowNull: false,
+          defaultValue: false,
+        },
+        reFloor: {
+          type: DataTypes.STRING(10), // 도착지 층
+          allowNull: false,
+        },
+        name: {
+          type: DataTypes.STRING(50), // 이름
+          allowNull: false,
+        },
+        mobile: {
+          type: DataTypes.STRING(50), // 전화번호
+          allowNull: false,
         },
         receiveAdd: {
           type: DataTypes.STRING(300), // 도착지 주소
@@ -104,7 +121,7 @@ module.exports = class BulletBox extends Model {
         isFilming: {
           type: DataTypes.BOOLEAN,
           allowNull: false,
-          defaultValue: false,
+          defaultValue: true,
         },
       },
       {
