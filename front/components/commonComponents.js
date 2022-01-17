@@ -123,6 +123,7 @@ export const Wrapper = styled.div`
   right: ${(props) => props.right};
   z-index: ${(props) => props.zIndex};
   border: ${(props) => props.border};
+  border-color: ${(props) => props.borderColor};
   border-bottom: ${(props) => props.borderBottom};
   border-top: ${(props) => props.borderTop};
   border-right: ${(props) => props.borderRight};

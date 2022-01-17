@@ -49,7 +49,8 @@ const MenuSlider = ({
   line = 1, // Row 슬라이드 행 수
   //
   setCurrentMenu,
-  currentMenu,
+  setActiveRightArrow,
+  setActiveLeftArrow,
   //
   tab,
 }) => {
@@ -135,13 +136,19 @@ const MenuSlider = ({
         <Wrapper
           position={`absolute`}
           bottom={`0`}
-          transform={`translateY(-50%)`}
+          // transform={`translateY(-50%)`}
+          top={`0`}
           dr={`row`}
           ju={`space-between`}
           zIndex={`9999`}
           cursor={`pointer`}
         >
-          <Wrapper width={`auto`}>
+          <Wrapper
+            width={`auto`}
+            onClick={() => {
+              setActiveLeftArrow(true);
+            }}
+          >
             <ArrowWrapper
               className={`before`}
               onClick={() => moveSlideHandler(false)}
@@ -150,11 +157,16 @@ const MenuSlider = ({
             </ArrowWrapper>
           </Wrapper>
 
-          <Wrapper width={`auto`}>
+          <Wrapper
+            width={`auto`}
+            onClick={() => {
+              setActiveRightArrow(true);
+            }}
+          >
             <ArrowWrapper
-              margin={`-15px -35px 0 0`}
+              margin={`0 -35px 0 0`}
               className={`next`}
-              onClick={() => moveSlideHandler(true)}
+              onClick={() => moveSlideHandler(false)}
             >
               <RightOutlined />
             </ArrowWrapper>
@@ -214,6 +226,14 @@ const MenuSlider = ({
                   margin={`15px 0 0`}
                 >
                   {slide[0][4]}
+                </Text>
+                <Text
+                  color={Theme.white_C}
+                  bold={true}
+                  fontSize={`1.5rem`}
+                  margin={`15px 0 0`}
+                >
+                  {slide[0][5]}
                 </Text>
               </Wrapper>
             </Wrapper>
