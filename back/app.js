@@ -28,6 +28,7 @@ const purchaseRouter = require("./routers/purchaseRouter");
 const menuImageRouter = require("./routers/menuImageRouter");
 const couponRouter = require("./routers/couponRouter");
 const subscriptionRouter = require("./routers/subscriptionRouter");
+const bulletRouter = require("./routers/bulletRouter");
 
 // Config Settings
 db.sequelize
@@ -110,6 +111,7 @@ app.use("/api/purchase", purchaseRouter);
 app.use("/api/menuImage", menuImageRouter);
 app.use("/api/coupon", couponRouter);
 app.use("/api/subscription", subscriptionRouter);
+app.use("/api/bullet", bulletRouter);
 
 // second minute hour day-of-month month day-of-week
 const task = cron.schedule(

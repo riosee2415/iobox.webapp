@@ -441,15 +441,13 @@ router.patch("/update", isAdminCheck, async (req, res, next) => {
       return res.status(401).send("존재하지 않는 박스입니다.");
     }
 
-    if (exBox.isPickup) {
-      return res.status(401).send("이미 픽업이 완료된 박스입니다.");
-    }
-
     const updateResult = await KeepBox.update(
       {
         // isPickup: true,
         deliveryCom,
         deliveryCode,
+        deliveryCom2,
+        deliveryCode2,
       },
       {
         where: { id: parseInt(id) },
@@ -616,7 +614,7 @@ router.patch("/update", isAdminCheck, async (req, res, next) => {
     }
   } catch (error) {
     console.error(error);
-    return res.status(401).send("픽업상태를 변경할 수 없습니다.");
+    return res.status(401).send("처리중 문제가 발생하였습니다.");
   }
 });
 
@@ -706,7 +704,7 @@ router.post("/image/create", async (req, res, next) => {
 
 // 상자 보관 물건촬영 사진 수정
 router.patch("/image/update", async (req, res, next) => {
-  const { id, imagePath } = req.body;
+  const { id, imagePath, deliveryCom, deliveryCode } = req.body;
 
   if (isNanCheck(id)) {
     return res.status(401).send("잘못된 요청입니다.");
@@ -724,6 +722,8 @@ router.patch("/image/update", async (req, res, next) => {
     const updateResult = await BoxImage.update(
       {
         imagePath,
+        deliveryCom,
+        deliveryCode,
       },
       {
         where: { id: parseInt(id) },

@@ -75,6 +75,14 @@ module.exports = class BulletBox extends Model {
           type: DataTypes.STRING(100), // 송장 번호
           allowNull: true,
         },
+        deliveryCom2: {
+          type: DataTypes.STRING(100), // 배송 택배사
+          allowNull: true,
+        },
+        deliveryCode2: {
+          type: DataTypes.STRING(100), // 송장 번호
+          allowNull: true,
+        },
         deliveryPay: {
           type: DataTypes.STRING(100), // 배송비
           allowNull: false,
@@ -89,6 +97,11 @@ module.exports = class BulletBox extends Model {
           defaultValue: false,
         },
         isEnd: {
+          type: DataTypes.BOOLEAN,
+          allowNull: false,
+          defaultValue: false,
+        },
+        isFilming: {
           type: DataTypes.BOOLEAN,
           allowNull: false,
           defaultValue: false,
