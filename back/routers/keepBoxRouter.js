@@ -45,6 +45,39 @@ const upload = multer({
   limits: { fileSize: 5 * 1024 * 1024 }, // 5MB
 });
 
+router.get("/:id", async (req, res, next) => {
+  const { id } = req.params;
+
+  let nanFlag = isNaN(id);
+
+  if (!id) {
+    nanFlag = false;
+  }
+
+  if (nanFlag) {
+    return res.status(400).send("잘못된 요청 입니다.");
+  }
+
+  try {
+    const boxes = await KeepBox.findOne({
+      where: { id },
+      include: [
+        {
+          model: BoxImage,
+        },
+        {
+          model: User,
+        },
+      ],
+    });
+
+    return res.status(200).json({ boxes });
+  } catch (e) {
+    console.error(error);
+    return res.status(401).send("디테일한 내용을 불러올 수 없습니다.");
+  }
+});
+
 // 보관하기 리스트
 router.get(["/list", "/list/:listType"], async (req, res, next) => {
   const { page, search } = req.query;
@@ -250,16 +283,6 @@ router.post("/list/date", async (req, res, next) => {
     return res.status(401).send("월별 결제 내용을 불러올 수 없습니다.");
   }
 });
-
-// 사용자가 상자보관 물건 촬영 여부를 체크 했다면 사용하는 api
-router.post(
-  "/image",
-  isAdminCheck,
-  upload.single("image"),
-  async (req, res, next) => {
-    return res.json({ path: req.file.location });
-  }
-);
 
 router.post("/create", async (req, res, next) => {
   const {
@@ -676,31 +699,48 @@ router.get("/image/list", async (req, res, next) => {
   }
 });
 
+// // 사용자가 상자보관 물건 촬영 여부를 체크 했다면 사용하는 api
+// router.post(
+//   "/image",
+//   isAdminCheck,
+//   upload.single("image"),
+//   async (req, res, next) => {
+//     return res.json({ path: req.file.location });
+//   }
+// );
+
 // 상자 보관 물건촬영 사진 추가
-router.post("/image/create", async (req, res, next) => {
-  const { KeepBoxId, imagePath, deliveryCom, deliveryCode } = req.body;
+router.post(
+  "/image/create",
+  isAdminCheck,
+  upload.single("image"),
+  async (req, res, next) => {
+    const { KeepBoxId } = req.body;
+    console.log(req.file, "ASD", req.body);
+    const { location } = req.file;
 
-  if (isNaN(KeepBoxId)) {
-    return res.status(401).send("잘못된 요청입니다.");
-  }
-  try {
-    const createResult = await BoxImage.create({
-      KeepBoxId: parseInt(KeepBoxId),
-      imagePath,
-      deliveryCom,
-      deliveryCode,
-    });
-
-    if (!createResult) {
-      return res.status(401).send("처리중 문제가 발생하였습니다.");
+    if (isNaN(KeepBoxId)) {
+      return res.status(401).send("잘못된 요청입니다.");
     }
+    try {
+      const createResult = await BoxImage.create({
+        KeepBoxId: parseInt(KeepBoxId),
+        imagePath: location,
+        deliveryCom: "",
+        deliveryCode: "",
+      });
 
-    return res.status(201).json({ result: true });
-  } catch (error) {
-    console.error(error);
-    return res.status(401).send("이미지를 생성할 수 없습니다.");
+      if (!createResult) {
+        return res.status(401).send("처리중 문제가 발생하였습니다.");
+      }
+
+      return res.status(201).json({ result: true });
+    } catch (error) {
+      console.error(error);
+      return res.status(401).send("이미지를 생성할 수 없습니다.");
+    }
   }
-});
+);
 
 // 상자 보관 물건촬영 사진 수정
 router.patch("/image/update", async (req, res, next) => {
