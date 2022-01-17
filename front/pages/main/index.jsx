@@ -20,6 +20,7 @@ import { useRouter } from "next/dist/client/router";
 import { KEEPBOX_LIST_REQUEST } from "../../reducers/keepBox";
 import { useCountUp, CountUp } from "use-count-up";
 import styled from "styled-components";
+import MainSlider from "../../components/slide/MainSlider";
 
 const FirstWrapper = styled(Wrapper)`
   width: 100%;
@@ -133,6 +134,12 @@ const Home = () => {
   }, [main]);
 
   ////// DATAVIEW //////
+  const imgArr = [
+    "https://4leaf-s3.s3.ap-northeast-2.amazonaws.com/iobox/assets/images/main/woman.png",
+    "https://4leaf-s3.s3.ap-northeast-2.amazonaws.com/iobox/assets/images/main/woman.png",
+    "https://4leaf-s3.s3.ap-northeast-2.amazonaws.com/iobox/assets/images/main/woman.png",
+  ];
+
   return (
     <>
       <ClientLayout>
@@ -161,6 +168,7 @@ const Home = () => {
                   color={Theme.white_C}
                   fontSize={`3.5rem`}
                   margin={width < 700 ? `0` : `10px 0 0`}
+                  zIndex={`-1`}
                 >
                   맡아줘 내 짐!
                 </Text>
@@ -178,8 +186,16 @@ const Home = () => {
                     원할 때 찾고!
                   </Text>
                 </Wrapper>
+                <Wrapper
+                  position={`absolute`}
+                  bottom={`0`}
+                  left={`0`}
+                  zIndex={`10`}
+                >
+                  <MainSlider datum={imgArr} />
+                </Wrapper>
 
-                <Image
+                {/* <Image
                   src={`https://4leaf-s3.s3.ap-northeast-2.amazonaws.com/iobox/assets/images/main/woman.png`}
                   position={`absolute`}
                   bottom={`0`}
@@ -187,7 +203,7 @@ const Home = () => {
                   width={width < 700 ? `110px` : `180px`}
                   zIndex={`2`}
                   margin={width < 700 ? `0 0 0 -55px` : `0 0 0 -90px`}
-                />
+                /> */}
               </RsWrapper>
             </Wrapper>
             <Wrapper

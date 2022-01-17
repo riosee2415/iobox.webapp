@@ -1,41 +1,28 @@
 import { Carousel } from "antd";
 import React, { useCallback, useEffect, useRef, useState } from "react";
-import { Wrapper, Text, Image } from "../commonComponents";
+import { Wrapper, Text, Image, GradientText } from "../commonComponents";
 import Theme from "../Theme";
 import styled from "styled-components";
 import { LeftOutlined, RightOutlined } from "@ant-design/icons";
 import useWidth from "../../hooks/useWidth";
-import { current } from "immer";
 import { useRouter } from "next/router";
-
-const BoxWrapper = styled(Wrapper)`
-  width: calc(100% / 4);
-  height: 500px;
-  padding: 0 12px;
-
-  &:first-child {
-    padding: 0 12px 0 0;
-  }
-
-  &:last-child {
-    padding: 0 0 0 12px;
-  }
-
-  @media (max-width: 1100px) {
-    width: calc(100% / 3);
-  }
-`;
 
 const ArrowWrapper = styled(Wrapper)`
   width: 35px;
+
   height: 35px;
+
   border-radius: 20px;
+
   margin: ${(props) => props.margin || `-15px 0 0 -35px`};
+
   transition: 0.5s;
 
   & svg {
     font-size: 30px;
+
     color: ${Theme.darkGrey_C};
+
     transition: 0.5s;
   }
 
@@ -46,58 +33,38 @@ const ArrowWrapper = styled(Wrapper)`
   }
 `;
 
-const BoxSlider = ({
+const MainSlider = ({
   datum,
   //
   dots = false,
-  arrow = true,
+  arrow = false,
   effect = `scrollx`, // scrollx or fade
   //
-  autoplay = false,
+  autoplay = true,
   delay = 5000,
   //
   isMix = false, // Row 슬라이드 가로 (false) 세로 (true) 정렬
   //
   row = 1,
-  line = 5, // Row 슬라이드 행 수
+  line = 1, // Row 슬라이드 행 수
   //
-  setCurrentBox,
-  currentBox,
+  setCurrentMenu,
+  setActiveRightArrow,
+  setActiveLeftArrow,
+  //
+  tab,
 }) => {
   const width = useWidth();
 
   const [slideDatum, setSlideDatum] = useState(null);
 
   const slideRef = useRef();
+
   const router = useRouter();
-
-  // if (!refDatum) {
-  //   const tempRef = [];
-
-  //   for (let i = 0; i < line; i++) {
-  //     tempRef.push(useRef());
-  //   }
-
-  //   refDatum = tempRef;
-  // }
 
   const moveSlideHandler = (isNext) => {
     if (isNext) {
-      // if (router.query.type === "iobox") {
-      //   router.push(`/iobox?type=hangerBox`);
-      // }
-      // if (router.query.type === "hangerBox") {
-      //   router.push(`/iobox?type=bigBox`);
-      // }
-      // if (router.query.type === "bigBox") {
-      //   router.push(`/iobox?type=tentBox`);
-      // }
-      // if (router.query.type === "tentBox") {
-      //   router.push(`/iobox?type=hangerBox`);
-      // }
-
       for (let i = 0; i < slideDatum.length; i++) {
-        // console.log(slideRef.current);
         if (slideRef.current) {
           slideRef.current.next();
         }
@@ -128,18 +95,21 @@ const BoxSlider = ({
 
         if (tempArr.length === row * line) {
           totalArr.push(tempArr);
+
           tempArr = [];
         }
       }
 
       if (tempArr.length !== 0) {
         let index = tempArr.length;
+
         for (let i = 0; i < row * line - index; i++) {
           tempArr.push("");
         }
 
         totalArr.push(tempArr);
       }
+
       setSlideDatum(totalArr);
     }
   }, [datum]);
@@ -147,9 +117,11 @@ const BoxSlider = ({
   useEffect(() => {
     if (slideDatum && arrow) {
       const beforeButton = document.querySelector(".before");
+
       const nextButton = document.querySelector(".next");
 
       beforeButton.addEventListener(`click`, () => moveSlideHandler(false));
+
       nextButton.addEventListener(`click`, () => moveSlideHandler(true));
     }
   }, [slideDatum, arrow, line, slideDatum]);
@@ -158,24 +130,25 @@ const BoxSlider = ({
     return null;
   }
 
-  // const change = useCallback(() => {
-  //   console.log("sss");
-  // }, []);
-
   return (
-    <Wrapper display={`block`} position={`relative`}>
+    <Wrapper display={`block`} position={`relative`} width={`80% !important`}>
       {arrow && (
         <Wrapper
           position={`absolute`}
-          top={`50%`}
-          transform={`translateY(-50%)`}
+          bottom={`0`}
+          // transform={`translateY(-50%)`}
+          top={`0`}
           dr={`row`}
           ju={`space-between`}
-          padding={`0 20px`}
           zIndex={`9999`}
           cursor={`pointer`}
         >
-          <Wrapper width={`auto`}>
+          <Wrapper
+            width={`auto`}
+            onClick={() => {
+              setActiveLeftArrow(true);
+            }}
+          >
             <ArrowWrapper
               className={`before`}
               onClick={() => moveSlideHandler(false)}
@@ -183,11 +156,17 @@ const BoxSlider = ({
               <LeftOutlined />
             </ArrowWrapper>
           </Wrapper>
-          <Wrapper width={`auto`}>
+
+          <Wrapper
+            width={`auto`}
+            onClick={() => {
+              setActiveRightArrow(true);
+            }}
+          >
             <ArrowWrapper
-              margin={`-15px -35px 0 0`}
+              margin={`0 -35px 0 0`}
               className={`next`}
-              onClick={() => moveSlideHandler(true)}
+              onClick={() => moveSlideHandler(false)}
             >
               <RightOutlined />
             </ArrowWrapper>
@@ -196,47 +175,29 @@ const BoxSlider = ({
       )}
 
       <Carousel
-        // onChange={change}
+        className="one-slide"
         effect={effect}
         dots={false}
-        slidesToShow={1}
-        vertical={true}
+        slidesToShow={1} // 한 화면에 몇개의 슬라이드가 보여지는지 결정
+        vertical={false}
         ref={slideRef}
         autoplay={autoplay}
-        className={`slide-0`}
-        initialSlide={currentBox}
-        afterChange={(index) => {
-          setCurrentBox(index);
-        }}
+        centerMode={false} // 양쪽에 겹쳐서 보이는 디자인
+        centerPadding={`30px`} // 얼만큼 겹쳐 보일건지 결정
+        fade={false} // fade or slide
+        initialSlide={0} // 초기에 몇번째 슬라이드를 보여줄 것인지 결정
+        variableWidth={false} // 각각 다른 크기를 지정할 수 있음
+        vartical={true}
+        verticalSwiping={true}
       >
         {slideDatum.map((slide, idx) => {
           return (
             <Wrapper display={`flex !important`} dr={`row`} key={idx}>
-              {idx === 0 ? (
-                <Wrapper width={`80%`} key={idx}>
-                  <Image
-                    src={`https://4leaf-s3.s3.ap-northeast-2.amazonaws.com/iobox/assets/images/icon2/img-hanger.png`}
-                  />
-                </Wrapper>
-              ) : idx === 1 ? (
-                <Wrapper width={`80%`} key={idx}>
-                  <Image
-                    src={`https://4leaf-s3.s3.ap-northeast-2.amazonaws.com/iobox/assets/images/icon2/img-hanger-plus.png`}
-                  />
-                </Wrapper>
-              ) : idx === 2 ? (
-                <Wrapper width={`80%`} key={idx}>
-                  <Image
-                    src={`https://4leaf-s3.s3.ap-northeast-2.amazonaws.com/iobox/assets/images/icon2/img-tent-box.png`}
-                  />
-                </Wrapper>
-              ) : (
-                <Wrapper width={`80%`} key={idx}>
-                  <Image
-                    src={`https://4leaf-s3.s3.ap-northeast-2.amazonaws.com/iobox/assets/images/icon2/img-camping-plus.png`}
-                  />
-                </Wrapper>
-              )}
+              <Image
+                src={`https://4leaf-s3.s3.ap-northeast-2.amazonaws.com/iobox/assets/images/main/woman.png`}
+                width={width < 700 ? `110px` : `180px`}
+                zIndex={`2`}
+              />
             </Wrapper>
           );
         })}
@@ -270,4 +231,4 @@ const BoxSlider = ({
   );
 };
 
-export default React.memo(BoxSlider);
+export default React.memo(MainSlider);

@@ -173,6 +173,7 @@ export const RsWrapper = styled.article`
   border: ${(props) => props.border};
   font-size: ${(props) => props.fontSize};
   position: ${(props) => props.position};
+  z-index: ${(props) => props.zIndex};
 
   padding-left: 30px;
   padding-right: 30px;

@@ -95,10 +95,53 @@ const Index = () => {
 
   const dataArr = [
     //
-    ["io박스", "W55 x H35 x D30 (CM)", "iO 베이직 월", 9000],
-    ["행거박스", "W55 x H35 x D30 (CM)", "iO 베이직 월", 19000],
-    ["텐트박스", "W55 x H35 x D30 (CM)", "iO 베이직 월", 29000],
-    ["대용량 박스", "W55 x H35 x D30 (CM)", "iO 베이직 월", 39000],
+    ["행거박스", "W58 x H100 x D30 (CM)", "월", 19000],
+    ["행거박스 plus+", "W58 x H130 x D60 (CM)", "월", 39000],
+    ["텐트박스", "W100 x H45 x D45 (CM)", "월", 39000],
+    ["캠핑박스 plus+", "W110 x H50 x D50 (CM)", "월", 59000],
+  ];
+
+  const dataArr2 = [
+    [
+      "",
+      "행거박스",
+      "각종 의류 구김 없이",
+      "걸어서 보관하는",
+      "행거형 박스!",
+      "",
+      19000,
+      5000,
+    ],
+    [
+      "",
+      "행거박스 plus+",
+      "걸수 있는 옷도 ok",
+      "개서 보관할 수 있는 옷도 ok",
+      "다용도! 대용량! 의류수납",
+      "토탈박스",
+      39000,
+      8000,
+    ],
+    [
+      "",
+      "텐트박스",
+      "일반 텐트 1개를",
+      "안전하게 보관 할 수",
+      "있는 텐트 보관 박스",
+      "",
+      39000,
+      6000,
+    ],
+    [
+      "",
+      "캠핑박스 plus+",
+      "텐트,각종 캠핑 장비",
+      "등을 보관 할 수 있는",
+      "대형 강화 박스",
+      "",
+      59000,
+      8000,
+    ],
   ];
 
   ////// HOOKS //////
@@ -472,16 +515,19 @@ const Index = () => {
             />
 
             <GradientText bold={true} fontSize={`2.2rem`}>
-              종이박스 배송
+              {dataArr2[currentBox][1]}
             </GradientText>
             <Text color={Theme.white_C} bold={true} fontSize={`1.4rem`}>
-              의류,물건,서류,책
+              {dataArr2[currentBox][2]}
             </Text>
             <Text color={Theme.white_C} bold={true} fontSize={`1.4rem`}>
-              각종 내 방안의 집
+              {dataArr2[currentBox][3]}
             </Text>
             <Text color={Theme.white_C} bold={true} fontSize={`1.4rem`}>
-              원할 때 맡기고 원할 때 찾기
+              {dataArr2[currentBox][4]}
+            </Text>
+            <Text color={Theme.white_C} bold={true} fontSize={`1.4rem`}>
+              {dataArr2[currentBox][5]}
             </Text>
 
             <Text
@@ -503,7 +549,7 @@ const Index = () => {
                 bold={true}
                 margin={`0 0 0 20px`}
               >
-                월 8,900원
+                월 {numberWithCommas(dataArr2[currentBox][6])}원
               </Text>
             </Wrapper>
             <Wrapper width={`auto`} dr={`row`}>
@@ -516,7 +562,7 @@ const Index = () => {
                 bold={true}
                 margin={`0 0 0 20px`}
               >
-                월 5,000원
+                월 {numberWithCommas(dataArr2[currentBox][7])}원
               </Text>
             </Wrapper>
 
@@ -533,7 +579,11 @@ const Index = () => {
                 color={Theme.basicTheme_C}
                 margin={`8px 0 0`}
               >
-                to. 8,900원
+                to.&nbsp;
+                {numberWithCommas(
+                  dataArr2[currentBox][6] + dataArr2[currentBox][7]
+                )}
+                원
               </Text>
             </Wrapper>
 
