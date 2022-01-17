@@ -33,4 +33,5 @@ export default {
   darkGrey_C: "#B2ADAD",
   darkGrey2_C: "#585858",
   darkGrey3_C: "#5F5F5F",
+  darkGrey4_C: "#555353",
 };

@@ -81,7 +81,7 @@ const TextHover = styled(Text)`
 
 const IconBox = styled(Wrapper)`
   width: 130px;
-  height: 130px;
+  height: 140px;
   cursor: pointer;
   position: absolute;
 
@@ -98,7 +98,7 @@ const IconBox = styled(Wrapper)`
 
   @media (max-width: 700px) {
     width: 105px;
-    height: 105px;
+    height: 110px;
   }
 `;
 
@@ -214,8 +214,12 @@ const AppFooter = () => {
   const { me, st_logoutDone } = useSelector((state) => state.user);
   const dispatch = useDispatch();
 
-  const [rotate, setRotate] = useState(0);
   const [currentMenu, setCurrentMenu] = useState(0);
+
+  const [activeMenu, setActiveMenu] = useState(0);
+
+  const [activeRightArrow, setActiveRightArrow] = useState(false);
+  const [activeLeftArrow, setActiveLeftArrow] = useState(false);
 
   const ImageBox = styled(Image)`
     &.active {
@@ -226,6 +230,28 @@ const AppFooter = () => {
   ////// REDUX //////
 
   ////// USEEFFECT //////
+
+  useEffect(() => {
+    setCurrentMenu(0);
+    setActiveMenu(0);
+  }, [tab]);
+
+  useEffect(() => {
+    setTimeout(() => {
+      setActiveRightArrow(false);
+      setActiveLeftArrow(false);
+    }, [100]);
+  }, [currentMenu]);
+
+  useEffect(() => {
+    if (activeRightArrow) {
+      const menu = activeMenu + 60;
+      setActiveMenu(menu);
+    } else if (activeLeftArrow) {
+      const menu = activeMenu - 60;
+      setActiveMenu(menu);
+    }
+  }, [currentMenu]);
 
   useEffect(() => {
     setDrawar(false);
@@ -279,46 +305,49 @@ const AppFooter = () => {
 
   const menuDatum = [
     [
-      "https://4leaf-s3.s3.ap-northeast-2.amazonaws.com/iobox/assets/images/main/paperbox.png",
-      "종이박스 배송",
-      "의류,물건,서류,책",
-      "각종 내 방안의 짐",
-      "원할때 맡기고 원할때 찾기",
+      "https://4leaf-s3.s3.ap-northeast-2.amazonaws.com/iobox/assets/images/icon2/top_hanger.png",
+      "행거박스",
+      "각종 의류 구임 없이",
+      "걸어서 보관하는",
+      "행거형 박스!",
     ],
     [
-      "https://4leaf-s3.s3.ap-northeast-2.amazonaws.com/iobox/assets/images/main/paperbox.png",
-      "22 배송",
-      "의류,물건,서류,책",
-      "각종 내 방안의 짐",
-      "원할때 맡기고 원할때 찾기",
+      "https://4leaf-s3.s3.ap-northeast-2.amazonaws.com/iobox/assets/images/icon2/top_hanger.png",
+      "행거박스 plus+",
+      "걸수 있는 옷도 ok",
+      "개서 보관 할 수 있는 옷도 ok",
+      "다용도! 대용량! 의류수납",
+      "토탈박스",
     ],
     [
-      "https://4leaf-s3.s3.ap-northeast-2.amazonaws.com/iobox/assets/images/main/paperbox.png",
-      "33 배송",
-      "의류,물건,서류,책",
-      "각종 내 방안의 짐",
-      "원할때 맡기고 원할때 찾기",
+      "https://4leaf-s3.s3.ap-northeast-2.amazonaws.com/iobox/assets/images/icon2/top_tent.png",
+      "텐트박스",
+      "일반 텐트 1개를",
+      "안전하게 보관 할 수",
+      "있는 텐트 보관 박스",
     ],
     [
-      "https://4leaf-s3.s3.ap-northeast-2.amazonaws.com/iobox/assets/images/main/paperbox.png",
-      "44 배송",
-      "의류,물건,서류,책",
-      "각종 내 방안의 짐",
-      "원할때 맡기고 원할때 찾기",
+      "https://4leaf-s3.s3.ap-northeast-2.amazonaws.com/iobox/assets/images/icon2/top_tent.png",
+      "캠핑박스 Plus+",
+      "텐트,각종 캠핑 장비",
+      "등을 보관 할 수 있는",
+      "대형 강화 박스",
     ],
     [
-      "https://4leaf-s3.s3.ap-northeast-2.amazonaws.com/iobox/assets/images/main/paperbox.png",
-      "55 배송",
-      "의류,물건,서류,책",
-      "각종 내 방안의 짐",
-      "원할때 맡기고 원할때 찾기",
+      "https://4leaf-s3.s3.ap-northeast-2.amazonaws.com/iobox/assets/images/icon2/top_oneday.png",
+      "하루 배송",
+      "하루배송 가능 지역",
+      "의정부/양주/서울",
+      "남양주/구리/일산",
+      "지역만 가능 합니다.",
     ],
     [
-      "https://4leaf-s3.s3.ap-northeast-2.amazonaws.com/iobox/assets/images/main/paperbox.png",
-      "66 배송",
-      "의류,물건,서류,책",
-      "각종 내 방안의 짐",
-      "원할때 맡기고 원할때 찾기",
+      "https://4leaf-s3.s3.ap-northeast-2.amazonaws.com/iobox/assets/images/icon2/top_delivery.png",
+      "배송현황",
+      "박스 배송부터",
+      "내 물건 수거 및 입고까지",
+      "실시간 배송 현황을",
+      "알아볼 수 있습니다.",
     ],
   ];
 
@@ -356,6 +385,8 @@ const AppFooter = () => {
                 tab={tab}
                 setCurrentMenu={setCurrentMenu}
                 currentMenu={currentMenu}
+                setActiveRightArrow={setActiveRightArrow}
+                setActiveLeftArrow={setActiveLeftArrow}
               />
             )}
           </Wrapper>
@@ -424,26 +455,77 @@ const AppFooter = () => {
               display={tab ? `flex` : `none`}
             >
               <Wrapper position={`relative`} height={`100%`}>
+                <Wrapper
+                  width={`100%`}
+                  height={`100%`}
+                  radius={`50%`}
+                  position={`absolute`}
+                  top={`0`}
+                  left={`0`}
+                  overflow={`hidden`}
+                >
+                  <Wrapper
+                    height={`100%`}
+                    position={`relative`}
+                    transform={`rotate(${activeMenu}deg)`}
+                  >
+                    <Wrapper
+                      position={`absolute`}
+                      top={`0`}
+                      left={`0`}
+                      width={`0`}
+                      hegiht={`0`}
+                      border={
+                        width < 700
+                          ? screen.height / 2 < 390
+                            ? `180px solid`
+                            : `195px solid`
+                          : `255px solid`
+                      }
+                      radius={`100%`}
+                      borderColor={`rgb(201,200,200) rgb(215,215,215)`}
+                      transform={`rotate(-75deg)`}
+                    ></Wrapper>
+                    <Wrapper
+                      position={`absolute`}
+                      top={`0`}
+                      left={`0`}
+                      width={`0`}
+                      hegiht={`0`}
+                      border={
+                        width < 700
+                          ? screen.height / 2 < 390
+                            ? `180px solid`
+                            : `195px solid`
+                          : `255px solid`
+                      }
+                      radius={`100%`}
+                      borderColor={`rgb(201,200,200) transparent rgb(201,200,200) rgb(201,200,200)`}
+                      transform={`rotate(-110deg)`}
+                    ></Wrapper>
+                  </Wrapper>
+                </Wrapper>
                 <IconBox
                   onClick={() => {
                     moveLinkHandler(`/iobox?type=iobox`);
                   }}
                   top={screen.height / 2 < 390 ? `20px` : `25px`}
                   left={`50%`}
-                  margin={width < 700 ? `0 0 0 -52.5px` : `0 0 0 -65px`}
-                  bgColor={currentMenu === 0 ? `rgba(0,0,0,0.2)` : ``}
+                  margin={width < 700 ? `0 0 0 -52.5px` : `0 0 0 -67px`}
                 >
                   <ImageBox
                     className={String(currentMenu) === "0" ? "active" : ""}
-                    src={`https://4leaf-s3.s3.ap-northeast-2.amazonaws.com/iobox/assets/images/main/iobox_dial.png`}
+                    src={`https://4leaf-s3.s3.ap-northeast-2.amazonaws.com/iobox/assets/images/icon2/hanger.png`}
                     alt={`icon`}
-                    width={width < 700 ? `50px` : `60px`}
+                    width={width < 700 ? `35px` : `50px`}
                   />
                   <Text
-                    fontSize={width < 700 ? `1.1rem` : `1.3rem`}
-                    color={currentMenu === 0 ? Theme.white_C : ``}
+                    fontSize={`1.1rem`}
+                    color={
+                      currentMenu === 0 ? Theme.white_C : Theme.darkGrey4_C
+                    }
                   >
-                    아이오 박스
+                    행거박스
                   </Text>
                 </IconBox>
 
@@ -455,8 +537,8 @@ const AppFooter = () => {
                     width < 700
                       ? screen.height / 2 < 390
                         ? `70px`
-                        : `90px`
-                      : `110px`
+                        : `80px`
+                      : `100px`
                   }
                   left={
                     width < 700
@@ -465,17 +547,18 @@ const AppFooter = () => {
                         : `30px`
                       : `50px`
                   }
-                  bgColor={currentMenu === 5 ? `rgba(0,0,0,0.2)` : ``}
                 >
                   <ImageBox
                     className={String(currentMenu) === "5" ? "active" : ""}
-                    src={`https://4leaf-s3.s3.ap-northeast-2.amazonaws.com/iobox/assets/images/main/truck_dial.png`}
+                    src={`https://4leaf-s3.s3.ap-northeast-2.amazonaws.com/iobox/assets/images/icon2/delivery.png`}
                     alt={`icon`}
                     width={width < 700 ? `50px` : `60px`}
                   />
                   <Text
-                    fontSize={width < 700 ? `1.1rem` : `1.3rem`}
-                    color={currentMenu === 5 ? Theme.white_C : ``}
+                    fontSize={`1.1rem`}
+                    color={
+                      currentMenu === 5 ? Theme.white_C : Theme.darkGrey4_C
+                    }
                   >
                     배송현황
                   </Text>
@@ -486,8 +569,8 @@ const AppFooter = () => {
                     width < 700
                       ? screen.height / 2 < 390
                         ? `70px`
-                        : `90px`
-                      : `110px`
+                        : `80px`
+                      : `100px`
                   }
                   right={
                     width < 700
@@ -499,19 +582,30 @@ const AppFooter = () => {
                   onClick={() => {
                     moveLinkHandler(`/iobox?type=hangerBox`);
                   }}
-                  bgColor={currentMenu === 1 ? `rgba(0,0,0,0.2)` : ``}
                 >
                   <ImageBox
-                    src={`https://4leaf-s3.s3.ap-northeast-2.amazonaws.com/iobox/assets/images/main/hagner_dial.png`}
+                    src={`https://4leaf-s3.s3.ap-northeast-2.amazonaws.com/iobox/assets/images/icon2/hanger-plus.png`}
                     alt={`icon`}
-                    width={width < 700 ? `40px` : `50px`}
+                    width={width < 700 ? `35px` : `50px`}
                     className={String(currentMenu) === "1" ? "active" : ""}
                   />
                   <Text
-                    fontSize={width < 700 ? `1.1rem` : `1.3rem`}
-                    color={currentMenu === 1 ? Theme.white_C : ``}
+                    margin={`5px 0 0`}
+                    fontSize={`1.1rem`}
+                    color={
+                      currentMenu === 1 ? Theme.white_C : Theme.darkGrey4_C
+                    }
+                    lineHeight={`1.2`}
                   >
                     행거박스
+                  </Text>
+                  <Text
+                    fontSize={`1.1rem`}
+                    color={
+                      currentMenu === 1 ? Theme.white_C : Theme.darkGrey4_C
+                    }
+                  >
+                    plus
                   </Text>
                 </IconBox>
 
@@ -520,7 +614,7 @@ const AppFooter = () => {
                     width < 700
                       ? screen.height / 2 < 390
                         ? `80px`
-                        : `90px`
+                        : `80px`
                       : `110px`
                   }
                   left={
@@ -533,19 +627,21 @@ const AppFooter = () => {
                   onClick={() => {
                     moveLinkHandler("/bullet");
                   }}
-                  bgColor={currentMenu === 4 ? `rgba(0,0,0,0.2)` : ``}
                 >
                   <ImageBox
                     className={String(currentMenu) === "4" ? "active" : ""}
-                    src={`https://4leaf-s3.s3.ap-northeast-2.amazonaws.com/iobox/assets/images/main/bullet_dial.png`}
+                    src={`https://4leaf-s3.s3.ap-northeast-2.amazonaws.com/iobox/assets/images/icon2/oneday.png`}
                     alt={`icon`}
                     width={width < 700 ? `60px` : `70px`}
                   />
                   <Text
-                    fontSize={width < 700 ? `1.1rem` : `1.3rem`}
-                    color={currentMenu === 4 ? Theme.white_C : ``}
+                    margin={`5px 0 0`}
+                    fontSize={`1.1rem`}
+                    color={
+                      currentMenu === 4 ? Theme.white_C : Theme.darkGrey4_C
+                    }
                   >
-                    총알배송
+                    하루배송
                   </Text>
                 </IconBox>
 
@@ -564,22 +660,23 @@ const AppFooter = () => {
                         : `30px`
                       : `50px`
                   }
-                  bgColor={currentMenu === 2 ? `rgba(0,0,0,0.2)` : ``}
                 >
                   <ImageBox
                     className={String(currentMenu) === "2" ? "active" : ""}
-                    src={`https://4leaf-s3.s3.ap-northeast-2.amazonaws.com/iobox/assets/images/main/large_dial.png`}
+                    src={`https://4leaf-s3.s3.ap-northeast-2.amazonaws.com/iobox/assets/images/icon2/tent-box.png`}
                     alt={`icon`}
-                    width={width < 700 ? `40px` : `50px`}
+                    width={width < 700 ? `60px` : `70px`}
                   />
                   <Text
-                    fontSize={width < 700 ? `1.1rem` : `1.3rem`}
+                    fontSize={`1.1rem`}
                     onClick={() => {
                       moveLinkHandler(`/iobox?type=bigBox`);
                     }}
-                    color={currentMenu === 2 ? Theme.white_C : ``}
+                    color={
+                      currentMenu === 2 ? Theme.white_C : Theme.darkGrey4_C
+                    }
                   >
-                    대용량 박스
+                    텐트박스
                   </Text>
                 </IconBox>
 
@@ -589,20 +686,30 @@ const AppFooter = () => {
                   }}
                   bottom={screen.height / 2 < 390 ? `20px` : `25px`}
                   left={`50%`}
-                  margin={width < 700 ? `0 0 0 -52.5px` : `0 0 0 -65px`}
-                  bgColor={currentMenu === 3 ? `rgba(0,0,0,0.2)` : ``}
+                  margin={width < 700 ? `0 0 0 -52.5px` : `0 0 0 -63px`}
                 >
                   <ImageBox
                     className={String(currentMenu) === "3" ? "active" : ""}
-                    src={`https://4leaf-s3.s3.ap-northeast-2.amazonaws.com/iobox/assets/images/main/box_dial.png`}
+                    src={`https://4leaf-s3.s3.ap-northeast-2.amazonaws.com/iobox/assets/images/icon2/tent-box-plus.png`}
                     alt={`icon`}
                     width={width < 700 ? `60px` : `70px`}
                   />
                   <Text
-                    fontSize={width < 700 ? `1.1rem` : `1.3rem`}
-                    color={currentMenu === 3 ? Theme.white_C : ``}
+                    fontSize={`1.1rem`}
+                    lineHeight={`1.2`}
+                    color={
+                      currentMenu === 3 ? Theme.white_C : Theme.darkGrey4_C
+                    }
                   >
-                    텐트보관 박스
+                    텐트박스
+                  </Text>
+                  <Text
+                    fontSize={`1.1rem`}
+                    color={
+                      currentMenu === 3 ? Theme.white_C : Theme.darkGrey4_C
+                    }
+                  >
+                    plus
                   </Text>
                 </IconBox>
 
