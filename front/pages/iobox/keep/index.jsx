@@ -311,7 +311,11 @@ const Index = () => {
                 </Wrapper>
               </Wrapper>
               <Text fontSize={`1.5rem`} fontWeight={`700`}>
-                {numberWithCommas(storeData.totalPay)}원
+                {numberWithCommas(
+                  storeData.totalPay -
+                    (storeData.type === "정기" ? storeData.totalPay * 0.1 : 0)
+                )}
+                원
               </Text>
             </Wrapper>
 
@@ -543,8 +547,12 @@ const Index = () => {
                 height={`50px`}
                 onClick={handleFormSubmit}
               >
-                {numberWithCommas(storeData.totalPay + storeData.pickUpPrice)}원
-                결제하기
+                월 결제{" "}
+                {numberWithCommas(
+                  storeData.totalPay -
+                    (storeData.type === "정기" ? storeData.totalPay * 0.1 : 0)
+                )}{" "}
+                + 배송비 {numberWithCommas(storeData.pickUpPrice)}원 결제하기
               </CommonButton>
             </Wrapper>
           </RsWrapper>
