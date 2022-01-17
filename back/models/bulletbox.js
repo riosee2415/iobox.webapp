@@ -1,7 +1,7 @@
 const DataTypes = require("sequelize");
 const { Model } = DataTypes;
 
-module.exports = class KeepBox extends Model {
+module.exports = class BulletBox extends Model {
   static init(sequelize) {
     return super.init(
       {
@@ -25,62 +25,53 @@ module.exports = class KeepBox extends Model {
           allowNull: false,
           defaultValue: 0,
         },
-        period: {
-          type: DataTypes.STRING(200), // 보관 기간
-          allowNull: false,
-        },
-        isFilming: {
-          type: DataTypes.BOOLEAN, // 상자보관 찰영유무
-          allowNull: false,
-          defaultValue: false,
-        },
-        isPickup: {
-          type: DataTypes.BOOLEAN, // 픽업 유무
-          defaultValue: false,
-          allowNull: false,
-        },
-        pickWay: {
-          type: DataTypes.STRING(300), // 픽업 방식
-          allowNull: false,
-        },
         price: {
           type: DataTypes.INTEGER, // 금액
           allowNull: false,
           defaultValue: 0,
         },
-        name: {
-          type: DataTypes.STRING(50), // 이름
-          allowNull: false,
-        },
-        mobile: {
-          type: DataTypes.STRING(50), // 전화번호
-          allowNull: false,
-        },
         address: {
-          type: DataTypes.STRING(300), // 주소
+          type: DataTypes.STRING(300), // 보관할 떄주소
           allowNull: false,
         },
         detailAddress: {
-          type: DataTypes.STRING(300), // 디테일 주소
+          type: DataTypes.STRING(300), // 보관할 때상세주소
           allowNull: false,
         },
-        remark: {
-          type: DataTypes.STRING(300), // 특이사항
+        isEle: {
+          type: DataTypes.BOOLEAN, // 엘베 유무
+          allowNull: false,
+          defaultValue: false,
+        },
+        floor: {
+          type: DataTypes.STRING(10), // 층
+          allowNull: false,
+        },
+        type: {
+          type: DataTypes.STRING(30), //결제 방식
+          allowNull: false,
+        },
+        startDate: {
+          type: DataTypes.STRING(50), // 보관시작일
           allowNull: true,
+        },
+        endDate: {
+          type: DataTypes.STRING(50), // 보관종료일
+          allowNull: true,
+        },
+        receiveAdd: {
+          type: DataTypes.STRING(300), // 도착지 주소
+          allowNull: false,
+        },
+        receiveDetail: {
+          type: DataTypes.STRING(300), // 도착지 상세 주소
+          allowNull: false,
         },
         deliveryCom: {
           type: DataTypes.STRING(100), // 배송 택배사
           allowNull: true,
         },
         deliveryCode: {
-          type: DataTypes.STRING(100), // 송장 번호
-          allowNull: true,
-        },
-        deliveryCom2: {
-          type: DataTypes.STRING(100), // 배송 택배사
-          allowNull: true,
-        },
-        deliveryCode2: {
           type: DataTypes.STRING(100), // 송장 번호
           allowNull: true,
         },
@@ -92,6 +83,11 @@ module.exports = class KeepBox extends Model {
           type: DataTypes.STRING(100),
           allowNull: true,
         },
+        isPickUp: {
+          type: DataTypes.BOOLEAN,
+          allowNull: false,
+          defaultValue: false,
+        },
         isEnd: {
           type: DataTypes.BOOLEAN,
           allowNull: false,
@@ -99,8 +95,8 @@ module.exports = class KeepBox extends Model {
         },
       },
       {
-        modelName: "KeepBox",
-        tableName: "keepBoxs",
+        modelName: "BulletBox",
+        tableName: "bulletBoxs",
         charset: "utf8mb4",
         collate: "utf8mb4_general_ci", // 한글 저장
         sequelize,
@@ -108,7 +104,7 @@ module.exports = class KeepBox extends Model {
     );
   }
   static associate(db) {
-    db.KeepBox.hasMany(db.BoxImage);
-    db.KeepBox.belongsTo(db.User);
+    db.BulletBox.hasMany(db.BoxImage);
+    db.BulletBox.belongsTo(db.User);
   }
 };

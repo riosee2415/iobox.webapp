@@ -419,7 +419,15 @@ router.post("/create", async (req, res, next) => {
 
 // 픽업 여부 변경
 router.patch("/update", isAdminCheck, async (req, res, next) => {
-  const { id, userCode, userId, deliveryCom, deliveryCode } = req.body;
+  const {
+    id,
+    userCode,
+    userId,
+    deliveryCom,
+    deliveryCode,
+    deliveryCom2,
+    deliveryCode2,
+  } = req.body;
 
   if (isNanCheck(id)) {
     return res.status(401).send("잘못된 요청입니다.");
@@ -537,6 +545,8 @@ router.patch("/update", isAdminCheck, async (req, res, next) => {
             // isPickup: true,
             deliveryCom,
             deliveryCode,
+            deliveryCom2,
+            deliveryCode2,
           },
           {
             where: { id: parseInt(id) },
@@ -625,7 +635,7 @@ router.get("/image/list", async (req, res, next) => {
 
 // 상자 보관 물건촬영 사진 추가
 router.post("/image/create", async (req, res, next) => {
-  const { KeepBoxId, imagePath } = req.body;
+  const { KeepBoxId, imagePath, deliveryCom, deliveryCode } = req.body;
 
   if (isNaN(KeepBoxId)) {
     return res.status(401).send("잘못된 요청입니다.");
@@ -634,6 +644,8 @@ router.post("/image/create", async (req, res, next) => {
     const createResult = await BoxImage.create({
       KeepBoxId: parseInt(KeepBoxId),
       imagePath,
+      deliveryCom,
+      deliveryCode,
     });
 
     if (!createResult) {
