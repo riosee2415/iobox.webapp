@@ -2,13 +2,19 @@ import produce from "../util/produce";
 
 export const initailState = {
   keepBoxes: null,
+  detailBox: null,
   maxPage: 1,
   //
   modal: false,
+  guideModal: false,
   //
   st_keepBoxListLoading: false, // 공지사항 가져오기
   st_keepBoxListDone: false,
   st_keepBoxListError: null,
+  //
+  st_keepBoxDetailLoading: false, // 공지사항 가져오기
+  st_keepBoxDetailDone: false,
+  st_keepBoxDetailError: null,
   //
   st_keepBoxDateListLoading: false, // 공지사항 날짜별 가져오기
   st_keepBoxDateListDone: false,
@@ -22,6 +28,14 @@ export const initailState = {
   st_keepBoxUpdateDone: false,
   st_keepBoxUpdateError: null,
   //
+  st_keepBoxUploadLoading: false, // 공지사항 업데이트
+  st_keepBoxUploadDone: false,
+  st_keepBoxUploadError: null,
+  //
+  st_keepBoxImageDeleteLoading: false, // 공지사항 삭제
+  st_keepBoxImageDeleteDone: false,
+  st_keepBoxImageDeleteError: null,
+  //
   st_keepBoxDeleteLoading: false, // 공지사항 삭제
   st_keepBoxDeleteDone: false,
   st_keepBoxDeleteError: null,
@@ -31,6 +45,10 @@ export const initailState = {
 export const KEEPBOX_LIST_REQUEST = "KEEPBOX_LIST_REQUEST";
 export const KEEPBOX_LIST_SUCCESS = "KEEPBOX_LIST_SUCCESS";
 export const KEEPBOX_LIST_FAILURE = "KEEPBOX_LIST_FAILURE";
+//
+export const KEEPBOX_DETAIL_REQUEST = "KEEPBOX_DETAIL_REQUEST";
+export const KEEPBOX_DETAIL_SUCCESS = "KEEPBOX_DETAIL_SUCCESS";
+export const KEEPBOX_DETAIL_FAILURE = "KEEPBOX_DETAIL_FAILURE";
 //
 export const KEEPBOX_DATE_LIST_REQUEST = "KEEPBOX_DATE_LIST_REQUEST";
 export const KEEPBOX_DATE_LIST_SUCCESS = "KEEPBOX_DATE_LIST_SUCCESS";
@@ -48,8 +66,19 @@ export const KEEPBOX_DELETE_REQUEST = "KEEPBOX_DELETE_REQUEST";
 export const KEEPBOX_DELETE_SUCCESS = "KEEPBOX_DELETE_SUCCESS";
 export const KEEPBOX_DELETE_FAILURE = "KEEPBOX_DELETE_FAILURE";
 //
+export const KEEPBOX_IMAGE_DELETE_REQUEST = "KEEPBOX_IMAGE_DELETE_REQUEST";
+export const KEEPBOX_IMAGE_DELETE_SUCCESS = "KEEPBOX_IMAGE_DELETE_SUCCESS";
+export const KEEPBOX_IMAGE_DELETE_FAILURE = "KEEPBOX_IMAGE_DELETE_FAILURE";
+//
+export const KEEPBOX_UPLOAD_REQUEST = "KEEPBOX_UPLOAD_REQUEST";
+export const KEEPBOX_UPLOAD_SUCCESS = "KEEPBOX_UPLOAD_SUCCESS";
+export const KEEPBOX_UPLOAD_FAILURE = "KEEPBOX_UPLOAD_FAILURE";
+//
 export const MODAL_OPEN_REQUEST = "MODAL_OPEN_REQUEST";
 export const MODAL_CLOSE_REQUEST = "MODAL_CLOSE_REQUEST";
+//
+export const GUIDE_MODAL_OPEN_REQUEST = "GUIDE_MODAL_OPEN_REQUEST";
+export const GUIDE_MODAL_CLOSE_REQUEST = "GUIDE_MODAL_CLOSE_REQUEST";
 
 const reducer = (state = initailState, action) =>
   produce(state, (draft) => {
@@ -71,6 +100,44 @@ const reducer = (state = initailState, action) =>
         draft.st_keepBoxListLoading = false;
         draft.st_keepBoxListDone = false;
         draft.st_keepBoxListError = action.error;
+        break;
+      }
+      ///////////////////////////////////////////////////////
+      case KEEPBOX_UPLOAD_REQUEST: {
+        draft.st_keepBoxUploadLoading = true;
+        draft.st_keepBoxUploadDone = null;
+        draft.st_keepBoxUploadError = false;
+        break;
+      }
+      case KEEPBOX_UPLOAD_SUCCESS: {
+        draft.st_keepBoxUploadLoading = false;
+        draft.st_keepBoxUploadDone = true;
+
+        break;
+      }
+      case KEEPBOX_UPLOAD_FAILURE: {
+        draft.st_keepBoxUploadLoading = false;
+        draft.st_keepBoxUploadDone = false;
+        draft.st_keepBoxUploadError = action.error;
+        break;
+      }
+      ///////////////////////////////////////////////////////
+      case KEEPBOX_DETAIL_REQUEST: {
+        draft.st_keepBoxDetailLoading = true;
+        draft.st_keepBoxDetailDone = null;
+        draft.st_keepBoxDetailError = false;
+        break;
+      }
+      case KEEPBOX_DETAIL_SUCCESS: {
+        draft.st_keepBoxDetailLoading = false;
+        draft.st_keepBoxDetailDone = true;
+        draft.detailBox = action.data.boxes;
+        break;
+      }
+      case KEEPBOX_DETAIL_FAILURE: {
+        draft.st_keepBoxDetailLoading = false;
+        draft.st_keepBoxDetailDone = false;
+        draft.st_keepBoxDetailError = action.error;
         break;
       }
       ///////////////////////////////////////////////////////
@@ -148,6 +215,24 @@ const reducer = (state = initailState, action) =>
         break;
       }
       ///////////////////////////////////////////////////////
+      case KEEPBOX_IMAGE_DELETE_REQUEST: {
+        draft.st_keepBoxImageDeleteLoading = true;
+        draft.st_keepBoxImageDeleteDone = null;
+        draft.st_keepBoxImageDeleteError = false;
+        break;
+      }
+      case KEEPBOX_IMAGE_DELETE_SUCCESS: {
+        draft.st_keepBoxImageDeleteLoading = false;
+        draft.st_keepBoxImageDeleteDone = true;
+        break;
+      }
+      case KEEPBOX_IMAGE_DELETE_FAILURE: {
+        draft.st_keepBoxImageDeleteLoading = false;
+        draft.st_keepBoxImageDeleteDone = false;
+        draft.st_keepBoxImageDeleteError = action.error;
+        break;
+      }
+      ///////////////////////////////////////////////////////
       ///////////////////////////////////////////////////////
       ///////////////////////////////////////////////////////
 
@@ -157,6 +242,14 @@ const reducer = (state = initailState, action) =>
 
       case MODAL_CLOSE_REQUEST:
         draft.modal = false;
+        break;
+
+      case GUIDE_MODAL_OPEN_REQUEST:
+        draft.guideModal = true;
+        break;
+
+      case GUIDE_MODAL_CLOSE_REQUEST:
+        draft.guideModal = false;
         break;
 
       default:

@@ -5,6 +5,10 @@ import {
   KEEPBOX_LIST_FAILURE,
   KEEPBOX_LIST_REQUEST,
   //
+  KEEPBOX_DETAIL_REQUEST,
+  KEEPBOX_DETAIL_SUCCESS,
+  KEEPBOX_DETAIL_FAILURE,
+  //
   KEEPBOX_DATE_LIST_SUCCESS,
   KEEPBOX_DATE_LIST_FAILURE,
   KEEPBOX_DATE_LIST_REQUEST,
@@ -13,6 +17,10 @@ import {
   KEEPBOX_CREATE_SUCCESS,
   KEEPBOX_CREATE_FAILURE,
   //
+  KEEPBOX_UPLOAD_REQUEST,
+  KEEPBOX_UPLOAD_SUCCESS,
+  KEEPBOX_UPLOAD_FAILURE,
+  //
   KEEPBOX_UPDATE_REQUEST,
   KEEPBOX_UPDATE_SUCCESS,
   KEEPBOX_UPDATE_FAILURE,
@@ -20,6 +28,10 @@ import {
   KEEPBOX_DELETE_REQUEST,
   KEEPBOX_DELETE_SUCCESS,
   KEEPBOX_DELETE_FAILURE,
+  //
+  KEEPBOX_IMAGE_DELETE_REQUEST,
+  KEEPBOX_IMAGE_DELETE_SUCCESS,
+  KEEPBOX_IMAGE_DELETE_FAILURE,
 } from "../reducers/keepBox";
 
 // SAGA AREA ********************************************************************************************************
@@ -40,6 +52,61 @@ function* keepBoxList(action) {
     console.error(err);
     yield put({
       type: KEEPBOX_LIST_FAILURE,
+      error: err.response.data,
+    });
+  }
+}
+
+// ******************************************************************************************************************
+// ******************************************************************************************************************
+// ******************************************************************************************************************
+
+// SAGA AREA ********************************************************************************************************
+// ******************************************************************************************************************
+function keepBoxUploadAPI(data) {
+  console.log(data);
+  return axios.post(`/api/keepBox/image/create`, data.formData);
+}
+
+function* keepBoxUpload(action) {
+  try {
+    const result = yield call(keepBoxUploadAPI, action.data);
+
+    yield put({
+      type: KEEPBOX_UPLOAD_SUCCESS,
+      data: result.data,
+    });
+  } catch (err) {
+    console.error(err);
+    yield put({
+      type: KEEPBOX_UPLOAD_FAILURE,
+      error: err.response.data,
+    });
+  }
+}
+
+// ******************************************************************************************************************
+// ******************************************************************************************************************
+// ******************************************************************************************************************
+
+// SAGA AREA ********************************************************************************************************
+// ******************************************************************************************************************
+function keepBoxDetailAPI(data) {
+  return axios.get(`/api/keepBox/${data.id}`, data);
+}
+
+function* keepBoxDetail(action) {
+  try {
+    const result = yield call(keepBoxDetailAPI, action.data);
+
+    yield put({
+      type: KEEPBOX_DETAIL_SUCCESS,
+      data: result.data,
+    });
+  } catch (err) {
+    console.error(err);
+    yield put({
+      type: KEEPBOX_DETAIL_FAILURE,
       error: err.response.data,
     });
   }
@@ -157,9 +224,44 @@ function* keepBoxDelete(action) {
 // ******************************************************************************************************************
 // ******************************************************************************************************************
 
+// SAGA AREA ********************************************************************************************************
+// ******************************************************************************************************************
+function keepBoxImageDeleteAPI(data) {
+  return axios.delete(`/api/keepBox/image/delete/${data.imageId}`);
+}
+
+function* keepBoxImageDelete(action) {
+  try {
+    const result = yield call(keepBoxImageDeleteAPI, action.data);
+
+    yield put({
+      type: KEEPBOX_IMAGE_DELETE_SUCCESS,
+      data: result.data,
+    });
+  } catch (err) {
+    console.error(err);
+    yield put({
+      type: KEEPBOX_IMAGE_DELETE_FAILURE,
+      error: err.response.data,
+    });
+  }
+}
+
+// ******************************************************************************************************************
+// ******************************************************************************************************************
+// ******************************************************************************************************************
+
 //////////////////////////////////////////////////////////////
 function* watchKeepBoxList() {
   yield takeLatest(KEEPBOX_LIST_REQUEST, keepBoxList);
+}
+
+function* watchKeepBoxUpload() {
+  yield takeLatest(KEEPBOX_UPLOAD_REQUEST, keepBoxUpload);
+}
+
+function* watchKeepBoxDetail() {
+  yield takeLatest(KEEPBOX_DETAIL_REQUEST, keepBoxDetail);
 }
 
 function* watchKeepBoxDateList() {
@@ -178,14 +280,21 @@ function* watchKeepBoxDelete() {
   yield takeLatest(KEEPBOX_DELETE_REQUEST, keepBoxDelete);
 }
 
+function* watchKeepBoxImageDelete() {
+  yield takeLatest(KEEPBOX_IMAGE_DELETE_REQUEST, keepBoxImageDelete);
+}
+
 //////////////////////////////////////////////////////////////
 export default function* keepBoxSaga() {
   yield all([
     fork(watchKeepBoxList),
+    fork(watchKeepBoxUpload),
+    fork(watchKeepBoxDetail),
     fork(watchKeepBoxDateList),
     fork(watchKeepBoxCreate),
     fork(watchKeepBoxUpdate),
     fork(watchKeepBoxDelete),
+    fork(watchKeepBoxImageDelete),
     //
   ]);
 }

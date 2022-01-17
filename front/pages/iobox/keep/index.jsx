@@ -148,12 +148,11 @@ const Index = () => {
         boxcount2: storeData.boxs[1],
         boxcount3: storeData.boxs[2],
         boxcount4: storeData.boxs[3],
-        period: "",
+        period: storeData.type,
         isFilming: storeData.isCapture,
         pickWay: storeData.pickUp,
-        price:
-          storeData.totalPay -
-          (storeData.type === "정기" ? storeData.totalPay * 0.1 : 0),
+        price: storeData.totalPay,
+        // -          (storeData.type === "정기" ? storeData.totalPay * 0.1 : 0),
         deliveryPay: storeData.pickUpPrice,
         name: inputName.value,
         mobile: inputMobile.value,

@@ -291,6 +291,12 @@ const Index = () => {
     }
   }, [updateData]);
 
+  useEffect(() => {
+    const date = new Date();
+
+    setYearInput(date.getFullYear());
+  }, []);
+
   ////// TOGGLE //////
   const modalOpen = useCallback(() => {
     dispatch({
@@ -326,72 +332,9 @@ const Index = () => {
   );
 
   ////// HANDLER //////
-  const onSubmit = useCallback(
-    (value) => {
-      dispatch({
-        type: KEEPBOX_CREATE_REQUEST,
-        data: {
-          hint: value.hint,
-          title: value.content,
-          answer: value.answer,
-          outLink: "-",
-        },
-      });
-    },
-    [uploadKeepBoxPath]
-  );
-
-  const onSubmitUpdate = useCallback(
-    (value) => {
-      dispatch({
-        type: KEEPBOX_UPDATE_REQUEST,
-        data: {
-          id: updateData.id,
-          hint: value.hint,
-          title: value.content,
-          answer: value.answer,
-          outLink: "-",
-        },
-      });
-    },
-    [uploadKeepBoxPath, updateData]
-  );
-
-  const onChangeImages = useCallback((e) => {
-    const formData = new FormData();
-
-    [].forEach.call(e.target.files, (file) => {
-      formData.append("image", file);
-    });
-
-    dispatch({
-      type: KEEPBOX_UPLOAD_REQUEST,
-      data: formData,
-    });
-  });
-
   const createModalOk = useCallback(() => {
     formRef.current.submit();
   }, []);
-
-  const clickImageUpload = useCallback(() => {
-    imageInput.current.click();
-  }, [imageInput.current]);
-
-  const otherPageCall = useCallback(
-    (changePage) => {
-      setCurrentPage(changePage);
-      const queryString = `?page=${changePage}&search=${searchValue}`;
-
-      dispatch({
-        type: KEEPBOX_DATE_LIST_REQUEST,
-        data: {
-          qs: queryString || "",
-        },
-      });
-    },
-    [searchValue]
-  );
 
   const deleteGalleryHandler = useCallback(() => {
     if (!deleteId) {
@@ -496,7 +439,9 @@ const Index = () => {
     {
       title: "상세정보",
       render: (data) => (
-        <Button onClick={() => updateModalOpen(data)}>확인</Button>
+        <Button onClick={() => moveLinkHandler(`/admin/keepBox/${data.id}`)}>
+          확인
+        </Button>
       ),
     },
     {
@@ -516,8 +461,6 @@ const Index = () => {
     //   ),
     // },
   ];
-
-  console.log(keepBoxes);
 
   return (
     <AdminLayout>
