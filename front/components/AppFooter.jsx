@@ -484,7 +484,7 @@ const AppFooter = () => {
                       }
                       radius={`100%`}
                       borderColor={`rgb(201,200,200) rgb(215,215,215)`}
-                      transform={`rotate(-75deg)`}
+                      transform={`rotate(110deg)`}
                     ></Wrapper>
                     <Wrapper
                       position={`absolute`}
