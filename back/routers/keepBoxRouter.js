@@ -257,9 +257,6 @@ router.post("/list/date", async (req, res, next) => {
     const nextMonth = new Date(searchDate);
     nextMonth.setMonth(nextMonth.getMonth() + 1);
 
-    console.log(dateParsingData);
-    console.log(nextMonth);
-
     const results = await KeepBox.findAll({
       where: {
         [Op.and]: [
