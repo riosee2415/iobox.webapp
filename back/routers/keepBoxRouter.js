@@ -325,9 +325,15 @@ router.post("/create", async (req, res, next) => {
     ) {
       return res.status(401).send("박스를 선택하여 주십시오.");
     } else {
+      let createResult;
+
+      // const masterResult = await KeepBoxMAster.create({
+      //   UserId: parseInt(UserId),
+      // })
+
       if (parseInt(boxcount1) !== 0) {
         for (let i = 0; i < parseInt(boxcount1); i++) {
-          const createResult = await KeepBox.create({
+          createResult = await KeepBox.create({
             boxcount1,
             boxcount2: 0,
             boxcount3: 0,
@@ -343,13 +349,14 @@ router.post("/create", async (req, res, next) => {
             detailAddress,
             remark,
             UserId: parseInt(UserId),
+            // Kep.. : pareserInt(masterResult.id),
           });
         }
       }
 
       if (parseInt(boxcount2) !== 0) {
         for (let i = 0; i < parseInt(boxcount2); i++) {
-          const createResult = await KeepBox.create({
+          createResult = await KeepBox.create({
             boxcount1: 0,
             boxcount2,
             boxcount3: 0,
@@ -371,7 +378,7 @@ router.post("/create", async (req, res, next) => {
 
       if (parseInt(boxcount3) !== 0) {
         for (let i = 0; i < parseInt(boxcount3); i++) {
-          const createResult = await KeepBox.create({
+          createResult = await KeepBox.create({
             boxcount1: 0,
             boxcount2: 0,
             boxcount3,
@@ -393,7 +400,7 @@ router.post("/create", async (req, res, next) => {
 
       if (parseInt(boxcount4) !== 0) {
         for (let i = 0; i < parseInt(boxcount4); i++) {
-          const createResult = await KeepBox.create({
+          createResult = await KeepBox.create({
             boxcount1: 0,
             boxcount2: 0,
             boxcount3: 0,
