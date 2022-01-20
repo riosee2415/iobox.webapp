@@ -538,6 +538,22 @@ router.patch("/update", isAdminCheck, async (req, res, next) => {
       return res.status(401).send(trakerApi.data.e_message);
     }
 
+    // const trakerApi = await axios({
+    //   url: `https://dev-alimtalk-api.sweettracker.net/v2/${profile_key}/sendMessage`,
+    //   method: "post", // POST method
+    //   headers: { "Content-Type": "application/json", userid: "key" }, // "Content-Type": "application/json"
+    //   data: {
+    //     msgid: "code", // 템플릿 코드
+    //     code: "04",
+    //     callback_url: "https://api.iobox.kr/api/kakao/callback",
+    //     fid: fidKey,
+    //     callback_type: "map",
+    //     tier: "testuser",
+    //     key: "testuser",
+    //     type: "json",
+    //   },
+    // });
+
     //  정기 결제 api
 
     const getToken = await axios({

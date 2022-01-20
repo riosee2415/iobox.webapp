@@ -5,7 +5,7 @@ const { KeepBoxSchedule, User, KeepBox } = require("../models");
 
 const router = express.Router();
 
-router.post(`/callback?query=ajsdajks`, async (req, res, next) => {
+router.post(`/callback`, async (req, res, next) => {
   try {
     console.log("JSON", req.body);
 
