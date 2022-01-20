@@ -39,6 +39,7 @@ import {
   DatePicker,
   Modal,
   Input,
+  message,
 } from "antd";
 import locale from "antd/lib/locale/zh_CN";
 import ElevatorSlider from "../../components/slide/ElevatorSlider";
@@ -189,6 +190,8 @@ const Index = () => {
       39000,
     ],
   ];
+
+  const CHECK_ADDRESS = ["의정부", "서울", "양주"];
 
   ////// HOOKS //////
 
@@ -1028,18 +1031,31 @@ const Index = () => {
       <PostCode
         width={width}
         //
+        address={address}
         isPostCode={isPostCode}
         //
         toggleDialogHandler={togglePostCodeDialogHandler}
-        onCompleteHandler={async (data) => {
-          if (address === "start") {
-            inputStartAddress.setValue(data.address);
-            inputStartZoneCode.setValue(data.zonecode);
-          } else {
-            inputEndAddress.setValue(data.address);
-            inputEndZoneCode.setValue(data.zonecode);
+        onCompleteHandler={(data, address) => {
+          let isCheck = false;
+          for (let i = 0; i < CHECK_ADDRESS.length; i++) {
+            if (data.address.includes(CHECK_ADDRESS[i])) {
+              isCheck = true;
+            }
           }
-          setIsPostCode(false);
+
+          if (isCheck) {
+            if (address === "start") {
+              inputStartAddress.setValue(data.address);
+              inputStartZoneCode.setValue(data.zonecode);
+            } else {
+              inputEndAddress.setValue(data.address);
+              inputEndZoneCode.setValue(data.zonecode);
+            }
+
+            togglePostCodeDialogHandler();
+          } else {
+            message.error("서비스 이용 불가능 지역입니다.");
+          }
         }}
       />
     </WholeWrapper>

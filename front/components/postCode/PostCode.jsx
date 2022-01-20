@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useRef } from "react";
 import DaumPostCode from "react-daum-postcode";
 import { Modal } from "antd";
 import { Wrapper } from "../../components/commonComponents";
@@ -12,10 +12,17 @@ const PostCode = ({
   width,
   //
   isPostCode,
+  address,
   //
   toggleDialogHandler,
   onCompleteHandler,
 }) => {
+  const daumRef = useRef();
+
+  useEffect(() => {
+    console.log(daumRef, address);
+  });
+
   return (
     <Modal
       width={`700px`}
@@ -36,14 +43,32 @@ const PostCode = ({
         </Wrapper>
       </Wrapper>
 
-      <DaumPostCode
-        onComplete={onCompleteHandler}
-        width={width < 600 ? `100%` : `600px`}
-        height={`450px`}
-        autoClose
-        animation
-        style={style}
-      />
+      {address === "start" && (
+        <DaumPostCode
+          ref={daumRef}
+          onComplete={(data) => {
+            onCompleteHandler(data, address);
+          }}
+          width={width < 600 ? `100%` : `600px`}
+          height={`450px`}
+          autoClose={false}
+          animation
+          style={style}
+        />
+      )}
+      {address === "end" && (
+        <DaumPostCode
+          ref={daumRef}
+          onComplete={(data) => {
+            onCompleteHandler(data, address);
+          }}
+          width={width < 600 ? `100%` : `600px`}
+          height={`450px`}
+          autoClose={false}
+          animation
+          style={style}
+        />
+      )}
     </Modal>
   );
 };

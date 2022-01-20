@@ -1,7 +1,7 @@
 import React, { useCallback, useEffect, useRef, useState } from "react";
-import AdminLayout from "../../../../components/AdminLayout";
-import PageHeader from "../../../../components/admin/PageHeader";
-import AdminTop from "../../../../components/admin/AdminTop";
+import AdminLayout from "../../../../../components/AdminLayout";
+import PageHeader from "../../../../../components/admin/PageHeader";
+import AdminTop from "../../../../../components/admin/AdminTop";
 import styled from "styled-components";
 import { useDispatch, useSelector } from "react-redux";
 import {
@@ -16,28 +16,32 @@ import {
   Row,
   Col,
   message,
+  Spin,
 } from "antd";
 import { END } from "redux-saga";
 import axios from "axios";
 import { useRouter } from "next/router";
-import { LOAD_MY_INFO_REQUEST } from "../../../../reducers/user";
-import wrapper from "../../../../store/configureStore";
+import { LOAD_MY_INFO_REQUEST } from "../../../../../reducers/user";
+import wrapper from "../../../../../store/configureStore";
 import {
   MODAL_CLOSE_REQUEST,
   MODAL_OPEN_REQUEST,
   KEEPBOX_DELETE_REQUEST,
-  KEEPBOX_DATE_LIST_REQUEST,
+  KEEPBOX_LIST_DETAIL_REQUEST,
   KEEPBOX_UPDATE_REQUEST,
-} from "../../../../reducers/keepBox";
-import useInput from "../../../../hooks/useInput";
+} from "../../../../../reducers/keepBox";
+import useInput from "../../../../../hooks/useInput";
 import {
   ColWrapper,
+  CommonButton,
   RowWrapper,
+  Text,
   Wrapper,
-} from "../../../../components/commonComponents";
+} from "../../../../../components/commonComponents";
 import { SearchOutlined } from "@ant-design/icons";
-import { numberWithCommas } from "../../../../components/commonUtils";
-import { SUBSCRIPTION_CANCEL_REQUEST } from "../../../../reducers/subscription";
+import { numberWithCommas } from "../../../../../components/commonUtils";
+import { SUBSCRIPTION_CANCEL_REQUEST } from "../../../../../reducers/subscription";
+import Theme from "../../../../../components/Theme";
 
 const AdminContent = styled.div`
   padding: 20px;
@@ -129,36 +133,6 @@ const Index = () => {
   }, [st_loadMyInfoDone]);
   /////////////////////////////////////////////////////////////////////////
 
-  const year = [
-    "2021",
-    "2022",
-    "2023",
-    "2024",
-    "2025",
-    "2026",
-    "2027",
-    "2028",
-    "2029",
-    "2030",
-    //
-  ];
-
-  const month = [
-    "01",
-    "02",
-    "03",
-    "04",
-    "05",
-    "06",
-    "07",
-    "08",
-    "09",
-    "10",
-    "11",
-    "12",
-    //
-  ];
-
   ////// HOOKS //////
   const dispatch = useDispatch();
 
@@ -178,12 +152,12 @@ const Index = () => {
   const [monthInput, setMonthInput] = useState("01");
 
   const {
-    keepBoxes,
+    keepBoxDetails,
     uploadKeepBoxPath,
     maxPage,
     modal,
     //
-    st_keepBoxListError,
+    st_keepBoxListDetailError,
     st_keepBoxCreateDone,
     st_keepBoxCreateError,
     st_keepBoxUpdateDone,
@@ -198,9 +172,9 @@ const Index = () => {
   useEffect(() => {
     const qs = getQs();
     dispatch({
-      type: KEEPBOX_DATE_LIST_REQUEST,
+      type: KEEPBOX_LIST_DETAIL_REQUEST,
       data: {
-        searchDate: `${yearInput}-${monthInput}-01`,
+        qs,
       },
     });
   }, [router.query, yearInput, monthInput]);
@@ -209,9 +183,9 @@ const Index = () => {
     if (st_keepBoxCreateDone) {
       const qs = getQs();
       dispatch({
-        type: KEEPBOX_DATE_LIST_REQUEST,
+        type: KEEPBOX_LIST_DETAIL_REQUEST,
         data: {
-          searchDate: `${yearInput}-${monthInput}-01`,
+          qs,
         },
       });
 
@@ -225,9 +199,9 @@ const Index = () => {
     if (st_keepBoxUpdateDone) {
       const qs = getQs();
       dispatch({
-        type: KEEPBOX_DATE_LIST_REQUEST,
+        type: KEEPBOX_LIST_DETAIL_REQUEST,
         data: {
-          searchDate: `${yearInput}-${monthInput}-01`,
+          qs,
         },
       });
 
@@ -241,9 +215,9 @@ const Index = () => {
     if (st_keepBoxDeleteDone) {
       const qs = getQs();
       dispatch({
-        type: KEEPBOX_DATE_LIST_REQUEST,
+        type: KEEPBOX_LIST_DETAIL_REQUEST,
         data: {
-          searchDate: `${yearInput}-${monthInput}-01`,
+          qs,
         },
       });
 
@@ -254,10 +228,10 @@ const Index = () => {
   }, [st_keepBoxDeleteDone, router.query, yearInput, monthInput]);
 
   useEffect(() => {
-    if (st_keepBoxListError) {
-      return message.error(st_keepBoxListError);
+    if (st_keepBoxListDetailError) {
+      return message.error(st_keepBoxListDetailError);
     }
-  }, [st_keepBoxListError]);
+  }, [st_keepBoxListDetailError]);
 
   useEffect(() => {
     if (st_keepBoxCreateError) {
@@ -365,9 +339,8 @@ const Index = () => {
       value = `?page=${qs.page}`;
     }
 
-    if (qs.search) {
-      value += `&searchTitle=${qs.search}`;
-      setSearchValue(qs.search);
+    if (qs.id) {
+      value += `&masterId=${qs.id}`;
     }
 
     return value;
@@ -388,14 +361,12 @@ const Index = () => {
 
   const updateDelivery = useCallback(
     (value) => {
-      console.log(updateData.User);
-
       dispatch({
         type: KEEPBOX_UPDATE_REQUEST,
         data: {
           id: updateData.id,
           userId: updateData.User.id,
-          userCode: updateData.User.userCode,
+          // userCode: updateData.User.userCode,
           deliveryCom: value.deliveryCom,
           deliveryCode: value.deliveryCode,
         },
@@ -411,35 +382,26 @@ const Index = () => {
     {
       title: "No",
       dataIndex: "id",
+      width: `5%`,
     },
     {
-      title: "구매자",
-      render: (data) => <div>{data.KeepBoxes[0].name}</div>,
+      title: "송장번호",
+      render: (data) => <div>{data.deliveryCode}</div>,
+      width: `60%`,
     },
+
     {
-      title: "구매한 상자 수",
-      render: (data) => <div>{numberWithCommas(data.KeepBoxes.length)}</div>,
-    },
-    {
-      title: "월 요금",
+      title: "배송 상태",
       render: (data) => (
-        <div>{numberWithCommas(data.KeepBoxes[0].price)}원</div>
+        <div>{data.deliveryCode ? `송장번호 입력완료` : `송장번호 미입력`}</div>
       ),
+      width: `12%`,
     },
-    {
-      title: "연락처",
-      render: (data) => <div>{data.KeepBoxes[0].mobile}</div>,
-    },
-    {
-      title: "신청일",
-      render: (data) => <div>{data.createdAt.slice(0, 10)}</div>,
-    },
+
     {
       title: "상세정보",
       render: (data) => (
-        <Button
-          onClick={() => moveLinkHandler(`/admin/keepBox/list/${data.id}`)}
-        >
+        <Button onClick={() => moveLinkHandler(`/admin/keepBox/${data.id}`)}>
           확인
         </Button>
       ),
@@ -452,7 +414,21 @@ const Index = () => {
         </Button>
       ),
     },
+    // {
+    //   title: "DELETE",
+    //   render: (data) => (
+    //     <Button type="danger" onClick={deletePopToggle(data.id)}>
+    //       DEL
+    //     </Button>
+    //   ),
+    // },
   ];
+
+  console.log(keepBoxDetails);
+
+  if (!keepBoxDetails) {
+    return <Spin />;
+  }
 
   return (
     <AdminLayout>
@@ -463,116 +439,63 @@ const Index = () => {
       />
 
       <AdminContent>
-        <Row gutter={[10, 10]} style={{ padding: "0 0 10px 0" }}>
-          <Col style={{ width: `150px` }}>
-            <Select
-              style={{ width: `100%` }}
-              value={yearInput}
-              onChange={(value) => setYearInput(value)}
-            >
-              {year.map((data) => {
-                return <Select.Option value={data}>{data}년</Select.Option>;
-              })}
-            </Select>
-          </Col>
-
-          <Col style={{ width: `150px` }}>
-            <Select
-              style={{ width: `100%` }}
-              value={monthInput}
-              onChange={(value) => setMonthInput(value)}
-            >
-              {month.map((data) => {
-                return <Select.Option value={data}>{data}월</Select.Option>;
-              })}
-            </Select>
-          </Col>
-        </Row>
+        <Wrapper margin={`20px 0 `} al={`flex-start`}>
+          <Text
+            fontSize={`20px`}
+            borderBottom={`1px solid ${Theme.black_C}`}
+            width={`100%`}
+            margin={`0 0 10px 0`}
+            fontWeight={`bold`}
+          >
+            구매자 정보
+          </Text>
+          <Wrapper dr={`row`} ju={`space-between`}>
+            <Text>구매자 : {keepBoxDetails[0].name}</Text>
+            <CommonButton>정기 결제 시작</CommonButton>
+          </Wrapper>
+          <Wrapper dr={`row`} al={`flex-start`} al={`space-between`}>
+            <Wrapper width={`50%`} al={`fles-start`}>
+              <Text>연락처 : {keepBoxDetails[0].mobile}</Text>
+              <Text>
+                주소 : {keepBoxDetails[0].address}{" "}
+                {keepBoxDetails[0].detailAddress}
+              </Text>
+              <Text>배송 방식 : {keepBoxDetails[0].pickWay}</Text>
+              <Text>보관 기간 : {keepBoxDetails[0].period} 보관</Text>
+            </Wrapper>
+            <Wrapper width={`50%`} al={`flex-start`}>
+              특이사항 :
+              <Text>
+                {keepBoxDetails[0].remark.split("\n").map((data, idx) => {
+                  return <Text key={idx}>{data}</Text>;
+                })}
+              </Text>
+            </Wrapper>
+          </Wrapper>
+        </Wrapper>
         <Table
           rowKey="id"
           columns={columns}
-          dataSource={keepBoxes ? keepBoxes : []}
+          dataSource={keepBoxDetails ? keepBoxDetails : []}
           size="small"
-          pagination={
-            false
-            //   {
-            //   defaultCurrent: 1,
-            //   current: parseInt(currentPage),
-
-            //   total: maxPage * 10,
-            //   onChange: (page) => otherPageCall(page),
-            // }
-          }
+          pagination={false}
         />
       </AdminContent>
 
       <Modal
         visible={modal}
         width={`600px`}
-        title={`매입 관리`}
+        title={`송장번호 입력 관리`}
         size="small"
         onCancel={modalClose}
         onOk={createModalOk}
       >
         <Wrapper padding={`10px`}>
-          {/* <ImageWrapper>
-            <GuideWrapper>
-              <GuideText>
-                이미지 사이즈는 가로 {_WIDTH}px 과 세로
-                {_HEIGHT}px을 기준으로 합니다.
-              </GuideText>
-              <GuideText>
-                이미지 사이즈가 상이할 경우 화면에 올바르지 않게 보일 수 있으니
-                이미지 사이즈를 확인해주세요.
-              </GuideText>
-            </GuideWrapper>
-
-            <UploadImage
-              src={
-                uploadKeepBoxPath
-                  ? `${uploadKeepBoxPath}`
-                  : `https://via.placeholder.com/${_WIDTH}x${_HEIGHT}`
-              }
-              alt="main_GALLEY_image"
-            />
-            <Guide>
-              {uploadKeepBoxPath && `이미지 미리보기 입니다.`}
-            </Guide>
-
-            <UploadWrapper>
-              <input
-                type="file"
-                name="image"
-                accept=".png, .jpg"
-                // multiple
-                hidden
-                ref={imageInput}
-                onChange={onChangeImages}
-              />
-              <Button
-                size="small"
-                type="primary"
-                onClick={clickImageUpload}
-                loading={st_keepBoxUploadLoading}
-              >
-                UPLOAD
-              </Button>
-            </UploadWrapper>
-          </ImageWrapper> */}
-
           <Form
             style={{ width: `80%` }}
             onFinish={updateDelivery}
             ref={formRef}
           >
-            <Form.Item
-              name={"deliveryCom"}
-              label="배송 택배사"
-              rules={[{ required: true }]}
-            >
-              <Input size="small" placeholder="택배사" />
-            </Form.Item>
-
             <Form.Item
               name={"deliveryCode"}
               label="송장번호"
@@ -580,26 +503,6 @@ const Index = () => {
             >
               <Input allowClear size="small" placeholder="송장번호" />
             </Form.Item>
-
-            <Button size="small" type="primary" htmlType="submit">
-              배송 시작
-            </Button>
-            <Button
-              size="small"
-              type="danger"
-              onClick={() => {
-                dispatch({
-                  type: SUBSCRIPTION_CANCEL_REQUEST,
-                  data: {
-                    id: updateData.id,
-                    userCode: updateData.User.userCode,
-                    userId: updateData.User.id,
-                  },
-                });
-              }}
-            >
-              배송 취소
-            </Button>
           </Form>
         </Wrapper>
       </Modal>

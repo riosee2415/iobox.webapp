@@ -2,41 +2,46 @@ import produce from "../util/produce";
 
 export const initailState = {
   keepBoxes: null,
+  keepBoxDetails: null,
   detailBox: null,
   maxPage: 1,
   //
   modal: false,
   guideModal: false,
   //
-  st_keepBoxListLoading: false, // 공지사항 가져오기
+  st_keepBoxListLoading: false, // 박스 가져오기
   st_keepBoxListDone: false,
   st_keepBoxListError: null,
   //
-  st_keepBoxDetailLoading: false, // 공지사항 가져오기
+  st_keepBoxListDetailLoading: false, // 박스 디테일 가져오기
+  st_keepBoxListDetailDone: false,
+  st_keepBoxListDetailError: null,
+  //
+  st_keepBoxDetailLoading: false, // 박스 가져오기
   st_keepBoxDetailDone: false,
   st_keepBoxDetailError: null,
   //
-  st_keepBoxDateListLoading: false, // 공지사항 날짜별 가져오기
+  st_keepBoxDateListLoading: false, // 박스 날짜별 가져오기
   st_keepBoxDateListDone: false,
   st_keepBoxDateListError: null,
   //
-  st_keepBoxCreateLoading: false, // 공지사항 가져오기
+  st_keepBoxCreateLoading: false, // 박스 가져오기
   st_keepBoxCreateDone: false,
   st_keepBoxCreateError: null,
   //
-  st_keepBoxUpdateLoading: false, // 공지사항 업데이트
+  st_keepBoxUpdateLoading: false, // 박스 업데이트
   st_keepBoxUpdateDone: false,
   st_keepBoxUpdateError: null,
   //
-  st_keepBoxUploadLoading: false, // 공지사항 업데이트
+  st_keepBoxUploadLoading: false, // 박스 업데이트
   st_keepBoxUploadDone: false,
   st_keepBoxUploadError: null,
   //
-  st_keepBoxImageDeleteLoading: false, // 공지사항 삭제
+  st_keepBoxImageDeleteLoading: false, // 박스 이미지 삭제
   st_keepBoxImageDeleteDone: false,
   st_keepBoxImageDeleteError: null,
   //
-  st_keepBoxDeleteLoading: false, // 공지사항 삭제
+  st_keepBoxDeleteLoading: false, // 박스 삭제
   st_keepBoxDeleteDone: false,
   st_keepBoxDeleteError: null,
   //
@@ -45,6 +50,10 @@ export const initailState = {
 export const KEEPBOX_LIST_REQUEST = "KEEPBOX_LIST_REQUEST";
 export const KEEPBOX_LIST_SUCCESS = "KEEPBOX_LIST_SUCCESS";
 export const KEEPBOX_LIST_FAILURE = "KEEPBOX_LIST_FAILURE";
+//
+export const KEEPBOX_LIST_DETAIL_REQUEST = "KEEPBOX_LIST_DETAIL_REQUEST";
+export const KEEPBOX_LIST_DETAIL_SUCCESS = "KEEPBOX_LIST_DETAIL_SUCCESS";
+export const KEEPBOX_LIST_DETAIL_FAILURE = "KEEPBOX_LIST_DETAIL_FAILURE";
 //
 export const KEEPBOX_DETAIL_REQUEST = "KEEPBOX_DETAIL_REQUEST";
 export const KEEPBOX_DETAIL_SUCCESS = "KEEPBOX_DETAIL_SUCCESS";
@@ -100,6 +109,26 @@ const reducer = (state = initailState, action) =>
         draft.st_keepBoxListLoading = false;
         draft.st_keepBoxListDone = false;
         draft.st_keepBoxListError = action.error;
+        break;
+      }
+      ///////////////////////////////////////////////////////
+      case KEEPBOX_LIST_DETAIL_REQUEST: {
+        draft.st_keepBoxListDetailLoading = true;
+        draft.st_keepBoxListDetailDone = null;
+        draft.st_keepBoxListDetailError = false;
+        break;
+      }
+      case KEEPBOX_LIST_DETAIL_SUCCESS: {
+        draft.st_keepBoxListDetailLoading = false;
+        draft.st_keepBoxListDetailDone = true;
+        draft.keepBoxDetails = action.data.boxes;
+
+        break;
+      }
+      case KEEPBOX_LIST_DETAIL_FAILURE: {
+        draft.st_keepBoxListDetailLoading = false;
+        draft.st_keepBoxListDetailDone = false;
+        draft.st_keepBoxListDetailError = action.error;
         break;
       }
       ///////////////////////////////////////////////////////

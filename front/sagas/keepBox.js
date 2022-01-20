@@ -5,6 +5,10 @@ import {
   KEEPBOX_LIST_FAILURE,
   KEEPBOX_LIST_REQUEST,
   //
+  KEEPBOX_LIST_DETAIL_SUCCESS,
+  KEEPBOX_LIST_DETAIL_FAILURE,
+  KEEPBOX_LIST_DETAIL_REQUEST,
+  //
   KEEPBOX_DETAIL_REQUEST,
   KEEPBOX_DETAIL_SUCCESS,
   KEEPBOX_DETAIL_FAILURE,
@@ -63,6 +67,33 @@ function* keepBoxList(action) {
 
 // SAGA AREA ********************************************************************************************************
 // ******************************************************************************************************************
+function keepBoxListDetailAPI(data) {
+  return axios.get(`/api/keepBox/master/detail${data.qs}`, data);
+}
+
+function* keepBoxListDetail(action) {
+  try {
+    const result = yield call(keepBoxListDetailAPI, action.data);
+
+    yield put({
+      type: KEEPBOX_LIST_DETAIL_SUCCESS,
+      data: result.data,
+    });
+  } catch (err) {
+    console.error(err);
+    yield put({
+      type: KEEPBOX_LIST_DETAIL_FAILURE,
+      error: err.response.data,
+    });
+  }
+}
+
+// ******************************************************************************************************************
+// ******************************************************************************************************************
+// ******************************************************************************************************************
+
+// SAGA AREA ********************************************************************************************************
+// ******************************************************************************************************************
 function keepBoxUploadAPI(data) {
   console.log(data);
   return axios.post(`/api/keepBox/image/create`, data.formData);
@@ -92,7 +123,7 @@ function* keepBoxUpload(action) {
 // SAGA AREA ********************************************************************************************************
 // ******************************************************************************************************************
 function keepBoxDetailAPI(data) {
-  return axios.get(`/api/keepBox/${data.id}`, data);
+  return axios.get(`/api/keepBox/box/${data.id}`, data);
 }
 
 function* keepBoxDetail(action) {
@@ -256,6 +287,10 @@ function* watchKeepBoxList() {
   yield takeLatest(KEEPBOX_LIST_REQUEST, keepBoxList);
 }
 
+function* watchKeepBoxListDetail() {
+  yield takeLatest(KEEPBOX_LIST_DETAIL_REQUEST, keepBoxListDetail);
+}
+
 function* watchKeepBoxUpload() {
   yield takeLatest(KEEPBOX_UPLOAD_REQUEST, keepBoxUpload);
 }
@@ -288,6 +323,7 @@ function* watchKeepBoxImageDelete() {
 export default function* keepBoxSaga() {
   yield all([
     fork(watchKeepBoxList),
+    fork(watchKeepBoxListDetail),
     fork(watchKeepBoxUpload),
     fork(watchKeepBoxDetail),
     fork(watchKeepBoxDateList),
