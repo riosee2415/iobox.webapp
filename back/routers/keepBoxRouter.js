@@ -1,6 +1,12 @@
 const express = require("express");
 const isAdminCheck = require("../middlewares/isAdminCheck");
-const { KeepBox, BoxImage, User, KeepBoxSchedule } = require("../models");
+const {
+  KeepBox,
+  BoxImage,
+  User,
+  KeepBoxSchedule,
+  KeepBoxMaster,
+} = require("../models");
 const fs = require("fs");
 const { Op } = require("sequelize");
 const multer = require("multer");
@@ -45,7 +51,7 @@ const upload = multer({
   limits: { fileSize: 5 * 1024 * 1024 }, // 5MB
 });
 
-router.get("/:id", async (req, res, next) => {
+router.get("/box/:id", async (req, res, next) => {
   const { id } = req.params;
 
   let nanFlag = isNaN(id);
@@ -78,186 +84,187 @@ router.get("/:id", async (req, res, next) => {
   }
 });
 
-// 보관하기 리스트
-router.get(["/list", "/list/:listType"], async (req, res, next) => {
-  const { page, search } = req.query;
-  const { listType } = req.params;
-
-  const LIMIT = 10;
-
-  const _page = page ? page : 1;
-  const _search = search ? search : "";
-
-  const __page = _page - 1;
-  const OFFSET = __page * 10;
-
-  let nanFlag = isNaN(listType);
-
-  if (!listType) {
-    nanFlag = false;
-  }
-
-  if (nanFlag) {
-    return res.status(400).send("잘못된 요청 입니다.");
-  }
-
-  let _listType = Number(listType);
-
-  if (_listType > 3 || !listType) {
-    _listType = 3;
-  }
-
+// master 리스트
+router.get("/list", isAdminCheck, async (req, res, next) => {
   try {
-    let totalBox = [];
-    let boxes = [];
-    let lastPage = 0;
-    let boxLen = 0;
-
-    switch (_listType) {
-      case 1:
-        totalBox = await KeepBox.findAll({
-          where: {
-            name: {
-              [Op.like]: `%${_search}%`,
-            },
+    const lists = await KeepBoxMaster.findAll({
+      include: [
+        {
+          model: KeepBox,
+        },
+        {
+          model: User,
+          attributes: {
+            exclude: [
+              "password",
+              "level",
+              "secret",
+              "cardNum",
+              "cardPeriod",
+              "cardIden",
+              "cardPassword",
+            ],
           },
-          include: [
-            {
-              model: BoxImage,
-            },
-          ],
-        });
+        },
+      ],
+    });
 
-        boxLen = totalBox.length;
-
-        lastPage = boxLen % LIMIT > 0 ? boxLen / LIMIT + 1 : boxLen / LIMIT;
-
-        boxes = await KeepBox.findAll({
-          offset: OFFSET,
-          limit: LIMIT,
-          where: {
-            name: {
-              [Op.like]: `%${_search}%`,
-            },
-
-            isPickup: false,
-          },
-          include: [
-            {
-              model: BoxImage,
-            },
-            {
-              model: User,
-            },
-          ],
-        });
-        break;
-
-      case 2:
-        totalBox = await KeepBox.findAll({
-          where: {
-            name: {
-              [Op.like]: `%${_search}%`,
-            },
-          },
-          include: [
-            {
-              model: BoxImage,
-            },
-            {
-              model: User,
-            },
-          ],
-        });
-
-        boxLen = totalBox.length;
-
-        lastPage = boxLen % LIMIT > 0 ? boxLen / LIMIT + 1 : boxLen / LIMIT;
-
-        boxes = await KeepBox.findAll({
-          offset: OFFSET,
-          limit: LIMIT,
-          where: {
-            name: {
-              [Op.like]: `%${_search}%`,
-            },
-            isPickup: true,
-          },
-          include: [
-            {
-              model: BoxImage,
-            },
-            {
-              model: User,
-            },
-          ],
-        });
-        break;
-
-      case 3:
-        totalBox = await KeepBox.findAll({
-          where: {
-            name: {
-              [Op.like]: `%${_search}%`,
-            },
-          },
-          include: [
-            {
-              model: BoxImage,
-            },
-            {
-              model: User,
-            },
-          ],
-        });
-
-        boxLen = totalBox.length;
-
-        lastPage = boxLen % LIMIT > 0 ? boxLen / LIMIT + 1 : boxLen / LIMIT;
-
-        boxes = await KeepBox.findAll({
-          offset: OFFSET,
-          limit: LIMIT,
-          where: {
-            name: {
-              [Op.like]: `%${_search}%`,
-            },
-          },
-          include: [
-            {
-              model: BoxImage,
-            },
-            {
-              model: User,
-            },
-          ],
-        });
-        break;
-
-      default:
-        break;
-    }
-
-    return res.status(200).json({ boxes, lastPage: parseInt(lastPage) });
+    return res.status(200).json(lists);
   } catch (error) {
     console.error(error);
-    return res.status(401).send("목록을 불러올 수 없습니다.");
+    return res.status(401).send("박스 목록을 불러올 수 없습니다.");
   }
 });
+
+// 상자 리스트
+router.get(
+  ["/master/detail", "/master/detail/:listType"],
+  async (req, res, next) => {
+    const { page, masterId } = req.query;
+    const { listType } = req.params;
+
+    const LIMIT = 10;
+
+    const _page = page ? page : 1;
+
+    const __page = _page - 1;
+    const OFFSET = __page * 10;
+
+    let nanFlag = isNaN(listType);
+
+    if (!listType) {
+      nanFlag = false;
+    }
+
+    if (nanFlag) {
+      return res.status(400).send("잘못된 요청 입니다.");
+    }
+
+    let _listType = Number(listType);
+
+    if (_listType > 3 || !listType) {
+      _listType = 3;
+    }
+
+    try {
+      let totalBox = [];
+      let boxes = [];
+      let lastPage = 0;
+      let boxLen = 0;
+
+      const exMaster = await KeepBoxMaster.findOne({
+        where: {
+          id: parseInt(masterId),
+        },
+      });
+
+      if (!exMaster) {
+        return res.status(401).send("존재하지 않는 박스입니다.");
+      }
+
+      switch (_listType) {
+        case 1:
+          totalBox = await KeepBox.findAll({
+            where: {
+              KeepBoxMasterId: parseInt(masterId),
+              isPickup: false,
+            },
+          });
+
+          boxLen = totalBox.length;
+
+          lastPage = boxLen % LIMIT > 0 ? boxLen / LIMIT + 1 : boxLen / LIMIT;
+
+          boxes = await KeepBox.findAll({
+            offset: OFFSET,
+            limit: LIMIT,
+            where: {
+              KeepBoxMasterId: parseInt(masterId),
+              isPickup: false,
+            },
+            include: [
+              {
+                model: BoxImage,
+              },
+            ],
+          });
+          break;
+
+        case 2:
+          totalBox = await KeepBox.findAll({
+            where: {
+              KeepBoxMasterId: parseInt(masterId),
+              isPickup: true,
+            },
+          });
+
+          boxLen = totalBox.length;
+
+          lastPage = boxLen % LIMIT > 0 ? boxLen / LIMIT + 1 : boxLen / LIMIT;
+
+          boxes = await KeepBox.findAll({
+            offset: OFFSET,
+            limit: LIMIT,
+            where: {
+              KeepBoxMasterId: parseInt(masterId),
+              isPickup: true,
+            },
+            include: [
+              {
+                model: BoxImage,
+              },
+            ],
+          });
+          break;
+
+        case 3:
+          totalBox = await KeepBox.findAll({
+            where: {
+              KeepBoxMasterId: parseInt(masterId),
+            },
+          });
+
+          boxLen = totalBox.length;
+
+          lastPage = boxLen % LIMIT > 0 ? boxLen / LIMIT + 1 : boxLen / LIMIT;
+
+          boxes = await KeepBox.findAll({
+            offset: OFFSET,
+            limit: LIMIT,
+            where: {
+              KeepBoxMasterId: parseInt(masterId),
+            },
+            include: [
+              {
+                model: BoxImage,
+              },
+            ],
+          });
+          break;
+
+        default:
+          break;
+      }
+
+      return res.status(200).json({ boxes, lastPage: parseInt(lastPage) });
+    } catch (error) {
+      console.error(error);
+      return res.status(401).send("목록을 불러올 수 없습니다.");
+    }
+  }
+);
 
 // 입력 받은 값의 월 부터 한달
 router.post("/list/date", async (req, res, next) => {
   const { searchDate } = req.body;
 
   try {
-    console.log(searchDate);
-
     const dateParsingData = new Date(searchDate);
 
     const nextMonth = new Date(searchDate);
     nextMonth.setMonth(nextMonth.getMonth() + 1);
 
-    const results = await KeepBox.findAll({
+    const results = await KeepBoxMaster.findAll({
       where: {
         [Op.and]: [
           { createdAt: { [Op.gte]: dateParsingData } },
@@ -266,10 +273,21 @@ router.post("/list/date", async (req, res, next) => {
       },
       include: [
         {
-          model: BoxImage,
+          model: KeepBox,
         },
         {
           model: User,
+          attributes: {
+            exclude: [
+              "password",
+              "level",
+              "secret",
+              "cardNum",
+              "cardPeriod",
+              "cardIden",
+              "cardPassword",
+            ],
+          },
         },
       ],
     });
@@ -325,11 +343,9 @@ router.post("/create", async (req, res, next) => {
     ) {
       return res.status(401).send("박스를 선택하여 주십시오.");
     } else {
-      let createResult;
-
-      // const masterResult = await KeepBoxMAster.create({
-      //   UserId: parseInt(UserId),
-      // })
+      const masterResult = await KeepBoxMaster.create({
+        UserId: parseInt(UserId),
+      });
 
       if (parseInt(boxcount1) !== 0) {
         for (let i = 0; i < parseInt(boxcount1); i++) {
@@ -349,7 +365,7 @@ router.post("/create", async (req, res, next) => {
             detailAddress,
             remark,
             UserId: parseInt(UserId),
-            // Kep.. : pareserInt(masterResult.id),
+            KeepBoxMasterId: parseInt(masterResult.id),
           });
         }
       }
@@ -372,6 +388,7 @@ router.post("/create", async (req, res, next) => {
             detailAddress,
             remark,
             UserId: parseInt(UserId),
+            KeepBoxMasterId: parseInt(masterResult.id),
           });
         }
       }
@@ -394,6 +411,7 @@ router.post("/create", async (req, res, next) => {
             detailAddress,
             remark,
             UserId: parseInt(UserId),
+            KeepBoxMasterId: parseInt(masterResult.id),
           });
         }
       }
@@ -416,6 +434,7 @@ router.post("/create", async (req, res, next) => {
             detailAddress,
             remark,
             UserId: parseInt(UserId),
+            KeepBoxMasterId: parseInt(masterResult.id),
           });
         }
       }

@@ -21,6 +21,8 @@ const coupon = require("./coupon");
 const keepBoxSchedule = require("./keepBoxSchedule");
 const bulletbox = require("./bulletbox");
 const bulletimage = require("./bulletimage");
+const keepboxmaster = require("./keepboxmaster");
+const bulletboxmaster = require("./bulletboxmaster");
 
 const env = process.env.NODE_ENV || "development";
 const config = require("../config/config")[env];
@@ -55,6 +57,8 @@ db.Coupon = coupon;
 db.KeepBoxSchedule = keepBoxSchedule;
 db.BulletBox = bulletbox;
 db.BulletImage = bulletimage;
+db.KeepBoxMaster = keepboxmaster;
+db.BulletBoxMaster = bulletboxmaster;
 
 Object.keys(db).forEach((modelName) => {
   db[modelName].init(sequelize);
