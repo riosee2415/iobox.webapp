@@ -186,6 +186,9 @@ router.get(
               {
                 model: BoxImage,
               },
+              {
+                model: User,
+              },
             ],
           });
           break;
@@ -213,6 +216,9 @@ router.get(
               {
                 model: BoxImage,
               },
+              {
+                model: User,
+              },
             ],
           });
           break;
@@ -237,6 +243,9 @@ router.get(
             include: [
               {
                 model: BoxImage,
+              },
+              {
+                model: User,
               },
             ],
           });
@@ -465,15 +474,7 @@ router.post("/create", async (req, res, next) => {
 
 // 픽업 여부 변경
 router.patch("/update", isAdminCheck, async (req, res, next) => {
-  const {
-    id,
-    userCode,
-    userId,
-    deliveryCom,
-    deliveryCode,
-    deliveryCom2,
-    deliveryCode2,
-  } = req.body;
+  const { id, userCode, userId, deliveryCom, deliveryCode } = req.body;
 
   if (isNanCheck(id)) {
     return res.status(401).send("잘못된 요청입니다.");
@@ -486,19 +487,6 @@ router.patch("/update", isAdminCheck, async (req, res, next) => {
     if (!exBox) {
       return res.status(401).send("존재하지 않는 박스입니다.");
     }
-
-    const updateResult = await KeepBox.update(
-      {
-        // isPickup: true,
-        deliveryCom,
-        deliveryCode,
-        deliveryCom2,
-        deliveryCode2,
-      },
-      {
-        where: { id: parseInt(id) },
-      }
-    );
 
     let d = new Date();
     let year = d.getFullYear() + "";
@@ -516,23 +504,41 @@ router.patch("/update", isAdminCheck, async (req, res, next) => {
     mSec = mSec < 10 ? "0" + mSec : mSec;
     let fidKey = "ORD" + year + month + date + hour + min + sec + mSec;
 
-    await axios({
-      url: "http://trace-api- dev.sweettracker.net:8102/add_invoice",
+    const trakerApi = await axios({
+      url: "http://trace-api-dev.sweettracker.net:8102/add_invoice",
       method: "post", // POST method
       headers: { "Content-Type": "application/json" }, // "Content-Type": "application/json"
       data: {
-        num: deliveryCode, // REST API 키
+        num: deliveryCode, // 송장번호
         code: "04",
-        callback_url: "https://api.iobox.kr/api/subscription/schedule",
+        callback_url: "https://api.iobox.kr/api/kakao/callback",
         fid: fidKey,
         callback_type: "map",
-        tier: testuser,
-        key: testuser,
+        tier: "testuser",
+        key: "testuser",
         type: "json",
       },
     });
 
-    return res.status(200).json({ result: true });
+    if (trakerApi.data.success) {
+      const updateResult = await KeepBox.update(
+        {
+          // isPickup: true,
+          deliveryCom,
+          deliveryCode,
+          merchantUid: trakerApi.data.fid,
+        },
+        {
+          where: { id: parseInt(id) },
+        }
+      );
+
+      return res.status(200).json({ result: true });
+    } else {
+      return res.status(401).send(trakerApi.data.e_message);
+    }
+
+    //  정기 결제 api
 
     const getToken = await axios({
       url: "https://api.iamport.kr/users/getToken",
