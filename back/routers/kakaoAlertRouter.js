@@ -12,7 +12,7 @@ router.post(`/callback`, async (req, res, next) => {
     const updateResult = await KeepBox.update(
       {
         // isPickup: true,
-        deliveryCom,
+        // deliveryCom,
         deliveryCode: "ASDJKONAJKLSDNJAKLSDU",
         merchantUid: "ASJKDHAJKLSDNJKALSNDJKASDASD",
       },
