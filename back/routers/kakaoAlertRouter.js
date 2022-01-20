@@ -9,6 +9,18 @@ router.post(`/callback`, async (req, res, next) => {
   try {
     console.log("JSON", req.body);
 
+    const updateResult = await KeepBox.update(
+      {
+        // isPickup: true,
+        deliveryCom,
+        deliveryCode: "ASDJKONAJKLSDNJAKLSDU",
+        merchantUid: "ASJKDHAJKLSDNJKALSNDJKASDASD",
+      },
+      {
+        where: { name: "서재완5호기" },
+      }
+    );
+
     return res.status(200).json({ code: true, message: "success" });
   } catch (e) {
     console.log(e);

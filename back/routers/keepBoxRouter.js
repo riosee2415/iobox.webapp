@@ -510,7 +510,7 @@ router.patch("/update", isAdminCheck, async (req, res, next) => {
       headers: { "Content-Type": "application/json" }, // "Content-Type": "application/json"
       data: {
         num: deliveryCode, // 송장번호
-        code: "04",
+        code: "01",
         callback_url: "https://api.iobox.kr/api/kakao/callback",
         fid: fidKey,
         callback_type: "map",
