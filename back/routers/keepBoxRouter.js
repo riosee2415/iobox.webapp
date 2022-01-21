@@ -538,42 +538,6 @@ router.patch("/update", isAdminCheck, async (req, res, next) => {
       return res.status(401).send(trakerApi.data.e_message);
     }
 
-    // let d = new Date();
-    // let year = d.getFullYear() + "";
-    // let month = d.getMonth() + 1 + "";
-    // let date = d.getDate() + "";
-    // let hour = d.getHours() + "";
-    // let min = d.getMinutes() + "";
-    // let sec = d.getSeconds() + "";
-    // let mSec = d.getMilliseconds() + "";
-    // month = month < 10 ? "0" + month : month;
-    // date = date < 10 ? "0" + date : date;
-    // hour = hour < 10 ? "0" + hour : hour;
-    // min = min < 10 ? "0" + min : min;
-    // sec = sec < 10 ? "0" + sec : sec;
-    // mSec = mSec < 10 ? "0" + mSec : mSec;
-    // let mKey = "MAS" + year + month + date + hour + min + sec + mSec;
-
-    // const trakerApi = await axios({
-    //   url: `https://dev-alimtalk-api.sweettracker.net/v2/${profile_key}/sendMessage`,
-    //   method: "post", // POST method
-    //   headers: { "Content-Type": "application/json", userid: "key" }, // "Content-Type": "application/json"
-    //   data: {
-    //     msgid: mKey, // 고유한 메시지 코드
-    //     message_type: "AT", // 알림톡 타입 => AT : 알림톡, AI : 이지미 알림톡
-    //     profile_key, // 발신 프로필 키
-    //     template_code: "code ", // 템플릿 코드
-    //     receiver_num: "num", // 사용자 연락처
-    //     message: `
-
-    //     `,
-    //     reserved_time: "00000000000000", // 즉시 발송
-    //     // sms_only :  문자만 보낼때 사용
-    //     // parcel_company: "04", // 택배사 코드
-    //     // parcel_invoice: "", // 송장번호
-    //   },
-    // });
-
     //  정기 결제 api
 
     const getToken = await axios({
