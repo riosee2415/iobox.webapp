@@ -34,5 +34,6 @@ module.exports = class BoxImage extends Model {
   }
   static associate(db) {
     db.BoxImage.belongsTo(db.KeepBox);
+    db.BoxImage.belongsTo(db.ReturnKeep);
   }
 };

@@ -6,6 +6,7 @@ const {
   User,
   KeepBoxSchedule,
   KeepBoxMaster,
+  ReturnKeep,
 } = require("../models");
 const fs = require("fs");
 const { Op } = require("sequelize");
@@ -469,6 +470,44 @@ router.post("/create", async (req, res, next) => {
   } catch (error) {
     console.error(error);
     return res.status(401).send("박스를 추가할 수 없습니다.");
+  }
+});
+
+router.post("/findBox", isLoggedIn, async (req, res, next) => {
+  const { imageIds } = req.body;
+
+  if (!Array.isArray(imageIds)) {
+    return res
+      .status(401)
+      .send("잘못된 요청입니다. 확인 후 다시 시도하여 주십시오.");
+  }
+
+  try {
+    const createResult = await ReturnKeep.create({
+      temp: 0,
+    });
+
+    await Promise.all(
+      imageIds.map(async (data) => {
+        await BoxImage.update(
+          {
+            ReturnKeepId: parseInt(createResult.id),
+          },
+          {
+            where: { id: parseInt(data) },
+          }
+        );
+      })
+    );
+
+    if (!createResult) {
+      return res.status(401).send("처리중 문제가 발생하였습니다.");
+    }
+
+    return res.status(201).json({ result: true });
+  } catch (error) {
+    console.error(error);
+    return res.status(401).send("박스를 찾을 수 없습니다.");
   }
 });
 
