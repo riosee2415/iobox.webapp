@@ -511,7 +511,7 @@ router.patch("/update", isAdminCheck, async (req, res, next) => {
       data: {
         num: deliveryCode, // 송장번호
         code: "04",
-        callback_url: "https://api.iobox.kr/api/kakao/callback/asdnajksd",
+        callback_url: "https://api.iobox.kr/api/kakao/callback/",
         fid: fidKey,
         callback_type: "map",
         tier: "testuser",
