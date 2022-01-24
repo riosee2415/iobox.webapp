@@ -21,6 +21,12 @@ import {
 import { useRouter } from "next/dist/client/router";
 import { Checkbox } from "antd";
 import Footer from "../../../components/Footer";
+import wrapper from "../../../store/configureStore";
+import axios from "axios";
+import { LOAD_MY_INFO_REQUEST } from "../../../reducers/user";
+import { END } from "redux-saga";
+import { useDispatch, useSelector } from "react-redux";
+import { MASTER_KEEPBOX_LIST_REQUEST } from "../../../reducers/keepBox";
 
 const CheckboxGroup = styled(Checkbox.Group)`
   width: 100%;
@@ -87,6 +93,15 @@ const PayButtton = styled(Wrapper)`
 
 const Index = () => {
   const width = useWidth();
+
+  const dataArr = [
+    //
+    ["행거박스", "W58 x H100 x D30 (CM)", "월", 19000],
+    ["행거박스 plus+", "W58 x H130 x D60 (CM)", "월", 39000],
+    ["텐트박스", "W100 x H45 x D45 (CM)", "월", 39000],
+    ["캠핑박스 plus+", "W110 x H50 x D50 (CM)", "월", 59000],
+  ];
+
   ////// HOOKS //////
   const [tab, setTab] = useState(1);
 
@@ -112,10 +127,26 @@ const Index = () => {
   const [checkA, setCheckA] = useState(false);
   const [checkB, setCheckB] = useState(false);
 
+  const [boxes, setBoxes] = useState(null);
+
   ////// REDUX //////
   const router = useRouter();
+  const dispatch = useDispatch();
+
+  const { me } = useSelector((state) => state.user);
+  const { keepBoxes } = useSelector((state) => state.keepBox);
 
   ////// USEEFFECT //////
+  useEffect(() => {
+    if (me) {
+      dispatch({
+        type: MASTER_KEEPBOX_LIST_REQUEST,
+        data: {
+          id: me.id,
+        },
+      });
+    }
+  }, [me]);
 
   useEffect(() => {
     scrollTo(0, 0);
@@ -136,6 +167,33 @@ const Index = () => {
       setCheck8(false);
     }
   }, [tab]);
+
+  useEffect(() => {
+    if (keepBoxes) {
+      console.log(keepBoxes);
+      let tempBox = { 1: [], 2: [], 3: [], 4: [] };
+
+      for (let i = 0; i < keepBoxes.length; i++) {
+        console.log(keepBoxes[i].KeepBoxes.length);
+        for (let j = 0; j < keepBoxes[i].KeepBoxes.length; j++) {
+          if (keepBoxes[i].KeepBoxes[j].boxcount1 !== 0) {
+            tempBox[1].push(keepBoxes[i].KeepBoxes[j]);
+          }
+          if (keepBoxes[i].KeepBoxes[j].boxcount2 !== 0) {
+            tempBox[2].push(keepBoxes[i].KeepBoxes[j]);
+          }
+          if (keepBoxes[i].KeepBoxes[j].boxcount3 !== 0) {
+            tempBox[3].push(keepBoxes[i].KeepBoxes[j]);
+          }
+          if (keepBoxes[i].KeepBoxes[j].boxcount4 !== 0) {
+            tempBox[4].push(keepBoxes[i].KeepBoxes[j]);
+          }
+        }
+      }
+
+      setBoxes(tempBox);
+    }
+  }, [keepBoxes]);
 
   ////// TOGGLE ///////
 
@@ -298,10 +356,10 @@ const Index = () => {
                   borderBottom={`1px solid ${Theme.grey_C}`}
                 >
                   <Wrapper width={`auto`} al={`flex-start`}>
-                    <Text fontWeight={`700`} fontSize={`1.2rem`}>
+                    {/* <Text fontWeight={`700`} fontSize={`1.2rem`}>
                       고객번호
                     </Text>
-                    <Text>05466</Text>
+                    <Text>05466</Text> */}
                   </Wrapper>
 
                   <CommonButton
@@ -834,7 +892,7 @@ const Index = () => {
               <CloseOutlined />
             </Wrapper>
 
-            <ModalWrapper dr={`row`} ju={`space-between`} cursor={`pointer`}>
+            {/* <ModalWrapper dr={`row`} ju={`space-between`} cursor={`pointer`}>
               <Text
                 fontSize={`1.2rem`}
                 bold={true}
@@ -845,23 +903,46 @@ const Index = () => {
                 io박스
               </Text>
 
-              <Wrapper dr={`row`} width={`auto`}>
-                <Wrapper
-                  width={`auto`}
-                  display={boxNum === 0 ? `none` : `flex`}
-                  onClick={() => {
-                    numMiunsHandler("iobox");
-                  }}
-                >
-                  <MinusCircleOutlined />
-                </Wrapper>
-                <Text fontSize={`1.2rem`} margin={`0 0 0 3px`}>
-                  {boxNum}개
-                </Text>
-              </Wrapper>
-            </ModalWrapper>
+              // <Wrapper dr={`row`} width={`auto`}>
+              //  <Wrapper
+               //   width={`auto`}
+               //   display={boxNum === 0 ? `none` : `flex`}
+               //   onClick={() => {
+               //     numMiunsHandler("iobox");
+               //   }}
+               // >
+               //   <MinusCircleOutlined />
+               // </Wrapper>
+               // <Text fontSize={`1.2rem`} margin={`0 0 0 3px`}>
+               //   {boxNum}개
+               // </Text>
+              //</Wrapper> 
+            </ModalWrapper> */}
 
-            <ModalWrapper dr={`row`} ju={`space-between`}>
+            {Object.values(boxes).map((data, idx) => {
+              return data.map((info, key) => {
+                return (
+                  <ModalWrapper
+                    dr={`row`}
+                    ju={`space-between`}
+                    cursor={`pointer`}
+                    key={key}
+                  >
+                    <Text
+                      fontSize={`1.2rem`}
+                      bold={true}
+                      onClick={() => {
+                        numPlusHandler("iobox");
+                      }}
+                    >
+                      {dataArr[idx][0]} - {data.length - key}
+                    </Text>
+                  </ModalWrapper>
+                );
+              });
+            })}
+
+            {/* <ModalWrapper dr={`row`} ju={`space-between`}>
               <Text
                 fontSize={`1.2rem`}
                 bold={true}
@@ -937,7 +1018,7 @@ const Index = () => {
                   {bigNum}개
                 </Text>
               </Wrapper>
-            </ModalWrapper>
+            </ModalWrapper> */}
 
             <CommonButton
               width={`80%`}
@@ -953,5 +1034,27 @@ const Index = () => {
     </>
   );
 };
+
+export const getServerSideProps = wrapper.getServerSideProps(
+  async (context) => {
+    // SSR Cookie Settings For Data Load/////////////////////////////////////
+    const cookie = context.req ? context.req.headers.cookie : "";
+    axios.defaults.headers.Cookie = "";
+    if (context.req && cookie) {
+      axios.defaults.headers.Cookie = cookie;
+    }
+    ////////////////////////////////////////////////////////////////////////
+    // 구현부
+
+    context.store.dispatch({
+      type: LOAD_MY_INFO_REQUEST,
+    });
+
+    // 구현부 종료
+    context.store.dispatch(END);
+    console.log("🍀 SERVER SIDE PROPS END");
+    await context.store.sagaTask.toPromise();
+  }
+);
 
 export default Index;

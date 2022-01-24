@@ -28,6 +28,7 @@ import {
   KEEPBOX_DELETE_REQUEST,
   KEEPBOX_DATE_LIST_REQUEST,
   KEEPBOX_UPDATE_REQUEST,
+  MASTER_KEEPBOX_UPDATE_REQUEST,
 } from "../../../../reducers/keepBox";
 import useInput from "../../../../hooks/useInput";
 import {
@@ -186,8 +187,8 @@ const Index = () => {
     st_keepBoxListError,
     st_keepBoxCreateDone,
     st_keepBoxCreateError,
-    st_keepBoxUpdateDone,
-    st_keepBoxUpdateError,
+    st_masterKeepBoxUpdateDone,
+    st_masterKeepBoxUpdateError,
     st_keepBoxDeleteDone,
     st_keepBoxDeleteError,
 
@@ -206,7 +207,7 @@ const Index = () => {
   }, [router.query, yearInput, monthInput]);
 
   useEffect(() => {
-    if (st_keepBoxCreateDone) {
+    if (st_masterKeepBoxUpdateDone) {
       const qs = getQs();
       dispatch({
         type: KEEPBOX_DATE_LIST_REQUEST,
@@ -219,23 +220,7 @@ const Index = () => {
         type: MODAL_CLOSE_REQUEST,
       });
     }
-  }, [st_keepBoxCreateDone, router.query, yearInput, monthInput]);
-
-  useEffect(() => {
-    if (st_keepBoxUpdateDone) {
-      const qs = getQs();
-      dispatch({
-        type: KEEPBOX_DATE_LIST_REQUEST,
-        data: {
-          searchDate: `${yearInput}-${monthInput}-01`,
-        },
-      });
-
-      dispatch({
-        type: MODAL_CLOSE_REQUEST,
-      });
-    }
-  }, [st_keepBoxUpdateDone, router.query, yearInput, monthInput]);
+  }, [st_masterKeepBoxUpdateDone, router.query, yearInput, monthInput]);
 
   useEffect(() => {
     if (st_keepBoxDeleteDone) {
@@ -266,10 +251,10 @@ const Index = () => {
   }, [st_keepBoxCreateError]);
 
   useEffect(() => {
-    if (st_keepBoxUpdateError) {
-      return message.error(st_keepBoxUpdateError);
+    if (st_masterKeepBoxUpdateError) {
+      return message.error(st_masterKeepBoxUpdateError);
     }
-  }, [st_keepBoxUpdateError]);
+  }, [st_masterKeepBoxUpdateError]);
 
   useEffect(() => {
     if (st_keepBoxDeleteError) {
@@ -375,9 +360,7 @@ const Index = () => {
 
   const onFill = useCallback((data) => {
     formRef.current.setFieldsValue({
-      hint: data.hint,
-      content: data.title,
-      answer: data.answer,
+      status: data.status,
     });
 
     // dispatch({
@@ -391,13 +374,10 @@ const Index = () => {
       console.log(updateData.User);
 
       dispatch({
-        type: KEEPBOX_UPDATE_REQUEST,
+        type: MASTER_KEEPBOX_UPDATE_REQUEST,
         data: {
           id: updateData.id,
-          userId: updateData.User.id,
-          userCode: updateData.User.userCode,
-          deliveryCom: value.deliveryCom,
-          deliveryCode: value.deliveryCode,
+          status: value.status,
         },
       });
     },
@@ -445,10 +425,10 @@ const Index = () => {
       ),
     },
     {
-      title: "배송",
+      title: "진행상황",
       render: (data) => (
         <Button type="primary" onClick={() => updateModalOpen(data)}>
-          배송 정보 작성
+          진행상황 수정
         </Button>
       ),
     },
@@ -509,7 +489,7 @@ const Index = () => {
       <Modal
         visible={modal}
         width={`600px`}
-        title={`매입 관리`}
+        title={`진행 관리`}
         size="small"
         onCancel={modalClose}
         onOk={createModalOk}
@@ -566,40 +546,17 @@ const Index = () => {
             ref={formRef}
           >
             <Form.Item
-              name={"deliveryCom"}
-              label="배송 택배사"
+              name={"status"}
+              label="진행 상태"
               rules={[{ required: true }]}
             >
-              <Input size="small" placeholder="택배사" />
+              <Select>
+                <Select.Option value={"보관예약"}>보관 예약</Select.Option>
+                <Select.Option value={"수거중"}>수거중</Select.Option>
+                <Select.Option value={"센터도착"}>센터 도착</Select.Option>
+                <Select.Option value={"보관중"}>보관중</Select.Option>
+              </Select>
             </Form.Item>
-
-            <Form.Item
-              name={"deliveryCode"}
-              label="송장번호"
-              rules={[{ required: true }]}
-            >
-              <Input allowClear size="small" placeholder="송장번호" />
-            </Form.Item>
-
-            <Button size="small" type="primary" htmlType="submit">
-              배송 시작
-            </Button>
-            <Button
-              size="small"
-              type="danger"
-              onClick={() => {
-                dispatch({
-                  type: SUBSCRIPTION_CANCEL_REQUEST,
-                  data: {
-                    id: updateData.id,
-                    userCode: updateData.User.userCode,
-                    userId: updateData.User.id,
-                  },
-                });
-              }}
-            >
-              배송 취소
-            </Button>
           </Form>
         </Wrapper>
       </Modal>

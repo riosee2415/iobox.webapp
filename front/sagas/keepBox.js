@@ -5,6 +5,14 @@ import {
   KEEPBOX_LIST_FAILURE,
   KEEPBOX_LIST_REQUEST,
   //
+  MASTER_KEEPBOX_LIST_SUCCESS,
+  MASTER_KEEPBOX_LIST_FAILURE,
+  MASTER_KEEPBOX_LIST_REQUEST,
+  //
+  MASTER_KEEPBOX_UPDATE_SUCCESS,
+  MASTER_KEEPBOX_UPDATE_FAILURE,
+  MASTER_KEEPBOX_UPDATE_REQUEST,
+  //
   KEEPBOX_LIST_DETAIL_SUCCESS,
   KEEPBOX_LIST_DETAIL_FAILURE,
   KEEPBOX_LIST_DETAIL_REQUEST,
@@ -56,6 +64,60 @@ function* keepBoxList(action) {
     console.error(err);
     yield put({
       type: KEEPBOX_LIST_FAILURE,
+      error: err.response.data,
+    });
+  }
+}
+
+// ******************************************************************************************************************
+// ******************************************************************************************************************
+// ******************************************************************************************************************
+
+// SAGA AREA ********************************************************************************************************
+// ******************************************************************************************************************
+function masterKeepBoxListAPI(data) {
+  return axios.get(`/api/keepBox/userBox/${data.id}`, data);
+}
+
+function* masterKeepBoxList(action) {
+  try {
+    const result = yield call(masterKeepBoxListAPI, action.data);
+
+    yield put({
+      type: MASTER_KEEPBOX_LIST_SUCCESS,
+      data: result.data,
+    });
+  } catch (err) {
+    console.error(err);
+    yield put({
+      type: MASTER_KEEPBOX_LIST_FAILURE,
+      error: err.response.data,
+    });
+  }
+}
+
+// ******************************************************************************************************************
+// ******************************************************************************************************************
+// ******************************************************************************************************************
+
+// SAGA AREA ********************************************************************************************************
+// ******************************************************************************************************************
+function masterKeepBoxUpdateAPI(data) {
+  return axios.patch(`/api/keepBox/master/status`, data);
+}
+
+function* masterKeepBoxUpdate(action) {
+  try {
+    const result = yield call(masterKeepBoxUpdateAPI, action.data);
+
+    yield put({
+      type: MASTER_KEEPBOX_UPDATE_SUCCESS,
+      data: result.data,
+    });
+  } catch (err) {
+    console.error(err);
+    yield put({
+      type: MASTER_KEEPBOX_UPDATE_FAILURE,
       error: err.response.data,
     });
   }
@@ -287,6 +349,14 @@ function* watchKeepBoxList() {
   yield takeLatest(KEEPBOX_LIST_REQUEST, keepBoxList);
 }
 
+function* watchMasterKeepBoxList() {
+  yield takeLatest(MASTER_KEEPBOX_LIST_REQUEST, masterKeepBoxList);
+}
+
+function* watchMasterKeepBoxUpdate() {
+  yield takeLatest(MASTER_KEEPBOX_UPDATE_REQUEST, masterKeepBoxUpdate);
+}
+
 function* watchKeepBoxListDetail() {
   yield takeLatest(KEEPBOX_LIST_DETAIL_REQUEST, keepBoxListDetail);
 }
@@ -323,6 +393,8 @@ function* watchKeepBoxImageDelete() {
 export default function* keepBoxSaga() {
   yield all([
     fork(watchKeepBoxList),
+    fork(watchMasterKeepBoxList),
+    fork(watchMasterKeepBoxUpdate),
     fork(watchKeepBoxListDetail),
     fork(watchKeepBoxUpload),
     fork(watchKeepBoxDetail),

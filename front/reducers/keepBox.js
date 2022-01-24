@@ -13,6 +13,14 @@ export const initailState = {
   st_keepBoxListDone: false,
   st_keepBoxListError: null,
   //
+  st_masterKeepBoxListLoading: false, // 박스 가져오기
+  st_masterKeepBoxListDone: false,
+  st_masterKeepBoxListError: null,
+  //
+  st_masterKeepBoxUpdateLoading: false, // 박스 업데이트
+  st_masterKeepBoxUpdateDone: false,
+  st_masterKeepBoxUpdateError: null,
+  //
   st_keepBoxListDetailLoading: false, // 박스 디테일 가져오기
   st_keepBoxListDetailDone: false,
   st_keepBoxListDetailError: null,
@@ -50,6 +58,14 @@ export const initailState = {
 export const KEEPBOX_LIST_REQUEST = "KEEPBOX_LIST_REQUEST";
 export const KEEPBOX_LIST_SUCCESS = "KEEPBOX_LIST_SUCCESS";
 export const KEEPBOX_LIST_FAILURE = "KEEPBOX_LIST_FAILURE";
+//
+export const MASTER_KEEPBOX_LIST_REQUEST = "MASTER_KEEPBOX_LIST_REQUEST";
+export const MASTER_KEEPBOX_LIST_SUCCESS = "MASTER_KEEPBOX_LIST_SUCCESS";
+export const MASTER_KEEPBOX_LIST_FAILURE = "MASTER_KEEPBOX_LIST_FAILURE";
+//
+export const MASTER_KEEPBOX_UPDATE_REQUEST = "MASTER_KEEPBOX_UPDATE_REQUEST";
+export const MASTER_KEEPBOX_UPDATE_SUCCESS = "MASTER_KEEPBOX_UPDATE_SUCCESS";
+export const MASTER_KEEPBOX_UPDATE_FAILURE = "MASTER_KEEPBOX_UPDATE_FAILURE";
 //
 export const KEEPBOX_LIST_DETAIL_REQUEST = "KEEPBOX_LIST_DETAIL_REQUEST";
 export const KEEPBOX_LIST_DETAIL_SUCCESS = "KEEPBOX_LIST_DETAIL_SUCCESS";
@@ -109,6 +125,45 @@ const reducer = (state = initailState, action) =>
         draft.st_keepBoxListLoading = false;
         draft.st_keepBoxListDone = false;
         draft.st_keepBoxListError = action.error;
+        break;
+      }
+      ///////////////////////////////////////////////////////
+      case MASTER_KEEPBOX_LIST_REQUEST: {
+        draft.st_masterKeepBoxListLoading = true;
+        draft.st_masterKeepBoxListDone = null;
+        draft.st_masterKeepBoxListError = false;
+        break;
+      }
+      case MASTER_KEEPBOX_LIST_SUCCESS: {
+        draft.st_masterKeepBoxListLoading = false;
+        draft.st_masterKeepBoxListDone = true;
+        draft.keepBoxes = action.data;
+
+        break;
+      }
+      case MASTER_KEEPBOX_LIST_FAILURE: {
+        draft.st_masterKeepBoxListLoading = false;
+        draft.st_masterKeepBoxListDone = false;
+        draft.st_masterKeepBoxListError = action.error;
+        break;
+      }
+      ///////////////////////////////////////////////////////
+      case MASTER_KEEPBOX_UPDATE_REQUEST: {
+        draft.st_masterKeepBoxUpdateLoading = true;
+        draft.st_masterKeepBoxUpdateDone = null;
+        draft.st_masterKeepBoxUpdateError = false;
+        break;
+      }
+      case MASTER_KEEPBOX_UPDATE_SUCCESS: {
+        draft.st_masterKeepBoxUpdateLoading = false;
+        draft.st_masterKeepBoxUpdateDone = true;
+
+        break;
+      }
+      case MASTER_KEEPBOX_UPDATE_FAILURE: {
+        draft.st_masterKeepBoxUpdateLoading = false;
+        draft.st_masterKeepBoxUpdateDone = false;
+        draft.st_masterKeepBoxUpdateError = action.error;
         break;
       }
       ///////////////////////////////////////////////////////
