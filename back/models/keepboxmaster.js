@@ -10,6 +10,11 @@ module.exports = class KeepBoxMaster extends Model {
           allowNull: false,
           defaultValue: 0,
         },
+        status: {
+          type: DataTypes.STRING(300),
+          allowNull: false,
+          defaultValue: "보관예약",
+        },
       },
       {
         modelName: "KeepBoxMaster",

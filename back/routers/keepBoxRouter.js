@@ -117,6 +117,26 @@ router.get("/list", isAdminCheck, async (req, res, next) => {
   }
 });
 
+router.get("/userBox/:id", async (req, res, next) => {
+  const { id } = req.params;
+
+  try {
+    const boxes = await KeepBoxMaster.findAll({
+      where: { UserId: id },
+      include: [
+        {
+          model: KeepBox,
+        },
+      ],
+      order: [["createdAt", "DESC"]],
+    });
+
+    return res.status(200).json(boxes);
+  } catch (e) {
+    return res.status(401).send("박스 목록을 불러올 수 없습니다.");
+  }
+});
+
 // 상자 리스트
 router.get(
   ["/master/detail", "/master/detail/:listType"],
@@ -284,6 +304,9 @@ router.post("/list/date", async (req, res, next) => {
       include: [
         {
           model: KeepBox,
+          include: {
+            model: BoxImage,
+          },
         },
         {
           model: User,
@@ -470,6 +493,28 @@ router.post("/create", async (req, res, next) => {
   } catch (error) {
     console.error(error);
     return res.status(401).send("박스를 추가할 수 없습니다.");
+  }
+});
+
+router.patch("/master/status", isLoggedIn, async (req, res, next) => {
+  const { status, id } = req.body;
+
+  console.log(status, id);
+
+  try {
+    const updateResult = await KeepBoxMaster.update(
+      { status },
+      {
+        where: {
+          id: parseInt(id),
+        },
+      }
+    );
+
+    return res.status(201).json({ result: true });
+  } catch (error) {
+    console.error(error);
+    return res.status(401).send("박스를 찾을 수 없습니다.");
   }
 });
 

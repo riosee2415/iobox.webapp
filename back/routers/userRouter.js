@@ -398,6 +398,68 @@ router.patch("/level/update", isAdminCheck, async (req, res, next) => {
   }
 });
 
+router.post("/phoneNumberCheck", isLoggedIn, async (req, res, next) => {
+  const { phoneNum } = req.body;
+
+  try {
+    // // 알림톡
+    let d = new Date();
+    let year = d.getFullYear() + "";
+    let month = d.getMonth() + 1 + "";
+    let date = d.getDate() + "";
+    let hour = d.getHours() + "";
+    let min = d.getMinutes() + "";
+    let sec = d.getSeconds() + "";
+    let mSec = d.getMilliseconds() + "";
+    month = month < 10 ? "0" + month : month;
+    date = date < 10 ? "0" + date : date;
+    hour = hour < 10 ? "0" + hour : hour;
+    min = min < 10 ? "0" + min : min;
+    sec = sec < 10 ? "0" + sec : sec;
+    mSec = mSec < 10 ? "0" + mSec : mSec;
+    let mKey = "MAS" + year + month + date + hour + min + sec + mSec;
+
+    const profile_key = "569bebdbe801200fcfa70fcf12b2d587bd95f8a7";
+
+    let str = "";
+    for (let i = 0; i < n; i++) {
+      str += Math.floor(Math.random() * 10);
+    }
+
+    const trakerApi = await axios({
+      url: `https://dev-alimtalk-api.sweettracker.net/v2/${profile_key}/sendMessage`,
+      method: "post", // POST method
+      headers: { "Content-Type": "application/json", userid: "key" }, // "Content-Type": "application/json"
+      data: {
+        msgid: mKey, // 고유한 메시지 코드
+        message_type: "AT", // 알림톡 타입 => AT : 알림톡, AI : 이지미 알림톡
+        profile_key, // 발신 프로필 키
+        template_code: "code ", // 템플릿 코드
+        receiver_num: phoneNum, // 사용자 연락처
+        message: `[아이오박스]
+        아이오박스 휴대폰 인증을 위한 인증번호는 아래와 같습니다.
+        
+        인증번호 : ${str}
+        `, // 알림톡 내용
+        reserved_time: "00000000000000", // 즉시 발송
+        // sms_only :  문자만 보낼때 사용
+        // parcel_company: "04", // 택배사 코드
+        // parcel_invoice: invoice_no, // 송장번호
+        // button1: {
+        //   name: "~~~", // 버튼 내용
+        //   type: "WL", // 버튼 타입 => WL : 웹으로 이동 (반응형 포함) AL : 어플로 이동
+        //   url_pc: "url",
+        //   url_mobile: "url",
+        // },
+        // 버튼 JSON 형식
+      },
+    });
+  } catch (e) {
+    console.log(e);
+    return res.status(401).send("휴대폰 인증을 할 수 없습니다.");
+  }
+});
+
 router.post("/cardCreate", isLoggedIn, async (req, res, next) => {
   const { cardNum, cardPeriod, cardIden, cardPassword } = req.body;
   try {
