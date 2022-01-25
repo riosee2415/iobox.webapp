@@ -508,352 +508,337 @@ const Index = () => {
                       </Wrapper>
                     </Wrapper>
                   </Wrapper>
-                  {(boxRealNum || hangRealNum || tentRealNum || bigRealNum) >
-                    0 && (
-                    <>
-                      {/* <CheckboxGroup
+
+                  {/* <CheckboxGroup
 
                       //  onChange={CheckBoxChangeHandler}
                       > */}
-                      <Wrapper
-                        bgColor={checkA ? Theme.lightGrey_C : ``}
-                        dr={`row`}
-                        ju={`space-between`}
-                        padding={`20px 0 10px`}
-                        borderBottom={`1px solid ${Theme.grey_C}`}
-                      >
-                        <Text bold={true} fontSize={`1.3rem`}>
-                          행거박스 A-1
-                        </Text>
+                  <Wrapper
+                    bgColor={checkA ? Theme.lightGrey_C : ``}
+                    dr={`row`}
+                    ju={`space-between`}
+                    padding={`20px 0 10px`}
+                    borderBottom={`1px solid ${Theme.grey_C}`}
+                  >
+                    <Text bold={true} fontSize={`1.3rem`}>
+                      행거박스 A-1
+                    </Text>
 
-                        <Wrapper
-                          width={`auto`}
-                          display={tab === 1 ? `flex` : `none`}
-                        >
-                          <Checkbox
-                            checked={checkA}
-                            onClick={() =>
-                              tab === 1 ? setCheckA((prev) => !prev) : {}
-                            }
-                          />
-                        </Wrapper>
-                      </Wrapper>
-
-                      <Wrapper
-                        bgColor={
-                          checkA
-                            ? Theme.lightGrey_C
-                            : check1
-                            ? Theme.lightGrey_C
-                            : ``
+                    <Wrapper
+                      width={`auto`}
+                      display={tab === 1 ? `flex` : `none`}
+                    >
+                      <Checkbox
+                        checked={checkA}
+                        onClick={() =>
+                          tab === 1 ? setCheckA((prev) => !prev) : {}
                         }
-                        dr={`row`}
-                        ju={`space-between`}
-                        height={`150px`}
-                        borderBottom={`1px solid ${Theme.grey_C}`}
-                      >
-                        <Image
-                          src={`https://4leaf-s3.s3.ap-northeast-2.amazonaws.com/iobox/assets/images/icon/tee.png`}
-                          alt={`image`}
-                          width={`30%`}
-                        />
+                      />
+                    </Wrapper>
+                  </Wrapper>
 
-                        <Wrapper
-                          width={`auto`}
-                          display={tab === 0 ? `flex` : `none`}
-                        >
-                          <Checkbox
-                            checked={check1}
-                            onClick={() =>
-                              tab === 0 ? setCheck1((prev) => !prev) : {}
-                            }
-                          />
-                        </Wrapper>
-                      </Wrapper>
+                  <Wrapper
+                    bgColor={
+                      checkA
+                        ? Theme.lightGrey_C
+                        : check1
+                        ? Theme.lightGrey_C
+                        : ``
+                    }
+                    dr={`row`}
+                    ju={`space-between`}
+                    height={`150px`}
+                    borderBottom={`1px solid ${Theme.grey_C}`}
+                  >
+                    <Image
+                      src={`https://4leaf-s3.s3.ap-northeast-2.amazonaws.com/iobox/assets/images/icon/tee.png`}
+                      alt={`image`}
+                      width={`30%`}
+                    />
 
-                      <Wrapper
-                        bgColor={
-                          checkA
-                            ? Theme.lightGrey_C
-                            : check2
-                            ? Theme.lightGrey_C
-                            : ``
+                    <Wrapper
+                      width={`auto`}
+                      display={tab === 0 ? `flex` : `none`}
+                    >
+                      <Checkbox
+                        checked={check1}
+                        onClick={() =>
+                          tab === 0 ? setCheck1((prev) => !prev) : {}
                         }
-                        dr={`row`}
-                        ju={`space-between`}
-                        height={`150px`}
-                        borderBottom={`1px solid ${Theme.grey_C}`}
-                      >
-                        <Image
-                          src={`https://4leaf-s3.s3.ap-northeast-2.amazonaws.com/iobox/assets/images/icon/book.png`}
-                          alt={`image`}
-                          width={`30%`}
-                        />
+                      />
+                    </Wrapper>
+                  </Wrapper>
 
-                        <Wrapper
-                          width={`auto`}
-                          display={tab === 0 ? `flex` : `none`}
-                        >
-                          <Checkbox
-                            checked={check2}
-                            onClick={() =>
-                              tab === 0 ? setCheck2((prev) => !prev) : {}
-                            }
-                          />
-                        </Wrapper>
-                      </Wrapper>
+                  <Wrapper
+                    bgColor={
+                      checkA
+                        ? Theme.lightGrey_C
+                        : check2
+                        ? Theme.lightGrey_C
+                        : ``
+                    }
+                    dr={`row`}
+                    ju={`space-between`}
+                    height={`150px`}
+                    borderBottom={`1px solid ${Theme.grey_C}`}
+                  >
+                    <Image
+                      src={`https://4leaf-s3.s3.ap-northeast-2.amazonaws.com/iobox/assets/images/icon/book.png`}
+                      alt={`image`}
+                      width={`30%`}
+                    />
 
-                      <Wrapper
-                        bgColor={
-                          checkA
-                            ? Theme.lightGrey_C
-                            : check3
-                            ? Theme.lightGrey_C
-                            : ``
+                    <Wrapper
+                      width={`auto`}
+                      display={tab === 0 ? `flex` : `none`}
+                    >
+                      <Checkbox
+                        checked={check2}
+                        onClick={() =>
+                          tab === 0 ? setCheck2((prev) => !prev) : {}
                         }
-                        dr={`row`}
-                        ju={`space-between`}
-                        height={`150px`}
-                        borderBottom={`1px solid ${Theme.grey_C}`}
-                      >
-                        <Image
-                          src={`https://4leaf-s3.s3.ap-northeast-2.amazonaws.com/iobox/assets/images/icon/shirt.png`}
-                          alt={`image`}
-                          width={`30%`}
-                        />
+                      />
+                    </Wrapper>
+                  </Wrapper>
 
-                        <Wrapper
-                          width={`auto`}
-                          display={tab === 0 ? `flex` : `none`}
-                        >
-                          <Checkbox
-                            checked={check3}
-                            onClick={() =>
-                              tab === 0 ? setCheck3((prev) => !prev) : {}
-                            }
-                          />
-                        </Wrapper>
-                      </Wrapper>
+                  <Wrapper
+                    bgColor={
+                      checkA
+                        ? Theme.lightGrey_C
+                        : check3
+                        ? Theme.lightGrey_C
+                        : ``
+                    }
+                    dr={`row`}
+                    ju={`space-between`}
+                    height={`150px`}
+                    borderBottom={`1px solid ${Theme.grey_C}`}
+                  >
+                    <Image
+                      src={`https://4leaf-s3.s3.ap-northeast-2.amazonaws.com/iobox/assets/images/icon/shirt.png`}
+                      alt={`image`}
+                      width={`30%`}
+                    />
 
-                      <Wrapper
-                        bgColor={
-                          checkA
-                            ? Theme.lightGrey_C
-                            : check4
-                            ? Theme.lightGrey_C
-                            : ``
+                    <Wrapper
+                      width={`auto`}
+                      display={tab === 0 ? `flex` : `none`}
+                    >
+                      <Checkbox
+                        checked={check3}
+                        onClick={() =>
+                          tab === 0 ? setCheck3((prev) => !prev) : {}
                         }
-                        dr={`row`}
-                        ju={`space-between`}
-                        height={`150px`}
-                        borderBottom={`1px solid ${Theme.grey_C}`}
-                      >
-                        <Image
-                          src={`https://4leaf-s3.s3.ap-northeast-2.amazonaws.com/iobox/assets/images/icon/knit.png`}
-                          alt={`image`}
-                          width={`30%`}
-                        />
+                      />
+                    </Wrapper>
+                  </Wrapper>
 
-                        <Wrapper
-                          width={`auto`}
-                          display={tab === 0 ? `flex` : `none`}
-                        >
-                          <Checkbox
-                            checked={check4}
-                            onClick={() =>
-                              tab === 0 ? setCheck4((prev) => !prev) : {}
-                            }
-                          />
-                        </Wrapper>
-                      </Wrapper>
+                  <Wrapper
+                    bgColor={
+                      checkA
+                        ? Theme.lightGrey_C
+                        : check4
+                        ? Theme.lightGrey_C
+                        : ``
+                    }
+                    dr={`row`}
+                    ju={`space-between`}
+                    height={`150px`}
+                    borderBottom={`1px solid ${Theme.grey_C}`}
+                  >
+                    <Image
+                      src={`https://4leaf-s3.s3.ap-northeast-2.amazonaws.com/iobox/assets/images/icon/knit.png`}
+                      alt={`image`}
+                      width={`30%`}
+                    />
 
-                      <Wrapper
-                        dr={`row`}
-                        ju={`space-between`}
-                        padding={`50px 0 10px`}
-                        borderBottom={`1px solid ${Theme.grey_C}`}
-                        bgColor={checkB ? Theme.lightGrey_C : ``}
-                      >
-                        <Text bold={true} fontSize={`1.3rem`}>
-                          행거박스 A-2
-                        </Text>
-                        <Wrapper
-                          width={`auto`}
-                          display={tab === 1 ? `flex` : `none`}
-                        >
-                          <Checkbox
-                            checked={checkB}
-                            onClick={() =>
-                              tab === 1 ? setCheckB((prev) => !prev) : {}
-                            }
-                          />
-                        </Wrapper>
-                      </Wrapper>
-
-                      <Wrapper
-                        bgColor={
-                          checkB
-                            ? Theme.lightGrey_C
-                            : check5
-                            ? Theme.lightGrey_C
-                            : ``
+                    <Wrapper
+                      width={`auto`}
+                      display={tab === 0 ? `flex` : `none`}
+                    >
+                      <Checkbox
+                        checked={check4}
+                        onClick={() =>
+                          tab === 0 ? setCheck4((prev) => !prev) : {}
                         }
-                        dr={`row`}
-                        ju={`space-between`}
-                        height={`150px`}
-                        borderBottom={`1px solid ${Theme.grey_C}`}
-                      >
-                        <Image
-                          src={`https://4leaf-s3.s3.ap-northeast-2.amazonaws.com/iobox/assets/images/icon/tee.png`}
-                          alt={`image`}
-                          width={`30%`}
-                        />
+                      />
+                    </Wrapper>
+                  </Wrapper>
 
-                        <Wrapper
-                          width={`auto`}
-                          display={tab === 0 ? `flex` : `none`}
-                        >
-                          <Checkbox
-                            checked={check5}
-                            onClick={() =>
-                              tab === 0 ? setCheck5((prev) => !prev) : {}
-                            }
-                          />
-                        </Wrapper>
-                      </Wrapper>
-
-                      <Wrapper
-                        bgColor={
-                          checkB
-                            ? Theme.lightGrey_C
-                            : check6
-                            ? Theme.lightGrey_C
-                            : ``
+                  <Wrapper
+                    dr={`row`}
+                    ju={`space-between`}
+                    padding={`50px 0 10px`}
+                    borderBottom={`1px solid ${Theme.grey_C}`}
+                    bgColor={checkB ? Theme.lightGrey_C : ``}
+                  >
+                    <Text bold={true} fontSize={`1.3rem`}>
+                      행거박스 A-2
+                    </Text>
+                    <Wrapper
+                      width={`auto`}
+                      display={tab === 1 ? `flex` : `none`}
+                    >
+                      <Checkbox
+                        checked={checkB}
+                        onClick={() =>
+                          tab === 1 ? setCheckB((prev) => !prev) : {}
                         }
-                        dr={`row`}
-                        ju={`space-between`}
-                        height={`150px`}
-                        borderBottom={`1px solid ${Theme.grey_C}`}
-                      >
-                        <Image
-                          src={`https://4leaf-s3.s3.ap-northeast-2.amazonaws.com/iobox/assets/images/icon/book.png`}
-                          alt={`image`}
-                          width={`30%`}
-                        />
+                      />
+                    </Wrapper>
+                  </Wrapper>
 
-                        <Wrapper
-                          width={`auto`}
-                          display={tab === 0 ? `flex` : `none`}
-                        >
-                          <Checkbox
-                            checked={check6}
-                            onClick={() =>
-                              tab === 0 ? setCheck6((prev) => !prev) : {}
-                            }
-                          />
-                        </Wrapper>
-                      </Wrapper>
+                  <Wrapper
+                    bgColor={
+                      checkB
+                        ? Theme.lightGrey_C
+                        : check5
+                        ? Theme.lightGrey_C
+                        : ``
+                    }
+                    dr={`row`}
+                    ju={`space-between`}
+                    height={`150px`}
+                    borderBottom={`1px solid ${Theme.grey_C}`}
+                  >
+                    <Image
+                      src={`https://4leaf-s3.s3.ap-northeast-2.amazonaws.com/iobox/assets/images/icon/tee.png`}
+                      alt={`image`}
+                      width={`30%`}
+                    />
 
-                      <Wrapper
-                        bgColor={
-                          checkB
-                            ? Theme.lightGrey_C
-                            : check7
-                            ? Theme.lightGrey_C
-                            : ``
+                    <Wrapper
+                      width={`auto`}
+                      display={tab === 0 ? `flex` : `none`}
+                    >
+                      <Checkbox
+                        checked={check5}
+                        onClick={() =>
+                          tab === 0 ? setCheck5((prev) => !prev) : {}
                         }
-                        dr={`row`}
-                        ju={`space-between`}
-                        height={`150px`}
-                        borderBottom={`1px solid ${Theme.grey_C}`}
-                      >
-                        <Image
-                          src={`https://4leaf-s3.s3.ap-northeast-2.amazonaws.com/iobox/assets/images/icon/shirt.png`}
-                          alt={`image`}
-                          width={`30%`}
-                        />
+                      />
+                    </Wrapper>
+                  </Wrapper>
 
-                        <Wrapper
-                          width={`auto`}
-                          display={tab === 0 ? `flex` : `none`}
-                        >
-                          <Checkbox
-                            checked={check7}
-                            onClick={() =>
-                              tab === 0 ? setCheck7((prev) => !prev) : {}
-                            }
-                          />
-                        </Wrapper>
-                      </Wrapper>
+                  <Wrapper
+                    bgColor={
+                      checkB
+                        ? Theme.lightGrey_C
+                        : check6
+                        ? Theme.lightGrey_C
+                        : ``
+                    }
+                    dr={`row`}
+                    ju={`space-between`}
+                    height={`150px`}
+                    borderBottom={`1px solid ${Theme.grey_C}`}
+                  >
+                    <Image
+                      src={`https://4leaf-s3.s3.ap-northeast-2.amazonaws.com/iobox/assets/images/icon/book.png`}
+                      alt={`image`}
+                      width={`30%`}
+                    />
 
-                      <Wrapper
-                        bgColor={
-                          checkB
-                            ? Theme.lightGrey_C
-                            : check8
-                            ? Theme.lightGrey_C
-                            : ``
+                    <Wrapper
+                      width={`auto`}
+                      display={tab === 0 ? `flex` : `none`}
+                    >
+                      <Checkbox
+                        checked={check6}
+                        onClick={() =>
+                          tab === 0 ? setCheck6((prev) => !prev) : {}
                         }
-                        dr={`row`}
-                        ju={`space-between`}
-                        height={`150px`}
-                        borderBottom={`1px solid ${Theme.grey_C}`}
-                      >
-                        <Image
-                          src={`https://4leaf-s3.s3.ap-northeast-2.amazonaws.com/iobox/assets/images/icon/knit.png`}
-                          alt={`image`}
-                          width={`30%`}
-                        />
+                      />
+                    </Wrapper>
+                  </Wrapper>
 
-                        <Wrapper
-                          width={`auto`}
-                          display={tab === 0 ? `flex` : `none`}
-                        >
-                          <Checkbox
-                            checked={check8}
-                            onClick={() =>
-                              tab === 0 ? setCheck8((prev) => !prev) : {}
-                            }
-                          />
-                        </Wrapper>
-                      </Wrapper>
-                      {/* </CheckboxGroup> */}
+                  <Wrapper
+                    bgColor={
+                      checkB
+                        ? Theme.lightGrey_C
+                        : check7
+                        ? Theme.lightGrey_C
+                        : ``
+                    }
+                    dr={`row`}
+                    ju={`space-between`}
+                    height={`150px`}
+                    borderBottom={`1px solid ${Theme.grey_C}`}
+                  >
+                    <Image
+                      src={`https://4leaf-s3.s3.ap-northeast-2.amazonaws.com/iobox/assets/images/icon/shirt.png`}
+                      alt={`image`}
+                      width={`30%`}
+                    />
 
-                      <Wrapper
-                        dr={`row`}
-                        ju={`space-around`}
-                        margin={
-                          (boxRealNum ||
-                            hangRealNum ||
-                            tentRealNum ||
-                            bigRealNum) === 0
-                            ? `50px 0`
-                            : `50px 0 0`
+                    <Wrapper
+                      width={`auto`}
+                      display={tab === 0 ? `flex` : `none`}
+                    >
+                      <Checkbox
+                        checked={check7}
+                        onClick={() =>
+                          tab === 0 ? setCheck7((prev) => !prev) : {}
                         }
-                      >
-                        <TextHover
-                          onClick={() => {
-                            setTab(0);
-                          }}
-                          bold={true}
-                          color={tab === 0 ? Theme.basicTheme_C : Theme.grey_C}
-                          beforeWidth={tab === 0 ? `100%` : `0`}
-                        >
-                          부분 찾기
-                        </TextHover>
-                        <TextHover
-                          onClick={() => {
-                            setTab(1);
-                          }}
-                          bold={true}
-                          color={tab === 1 ? Theme.basicTheme_C : Theme.grey_C}
-                          beforeWidth={tab === 1 ? `100%` : `0`}
-                        >
-                          전체 찾기
-                        </TextHover>
-                      </Wrapper>
-                    </>
-                  )}
+                      />
+                    </Wrapper>
+                  </Wrapper>
+
+                  <Wrapper
+                    bgColor={
+                      checkB
+                        ? Theme.lightGrey_C
+                        : check8
+                        ? Theme.lightGrey_C
+                        : ``
+                    }
+                    dr={`row`}
+                    ju={`space-between`}
+                    height={`150px`}
+                    borderBottom={`1px solid ${Theme.grey_C}`}
+                  >
+                    <Image
+                      src={`https://4leaf-s3.s3.ap-northeast-2.amazonaws.com/iobox/assets/images/icon/knit.png`}
+                      alt={`image`}
+                      width={`30%`}
+                    />
+
+                    <Wrapper
+                      width={`auto`}
+                      display={tab === 0 ? `flex` : `none`}
+                    >
+                      <Checkbox
+                        checked={check8}
+                        onClick={() =>
+                          tab === 0 ? setCheck8((prev) => !prev) : {}
+                        }
+                      />
+                    </Wrapper>
+                  </Wrapper>
+                  {/* </CheckboxGroup> */}
+
+                  <Wrapper dr={`row`} ju={`space-around`} margin={`50px 0 0`}>
+                    <TextHover
+                      onClick={() => {
+                        setTab(0);
+                      }}
+                      bold={true}
+                      color={tab === 0 ? Theme.basicTheme_C : Theme.grey_C}
+                      beforeWidth={tab === 0 ? `100%` : `0`}
+                    >
+                      부분 찾기
+                    </TextHover>
+                    <TextHover
+                      onClick={() => {
+                        setTab(1);
+                      }}
+                      bold={true}
+                      color={tab === 1 ? Theme.basicTheme_C : Theme.grey_C}
+                      beforeWidth={tab === 1 ? `100%` : `0`}
+                    >
+                      전체 찾기
+                    </TextHover>
+                  </Wrapper>
                 </Wrapper>
               </Wrapper>
             </RsWrapper>
