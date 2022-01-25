@@ -538,7 +538,7 @@ const AppFooter = () => {
                       ? screen.height / 2 < 390
                         ? `70px`
                         : `80px`
-                      : `100px`
+                      : `110px`
                   }
                   left={
                     width < 700
@@ -565,13 +565,7 @@ const AppFooter = () => {
                 </IconBox>
 
                 <IconBox
-                  top={
-                    width < 700
-                      ? screen.height / 2 < 390
-                        ? `70px`
-                        : `80px`
-                      : `100px`
-                  }
+                  top={width < 700 ? `70px` : `100px`}
                   right={
                     width < 700
                       ? screen.height / 2 < 390
@@ -614,7 +608,7 @@ const AppFooter = () => {
                     width < 700
                       ? screen.height / 2 < 390
                         ? `80px`
-                        : `80px`
+                        : `70px`
                       : `110px`
                   }
                   left={
@@ -650,8 +644,8 @@ const AppFooter = () => {
                     width < 700
                       ? screen.height / 2 < 390
                         ? `80px`
-                        : `90px`
-                      : `110px`
+                        : `75px`
+                      : `100px`
                   }
                   right={
                     width < 700
@@ -684,7 +678,7 @@ const AppFooter = () => {
                   onClick={() => {
                     moveLinkHandler(`/iobox?type=tentBox`);
                   }}
-                  bottom={screen.height / 2 < 390 ? `20px` : `25px`}
+                  bottom={screen.height / 2 < 390 ? `20px` : `20px`}
                   left={`50%`}
                   margin={width < 700 ? `0 0 0 -52.5px` : `0 0 0 -63px`}
                 >

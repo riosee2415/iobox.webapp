@@ -199,7 +199,7 @@ const MenuSlider = ({
               display={`flex !important`}
               dr={`row`}
               key={idx}
-              padding={`0 0 0 50px`}
+              padding={`0 0 0 30px`}
             >
               <Wrapper al={`flex-start`}>
                 <Image width={`60px`} src={slide[0][0]} />
