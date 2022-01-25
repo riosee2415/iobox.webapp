@@ -53,7 +53,7 @@ router.post(`/schedule`, async (req, res, next) => {
     mSec = mSec < 10 ? "0" + mSec : mSec;
     let schedulePK = "ORD" + year + month + date + hour + min + sec + mSec;
 
-    let time = moment().add(1, `m`).unix();
+    let time = moment().add(1, `month`).unix();
     console.log(
       data.id,
       data.KeepBox,

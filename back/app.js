@@ -11,7 +11,7 @@ const db = require("./models");
 const passportConfig = require("./passport");
 const passport = require("passport");
 const cron = require("node-cron");
-
+const axios = require("axios");
 const userRouter = require("./routers/userRouter");
 const bannerRouter = require("./routers/bannerRouter");
 const popupRouter = require("./routers/popupRouter");

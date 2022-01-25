@@ -399,7 +399,7 @@ router.patch("/level/update", isAdminCheck, async (req, res, next) => {
 });
 
 router.post("/phoneNumberCheck", isLoggedIn, async (req, res, next) => {
-  const { phoneNum } = req.body;
+  const { phoneNum, id } = req.body;
 
   try {
     // // 알림톡
@@ -419,44 +419,91 @@ router.post("/phoneNumberCheck", isLoggedIn, async (req, res, next) => {
     mSec = mSec < 10 ? "0" + mSec : mSec;
     let mKey = "MAS" + year + month + date + hour + min + sec + mSec;
 
-    const profile_key = "569bebdbe801200fcfa70fcf12b2d587bd95f8a7";
+    // 알림톡 전환 필요
+
+    // const profile_key = "569bebdbe801200fcfa70fcf12b2d587bd95f8a7";
+    const profile_key = "a52fe945072e0cf2ec85bc9811590d6065ef33e0";
 
     let str = "";
-    for (let i = 0; i < n; i++) {
+    for (let i = 0; i < 6; i++) {
       str += Math.floor(Math.random() * 10);
     }
 
     const trakerApi = await axios({
       url: `https://dev-alimtalk-api.sweettracker.net/v2/${profile_key}/sendMessage`,
       method: "post", // POST method
-      headers: { "Content-Type": "application/json", userid: "key" }, // "Content-Type": "application/json"
-      data: {
-        msgid: mKey, // 고유한 메시지 코드
-        message_type: "AT", // 알림톡 타입 => AT : 알림톡, AI : 이지미 알림톡
-        profile_key, // 발신 프로필 키
-        template_code: "code ", // 템플릿 코드
-        receiver_num: phoneNum, // 사용자 연락처
-        message: `[아이오박스]
-        아이오박스 휴대폰 인증을 위한 인증번호는 아래와 같습니다.
-        
-        인증번호 : ${str}
-        `, // 알림톡 내용
-        reserved_time: "00000000000000", // 즉시 발송
-        // sms_only :  문자만 보낼때 사용
-        // parcel_company: "04", // 택배사 코드
-        // parcel_invoice: invoice_no, // 송장번호
-        // button1: {
-        //   name: "~~~", // 버튼 내용
-        //   type: "WL", // 버튼 타입 => WL : 웹으로 이동 (반응형 포함) AL : 어플로 이동
-        //   url_pc: "url",
-        //   url_mobile: "url",
-        // },
-        // 버튼 JSON 형식
-      },
+      headers: {
+        "Content-Type": "application/json",
+        userid: "tracker_partner",
+      }, // "Content-Type": "application/json"
+      data: [
+        {
+          msgid: mKey, // 고유한 메시지 코드
+          message_type: "AT", // 알림톡 타입 => AT : 알림톡, AI : 이지미 알림톡
+          profile_key, // 발신 프로필 키
+          template_code: "io_num2", // 템플릿 코드
+          // template_code: "io_num", // 템플릿 코드
+          receiver_num: `${phoneNum}`, // 사용자 연락처
+          message: `[아이오박스]
+아이오박스 휴대폰 인증을 위한 인증번호는 아래와 같습니다.
+
+인증번호 : ${str}
+`, // 알림톡 내용
+
+          reserved_time: "00000000000000", // 즉시 발송
+        },
+      ],
     });
+
+    await User.update(
+      {
+        secret: str,
+        mobile: phoneNum,
+      },
+      {
+        where: {
+          id,
+        },
+      }
+    );
+
+    return res.status(200).json({ result: true });
   } catch (e) {
     console.log(e);
     return res.status(401).send("휴대폰 인증을 할 수 없습니다.");
+  }
+});
+
+router.patch("/secretCheck", isLoggedIn, async (req, res, next) => {
+  const { id, code } = req.body;
+
+  try {
+    const userCheck = await User.findAll({
+      where: {
+        id,
+        secret: code,
+      },
+    });
+
+    if (userCheck.length === 0) {
+      return res.status.__wrapped(401).send("인증번호가 잘못되었습니다.");
+    }
+
+    await User.update(
+      {
+        level: 2,
+      },
+      {
+        where: {
+          id,
+        },
+      }
+    );
+
+    return res.status(200).json({ result: true });
+  } catch (e) {
+    console.log(e);
+    return res.status(401).send("인증번호를 확인할 수 없습니다.");
   }
 });
 

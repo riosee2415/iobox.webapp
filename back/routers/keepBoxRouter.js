@@ -861,7 +861,7 @@ router.patch("/update", isAdminCheck, async (req, res, next) => {
         mSec = mSec < 10 ? "0" + mSec : mSec;
         let schedulePK = "ORD" + year + month + date + hour + min + sec + mSec;
 
-        let time = moment().add(1, `m`).unix();
+        let time = moment().add(1, `month`).unix();
 
         axios({
           url: "https://api.iamport.kr/subscribe/payments/schedule", // 예:

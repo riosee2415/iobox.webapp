@@ -6,6 +6,8 @@ const { KeepBoxSchedule, User, KeepBox } = require("../models");
 const router = express.Router();
 
 router.post(`/callback`, async (req, res, next) => {
+  // 알림톡 전환 필요
+
   // 배송 레벨
   // 1 배송준비 상태
   // 2 집화완료 상태
