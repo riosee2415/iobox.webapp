@@ -529,8 +529,12 @@ const Index = () => {
                 ))}
               </Wrapper>
             ) : (
-              <Wrapper height={`calc(100% - 44px)`}>
-                <Image src={`#`} width={`auto`} margin={`0 0 10px`} />
+              <Wrapper height={`calc(100% - 44px)`} minHeight={`100vh`}>
+                <Image
+                  src={`https://4leaf-s3.s3.ap-northeast-2.amazonaws.com/iobox/assets/images/icon/box2.png`}
+                  width={`80px`}
+                  margin={`0 0 10px`}
+                />
 
                 <Text color={Theme.darkGrey_C}>보관중인</Text>
                 <Text color={Theme.darkGrey_C}>물품이 없습니다.</Text>
