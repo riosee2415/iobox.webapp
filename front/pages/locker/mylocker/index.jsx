@@ -26,7 +26,10 @@ import axios from "axios";
 import { LOAD_MY_INFO_REQUEST } from "../../../reducers/user";
 import { END } from "redux-saga";
 import { useDispatch, useSelector } from "react-redux";
-import { MASTER_KEEPBOX_LIST_REQUEST } from "../../../reducers/keepBox";
+import {
+  KEEPBOX_DETAIL_REQUEST,
+  MASTER_KEEPBOX_LIST_REQUEST,
+} from "../../../reducers/keepBox";
 
 const CheckboxGroup = styled(Checkbox.Group)`
   width: 100%;
@@ -128,15 +131,28 @@ const Index = () => {
   const [checkB, setCheckB] = useState(false);
 
   const [boxes, setBoxes] = useState(null);
+  const [boxId, setBoxId] = useState(null);
 
   ////// REDUX //////
   const router = useRouter();
   const dispatch = useDispatch();
 
   const { me } = useSelector((state) => state.user);
-  const { keepBoxes } = useSelector((state) => state.keepBox);
+  const { keepBoxes, detailBox } = useSelector((state) => state.keepBox);
 
+  console.log(detailBox);
   ////// USEEFFECT //////
+  useEffect(() => {
+    if (boxId) {
+      dispatch({
+        type: KEEPBOX_DETAIL_REQUEST,
+        data: {
+          id: boxId,
+        },
+      });
+    }
+  }, [boxId]);
+
   useEffect(() => {
     if (me) {
       dispatch({
@@ -215,6 +231,9 @@ const Index = () => {
   }, [modal]);
 
   ///// HANDLER //////
+  const updateKeepBoxHandler = useCallback((id) => {
+    setBoxId(id);
+  }, []);
 
   const CheckBoxChangeHandler = useCallback(
     (e) => {
@@ -927,14 +946,12 @@ const Index = () => {
                     ju={`space-between`}
                     cursor={`pointer`}
                     key={key}
+                    onClick={() => {
+                      updateKeepBoxHandler(info.id);
+                      modalToggle();
+                    }}
                   >
-                    <Text
-                      fontSize={`1.2rem`}
-                      bold={true}
-                      onClick={() => {
-                        numPlusHandler("iobox");
-                      }}
-                    >
+                    <Text fontSize={`1.2rem`} bold={true} onClick={() => {}}>
                       {dataArr[idx][0]} - {data.length - key}
                     </Text>
                   </ModalWrapper>
