@@ -83,6 +83,10 @@ const GlobalStyles = createGlobalStyle`
     color: ${(props) => props.theme.black_C};
   }
 
+  ::-webkit-scrollbar{
+    display : none;
+  }
+
   .ant-modal-body{
     padding:0;
   }

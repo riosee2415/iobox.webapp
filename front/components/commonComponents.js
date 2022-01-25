@@ -157,6 +157,7 @@ export const RsWrapper = styled.article`
   width: 100%;
   height: ${(props) => props.height || `100%`};
   min-height: ${(props) => props.minHeight};
+  max-height: ${(props) => props.maxHeight};
   color: ${(props) => props.color};
   display: ${(props) => props.display || `flex`};
   background: ${(props) => props.bgColor};
@@ -169,11 +170,13 @@ export const RsWrapper = styled.article`
   margin: ${(props) => props.margin};
   padding: ${(props) => props.padding};
   overflow: ${(props) => props.overflow};
+  overflow-y: ${(props) => props.overflowY};
   border-bottom: ${(props) => props.borderBottom};
   border: ${(props) => props.border};
   font-size: ${(props) => props.fontSize};
   position: ${(props) => props.position};
   z-index: ${(props) => props.zIndex};
+  flex-wrap: ${(props) => props.wrap};
 
   padding-left: 30px;
   padding-right: 30px;
