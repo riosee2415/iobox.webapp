@@ -87,11 +87,17 @@ router.get("/box/:id", async (req, res, next) => {
 
 // master 리스트
 router.get("/list", isAdminCheck, async (req, res, next) => {
+  const { type } = req.query;
+
+  const _type = type ? type : "";
   try {
     const lists = await KeepBoxMaster.findAll({
       include: [
         {
           model: KeepBox,
+          where: {
+            type: _type,
+          },
         },
         {
           model: User,
@@ -141,12 +147,13 @@ router.get("/userBox/:id", async (req, res, next) => {
 router.get(
   ["/master/detail", "/master/detail/:listType"],
   async (req, res, next) => {
-    const { page, masterId } = req.query;
+    const { page, masterId, type } = req.query;
     const { listType } = req.params;
 
     const LIMIT = 10;
 
     const _page = page ? page : 1;
+    // const _type = type ? type : "";
 
     const __page = _page - 1;
     const OFFSET = __page * 10;
@@ -189,6 +196,7 @@ router.get(
             where: {
               KeepBoxMasterId: parseInt(masterId),
               isPickup: false,
+              // type: _type,
             },
           });
 
@@ -202,6 +210,7 @@ router.get(
             where: {
               KeepBoxMasterId: parseInt(masterId),
               isPickup: false,
+              // type: _type,
             },
             include: [
               {
@@ -219,6 +228,7 @@ router.get(
             where: {
               KeepBoxMasterId: parseInt(masterId),
               isPickup: true,
+              // type: _type,
             },
           });
 
@@ -232,6 +242,7 @@ router.get(
             where: {
               KeepBoxMasterId: parseInt(masterId),
               isPickup: true,
+              // type: _type,
             },
             include: [
               {
@@ -248,6 +259,7 @@ router.get(
           totalBox = await KeepBox.findAll({
             where: {
               KeepBoxMasterId: parseInt(masterId),
+              // type: _type,
             },
           });
 
@@ -260,6 +272,7 @@ router.get(
             limit: LIMIT,
             where: {
               KeepBoxMasterId: parseInt(masterId),
+              // type: _type,
             },
             include: [
               {
@@ -334,6 +347,7 @@ router.post("/list/date", async (req, res, next) => {
 
 router.post("/create", async (req, res, next) => {
   const {
+    type,
     boxcount1,
     boxcount2,
     boxcount3,
@@ -349,6 +363,16 @@ router.post("/create", async (req, res, next) => {
     detailAddress,
     remark,
     UserId,
+    ///////////////Bullet/////////////////
+    isEle,
+    floor,
+    paymentType,
+    startDate,
+    endDate,
+    reIsEle,
+    reFloor,
+    receiveAdd,
+    receiveDetail,
   } = req.body;
 
   if (isNanCheck(boxcount1)) {
@@ -368,127 +392,270 @@ router.post("/create", async (req, res, next) => {
   }
 
   try {
-    if (
-      parseInt(boxcount1) === 0 &&
-      parseInt(boxcount2) === 0 &&
-      parseInt(boxcount3) === 0 &&
-      parseInt(boxcount4) === 0
-    ) {
-      return res.status(401).send("박스를 선택하여 주십시오.");
-    } else {
-      const masterResult = await KeepBoxMaster.create({
-        UserId: parseInt(UserId),
-      });
+    if (type === "일반 배송") {
+      if (
+        parseInt(boxcount1) === 0 &&
+        parseInt(boxcount2) === 0 &&
+        parseInt(boxcount3) === 0 &&
+        parseInt(boxcount4) === 0
+      ) {
+        return res.status(401).send("박스를 선택하여 주십시오.");
+      } else {
+        const masterResult = await KeepBoxMaster.create({
+          UserId: parseInt(UserId),
+        });
 
-      if (parseInt(boxcount1) !== 0) {
-        for (let i = 0; i < parseInt(boxcount1); i++) {
-          createResult = await KeepBox.create({
-            boxcount1,
-            boxcount2: 0,
-            boxcount3: 0,
-            boxcount4: 0,
-            period,
-            isFilming,
-            pickWay,
-            price,
-            deliveryPay,
-            name,
-            mobile,
-            address,
-            detailAddress,
-            remark,
-            UserId: parseInt(UserId),
-            KeepBoxMasterId: parseInt(masterResult.id),
-          });
+        if (parseInt(boxcount1) !== 0) {
+          for (let i = 0; i < parseInt(boxcount1); i++) {
+            createResult = await KeepBox.create({
+              type: "일반 배송",
+              boxcount1,
+              boxcount2: 0,
+              boxcount3: 0,
+              boxcount4: 0,
+              period,
+              isFilming,
+              pickWay,
+              price,
+              deliveryPay,
+              name,
+              mobile,
+              address,
+              detailAddress,
+              remark,
+              UserId: parseInt(UserId),
+              KeepBoxMasterId: parseInt(masterResult.id),
+            });
+          }
         }
-      }
 
-      if (parseInt(boxcount2) !== 0) {
-        for (let i = 0; i < parseInt(boxcount2); i++) {
-          createResult = await KeepBox.create({
-            boxcount1: 0,
-            boxcount2,
-            boxcount3: 0,
-            boxcount4: 0,
-            period,
-            isFilming,
-            pickWay,
-            price,
-            deliveryPay,
-            name,
-            mobile,
-            address,
-            detailAddress,
-            remark,
-            UserId: parseInt(UserId),
-            KeepBoxMasterId: parseInt(masterResult.id),
-          });
+        if (parseInt(boxcount2) !== 0) {
+          for (let i = 0; i < parseInt(boxcount2); i++) {
+            createResult = await KeepBox.create({
+              type: "일반 배송",
+              boxcount1: 0,
+              boxcount2,
+              boxcount3: 0,
+              boxcount4: 0,
+              period,
+              isFilming,
+              pickWay,
+              price,
+              deliveryPay,
+              name,
+              mobile,
+              address,
+              detailAddress,
+              remark,
+              UserId: parseInt(UserId),
+              KeepBoxMasterId: parseInt(masterResult.id),
+            });
+          }
         }
-      }
 
-      if (parseInt(boxcount3) !== 0) {
-        for (let i = 0; i < parseInt(boxcount3); i++) {
-          createResult = await KeepBox.create({
-            boxcount1: 0,
-            boxcount2: 0,
-            boxcount3,
-            boxcount4: 0,
-            period,
-            isFilming,
-            pickWay,
-            price,
-            deliveryPay,
-            name,
-            mobile,
-            address,
-            detailAddress,
-            remark,
-            UserId: parseInt(UserId),
-            KeepBoxMasterId: parseInt(masterResult.id),
-          });
+        if (parseInt(boxcount3) !== 0) {
+          for (let i = 0; i < parseInt(boxcount3); i++) {
+            createResult = await KeepBox.create({
+              type: "일반 배송",
+              boxcount1: 0,
+              boxcount2: 0,
+              boxcount3,
+              boxcount4: 0,
+              period,
+              isFilming,
+              pickWay,
+              price,
+              deliveryPay,
+              name,
+              mobile,
+              address,
+              detailAddress,
+              remark,
+              UserId: parseInt(UserId),
+              KeepBoxMasterId: parseInt(masterResult.id),
+            });
+          }
         }
-      }
 
-      if (parseInt(boxcount4) !== 0) {
-        for (let i = 0; i < parseInt(boxcount4); i++) {
-          createResult = await KeepBox.create({
-            boxcount1: 0,
-            boxcount2: 0,
-            boxcount3: 0,
-            boxcount4,
-            period,
-            isFilming,
-            pickWay,
-            price,
-            deliveryPay,
-            name,
-            mobile,
-            address,
-            detailAddress,
-            remark,
-            UserId: parseInt(UserId),
-            KeepBoxMasterId: parseInt(masterResult.id),
-          });
+        if (parseInt(boxcount4) !== 0) {
+          for (let i = 0; i < parseInt(boxcount4); i++) {
+            createResult = await KeepBox.create({
+              type: "일반 배송",
+              boxcount1: 0,
+              boxcount2: 0,
+              boxcount3: 0,
+              boxcount4,
+              period,
+              isFilming,
+              pickWay,
+              price,
+              deliveryPay,
+              name,
+              mobile,
+              address,
+              detailAddress,
+              remark,
+              UserId: parseInt(UserId),
+              KeepBoxMasterId: parseInt(masterResult.id),
+            });
+          }
         }
+
+        const userData = await User.findOne({
+          where: { id: UserId },
+          attributes: [
+            "id",
+            "userId",
+            "mobile",
+            "nickname",
+            "cardNum",
+            "cardPeriod",
+            "cardIden",
+            "cardPassword",
+            "userCode",
+            "level",
+          ],
+        });
+
+        return res.status(201).json({ result: true });
       }
+    }
 
-      const userData = await User.findOne({
-        where: { id: UserId },
-        attributes: [
-          "id",
-          "userId",
-          "mobile",
-          "nickname",
-          "cardNum",
-          "cardPeriod",
-          "cardIden",
-          "cardPassword",
-          "userCode",
-          "level",
-        ],
-      });
+    if (type === "총알 배송") {
+      if (
+        parseInt(boxcount1) === 0 &&
+        parseInt(boxcount2) === 0 &&
+        parseInt(boxcount3) === 0 &&
+        parseInt(boxcount4) === 0
+      ) {
+        return res.status(401).send("박스를 선택하여 주십시오.");
+      } else {
+        const masterResult = await KeepBoxMaster.create({
+          UserId: parseInt(UserId),
+        });
 
-      return res.status(201).json({ result: true });
+        if (parseInt(boxcount1) !== 0) {
+          for (let i = 0; i < parseInt(boxcount1); i++) {
+            const createResult = await KeepBox.create({
+              type: "총알 배송",
+              boxcount1,
+              boxcount2: 0,
+              boxcount3: 0,
+              boxcount4: 0,
+              price,
+              address,
+              detailAddress,
+              isEle,
+              floor,
+              paymentType,
+              startDate,
+              endDate,
+              name,
+              mobile,
+              receiveAdd,
+              receiveDetail,
+              reIsEle,
+              reFloor,
+              isFilming,
+              deliveryPay,
+              UserId: parseInt(UserId),
+              KeepBoxMasterId: parseInt(masterResult.id),
+            });
+          }
+        }
+
+        if (parseInt(boxcount2) !== 0) {
+          for (let i = 0; i < parseInt(boxcount2); i++) {
+            const createResult = await KeepBox.create({
+              type: "총알 배송",
+              boxcount1: 0,
+              boxcount2,
+              boxcount3: 0,
+              boxcount4: 0,
+              price,
+              address,
+              detailAddress,
+              isEle,
+              floor,
+              paymentType,
+              startDate,
+              endDate,
+              name,
+              mobile,
+              receiveAdd,
+              receiveDetail,
+              reIsEle,
+              reFloor,
+              isFilming,
+              deliveryPay,
+              UserId: parseInt(UserId),
+              KeepBoxMasterId: parseInt(masterResult.id),
+            });
+          }
+        }
+
+        if (parseInt(boxcount3) !== 0) {
+          for (let i = 0; i < parseInt(boxcount3); i++) {
+            const createResult = await KeepBox.create({
+              type: "총알 배송",
+              boxcount1: 0,
+              boxcount2: 0,
+              boxcount3,
+              boxcount4: 0,
+              price,
+              address,
+              detailAddress,
+              isEle,
+              floor,
+              paymentType,
+              startDate,
+              endDate,
+              name,
+              mobile,
+              receiveAdd,
+              receiveDetail,
+              reIsEle,
+              reFloor,
+              isFilming,
+              deliveryPay,
+              UserId: parseInt(UserId),
+              KeepBoxMasterId: parseInt(masterResult.id),
+            });
+          }
+        }
+
+        if (parseInt(boxcount4) !== 0) {
+          for (let i = 0; i < parseInt(boxcount4); i++) {
+            const createResult = await KeepBox.create({
+              type: "총알 배송",
+              boxcount1: 0,
+              boxcount2: 0,
+              boxcount3: 0,
+              boxcount4,
+              price,
+              address,
+              detailAddress,
+              isEle,
+              floor,
+              paymentType,
+              startDate,
+              endDate,
+              name,
+              mobile,
+              receiveAdd,
+              receiveDetail,
+              reIsEle,
+              reFloor,
+              isFilming,
+              deliveryPay,
+              UserId: parseInt(UserId),
+              KeepBoxMasterId: parseInt(masterResult.id),
+            });
+          }
+        }
+
+        return res.status(201).json({ result: true });
+      }
     }
   } catch (error) {
     console.error(error);
