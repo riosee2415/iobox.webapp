@@ -146,6 +146,7 @@ const Index = () => {
     dispatch({
       type: KEEPBOX_CREATE_REQUEST,
       data: {
+        type: "일반 배송",
         boxcount1: storeData.boxs[0],
         boxcount2: storeData.boxs[1],
         boxcount3: storeData.boxs[2],
