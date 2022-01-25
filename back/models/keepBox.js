@@ -5,6 +5,10 @@ module.exports = class KeepBox extends Model {
   static init(sequelize) {
     return super.init(
       {
+        type: {
+          type: DataTypes.STRING(50), // [일반 배송 or 총알 배송]
+          allowNull: false,
+        },
         boxcount1: {
           type: DataTypes.INTEGER, // 1번 박스 카운트
           allowNull: false,
@@ -25,9 +29,14 @@ module.exports = class KeepBox extends Model {
           allowNull: false,
           defaultValue: 0,
         },
+        price: {
+          type: DataTypes.INTEGER, // 금액
+          allowNull: false,
+          defaultValue: 0,
+        },
         period: {
           type: DataTypes.STRING(200), // 보관 기간
-          allowNull: false,
+          allowNull: true,
         },
         isFilming: {
           type: DataTypes.BOOLEAN, // 상자보관 찰영유무
@@ -41,12 +50,7 @@ module.exports = class KeepBox extends Model {
         },
         pickWay: {
           type: DataTypes.STRING(300), // 픽업 방식
-          allowNull: false,
-        },
-        price: {
-          type: DataTypes.INTEGER, // 금액
-          allowNull: false,
-          defaultValue: 0,
+          allowNull: true,
         },
         name: {
           type: DataTypes.STRING(50), // 이름
@@ -96,6 +100,44 @@ module.exports = class KeepBox extends Model {
           type: DataTypes.BOOLEAN,
           allowNull: false,
           defaultValue: false,
+        },
+        isEle: {
+          type: DataTypes.BOOLEAN, // 엘베 유무 [총알]
+          allowNull: true,
+          defaultValue: false,
+        },
+        floor: {
+          type: DataTypes.STRING(10), // 층 [총알]
+          allowNull: true,
+        },
+        paymentType: {
+          type: DataTypes.STRING(30), //결제 방식 [총알]
+          allowNull: true,
+        },
+        startDate: {
+          type: DataTypes.STRING(50), // 보관시작일 [총알]
+          allowNull: true,
+        },
+        endDate: {
+          type: DataTypes.STRING(50), // 보관종료일 [총알]
+          allowNull: true,
+        },
+        reIsEle: {
+          type: DataTypes.BOOLEAN, // 도착지 엘베 유무  [총알]
+          allowNull: true,
+          defaultValue: false,
+        },
+        reFloor: {
+          type: DataTypes.STRING(10), // 도착지 층  [총알]
+          allowNull: true,
+        },
+        receiveAdd: {
+          type: DataTypes.STRING(300), // 도착지 주소 [총알]
+          allowNull: true,
+        },
+        receiveDetail: {
+          type: DataTypes.STRING(300), // 도착지 상세 주소  [총알]
+          allowNull: true,
         },
       },
       {
