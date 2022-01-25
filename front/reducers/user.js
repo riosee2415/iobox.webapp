@@ -44,6 +44,10 @@ export const initailState = {
   st_userPhoneDone: false,
   st_userPhoneError: null,
   //
+  st_userPhoneCheckLoading: false,
+  st_userPhoneCheckDone: false,
+  st_userPhoneCheckError: null,
+  //
   st_userNickNameUpdateLoading: false,
   st_userNickNameUpdateDone: false,
   st_userNickNameUpdateError: null,
@@ -84,6 +88,10 @@ export const USER_CARD_CREATE_FAILURE = "USER_CARD_CREATE_FAILURE";
 export const USER_PHONE_REQUEST = "USER_PHONE_REQUEST";
 export const USER_PHONE_SUCCESS = "USER_PHONE_SUCCESS";
 export const USER_PHONE_FAILURE = "USER_PHONE_FAILURE";
+
+export const USER_PHONE_CHECK_REQUEST = "USER_PHONE_CHECK_REQUEST";
+export const USER_PHONE_CHECK_SUCCESS = "USER_PHONE_CHECK_SUCCESS";
+export const USER_PHONE_CHECK_FAILURE = "USER_PHONE_CHECK_FAILURE";
 
 export const USER_NICKNAME_UPDATE_REQUEST = "USER_NICKNAME_UPDATE_REQUEST";
 export const USER_NICKNAME_UPDATE_SUCCESS = "USER_NICKNAME_UPDATE_SUCCESS";
@@ -228,6 +236,25 @@ const reducer = (state = initailState, action) =>
         draft.st_userPhoneLoading = false;
         draft.st_userPhoneDone = false;
         draft.st_userPhoneError = action.error;
+        break;
+      }
+      //////////////////////////////////////////////
+
+      case USER_PHONE_CHECK_REQUEST: {
+        draft.st_userPhoneCheckLoading = true;
+        draft.st_userPhoneCheckDone = null;
+        draft.st_userPhoneCheckError = false;
+        break;
+      }
+      case USER_PHONE_CHECK_SUCCESS: {
+        draft.st_userPhoneCheckLoading = false;
+        draft.st_userPhoneCheckDone = true;
+        break;
+      }
+      case USER_PHONE_CHECK_FAILURE: {
+        draft.st_userPhoneCheckLoading = false;
+        draft.st_userPhoneCheckDone = false;
+        draft.st_userPhoneCheckError = action.error;
         break;
       }
       //////////////////////////////////////////////

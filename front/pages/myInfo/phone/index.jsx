@@ -22,6 +22,17 @@ import {
 import { useRouter } from "next/dist/client/router";
 import { useDispatch } from "react-redux";
 import Footer from "../../../components/Footer";
+import useInput from "../../../hooks/useInput";
+import {
+  LOAD_MY_INFO_REQUEST,
+  USER_PHONE_CHECK_REQUEST,
+  USER_PHONE_REQUEST,
+} from "../../../reducers/user";
+import { message } from "antd";
+import { useSelector } from "react-redux";
+import wrapper from "../../../store/configureStore";
+import axios from "axios";
+import { END } from "redux-saga";
 
 const Button = styled(CommonButton)`
   width: 100%;
@@ -58,10 +69,47 @@ const Index = () => {
   const [isTimeOut, setIsTimeOut] = useState(false);
   const dispatch = useDispatch();
 
+  const inputMobile = useInput("");
+  const inputSecret = useInput("");
+
   ////// REDUX //////
   const router = useRouter();
 
+  const {
+    me,
+    st_userPhoneDone,
+    st_userPhoneError,
+    st_userPhoneCheckDone,
+    st_userPhoneCheckError,
+  } = useSelector((state) => state.user);
+
+  console.log(me);
+
   ////// USEEFFECT //////
+  useEffect(() => {
+    if (st_userPhoneDone) {
+      setReqTab(1);
+    }
+  }, [st_userPhoneDone]);
+
+  useEffect(() => {
+    if (st_userPhoneError) {
+      return message.error(st_userPhoneError);
+    }
+  }, [st_userPhoneError]);
+  useEffect(() => {
+    if (st_userPhoneCheckDone) {
+      moveBackHandler("/myinfo");
+      return message.success("휴대폰 인증에 성공하였습니다.");
+    }
+  }, [st_userPhoneCheckDone]);
+
+  useEffect(() => {
+    if (st_userPhoneCheckError) {
+      return message.error(st_userPhoneCheckError);
+    }
+  }, [st_userPhoneCheckError]);
+
   useEffect(() => {
     scrollTo(0, 0);
   }, [router.route]);
@@ -74,13 +122,31 @@ const Index = () => {
   }, []);
 
   const reqHandler = useCallback(() => {
+    if (inputMobile.value.length !== 11) {
+      return message.error("연락처를 제대로 입력해주세요.");
+    }
     dispatch({
-      type: "A",
+      type: USER_PHONE_REQUEST,
       data: {
-        "": "",
+        phoneNum: inputMobile.value,
+        id: me.id,
       },
     });
-  }, []);
+  }, [inputMobile, me]);
+
+  const checkCodeHandler = useCallback(() => {
+    if (inputSecret.value.length !== 6) {
+      return message.error("인증번호는 6자입니다.");
+    }
+
+    dispatch({
+      type: USER_PHONE_CHECK_REQUEST,
+      data: {
+        id: me.id,
+        code: inputSecret.value,
+      },
+    });
+  }, [inputSecret, me]);
 
   ////// DATAVIEW //////
   return (
@@ -124,20 +190,23 @@ const Index = () => {
             ) : (
               //  인증요청 누르기 후 text
               <Text fontSize={`0.9rem`}>
-                01000000000로 전송된 6자리 코드를 입력해주세요.
+                {inputMobile.value}로 전송된 6자리 코드를 입력해주세요.
               </Text>
             )}
 
             {/* 인증요청 누른 후 나타남 */}
             {reqTab === 1 && (
               <Wrapper dr={`row`} ju={`space-between`} margin={`30px 0 0`}>
-                <TextButton>전화번호 재입력</TextButton>
+                <TextButton onClick={() => setReqTab(0)}>
+                  전화번호 재입력
+                </TextButton>
 
                 <CommonButton
                   width={`auto`}
                   radius={`30px`}
                   hieght={`25px`}
                   fontSize={`0.8rem`}
+                  onClick={reqHandler}
                 >
                   인증번호 재요청
                 </CommonButton>
@@ -146,10 +215,12 @@ const Index = () => {
             {/* 인증요청 버튼 누르기 전 */}
             {reqTab === 0 && (
               <TextInput
+                type="number"
                 width={`100%`}
                 height={`50px`}
                 margin={`10px 0 0`}
                 placeholder="(-) 없이 전화번호 입력해주세요."
+                {...inputMobile}
               />
             )}
 
@@ -161,12 +232,13 @@ const Index = () => {
                   height={`50px`}
                   margin={`10px 0 0`}
                   placeholder="인증번호 6자리를 입력해주세요."
+                  {...inputSecret}
                 />
 
-                {/* 인증시간 */}
+                {/* 인증시간
                 <Wrapper al={`flex-start`} margin={`5px 0 0`}>
                   <Text fontSize={`0.8rem`}>0:00</Text>
-                </Wrapper>
+                </Wrapper> */}
               </>
             )}
 
@@ -196,12 +268,11 @@ const Index = () => {
             radius={`0`}
             width={`100%`}
             height={`50px`}
-            bgColor={`${Theme.grey_C} !important`}
-            onClick={reqHandler}
-            // 번호 안썼을 때 bgColor={`initial`} 번호 쓰면 bgColor={Theme.basicTheme_C}
-            // 번호 안썼을 때 hoverBgColor={`initial`} 번호 쓰면 hoverBgColor={Theme.basicTheme_C}
-            // 번호 안썼을 때 border={`initial`} 번호 쓰면 border={`1px solid ${Theme.basicTheme_C}`}
-            // 번호 안썼을 때 hoverColor={`initial`} 번호 쓰면 hoverColor={Theme.basicTheme_C}
+            // bgColor={`${Theme.grey_C} !important`}
+            onClick={() => (reqTab === 0 ? reqHandler() : checkCodeHandler())}
+            bgColor={inputMobile.value ? Theme.basicTheme_C : `initial`}
+            hoverBgColor={inputMobile.value ? Theme.basicTheme_C : `initial`}
+            border={inputMobile.value ? Theme.basicTheme_C : `initial`}
           >
             {reqTab === 0 ? `인증 요청` : `인증`}
           </Button>
@@ -212,5 +283,27 @@ const Index = () => {
     </WholeWrapper>
   );
 };
+
+export const getServerSideProps = wrapper.getServerSideProps(
+  async (context) => {
+    // SSR Cookie Settings For Data Load/////////////////////////////////////
+    const cookie = context.req ? context.req.headers.cookie : "";
+    axios.defaults.headers.Cookie = "";
+    if (context.req && cookie) {
+      axios.defaults.headers.Cookie = cookie;
+    }
+    ////////////////////////////////////////////////////////////////////////
+    // 구현부
+
+    context.store.dispatch({
+      type: LOAD_MY_INFO_REQUEST,
+    });
+
+    // 구현부 종료
+    context.store.dispatch(END);
+    console.log("🍀 SERVER SIDE PROPS END");
+    await context.store.sagaTask.toPromise();
+  }
+);
 
 export default Index;

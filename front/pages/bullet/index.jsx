@@ -322,6 +322,34 @@ const Index = () => {
     router.push(link);
   }, []);
 
+  const nextStepHandler = useCallback(() => {
+    console.log(
+      currentBuy,
+      startDate,
+      endDate,
+      startFloor,
+      endFloor,
+      inputStartAddress,
+      inputStartZoneCode,
+      inputStartDetail,
+      inputEndAddress,
+      inputEndZoneCode,
+      inputEndDetail
+    );
+  }, [
+    currentBuy,
+    startDate,
+    endDate,
+    startFloor,
+    endFloor,
+    inputStartAddress,
+    inputStartZoneCode,
+    inputStartDetail,
+    inputEndAddress,
+    inputEndZoneCode,
+    inputEndDetail,
+  ]);
+
   ////// DATAVIEW //////
   return (
     <WholeWrapper bgColor={width < 700 ? Theme.white_C : Theme.lightGrey_C}>
@@ -371,7 +399,7 @@ const Index = () => {
                     lineHeight={`1.2`}
                     fontWeight={`700`}
                   >
-                    총알배송은
+                    하루배송은
                   </Text>
                   <Text
                     fontSize={width < 700 ? `1.6rem` : `1.8rem`}
@@ -1000,6 +1028,7 @@ const Index = () => {
                 width={`130px`}
                 height={`50px`}
                 kindOf={`grey`}
+                onClick={nextStepHandler}
               >
                 다음
               </CommonButton>

@@ -33,6 +33,14 @@ import {
   USER_CARD_CREATE_SUCCESS,
   USER_CARD_CREATE_FAILURE,
   /////////////////////////////
+  USER_PHONE_REQUEST,
+  USER_PHONE_SUCCESS,
+  USER_PHONE_FAILURE,
+  /////////////////////////////
+  USER_PHONE_CHECK_REQUEST,
+  USER_PHONE_CHECK_SUCCESS,
+  USER_PHONE_CHECK_FAILURE,
+  /////////////////////////////
   USER_NICKNAME_UPDATE_REQUEST,
   USER_NICKNAME_UPDATE_SUCCESS,
   USER_NICKNAME_UPDATE_FAILURE,
@@ -248,6 +256,58 @@ function* userNickNameUpdate(action) {
 
 // SAGA AREA ********************************************************************************************************
 // ******************************************************************************************************************
+function userPhoneCheckAPI(data) {
+  return axios.post(`/api/user/phoneNumberCheck`, data);
+}
+
+function* userPhoneCheck(action) {
+  try {
+    const result = yield call(userPhoneCheckAPI, action.data);
+    yield put({
+      type: USER_PHONE_SUCCESS,
+      data: result.data,
+    });
+  } catch (err) {
+    console.error(err);
+    yield put({
+      type: USER_PHONE_FAILURE,
+      error: err.response.data,
+    });
+  }
+}
+
+// ******************************************************************************************************************
+// ******************************************************************************************************************
+// ******************************************************************************************************************
+
+// SAGA AREA ********************************************************************************************************
+// ******************************************************************************************************************
+function userPhoneCheckSNSAPI(data) {
+  return axios.patch(`/api/user/secretCheck`, data);
+}
+
+function* userPhoneCheckSNS(action) {
+  try {
+    const result = yield call(userPhoneCheckSNSAPI, action.data);
+    yield put({
+      type: USER_PHONE_CHECK_SUCCESS,
+      data: result.data,
+    });
+  } catch (err) {
+    console.error(err);
+    yield put({
+      type: USER_PHONE_CHECK_FAILURE,
+      error: err.response.data,
+    });
+  }
+}
+
+// ******************************************************************************************************************
+// ******************************************************************************************************************
+// ******************************************************************************************************************
+
+// SAGA AREA ********************************************************************************************************
+// ******************************************************************************************************************
 function userCardCreateAPI(data) {
   return axios.post(`/api/user/cardCreate`, data);
 }
@@ -304,6 +364,13 @@ function* watchSignOut() {
 function* watchCardCreate() {
   yield takeLatest(USER_CARD_CREATE_REQUEST, userCardCreate);
 }
+function* watchPhoneUpdate() {
+  yield takeLatest(USER_PHONE_REQUEST, userPhoneCheck);
+}
+
+function* watchPhoneCheckUpdate() {
+  yield takeLatest(USER_PHONE_CHECK_REQUEST, userPhoneCheckSNS);
+}
 function* watchNickNameUpdate() {
   yield takeLatest(USER_NICKNAME_UPDATE_REQUEST, userNickNameUpdate);
 }
@@ -319,6 +386,8 @@ export default function* userSaga() {
     fork(watchUserListUpdate),
     fork(watchSignOut),
     fork(watchCardCreate),
+    fork(watchPhoneUpdate),
+    fork(watchPhoneCheckUpdate),
     fork(watchNickNameUpdate),
     //
   ]);

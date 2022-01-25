@@ -173,7 +173,9 @@ const Index = () => {
                   fontWeight={`700`}
                   margin={`0 5px 0 0`}
                 >
-                  {me && me.mobile ? me.mobile : `휴대폰인증을 완료해주세요.`}
+                  {me && me.level > 1
+                    ? me.mobile
+                    : `휴대폰인증을 완료해주세요.`}
                 </Text>
                 <Wrapper width={`auto`} color={Theme.darkGrey_C}>
                   <RightOutlined />

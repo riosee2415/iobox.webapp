@@ -140,7 +140,6 @@ const Index = () => {
   const { me } = useSelector((state) => state.user);
   const { keepBoxes, detailBox } = useSelector((state) => state.keepBox);
 
-  console.log(detailBox);
   ////// USEEFFECT //////
   useEffect(() => {
     if (boxId) {
@@ -938,26 +937,27 @@ const Index = () => {
               //</Wrapper> 
             </ModalWrapper> */}
 
-            {Object.values(boxes).map((data, idx) => {
-              return data.map((info, key) => {
-                return (
-                  <ModalWrapper
-                    dr={`row`}
-                    ju={`space-between`}
-                    cursor={`pointer`}
-                    key={key}
-                    onClick={() => {
-                      updateKeepBoxHandler(info.id);
-                      modalToggle();
-                    }}
-                  >
-                    <Text fontSize={`1.2rem`} bold={true} onClick={() => {}}>
-                      {dataArr[idx][0]} - {data.length - key}
-                    </Text>
-                  </ModalWrapper>
-                );
-              });
-            })}
+            {boxes &&
+              Object.values(boxes).map((data, idx) => {
+                return data.map((info, key) => {
+                  return (
+                    <ModalWrapper
+                      dr={`row`}
+                      ju={`space-between`}
+                      cursor={`pointer`}
+                      key={key}
+                      onClick={() => {
+                        updateKeepBoxHandler(info.id);
+                        modalToggle();
+                      }}
+                    >
+                      <Text fontSize={`1.2rem`} bold={true} onClick={() => {}}>
+                        {dataArr[idx][0]} - {data.length - key}
+                      </Text>
+                    </ModalWrapper>
+                  );
+                });
+              })}
 
             {/* <ModalWrapper dr={`row`} ju={`space-between`}>
               <Text
