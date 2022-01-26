@@ -15,6 +15,21 @@ import useWidth from "../../../hooks/useWidth";
 import { CloseOutlined, DownOutlined, UpOutlined } from "@ant-design/icons";
 import { useRouter } from "next/dist/client/router";
 import Footer from "../../../components/Footer";
+import { LOAD_MY_INFO_REQUEST } from "../../../reducers/user";
+
+import axios from "axios";
+import wrapper from "../../../store/configureStore";
+import { END } from "redux-saga";
+import { notification } from "antd";
+import { useSelector } from "react-redux";
+
+const LoadNotification = (msg, content) => {
+  notification.open({
+    message: msg,
+    description: content,
+    onClick: () => {},
+  });
+};
 
 const Index = () => {
   const width = useWidth();
@@ -23,8 +38,16 @@ const Index = () => {
 
   ////// REDUX //////
   const router = useRouter();
-
+  const { me } = useSelector((state) => state.user);
   ////// USEEFFECT //////
+
+  useEffect(() => {
+    if (!me) {
+      router.push("/");
+
+      return LoadNotification("로그인 후 이용해주세요.");
+    }
+  }, [me]);
 
   useEffect(() => {
     scrollTo(0, 0);
@@ -73,5 +96,27 @@ const Index = () => {
     </WholeWrapper>
   );
 };
+
+export const getServerSideProps = wrapper.getServerSideProps(
+  async (context) => {
+    // SSR Cookie Settings For Data Load/////////////////////////////////////
+    const cookie = context.req ? context.req.headers.cookie : "";
+    axios.defaults.headers.Cookie = "";
+    if (context.req && cookie) {
+      axios.defaults.headers.Cookie = cookie;
+    }
+    ////////////////////////////////////////////////////////////////////////
+    // 구현부
+
+    context.store.dispatch({
+      type: LOAD_MY_INFO_REQUEST,
+    });
+
+    // 구현부 종료
+    context.store.dispatch(END);
+    console.log("🍀 SERVER SIDE PROPS END");
+    await context.store.sagaTask.toPromise();
+  }
+);
 
 export default Index;

@@ -19,7 +19,7 @@ import {
   MinusCircleOutlined,
 } from "@ant-design/icons";
 import { useRouter } from "next/dist/client/router";
-import { Checkbox, Modal } from "antd";
+import { Checkbox, Modal, notification } from "antd";
 import Footer from "../../../components/Footer";
 import wrapper from "../../../store/configureStore";
 import axios from "axios";
@@ -95,6 +95,14 @@ const PayButtton = styled(Wrapper)`
   }
 `;
 
+const LoadNotification = (msg, content) => {
+  notification.open({
+    message: msg,
+    description: content,
+    onClick: () => {},
+  });
+};
+
 const Index = () => {
   const width = useWidth();
 
@@ -133,6 +141,15 @@ const Index = () => {
   const { keepBoxes, detailBox } = useSelector((state) => state.keepBox);
 
   ////// USEEFFECT //////
+
+  useEffect(() => {
+    if (!me) {
+      router.push("/");
+
+      return LoadNotification("로그인 후 이용해주세요.");
+    }
+  }, [me]);
+
   useEffect(() => {
     if (boxId) {
       dispatch({
