@@ -28,7 +28,7 @@ import {
   USER_PHONE_CHECK_REQUEST,
   USER_PHONE_REQUEST,
 } from "../../../reducers/user";
-import { message } from "antd";
+import { message, notification } from "antd";
 import { useSelector } from "react-redux";
 import wrapper from "../../../store/configureStore";
 import axios from "axios";
@@ -60,6 +60,14 @@ const TextButton = styled(Text)`
   }
 `;
 
+const LoadNotification = (msg, content) => {
+  notification.open({
+    message: msg,
+    description: content,
+    onClick: () => {},
+  });
+};
+
 const Index = () => {
   const width = useWidth();
 
@@ -83,7 +91,13 @@ const Index = () => {
     st_userPhoneCheckError,
   } = useSelector((state) => state.user);
 
-  console.log(me);
+  useEffect(() => {
+    if (!me) {
+      router.push("/");
+
+      return LoadNotification("로그인 후 이용해주세요.");
+    }
+  }, [me]);
 
   ////// USEEFFECT //////
   useEffect(() => {

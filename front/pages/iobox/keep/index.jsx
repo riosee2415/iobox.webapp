@@ -17,7 +17,7 @@ import ClientLayout from "../../../components/ClientLayout";
 import useWidth from "../../../hooks/useWidth";
 import { CloseOutlined, DownOutlined, UpOutlined } from "@ant-design/icons";
 import { useRouter } from "next/dist/client/router";
-import { message, Radio } from "antd";
+import { message, notification, Radio } from "antd";
 import { CloseCircleOutlined, SearchOutlined } from "@ant-design/icons";
 import useInput from "../../../hooks/useInput";
 import PostCode from "../../../components/postCode/PostCode";

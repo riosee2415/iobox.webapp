@@ -86,42 +86,119 @@ router.get("/box/:id", async (req, res, next) => {
 });
 
 // master 리스트
-router.get("/list", isAdminCheck, async (req, res, next) => {
-  const { type } = req.query;
+router.get(
+  ["/list", "/list/:listType"],
+  isAdminCheck,
+  async (req, res, next) => {
+    const { listType } = req.params;
 
-  const _type = type ? type : "";
-  try {
-    const lists = await KeepBoxMaster.findAll({
-      include: [
-        {
-          model: KeepBox,
-          where: {
-            type: _type,
-          },
-        },
-        {
-          model: User,
-          attributes: {
-            exclude: [
-              "password",
-              "level",
-              "secret",
-              "cardNum",
-              "cardPeriod",
-              "cardIden",
-              "cardPassword",
+    let nanFlag = isNaN(listType);
+
+    if (!listType) {
+      nanFlag = false;
+    }
+
+    if (nanFlag) {
+      return res.status(400).send("잘못된 요청 입니다.");
+    }
+
+    let _listType = Number(listType);
+
+    if (_listType > 3 || !listType) {
+      _listType = 3;
+    }
+
+    try {
+      let lists = [];
+
+      switch (_listType) {
+        case 1:
+          lists = await KeepBoxMaster.findAll({
+            include: [
+              {
+                model: KeepBox,
+                where: {
+                  type: "일반 배송",
+                },
+              },
+              {
+                model: User,
+                attributes: {
+                  exclude: [
+                    "password",
+                    "level",
+                    "secret",
+                    "cardNum",
+                    "cardPeriod",
+                    "cardIden",
+                    "cardPassword",
+                  ],
+                },
+              },
             ],
-          },
-        },
-      ],
-    });
+          });
+          break;
+        case 2:
+          lists = await KeepBoxMaster.findAll({
+            include: [
+              {
+                model: KeepBox,
+                where: {
+                  type: "총알 배송",
+                },
+              },
+              {
+                model: User,
+                attributes: {
+                  exclude: [
+                    "password",
+                    "level",
+                    "secret",
+                    "cardNum",
+                    "cardPeriod",
+                    "cardIden",
+                    "cardPassword",
+                  ],
+                },
+              },
+            ],
+          });
+          break;
+        case 3:
+          lists = await KeepBoxMaster.findAll({
+            include: [
+              {
+                model: KeepBox,
+              },
+              {
+                model: User,
+                attributes: {
+                  exclude: [
+                    "password",
+                    "level",
+                    "secret",
+                    "cardNum",
+                    "cardPeriod",
+                    "cardIden",
+                    "cardPassword",
+                  ],
+                },
+              },
+            ],
+          });
+          break;
 
-    return res.status(200).json(lists);
-  } catch (error) {
-    console.error(error);
-    return res.status(401).send("박스 목록을 불러올 수 없습니다.");
+        default:
+          break;
+      }
+
+      return res.status(200).json(lists);
+    } catch (error) {
+      console.error(error);
+      return res.status(401).send("박스 목록을 불러올 수 없습니다.");
+    }
   }
-});
+);
 
 router.get("/userBox/:id", async (req, res, next) => {
   const { id } = req.params;

@@ -113,6 +113,10 @@ const GlobalStyles = createGlobalStyle`
     background-color : ${(props) => props.theme.basicTheme_C};
   }
 
+  .mylocker .ant-modal-content{
+    border-radius : 20px;
+  }
+
   .ant-drawer-body{
     padding:0;
   }

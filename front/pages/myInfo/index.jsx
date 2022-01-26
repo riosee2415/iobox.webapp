@@ -100,6 +100,7 @@ const Index = () => {
     dispatch({
       type: LOGOUT_REQUEST,
     });
+    router.push(`/`);
   }, []);
 
   ////// DATAVIEW //////

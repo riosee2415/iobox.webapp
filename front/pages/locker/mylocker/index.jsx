@@ -19,7 +19,7 @@ import {
   MinusCircleOutlined,
 } from "@ant-design/icons";
 import { useRouter } from "next/dist/client/router";
-import { Checkbox } from "antd";
+import { Checkbox, Modal, notification } from "antd";
 import Footer from "../../../components/Footer";
 import wrapper from "../../../store/configureStore";
 import axios from "axios";
@@ -38,6 +38,7 @@ const CheckboxGroup = styled(Checkbox.Group)`
 const ModalWrapper = styled(Wrapper)`
   flex-direction: row;
   justify-content: space-between;
+  height: auto;
   cursor: pointer;
   padding: 5px 20px;
 
@@ -94,6 +95,14 @@ const PayButtton = styled(Wrapper)`
   }
 `;
 
+const LoadNotification = (msg, content) => {
+  notification.open({
+    message: msg,
+    description: content,
+    onClick: () => {},
+  });
+};
+
 const Index = () => {
   const width = useWidth();
 
@@ -132,6 +141,15 @@ const Index = () => {
   const { keepBoxes, detailBox } = useSelector((state) => state.keepBox);
 
   ////// USEEFFECT //////
+
+  useEffect(() => {
+    if (!me) {
+      router.push("/");
+
+      return LoadNotification("로그인 후 이용해주세요.");
+    }
+  }, [me]);
+
   useEffect(() => {
     if (boxId) {
       dispatch({
@@ -511,26 +529,24 @@ const Index = () => {
         <Footer />
       </Wrapper>
 
-      {modal && (
+      <Modal
+        visible={modal}
+        footer={false}
+        onCancel={modalToggle}
+        width={`220px`}
+        className="mylocker"
+      >
         <Wrapper
-          position={`absolute`}
-          top={`0`}
-          left={`0`}
-          height={`100vh`}
-          bgColor={`rgba(0,0,0,0.4)`}
-          zIndex={`10000`}
+          radius={`20px`}
+          bgColor={Theme.white_C}
+          width={`220px`}
+          height={`300px`}
+          overflowY={`scroll`}
+          wrap={`nowrap`}
+          ju={`flex-start`}
+          padding={`40px 0 0`}
         >
-          <Wrapper radius={`20px`} bgColor={Theme.white_C} width={`220px`}>
-            <Wrapper
-              al={`flex-end`}
-              cursor={`pointer`}
-              onClick={modalToggle}
-              padding={`20px 20px 10px`}
-            >
-              <CloseOutlined />
-            </Wrapper>
-
-            {/* <ModalWrapper dr={`row`} ju={`space-between`} cursor={`pointer`}>
+          {/* <ModalWrapper dr={`row`} ju={`space-between`} cursor={`pointer`}>
               <Text
                 fontSize={`1.2rem`}
                 bold={true}
@@ -557,32 +573,32 @@ const Index = () => {
               //</Wrapper> 
             </ModalWrapper> */}
 
-            {boxes &&
-              Object.values(boxes).map((data, idx) => {
-                return data.map((info, key) => {
-                  return (
-                    <ModalWrapper
-                      dr={`row`}
-                      ju={`space-between`}
-                      cursor={`pointer`}
-                      key={key}
-                      onClick={() => {
-                        updateKeepBoxHandler(info.id);
-                        setCurrentBox(
-                          `${dataArr[idx][0]} - ${data.length - key}`
-                        );
-                        modalToggle();
-                      }}
-                    >
-                      <Text fontSize={`1.2rem`} bold={true} onClick={() => {}}>
-                        {dataArr[idx][0]} - {data.length - key}
-                      </Text>
-                    </ModalWrapper>
-                  );
-                });
-              })}
+          {boxes &&
+            Object.values(boxes).map((data, idx) => {
+              return data.map((info, key) => {
+                return (
+                  <ModalWrapper
+                    dr={`row`}
+                    ju={`space-between`}
+                    cursor={`pointer`}
+                    key={key}
+                    onClick={() => {
+                      updateKeepBoxHandler(info.id);
+                      setCurrentBox(
+                        `${dataArr[idx][0]} - ${data.length - key}`
+                      );
+                      modalToggle();
+                    }}
+                  >
+                    <Text fontSize={`1.2rem`} bold={true} onClick={() => {}}>
+                      {dataArr[idx][0]} - {data.length - key}
+                    </Text>
+                  </ModalWrapper>
+                );
+              });
+            })}
 
-            {/* <ModalWrapper dr={`row`} ju={`space-between`}>
+          {/* <ModalWrapper dr={`row`} ju={`space-between`}>
               <Text
                 fontSize={`1.2rem`}
                 bold={true}
@@ -660,17 +676,16 @@ const Index = () => {
               </Wrapper>
             </ModalWrapper> */}
 
-            <CommonButton
-              width={`80%`}
-              margin={`10px 0 0`}
-              onClick={modalOK}
-              margin={`0 0 20px`}
-            >
-              확인
-            </CommonButton>
-          </Wrapper>
+          <CommonButton
+            width={`80%`}
+            margin={`10px 0 0`}
+            onClick={modalOK}
+            margin={`0 0 20px`}
+          >
+            확인
+          </CommonButton>
         </Wrapper>
-      )}
+      </Modal>
     </>
   );
 };

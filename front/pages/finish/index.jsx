@@ -127,8 +127,17 @@ const Home = () => {
           minHeight={`100vh`}
           bgColor={width < 700 ? Theme.white_C : Theme.lightGrey_C}
         >
-          <IoBoxWrapper height={`100vh`} padding={`20px 0 100px`}>
-            <Text bold={true} fontSize={`1.5rem`} margin={`0 0 30px`}>
+          <IoBoxWrapper
+            height={`100vh`}
+            padding={`20px 0 100px`}
+            bgColor={Theme.white_C}
+          >
+            <Text
+              bold={true}
+              fontSize={`1.5rem`}
+              margin={`0 0 30px`}
+              textAlign={`center`}
+            >
               {keepBoxDetails[0].User.nickname}님,{" "}
               <Text>성공적으로 구매가 되었습니다.</Text>
             </Text>

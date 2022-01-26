@@ -24,6 +24,15 @@ import wrapper from "../../store/configureStore";
 import { LOAD_MY_INFO_REQUEST } from "../../reducers/user";
 import axios from "axios";
 import { END } from "redux-saga";
+import { notification } from "antd";
+
+const LoadNotification = (msg, content) => {
+  notification.open({
+    message: msg,
+    description: content,
+    onClick: () => {},
+  });
+};
 
 const Index = () => {
   const width = useWidth();
@@ -48,6 +57,15 @@ const Index = () => {
   };
 
   ////// USEEFFECT //////
+
+  useEffect(() => {
+    if (!me) {
+      router.push("/");
+
+      return LoadNotification("로그인 후 이용해주세요.");
+    }
+  }, [me]);
+
   useEffect(() => {
     scrollTo(0, 0);
   }, [router.route]);
