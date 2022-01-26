@@ -212,7 +212,7 @@ function* keepBoxDetail(action) {
 // SAGA AREA ********************************************************************************************************
 // ******************************************************************************************************************
 function keepBoxDateListAPI(data) {
-  return axios.post(`/api/keepBox/list/date`, data);
+  return axios.post(`/api/keepBox/list/date${data.qs}`, data);
 }
 
 function* keepBoxDateList(action) {

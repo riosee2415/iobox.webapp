@@ -168,8 +168,9 @@ const Index = () => {
         period: storeData.type,
         isFilming: storeData.isCapture,
         pickWay: storeData.pickUp,
-        price: storeData.totalPay,
-        // -          (storeData.type === "정기" ? storeData.totalPay * 0.1 : 0),
+        price:
+          storeData.totalPay -
+          (storeData.type === "정기" ? storeData.totalPay * 0.1 : 0),
         deliveryPay: storeData.pickUpPrice,
         name: inputName.value,
         mobile: inputMobile.value,
@@ -330,14 +331,14 @@ const Index = () => {
               </Wrapper>
               <Text fontSize={`1.5rem`} fontWeight={`700`}>
                 {numberWithCommas(
-                  storeData.totalPay
-                  // -                    (storeData.type === "정기" ? storeData.totalPay * 0.1 : 0)
+                  storeData.totalPay -
+                    (storeData.type === "정기" ? storeData.totalPay * 0.1 : 0)
                 )}
                 원
               </Text>
             </Wrapper>
 
-            {/* <Wrapper dr={`row`} ju={`space-between`} padding={`10px 0`}>
+            <Wrapper dr={`row`} ju={`space-between`} padding={`10px 0`}>
               <Wrapper dr={`row`} width={`auto`} ju={`flex-start`}>
                 <Text fontSize={`1.2rem`} fontWeight={`700`}>
                   배송비
@@ -346,7 +347,7 @@ const Index = () => {
               <Text fontSize={`1.5rem`} fontWeight={`700`}>
                 {numberWithCommas(storeData.pickUpPrice)}원
               </Text>
-            </Wrapper> */}
+            </Wrapper>
 
             <Wrapper dr={`row`} ju={`flex-start`} margin={`20px 0`}>
               <Image
@@ -566,8 +567,8 @@ const Index = () => {
                 onClick={handleFormSubmit}
               >
                 {numberWithCommas(
-                  storeData.totalPay
-                  // -                    (storeData.type === "정기" ? storeData.totalPay * 0.1 : 0)
+                  storeData.totalPay -
+                    (storeData.type === "정기" ? storeData.totalPay * 0.1 : 0)
                 )}{" "}
                 원 결제하기
               </CommonButton>

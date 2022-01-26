@@ -160,23 +160,23 @@ const Index = () => {
 
   useEffect(() => {
     if (keepBoxes) {
-      console.log(keepBoxes);
       let tempBox = { 1: [], 2: [], 3: [], 4: [] };
 
       for (let i = 0; i < keepBoxes.length; i++) {
-        console.log(keepBoxes[i].KeepBoxes.length);
-        for (let j = 0; j < keepBoxes[i].KeepBoxes.length; j++) {
-          if (keepBoxes[i].KeepBoxes[j].boxcount1 !== 0) {
-            tempBox[1].push(keepBoxes[i].KeepBoxes[j]);
-          }
-          if (keepBoxes[i].KeepBoxes[j].boxcount2 !== 0) {
-            tempBox[2].push(keepBoxes[i].KeepBoxes[j]);
-          }
-          if (keepBoxes[i].KeepBoxes[j].boxcount3 !== 0) {
-            tempBox[3].push(keepBoxes[i].KeepBoxes[j]);
-          }
-          if (keepBoxes[i].KeepBoxes[j].boxcount4 !== 0) {
-            tempBox[4].push(keepBoxes[i].KeepBoxes[j]);
+        if (keepBoxes[i].status === "보관중") {
+          for (let j = 0; j < keepBoxes[i].KeepBoxes.length; j++) {
+            if (keepBoxes[i].KeepBoxes[j].boxcount1 !== 0) {
+              tempBox[1].push(keepBoxes[i].KeepBoxes[j]);
+            }
+            if (keepBoxes[i].KeepBoxes[j].boxcount2 !== 0) {
+              tempBox[2].push(keepBoxes[i].KeepBoxes[j]);
+            }
+            if (keepBoxes[i].KeepBoxes[j].boxcount3 !== 0) {
+              tempBox[3].push(keepBoxes[i].KeepBoxes[j]);
+            }
+            if (keepBoxes[i].KeepBoxes[j].boxcount4 !== 0) {
+              tempBox[4].push(keepBoxes[i].KeepBoxes[j]);
+            }
           }
         }
       }
@@ -216,8 +216,6 @@ const Index = () => {
   const moveLinkHandler = useCallback((link) => {
     router.push(link);
   }, []);
-
-  console.log(detailBox);
 
   ////// DATAVIEW //////
   return (

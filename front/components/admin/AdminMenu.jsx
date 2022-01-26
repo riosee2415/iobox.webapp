@@ -121,11 +121,17 @@ const AdminMenu = () => {
         <SubMenu
           key="sub7"
           icon={<FolderOutlined />}
-          title="박스 관리"
+          title="주문 관리"
           onTitleClick={titleClickHandler("sub7")}
         >
-          <Menu.Item key="/admin/keepBox/list">
-            <MenuName>박스 리스트</MenuName>
+          <Menu.Item key="/admin/keepBox/list?listType=3">
+            <MenuName>전체 리스트</MenuName>
+          </Menu.Item>
+          <Menu.Item key="/admin/keepBox/list?listType=1">
+            <MenuName>일반 배송 리스트</MenuName>
+          </Menu.Item>
+          <Menu.Item key="/admin/keepBox/list?listType=2">
+            <MenuName>하루 배송 리스트</MenuName>
           </Menu.Item>
         </SubMenu>
         <SubMenu

@@ -11,6 +11,7 @@ import {
   TextArea,
   Canceal,
   IoBoxWrapper,
+  Question,
 } from "../../../components/commonComponents";
 import styled from "styled-components";
 import ClientLayout from "../../../components/ClientLayout";
@@ -58,6 +59,7 @@ const Index = () => {
   const router = useRouter();
 
   ////// HOOKS //////
+  const [isCapture, setIsCapture] = useState(true);
 
   const [cardNum, setCardNum] = useState(null);
 
@@ -142,81 +144,40 @@ const Index = () => {
   }, []);
 
   const handleFormSubmit = useCallback(() => {
-    // dispatch({
-    //   type: SUBSCRIPTION_CREATE_REQUEST,
-    //   data: {
-    //     // 카드번호
-    //     cardNumber: "4092160302741999",
-    //     // 유효기간
-    //     expiry: "2024-07",
-    //     // 생년월일
-    //     birth: "920131",
-    //     // 비밀번호 앞 두자리
-    //     pwd2Digit: "74",
-    //     // 고유 코드
-    //     customer_uid: "gildong_0001_1234",
-    //   },
-    // });
     dispatch({
       type: KEEPBOX_CREATE_REQUEST,
       data: {
-        type: "일반 배송",
+        type: "총알 배송",
         boxcount1: storeData.boxs[0],
         boxcount2: storeData.boxs[1],
         boxcount3: storeData.boxs[2],
         boxcount4: storeData.boxs[3],
         period: storeData.type,
-        isFilming: storeData.isCapture,
-        pickWay: storeData.pickUp,
+        isFilming: isCapture,
+        pickWay: "하루 배송",
         price: storeData.totalPay,
-        // -          (storeData.type === "정기" ? storeData.totalPay * 0.1 : 0),
-        deliveryPay: storeData.pickUpPrice,
+        deliveryPay: 0,
+        // deliveryPay: storeData.pickUpPrice,
         name: inputName.value,
         mobile: inputMobile.value,
-        address: inputAddress.value,
-        detailAddress: inputDetail.value,
+        address: storeData.startAdd,
+        detailAddress: storeData.startDetail,
         remark: inputContent.value,
         UserId: me.id,
+        //
+        //
+        isEle: storeData.startEle,
+        floor: storeData.startFloor,
+        startDate: storeData.startDate,
+        reIsEle: storeData.endEle,
+        reFloor: storeData.endFloor,
+        endDate: storeData.endDate,
+        receiveAdd: storeData.endAdd,
+        receiveDetail: storeData.endDetail,
       },
     });
-    //
-    //
-    // const d = new Date();
-    // let year = d.getFullYear() + "";
-    // let month = d.getMonth() + 1 + "";
-    // let date = d.getDate() + "";
-    // let hour = d.getHours() + "";
-    // let min = d.getMinutes() + "";
-    // let sec = d.getSeconds() + "";
-    // let mSec = d.getMilliseconds() + "";
-    // month = month < 10 ? "0" + month : month;
-    // date = date < 10 ? "0" + date : date;
-    // hour = hour < 10 ? "0" + hour : hour;
-    // min = min < 10 ? "0" + min : min;
-    // sec = sec < 10 ? "0" + sec : sec;
-    // mSec = mSec < 10 ? "0" + mSec : mSec;
-    // let orderPK = "ORD" + year + month + date + hour + min + sec + mSec;
-    // const IMP = window.IMP;
-    // IMP.request_pay(
-    //   {
-    //     pay_method: "card",
-    //     buyer_name: inputName.value,
-    //     buyer_mobile: inputMobile.value,
-    //     merchant_uid: orderPK,
-    //     name: "상자",
-    //     amount: storeData.totalPay + "",
-    //   },
-    //   async (rsp) => {
-    //     if (rsp.success) {
-    //       console.log(rsp.success);
-    //     } else {
-    //       console.log(rsp.error_msg);
-    //       if (rsp.error_msg !== "사용자가 결제를 취소하셨습니다") {
-    //       }
-    //     }
-    //   }
-    // );
   }, [
+    isCapture,
     storeData,
     inputName,
     inputMobile,
@@ -227,7 +188,6 @@ const Index = () => {
   ]);
 
   ////// DATAVIEW //////
-  console.log(storeData);
 
   if (!storeData) {
     return null;
@@ -286,14 +246,14 @@ const Index = () => {
               <Text fontSize={`1.2rem`} fontWeight={`700`}>
                 보관함
               </Text>
-              <Text>상자 1</Text>
+              <Text>상자 </Text>
             </Wrapper>
 
             <Wrapper dr={`row`} ju={`space-between`} padding={`10px 0`}>
               <Text fontSize={`1.2rem`} fontWeight={`700`}>
                 팍업방식
               </Text>
-              <Text>{storeData.pickUp}</Text>
+              <Text>하루 배송</Text>
             </Wrapper>
 
             <Wrapper
@@ -347,6 +307,38 @@ const Index = () => {
                 {numberWithCommas(storeData.pickUpPrice)}원
               </Text>
             </Wrapper> */}
+
+            <Wrapper dr={`row`} ju={`flex-start`} margin={`20px 0 0`}>
+              <Image
+                src={`https://4leaf-s3.s3.ap-northeast-2.amazonaws.com/iobox/assets/images/payment/present.png`}
+                width={`30px`}
+                margin={`0 10px 0 0`}
+                alt={`icon`}
+              />
+              <Text bold={true} fontSize={`1.5rem`} margin={`0 0 0 5px`}>
+                io박스 무료 서비스
+              </Text>
+            </Wrapper>
+
+            <Wrapper dr={`row`} ju={`space-between`} margin={`20px 0`}>
+              <Wrapper width={`auto`} dr={`row`}>
+                <Radio
+                  style={{ display: "flex", alignItems: "center" }}
+                  checked={isCapture}
+                  onClick={() => setIsCapture(!isCapture)}
+                >
+                  <Wrapper width={`auto`} al={`flex-start`}>
+                    <Text>상자 보관 물건 촬영</Text>
+                    <Text color={Theme.basicTheme_C} fontWeight={`700`}>
+                      무료
+                    </Text>
+                  </Wrapper>
+                </Radio>
+              </Wrapper>
+              <Question>
+                <Text margin={`1px 0 0 2px`}>?</Text>
+              </Question>
+            </Wrapper>
 
             <Wrapper dr={`row`} ju={`flex-start`} margin={`20px 0`}>
               <Image
@@ -409,7 +401,7 @@ const Index = () => {
               </Wrapper>
             </Wrapper>
 
-            <Wrapper al={`flex-start`} margin={`0 0 20px`}>
+            {/* <Wrapper al={`flex-start`} margin={`0 0 20px`}>
               <Text margin={`0 0 5px`}>주소</Text>
 
               <Wrapper>
@@ -457,7 +449,7 @@ const Index = () => {
                   </Wrapper>
                 </Wrapper>
               </Wrapper>
-            </Wrapper>
+            </Wrapper> */}
 
             <Wrapper al={`flex-start`} margin={`0 0 20px`}>
               <Text margin={`0 0 5px`}>특이사항</Text>

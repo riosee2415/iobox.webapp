@@ -39,6 +39,25 @@ import {
 import { SearchOutlined } from "@ant-design/icons";
 import { numberWithCommas } from "../../../../components/commonUtils";
 import { SUBSCRIPTION_CANCEL_REQUEST } from "../../../../reducers/subscription";
+import { CSVLink } from "react-csv";
+import Theme from "../../../../components/Theme";
+
+const DownloadBtn = styled(CSVLink)`
+  width: 200px;
+  height: 25px;
+  margin: 0 0 0 10px;
+  border-radius: 3px;
+
+  background: ${(props) => props.theme.basicTheme_C};
+  color: ${(props) => props.theme.white_C};
+
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+
+  transition: 0.4s;
+`;
 
 const AdminContent = styled.div`
   padding: 20px;
@@ -112,6 +131,28 @@ const LoadNotification = (msg, content) => {
 const Index = () => {
   const _WIDTH = `400`;
   const _HEIGHT = `400`;
+
+  const dataArr = [
+    //
+    ["행거박스", "W58 x H100 x D30 (CM)", "월", 19000],
+    ["행거박스 plus+", "W58 x H130 x D60 (CM)", "월", 39000],
+    ["텐트박스", "W100 x H45 x D45 (CM)", "월", 39000],
+    ["캠핑박스 plus+", "W110 x H50 x D50 (CM)", "월", 59000],
+  ];
+
+  const headers = [
+    { label: "번호", key: "no" },
+    { label: "박스 유형", key: "boxes" },
+    { label: "구매 유형", key: "type" },
+    { label: "구매자", key: "name" },
+    { label: "연락처", key: "mobile" },
+    { label: "배송 방법", key: "pickWay" },
+    { label: "특이사항", key: "remark" },
+    { label: "택배사", key: "deliveyCom" },
+    { label: "송장번호", key: "deliveryNo" },
+    { label: "구매일", key: "createdAt" },
+  ];
+
   // LOAD CURRENT INFO AREA /////////////////////////////////////////////
   const { me, st_loadMyInfoDone } = useSelector((state) => state.user);
 
@@ -178,6 +219,8 @@ const Index = () => {
   const [yearInput, setYearInput] = useState("2021");
   const [monthInput, setMonthInput] = useState("01");
 
+  const [csvData, setCsvData] = useState(null);
+
   const {
     keepBoxes,
     uploadKeepBoxPath,
@@ -202,6 +245,7 @@ const Index = () => {
       type: KEEPBOX_DATE_LIST_REQUEST,
       data: {
         searchDate: `${yearInput}-${monthInput}-01`,
+        qs,
       },
     });
   }, [router.query, yearInput, monthInput]);
@@ -213,6 +257,7 @@ const Index = () => {
         type: KEEPBOX_DATE_LIST_REQUEST,
         data: {
           searchDate: `${yearInput}-${monthInput}-01`,
+          qs,
         },
       });
 
@@ -229,6 +274,7 @@ const Index = () => {
         type: KEEPBOX_DATE_LIST_REQUEST,
         data: {
           searchDate: `${yearInput}-${monthInput}-01`,
+          qs,
         },
       });
 
@@ -281,6 +327,49 @@ const Index = () => {
 
     setYearInput(date.getFullYear());
   }, []);
+
+  useEffect(() => {
+    if (keepBoxes) {
+      const tempArr = [];
+
+      keepBoxes.map((data, idx) => {
+        data.KeepBoxes.map((info) => {
+          let type = "";
+
+          if (info.boxcount1) {
+            type = dataArr[0];
+          }
+          if (info.boxcount2) {
+            type = dataArr[1];
+          }
+          if (info.boxcount3) {
+            type = dataArr[2];
+          }
+          if (info.boxcount4) {
+            type = dataArr[3];
+          }
+
+          tempArr.push({
+            no: data.id,
+            boxes: type[0],
+            type: info.type === "일반 배송" ? "일반 배송" : "하루 배송",
+            name: info.name,
+            mobile: `${info.mobile.slice(0, 3)}-${info.mobile.slice(
+              3,
+              7
+            )}-${info.mobile.slice(7, 11)}`,
+            pickWay: info.pickWay ? info.pickWay : "하루 배송",
+            remark: info.remark,
+            deliveryCom: info.deliveryCom,
+            deliveryNo: info.deliveryNo,
+            createdAt: data.createdAt.slice(0, 10),
+          });
+        });
+      });
+
+      setCsvData(tempArr);
+    }
+  }, [keepBoxes]);
 
   ////// TOGGLE //////
   const modalOpen = useCallback(() => {
@@ -342,17 +431,10 @@ const Index = () => {
 
     let value = "";
 
-    if (!qs.page) {
-      setCurrentPage(1);
-      value = "?page=1";
+    if (!qs.listType) {
+      value = "/3";
     } else {
-      setCurrentPage(qs.page);
-      value = `?page=${qs.page}`;
-    }
-
-    if (qs.search) {
-      value += `&searchTitle=${qs.search}`;
-      setSearchValue(qs.search);
+      value = `/${qs.listType}`;
     }
 
     return value;
@@ -427,9 +509,17 @@ const Index = () => {
     {
       title: "진행상황",
       render: (data) => (
-        <Button type="primary" onClick={() => updateModalOpen(data)}>
-          진행상황 수정
-        </Button>
+        <Wrapper al={`flex-start`}>
+          {data.status === "찾기완료" ? (
+            <Text>찾기완료</Text>
+          ) : data.status === "보관중" ? (
+            <Text>보관중</Text>
+          ) : (
+            <Button type="primary" onClick={() => updateModalOpen(data)}>
+              진행상황 수정
+            </Button>
+          )}
+        </Wrapper>
       ),
     },
   ];
@@ -443,46 +533,74 @@ const Index = () => {
       />
 
       <AdminContent>
-        <Row gutter={[10, 10]} style={{ padding: "0 0 10px 0" }}>
-          <Col style={{ width: `150px` }}>
-            <Select
-              style={{ width: `100%` }}
-              value={yearInput}
-              onChange={(value) => setYearInput(value)}
-            >
-              {year.map((data) => {
-                return <Select.Option value={data}>{data}년</Select.Option>;
-              })}
-            </Select>
-          </Col>
+        <Wrapper padding={"0 0 10px 0"} dr={`row`} ju={`space-between`}>
+          <Wrapper width={`auto`} dr={`row`}>
+            <Wrapper width={`150px`}>
+              <Select
+                style={{ width: `100%` }}
+                value={yearInput}
+                onChange={(value) => setYearInput(value)}
+              >
+                {year.map((data) => {
+                  return <Select.Option value={data}>{data}년</Select.Option>;
+                })}
+              </Select>
+            </Wrapper>
 
-          <Col style={{ width: `150px` }}>
-            <Select
-              style={{ width: `100%` }}
-              value={monthInput}
-              onChange={(value) => setMonthInput(value)}
+            <Wrapper width={`150px`} margin={`0 10px`}>
+              <Select
+                style={{ width: `100%` }}
+                value={monthInput}
+                onChange={(value) => setMonthInput(value)}
+              >
+                {month.map((data) => {
+                  return <Select.Option value={data}>{data}월</Select.Option>;
+                })}
+              </Select>
+            </Wrapper>
+            <Wrapper width={`86px`}>
+              <Button
+                onClick={() =>
+                  moveLinkHandler("/admin/keepBox/list?listType=3")
+                }
+              >
+                전체 조회
+              </Button>
+            </Wrapper>
+            <Wrapper width={`86px`} margin={`0 5px`}>
+              <Button
+                onClick={() =>
+                  moveLinkHandler("/admin/keepBox/list?listType=1")
+                }
+              >
+                일반 배송
+              </Button>
+            </Wrapper>
+            <Wrapper width={`86px`}>
+              <Button
+                onClick={() =>
+                  moveLinkHandler("/admin/keepBox/list?listType=2")
+                }
+              >
+                하루 배송
+              </Button>
+            </Wrapper>
+          </Wrapper>
+          {csvData && (
+            <DownloadBtn
+              filename={`배송 정보`}
+              headers={headers}
+              data={csvData}
             >
-              {month.map((data) => {
-                return <Select.Option value={data}>{data}월</Select.Option>;
-              })}
-            </Select>
-          </Col>
-        </Row>
+              배송 정보 출력
+            </DownloadBtn>
+          )}
+        </Wrapper>
         <Table
           rowKey="id"
           columns={columns}
           dataSource={keepBoxes ? keepBoxes : []}
           size="small"
-          pagination={
-            false
-            //   {
-            //   defaultCurrent: 1,
-            //   current: parseInt(currentPage),
-
-            //   total: maxPage * 10,
-            //   onChange: (page) => otherPageCall(page),
-            // }
-          }
         />
       </AdminContent>
 
@@ -542,7 +660,7 @@ const Index = () => {
 
           <Form
             style={{ width: `80%` }}
-            onFinish={updateDelivery}
+            onFinish={() => updateDelivery()}
             ref={formRef}
           >
             <Form.Item
