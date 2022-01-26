@@ -6,6 +6,8 @@ export const initailState = {
   detailBox: null,
   maxPage: 1,
   //
+  createInfo: null,
+  //
   modal: false,
   guideModal: false,
   //
@@ -254,6 +256,7 @@ const reducer = (state = initailState, action) =>
       case KEEPBOX_CREATE_SUCCESS: {
         draft.st_keepBoxCreateLoading = false;
         draft.st_keepBoxCreateDone = true;
+        draft.createInfo = action.data.info;
         break;
       }
       case KEEPBOX_CREATE_FAILURE: {

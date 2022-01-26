@@ -216,17 +216,14 @@ const Index = () => {
   const [cardInput, setCardInput] = useState(false);
   const [dayInput, setDayInput] = useState(false);
 
-  const [currentHanger, setCurrentHanger] = useState(0);
-  const [currentIo, setCurrentIo] = useState(0);
-  const [currentBig, setCurrentBig] = useState(0);
-  const [currentTent, setCurrentTent] = useState(0);
-
   const [startDate, setStartDate] = useState(null);
   const [endDate, setEndDate] = useState(null);
   const [floorModal, setFloorModal] = useState(false);
 
   const [startFloor, setStartFloor] = useState(false);
+  const [startEle, setStartEle] = useState(false);
   const [endFloor, setEndFloor] = useState(false);
+  const [endEle, setEndEle] = useState(false);
 
   const [datePickerOpen1, setDatePickerOpen1] = useState(false);
   const [datePickerOpen2, setDatePickerOpen2] = useState(false);
@@ -287,19 +284,6 @@ const Index = () => {
     },
     [currentBuy]
   );
-  const currentIoHandler = useCallback(
-    (pm) => {
-      if (pm === `plus`) {
-        setCurrentIo(currentIo + 1);
-      } else if (pm === `minus`) {
-        if (currentIo <= 0) {
-          return;
-        }
-        setCurrentIo(currentIo - 1);
-      }
-    },
-    [currentIo]
-  );
 
   const deleteAllBoxHandler = useCallback(() => {
     setCurrentBuy([0, 0, 0, 0]);
@@ -308,6 +292,12 @@ const Index = () => {
   const dateChangeHandler = useCallback(
     (e) => {
       console.log(e);
+      if (e[0]) {
+        setStartDate(e[0].format("YYYY-MM-DD"));
+      }
+      if (e[1]) {
+        setEndDate(e[1].format("YYYY-MM-DD"));
+      }
     },
     [startDate, endDate]
   );
@@ -338,25 +328,43 @@ const Index = () => {
   }, []);
 
   const nextStepHandler = useCallback(() => {
+    if (price === 0) {
+      return message.error("박스를 선택해주세요.");
+    }
+
+    if (radioValue === 0 && (!startDate || !endDate)) {
+      return message.error("보관 기간을 선택해주세요.");
+    }
+
     console.log(
       currentBuy,
+      //
       startDate,
       endDate,
-      startFloor,
-      endFloor,
+      //
+      radioValue === 0 ? "선결제방식" : "매월결제방식",
       inputStartAddress,
       inputStartZoneCode,
       inputStartDetail,
+      startFloor,
+      startEle,
+      //
       inputEndAddress,
       inputEndZoneCode,
-      inputEndDetail
+      inputEndDetail,
+      endFloor,
+      endEle
     );
   }, [
+    price,
+    radioValue,
     currentBuy,
     startDate,
     endDate,
     startFloor,
     endFloor,
+    startEle,
+    endEle,
     inputStartAddress,
     inputStartZoneCode,
     inputStartDetail,
@@ -594,16 +602,10 @@ const Index = () => {
                           radius={`35px`}
                           padding={`0 15px`}
                           dr={`row`}
-                          촘
                           ju={`space-between`}
                           bgColor={Theme.lightGrey_C}
                         >
                           <MinusOutlined
-                            style={
-                              currentHanger === 0
-                                ? { color: "GrayText" }
-                                : { color: "black" }
-                            }
                             onClick={() => {
                               currentHangerHandler(-1, idx);
                             }}
@@ -691,8 +693,15 @@ const Index = () => {
                   <Wrapper dr={`row`} ju={`space-between`} margin={`0 0 30px`}>
                     <Text fontSize={`1.2rem`}>층</Text>
                     <Wrapper dr={`row`} width={`auto`} ju={`space-between`}>
-                      <GreyCheckbox />
-                      <Text margin={`0 0 0 10px`} fontSize={`1.2rem`}>
+                      <GreyCheckbox
+                        checked={startEle}
+                        onClick={() => setStartEle(!startEle)}
+                      />
+                      <Text
+                        margin={`0 0 0 10px`}
+                        fontSize={`1.2rem`}
+                        onClick={() => setStartEle(!startEle)}
+                      >
                         엘리베이터 있음
                       </Text>
                     </Wrapper>
@@ -994,11 +1003,15 @@ const Index = () => {
                         층
                       </Text>
                       <Wrapper dr={`row`} width={`auto`} ju={`space-between`}>
-                        <GreyCheckbox />
+                        <GreyCheckbox
+                          checked={endEle}
+                          onClick={() => setEndEle(!endEle)}
+                        />
                         <Text
                           margin={`0 0 0 10px`}
                           fontSize={`1.3rem`}
                           color={Theme.darkGrey3_C}
+                          onClick={() => setEndEle(!endEle)}
                         >
                           엘리베이터 있음
                         </Text>
