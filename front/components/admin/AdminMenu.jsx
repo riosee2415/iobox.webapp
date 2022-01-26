@@ -20,6 +20,8 @@ const { SubMenu } = Menu;
 const MenuName = styled.div`
   width: 100%;
   height: 100%;
+  ${(props) => (props.color ? props.color : "")};
+  ${(props) => (props.cursor ? props.cursor : "")};
   display: flex;
   flex-direction: row;
   align-items: center;
@@ -132,6 +134,19 @@ const AdminMenu = () => {
           </Menu.Item>
           <Menu.Item key="/admin/keepBox/list?listType=2">
             <MenuName>하루 배송 리스트</MenuName>
+          </Menu.Item>
+          <Menu.Item disabled={true}>
+            <MenuName
+              color={`color:rgba(255, 255, 255, 0.65) !important`}
+              cursor={`cursor: pointer !important`}
+              onClick={(e) => {
+                console.log(e);
+                e.preventDefault();
+                window.open("https://admin.iamport.kr/users/login", "_blank");
+              }}
+            >
+              결제 내역 관리
+            </MenuName>
           </Menu.Item>
         </SubMenu>
         <SubMenu
