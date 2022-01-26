@@ -298,7 +298,7 @@ router.get(
 );
 
 // 입력 받은 값의 월 부터 한달
-router.post("/list/date", async (req, res, next) => {
+router.post("/list/date/:listType", async (req, res, next) => {
   const { searchDate } = req.body;
 
   try {
@@ -336,6 +336,7 @@ router.post("/list/date", async (req, res, next) => {
           },
         },
       ],
+      order: [["createdAt", "DESC"]],
     });
 
     return res.status(200).json(results);
@@ -391,6 +392,8 @@ router.post("/create", async (req, res, next) => {
     return res.status(401).send("잘못된 요청입니다.");
   }
 
+  let masterId = "";
+
   try {
     if (type === "일반 배송") {
       if (
@@ -404,6 +407,8 @@ router.post("/create", async (req, res, next) => {
         const masterResult = await KeepBoxMaster.create({
           UserId: parseInt(UserId),
         });
+
+        masterId = masterResult.id;
 
         if (parseInt(boxcount1) !== 0) {
           for (let i = 0; i < parseInt(boxcount1); i++) {
@@ -517,7 +522,7 @@ router.post("/create", async (req, res, next) => {
           ],
         });
 
-        return res.status(201).json({ result: true });
+        return res.status(201).json({ result: true, info: [masterId, type] });
       }
     }
 
@@ -533,6 +538,8 @@ router.post("/create", async (req, res, next) => {
         const masterResult = await KeepBoxMaster.create({
           UserId: parseInt(UserId),
         });
+
+        masterId = masterResult.id;
 
         if (parseInt(boxcount1) !== 0) {
           for (let i = 0; i < parseInt(boxcount1); i++) {
@@ -654,7 +661,7 @@ router.post("/create", async (req, res, next) => {
           }
         }
 
-        return res.status(201).json({ result: true });
+        return res.status(201).json({ result: true, info: [masterId, type] });
       }
     }
   } catch (error) {
