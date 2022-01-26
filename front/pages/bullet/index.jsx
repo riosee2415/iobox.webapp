@@ -180,14 +180,29 @@ const Index = () => {
 
   const dataArr = [
     //
-    ["io박스", "https://via.placeholder.com/100x100", "iO 베이직 월", 9000],
-    ["행거박스", "https://via.placeholder.com/100x100", "iO 베이직 월", 19000],
-    ["텐트박스", "https://via.placeholder.com/100x100", "iO 베이직 월", 29000],
     [
-      "대용량 박스",
-      "https://via.placeholder.com/100x100",
-      "iO 베이직 월",
+      "행거박스",
+      "https://4leaf-s3.s3.ap-northeast-2.amazonaws.com/iobox/assets/images/icon2/img-hanger.png",
+      "월",
+      19000,
+    ],
+    [
+      "행거박스 plus+",
+      "https://4leaf-s3.s3.ap-northeast-2.amazonaws.com/iobox/assets/images/icon2/img-hanger-plus.png",
+      "월",
       39000,
+    ],
+    [
+      "텐트박스",
+      "https://4leaf-s3.s3.ap-northeast-2.amazonaws.com/iobox/assets/images/icon2/img-tent-box.png",
+      "월",
+      39000,
+    ],
+    [
+      "텐트박스 plus+",
+      "https://4leaf-s3.s3.ap-northeast-2.amazonaws.com/iobox/assets/images/icon2/img-camping-plus.png",
+      "월",
+      59000,
     ],
   ];
 
