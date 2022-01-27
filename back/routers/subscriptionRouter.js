@@ -2,13 +2,12 @@ const express = require("express");
 const axios = require("axios");
 const moment = require("moment");
 const { KeepBoxSchedule, User, KeepBox } = require("../models");
+const KeepBoxMaster = require("../models/keepboxmaster");
 
 const router = express.Router();
 
 router.post(`/schedule`, async (req, res, next) => {
   try {
-    console.log(req.body);
-
     const data = await KeepBoxSchedule.findOne({
       where: {
         merchantUid: req.body.merchant_uid,
@@ -20,7 +19,12 @@ router.post(`/schedule`, async (req, res, next) => {
           model: User,
         },
         {
-          model: KeepBox,
+          model: KeepBoxMaster,
+          include: [
+            {
+              model: KeepBox,
+            },
+          ],
         },
       ],
     });
@@ -53,14 +57,7 @@ router.post(`/schedule`, async (req, res, next) => {
     mSec = mSec < 10 ? "0" + mSec : mSec;
     let schedulePK = "ORD" + year + month + date + hour + min + sec + mSec;
 
-    let time = moment().add(1, `month`).unix();
-    console.log(
-      data.id,
-      data.KeepBox,
-      data.User.userId,
-      data.User.nickname,
-      access_token
-    );
+    let time = moment().add(10, `s`).unix();
 
     await KeepBoxSchedule.update(
       {
@@ -82,7 +79,8 @@ router.post(`/schedule`, async (req, res, next) => {
             merchant_uid: schedulePK, // 주문 번호
             schedule_at: time, // 결제 시도 시각 in Unix Time Stamp. 예: 다음 달 1일
             amount: 1000,
-            name: `(${data.User.userId})${data.User.nickname}`,
+            name: "아이오박스 정기결제",
+            buyer_name: data.User.nickname,
           },
         ],
       },

@@ -31,6 +31,6 @@ module.exports = class KeepBoxSchedule extends Model {
   }
   static associate(db) {
     db.KeepBoxSchedule.belongsTo(db.User);
-    db.KeepBoxSchedule.belongsTo(db.KeepBox);
+    db.KeepBoxSchedule.belongsTo(db.KeepBoxMaster);
   }
 };
