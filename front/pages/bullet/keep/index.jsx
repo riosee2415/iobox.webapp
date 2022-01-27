@@ -144,6 +144,19 @@ const Index = () => {
   }, []);
 
   const handleFormSubmit = useCallback(() => {
+    if (!inputName.value || inputName.value.trim() === "") {
+      return message.error("이름을 입력해주세요.");
+    }
+    if (!inputMobile.value || inputMobile.value.trim() === "") {
+      return message.error("전화번호를 입력해주세요.");
+    }
+    if (!inputAddress.value || inputAddress.value.trim() === "") {
+      return message.error("주소를 입력해주세요.");
+    }
+    if (!inputDetail.value || inputDetail.value.trim() === "") {
+      return message.error("상세주소를 입력해주세요.");
+    }
+
     dispatch({
       type: KEEPBOX_CREATE_REQUEST,
       data: {

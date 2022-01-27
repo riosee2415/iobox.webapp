@@ -34,6 +34,7 @@ import useInput from "../../../../hooks/useInput";
 import {
   ColWrapper,
   RowWrapper,
+  Text,
   Wrapper,
 } from "../../../../components/commonComponents";
 import { SearchOutlined } from "@ant-design/icons";
@@ -453,13 +454,12 @@ const Index = () => {
 
   const updateDelivery = useCallback(
     (value) => {
-      console.log(updateData.User);
-
       dispatch({
         type: MASTER_KEEPBOX_UPDATE_REQUEST,
         data: {
           id: updateData.id,
           status: value.status,
+          userId: updateData.User.id,
         },
       });
     },
@@ -660,7 +660,7 @@ const Index = () => {
 
           <Form
             style={{ width: `80%` }}
-            onFinish={() => updateDelivery()}
+            onFinish={updateDelivery}
             ref={formRef}
           >
             <Form.Item

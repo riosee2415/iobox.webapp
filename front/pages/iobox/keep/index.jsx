@@ -157,6 +157,19 @@ const Index = () => {
     //     customer_uid: "gildong_0001_1234",
     //   },
     // });
+    if (!inputName.value || inputName.value.trim() === "") {
+      return message.error("이름을 입력해주세요.");
+    }
+    if (!inputMobile.value || inputMobile.value.trim() === "") {
+      return message.error("전화번호를 입력해주세요.");
+    }
+    if (!inputAddress.value || inputAddress.value.trim() === "") {
+      return message.error("주소를 입력해주세요.");
+    }
+    if (!inputDetail.value || inputDetail.value.trim() === "") {
+      return message.error("상세주소를 입력해주세요.");
+    }
+
     dispatch({
       type: KEEPBOX_CREATE_REQUEST,
       data: {
@@ -228,7 +241,6 @@ const Index = () => {
   ]);
 
   ////// DATAVIEW //////
-  console.log(storeData);
 
   if (!storeData) {
     return null;
@@ -287,7 +299,7 @@ const Index = () => {
               <Text fontSize={`1.2rem`} fontWeight={`700`}>
                 보관함
               </Text>
-              <Text>상자 1</Text>
+              <Text>상자</Text>
             </Wrapper>
 
             <Wrapper dr={`row`} ju={`space-between`} padding={`10px 0`}>

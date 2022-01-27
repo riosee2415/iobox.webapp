@@ -136,8 +136,6 @@ const Index = () => {
     [tab]
   );
 
-  console.log(tab);
-
   ////// DATAVIEW //////
   return (
     <WholeWrapper bgColor={width < 700 ? Theme.white_C : Theme.lightGrey_C}>
@@ -247,8 +245,6 @@ const Index = () => {
                           check[3] = tempData.boxcount4;
                         }
                       }
-
-                      console.log(check);
 
                       return (
                         <Wrapper

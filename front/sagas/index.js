@@ -14,6 +14,7 @@ import infoSaga from "./info";
 import keepBoxSaga from "./keepBox";
 import menuImageSaga from "./menuImage";
 import subscriptionSaga from "./subscription";
+import returnBoxSaga from "./returnBox";
 //
 import axios from "axios";
 import backURL from "../config/config";
@@ -38,5 +39,6 @@ export default function* rootSaga() {
     fork(keepBoxSaga),
     fork(menuImageSaga),
     fork(subscriptionSaga),
+    fork(returnBoxSaga),
   ]);
 }

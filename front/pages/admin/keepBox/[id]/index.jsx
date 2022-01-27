@@ -403,9 +403,10 @@ const Index = ({}) => {
             </Text>
             <Wrapper margin={`5px 0`} al={`flex-start`}>
               <Text>특이사항 :</Text>
-              {detailBox.remark.split("\n").map((data, idx) => {
-                return <Text key={idx}>{data}</Text>;
-              })}
+              {detailBox.remark &&
+                detailBox.remark.split("\n").map((data, idx) => {
+                  return <Text key={idx}>{data}</Text>;
+                })}
             </Wrapper>
           </Wrapper>
 
