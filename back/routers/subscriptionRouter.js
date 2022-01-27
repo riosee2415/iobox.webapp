@@ -79,7 +79,7 @@ router.post(`/schedule`, async (req, res, next) => {
             merchant_uid: schedulePK, // 주문 번호
             schedule_at: time, // 결제 시도 시각 in Unix Time Stamp. 예: 다음 달 1일
             amount: 1000,
-            name: "아이오박스 정기결제",
+            name: "아이오박스 정기결제 3",
             buyer_name: data.User.nickname,
           },
         ],
@@ -89,7 +89,7 @@ router.post(`/schedule`, async (req, res, next) => {
     const schedulePay = await KeepBoxSchedule.create({
       merchantUid: schedulePK,
       UserId: parseInt(data.User.id),
-      KeepBoxId: parseInt(data.KeepBox.id),
+      KeepBoxMasterId: parseInt(data.KeepBoxMaster.id),
     });
 
     return res.status(200).json({ result: true });
