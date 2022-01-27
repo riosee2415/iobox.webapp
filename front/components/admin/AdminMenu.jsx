@@ -20,6 +20,8 @@ const { SubMenu } = Menu;
 const MenuName = styled.div`
   width: 100%;
   height: 100%;
+  ${(props) => (props.color ? props.color : "")};
+  ${(props) => (props.cursor ? props.cursor : "")};
   display: flex;
   flex-direction: row;
   align-items: center;
@@ -121,13 +123,42 @@ const AdminMenu = () => {
         <SubMenu
           key="sub7"
           icon={<FolderOutlined />}
-          title="박스 관리"
+          title="주문 관리"
           onTitleClick={titleClickHandler("sub7")}
         >
-          <Menu.Item key="/admin/keepBox/list">
-            <MenuName>박스 리스트</MenuName>
+          <Menu.Item key="/admin/keepBox/list?listType=3">
+            <MenuName>전체 리스트</MenuName>
+          </Menu.Item>
+          <Menu.Item key="/admin/keepBox/list?listType=1">
+            <MenuName>일반 배송 리스트</MenuName>
+          </Menu.Item>
+          <Menu.Item key="/admin/keepBox/list?listType=2">
+            <MenuName>하루 배송 리스트</MenuName>
+          </Menu.Item>
+          <Menu.Item disabled={true}>
+            <MenuName
+              color={`color:rgba(255, 255, 255, 0.65) !important`}
+              cursor={`cursor: pointer !important`}
+              onClick={(e) => {
+                console.log(e);
+                e.preventDefault();
+                window.open("https://admin.iamport.kr/users/login", "_blank");
+              }}
+            >
+              결제 내역 관리
+            </MenuName>
           </Menu.Item>
         </SubMenu>
+        {/* <SubMenu
+          key="sub7"
+          icon={<FolderOutlined />}
+          title="반환 요청 관리"
+          onTitleClick={titleClickHandler("sub7")}
+        >
+          <Menu.Item key="/admin/returnBox/list?listType=3">
+            <MenuName>반환 리스트</MenuName>
+          </Menu.Item>
+        </SubMenu> */}
         <SubMenu
           key="sub3"
           icon={<BookOutlined />}

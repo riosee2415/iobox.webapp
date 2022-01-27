@@ -5,10 +5,18 @@ module.exports = class ReturnKeep extends Model {
   static init(sequelize) {
     return super.init(
       {
-        temp: {
-          type: DataTypes.INTEGER,
+        deliveryCom: {
+          type: DataTypes.STRING(100), // 배송 택배사
+          allowNull: true,
+        },
+        deliveryCode: {
+          type: DataTypes.STRING(100), // 송장 번호
+          allowNull: true,
+        },
+        isComplete: {
+          type: DataTypes.BOOLEAN, // 처리 유무
+          defaultValue: false,
           allowNull: false,
-          defaultValue: 0,
         },
       },
       {

@@ -19,7 +19,7 @@ import {
   MinusCircleOutlined,
 } from "@ant-design/icons";
 import { useRouter } from "next/dist/client/router";
-import { Checkbox, Modal, notification } from "antd";
+import { Checkbox, message, Modal, notification } from "antd";
 import Footer from "../../../components/Footer";
 import wrapper from "../../../store/configureStore";
 import axios from "axios";
@@ -30,6 +30,8 @@ import {
   KEEPBOX_DETAIL_REQUEST,
   MASTER_KEEPBOX_LIST_REQUEST,
 } from "../../../reducers/keepBox";
+import { RETURNBOX_CREATE_REQUEST } from "../../../reducers/returnBox";
+import moment from "moment";
 
 const CheckboxGroup = styled(Checkbox.Group)`
   width: 100%;
@@ -133,12 +135,21 @@ const Index = () => {
   const [currentBox, setCurrentBox] = useState(null);
   const [boxId, setBoxId] = useState(null);
 
+  const [checkBoxes, setCheckBoxes] = useState([]);
+  const [checkBox, setCheckBox] = useState(false);
+
+  const [returnFinish, setReturnFinish] = useState(false);
+  const [noneReturnBox, setNoneReturnBox] = useState(false);
+
   ////// REDUX //////
   const router = useRouter();
   const dispatch = useDispatch();
 
   const { me } = useSelector((state) => state.user);
   const { keepBoxes, detailBox } = useSelector((state) => state.keepBox);
+  const { st_returnBoxCreateDone, st_returnBoxCreateError } = useSelector(
+    (state) => state.returnBox
+  );
 
   ////// USEEFFECT //////
 
@@ -178,23 +189,35 @@ const Index = () => {
 
   useEffect(() => {
     if (keepBoxes) {
-      console.log(keepBoxes);
       let tempBox = { 1: [], 2: [], 3: [], 4: [] };
 
       for (let i = 0; i < keepBoxes.length; i++) {
-        console.log(keepBoxes[i].KeepBoxes.length);
-        for (let j = 0; j < keepBoxes[i].KeepBoxes.length; j++) {
-          if (keepBoxes[i].KeepBoxes[j].boxcount1 !== 0) {
-            tempBox[1].push(keepBoxes[i].KeepBoxes[j]);
-          }
-          if (keepBoxes[i].KeepBoxes[j].boxcount2 !== 0) {
-            tempBox[2].push(keepBoxes[i].KeepBoxes[j]);
-          }
-          if (keepBoxes[i].KeepBoxes[j].boxcount3 !== 0) {
-            tempBox[3].push(keepBoxes[i].KeepBoxes[j]);
-          }
-          if (keepBoxes[i].KeepBoxes[j].boxcount4 !== 0) {
-            tempBox[4].push(keepBoxes[i].KeepBoxes[j]);
+        if (keepBoxes[i].status === "보관중") {
+          for (let j = 0; j < keepBoxes[i].KeepBoxes.length; j++) {
+            if (keepBoxes[i].KeepBoxes[j].boxcount1 !== 0) {
+              tempBox[1].push({
+                ...keepBoxes[i].KeepBoxes[j],
+                updated: keepBoxes[i].updatedAt,
+              });
+            }
+            if (keepBoxes[i].KeepBoxes[j].boxcount2 !== 0) {
+              tempBox[2].push({
+                ...keepBoxes[i].KeepBoxes[j],
+                updated: keepBoxes[i].updatedAt,
+              });
+            }
+            if (keepBoxes[i].KeepBoxes[j].boxcount3 !== 0) {
+              tempBox[3].push({
+                ...keepBoxes[i].KeepBoxes[j],
+                updated: keepBoxes[i].updatedAt,
+              });
+            }
+            if (keepBoxes[i].KeepBoxes[j].boxcount4 !== 0) {
+              tempBox[4].push({
+                ...keepBoxes[i].KeepBoxes[j],
+                updated: keepBoxes[i].updatedAt,
+              });
+            }
           }
         }
       }
@@ -202,6 +225,26 @@ const Index = () => {
       setBoxes(tempBox);
     }
   }, [keepBoxes]);
+
+  useEffect(() => {
+    setCheckBoxes([]);
+    setCheckBox(false);
+    setReturnFinish(false);
+
+    if (detailBox && detailBox.BoxImages.length !== 0) {
+      const tempArr = [];
+
+      detailBox.BoxImages.map((data) => {
+        if (data.ReturnKeepId) {
+          tempArr.push(data);
+        }
+      });
+
+      if (tempArr.length === detailBox.BoxImages.length) {
+        setReturnFinish(true);
+      }
+    }
+  }, [detailBox]);
 
   ////// TOGGLE ///////
 
@@ -223,8 +266,88 @@ const Index = () => {
   }, [modal]);
 
   ///// HANDLER //////
-  const updateKeepBoxHandler = useCallback((id) => {
-    setBoxId(id);
+  const getBoxHandler = useCallback(
+    (id) => {
+      if (returnFinish) {
+        return message.error("모든 박스를 찾으셨습니다.");
+      }
+
+      if (!checkBox && checkBoxes.length === 0) {
+        return message.error("찾아올 박스를 선택해주세요.");
+      }
+
+      if (noneReturnBox) {
+        return message.error(
+          "정기 보관의 경우 보관 후 6개월 이후에 찾기가 가능합니다."
+        );
+      }
+
+      dispatch({
+        type: RETURNBOX_CREATE_REQUEST,
+        data: {
+          imageIds: checkBoxes,
+          boxId: id,
+        },
+      });
+    },
+    [checkBoxes, checkBox, noneReturnBox]
+  );
+
+  const checkBoxAllHandler = useCallback(
+    (data) => {
+      if (checkBox) {
+        setCheckBoxes([]);
+        setCheckBox(false);
+      } else {
+        setCheckBox(true);
+        const tempArr = [];
+
+        data.map((info) => {
+          if (!info.ReturnKeepId) {
+            tempArr.push(info.id);
+          }
+        });
+
+        setCheckBoxes(tempArr);
+      }
+    },
+    [checkBox]
+  );
+
+  const checkBoxImageHandler = useCallback(
+    (data) => {
+      let tempArr = checkBoxes.map((data) => {
+        return data;
+      });
+      if (checkBoxes.includes(data)) {
+        tempArr = tempArr.filter((id) => {
+          return data !== id;
+        });
+      } else {
+        tempArr.push(data);
+      }
+
+      setCheckBoxes(tempArr);
+    },
+    [checkBoxes]
+  );
+
+  const updateKeepBoxHandler = useCallback((info) => {
+    console.log("ASJKDLNAJKLSDNAJKLSNDJKANJKSLNJKLAZD", info.period);
+    if (info.period === "정기") {
+      const boxDate = moment(info.updated);
+      const current = moment();
+
+      console.log(boxDate.add(1, "M").format("DD-MM-YYYY"));
+
+      console.log(boxDate.format("DD-MM-YYYY"));
+
+      if (boxDate.diff(current, "month") < 6) {
+        setNoneReturnBox(true);
+      }
+    }
+
+    setBoxId(info.id);
   }, []);
 
   const moveBackHandler = useCallback(() => {
@@ -234,8 +357,6 @@ const Index = () => {
   const moveLinkHandler = useCallback((link) => {
     router.push(link);
   }, []);
-
-  console.log(detailBox);
 
   ////// DATAVIEW //////
   return (
@@ -435,35 +556,42 @@ const Index = () => {
                           display={tab === 1 ? `flex` : `none`}
                         >
                           <Checkbox
-                            // checked={checkA}
-                            onClick={
-                              () => {}
-                              // tab === 1 ? setCheckA((prev) => !prev) : {}
-                            }
+                            checked={checkBox}
+                            onClick={() => {
+                              checkBoxAllHandler(detailBox.BoxImages);
+                            }}
                           />
                         </Wrapper>
                       </Wrapper>
                       {detailBox.isFilming &&
                         detailBox.BoxImages.map((data, idx) => {
                           return (
-                            <Wrapper
-                              bgColor={``}
-                              dr={`row`}
-                              ju={`space-between`}
-                              height={`150px`}
-                              borderBottom={`1px solid ${Theme.grey_C}`}
-                              key={idx}
-                            >
-                              <Image
-                                src={data.imagePath}
-                                alt={`image`}
-                                width={`30%`}
-                              />
+                            data.imagePath !== "-" && (
+                              <Wrapper
+                                bgColor={``}
+                                dr={`row`}
+                                ju={`space-between`}
+                                height={`150px`}
+                                borderBottom={`1px solid ${Theme.grey_C}`}
+                                key={idx}
+                              >
+                                <Image
+                                  src={data.imagePath}
+                                  alt={`image`}
+                                  width={`30%`}
+                                />
 
-                              <Wrapper width={`auto`} display={`flex`}>
-                                <Checkbox />
+                                <Wrapper width={`auto`} display={`flex`}>
+                                  <Checkbox
+                                    checked={checkBoxes.includes(data.id)}
+                                    onChange={() => {
+                                      setCheckBox(false);
+                                      checkBoxImageHandler(data.id);
+                                    }}
+                                  />
+                                </Wrapper>
                               </Wrapper>
-                            </Wrapper>
+                            )
                           );
                         })}
                     </>
@@ -522,7 +650,13 @@ const Index = () => {
           <Wrapper width={`auto`} al={`flex-start`}>
             <PayButtton bold={true}>배송비 5,000원</PayButtton>
           </Wrapper>
-          <CommonButton width={`130px`} height={`50px`}>
+          <CommonButton
+            width={`130px`}
+            height={`50px`}
+            onClick={() => {
+              detailBox && getBoxHandler(detailBox.id);
+            }}
+          >
             찾기
           </CommonButton>
         </IoBoxWrapper>
@@ -585,7 +719,7 @@ const Index = () => {
                     cursor={`pointer`}
                     key={key}
                     onClick={() => {
-                      updateKeepBoxHandler(info.id);
+                      updateKeepBoxHandler(info);
                       setCurrentBox(
                         `${dataArr[idx][0]} - ${data.length - key}`
                       );

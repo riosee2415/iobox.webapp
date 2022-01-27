@@ -86,42 +86,119 @@ router.get("/box/:id", async (req, res, next) => {
 });
 
 // master 리스트
-router.get("/list", isAdminCheck, async (req, res, next) => {
-  const { type } = req.query;
+router.get(
+  ["/list", "/list/:listType"],
+  isAdminCheck,
+  async (req, res, next) => {
+    const { listType } = req.params;
 
-  const _type = type ? type : "";
-  try {
-    const lists = await KeepBoxMaster.findAll({
-      include: [
-        {
-          model: KeepBox,
-          where: {
-            type: _type,
-          },
-        },
-        {
-          model: User,
-          attributes: {
-            exclude: [
-              "password",
-              "level",
-              "secret",
-              "cardNum",
-              "cardPeriod",
-              "cardIden",
-              "cardPassword",
+    let nanFlag = isNaN(listType);
+
+    if (!listType) {
+      nanFlag = false;
+    }
+
+    if (nanFlag) {
+      return res.status(400).send("잘못된 요청 입니다.");
+    }
+
+    let _listType = Number(listType);
+
+    if (_listType > 3 || !listType) {
+      _listType = 3;
+    }
+
+    try {
+      let lists = [];
+
+      switch (_listType) {
+        case 1:
+          lists = await KeepBoxMaster.findAll({
+            include: [
+              {
+                model: KeepBox,
+                where: {
+                  type: "일반 배송",
+                },
+              },
+              {
+                model: User,
+                attributes: {
+                  exclude: [
+                    "password",
+                    "level",
+                    "secret",
+                    "cardNum",
+                    "cardPeriod",
+                    "cardIden",
+                    "cardPassword",
+                  ],
+                },
+              },
             ],
-          },
-        },
-      ],
-    });
+          });
+          break;
+        case 2:
+          lists = await KeepBoxMaster.findAll({
+            include: [
+              {
+                model: KeepBox,
+                where: {
+                  type: "총알 배송",
+                },
+              },
+              {
+                model: User,
+                attributes: {
+                  exclude: [
+                    "password",
+                    "level",
+                    "secret",
+                    "cardNum",
+                    "cardPeriod",
+                    "cardIden",
+                    "cardPassword",
+                  ],
+                },
+              },
+            ],
+          });
+          break;
+        case 3:
+          lists = await KeepBoxMaster.findAll({
+            include: [
+              {
+                model: KeepBox,
+              },
+              {
+                model: User,
+                attributes: {
+                  exclude: [
+                    "password",
+                    "level",
+                    "secret",
+                    "cardNum",
+                    "cardPeriod",
+                    "cardIden",
+                    "cardPassword",
+                  ],
+                },
+              },
+            ],
+          });
+          break;
 
-    return res.status(200).json(lists);
-  } catch (error) {
-    console.error(error);
-    return res.status(401).send("박스 목록을 불러올 수 없습니다.");
+        default:
+          break;
+      }
+
+      return res.status(200).json(lists);
+    } catch (error) {
+      console.error(error);
+      return res.status(401).send("박스 목록을 불러올 수 없습니다.");
+    }
   }
-});
+);
 
 router.get("/userBox/:id", async (req, res, next) => {
   const { id } = req.params;
@@ -298,7 +375,7 @@ router.get(
 );
 
 // 입력 받은 값의 월 부터 한달
-router.post("/list/date", async (req, res, next) => {
+router.post("/list/date/:listType", async (req, res, next) => {
   const { searchDate } = req.body;
 
   try {
@@ -336,6 +413,7 @@ router.post("/list/date", async (req, res, next) => {
           },
         },
       ],
+      order: [["createdAt", "DESC"]],
     });
 
     return res.status(200).json(results);
@@ -391,6 +469,8 @@ router.post("/create", async (req, res, next) => {
     return res.status(401).send("잘못된 요청입니다.");
   }
 
+  let masterId = "";
+
   try {
     if (type === "일반 배송") {
       if (
@@ -404,6 +484,8 @@ router.post("/create", async (req, res, next) => {
         const masterResult = await KeepBoxMaster.create({
           UserId: parseInt(UserId),
         });
+
+        masterId = masterResult.id;
 
         if (parseInt(boxcount1) !== 0) {
           for (let i = 0; i < parseInt(boxcount1); i++) {
@@ -517,7 +599,7 @@ router.post("/create", async (req, res, next) => {
           ],
         });
 
-        return res.status(201).json({ result: true });
+        return res.status(201).json({ result: true, info: [masterId, type] });
       }
     }
 
@@ -533,6 +615,8 @@ router.post("/create", async (req, res, next) => {
         const masterResult = await KeepBoxMaster.create({
           UserId: parseInt(UserId),
         });
+
+        masterId = masterResult.id;
 
         if (parseInt(boxcount1) !== 0) {
           for (let i = 0; i < parseInt(boxcount1); i++) {
@@ -654,7 +738,7 @@ router.post("/create", async (req, res, next) => {
           }
         }
 
-        return res.status(201).json({ result: true });
+        return res.status(201).json({ result: true, info: [masterId, type] });
       }
     }
   } catch (error) {
@@ -664,9 +748,164 @@ router.post("/create", async (req, res, next) => {
 });
 
 router.patch("/master/status", isLoggedIn, async (req, res, next) => {
-  const { status, id } = req.body;
+  const { status, id, userId } = req.body;
 
-  console.log(status, id);
+  if (status === "수거중") {
+    const currentUser = await User.findOne({
+      where: {
+        id: parseInt(userId),
+      },
+    });
+
+    const currentKeepBoxMaster = await KeepBoxMaster.findOne({
+      where: {
+        id: parseInt(id),
+      },
+      include: [
+        {
+          model: KeepBox,
+        },
+      ],
+    });
+
+    const getToken = await axios({
+      url: "https://api.iamport.kr/users/getToken",
+      method: "post", // POST method
+      headers: { "Content-Type": "application/json" }, // "Content-Type": "application/json"
+      data: {
+        imp_key: "9134198546040290", // REST API 키
+        imp_secret:
+          "786198908d47a63ad00927cece057a617666d0a2436b56a731a6f857fa1cd72c57035d200ac6df0a", // REST API Secret
+      },
+    });
+    const { access_token } = getToken.data.response; // 인증 토큰
+
+    d = new Date();
+    year = d.getFullYear() + "";
+    month = d.getMonth() + 1 + "";
+    date = d.getDate() + "";
+    hour = d.getHours() + "";
+    min = d.getMinutes() + "";
+    sec = d.getSeconds() + "";
+    mSec = d.getMilliseconds() + "";
+    month = month < 10 ? "0" + month : month;
+    date = date < 10 ? "0" + date : date;
+    hour = hour < 10 ? "0" + hour : hour;
+    min = min < 10 ? "0" + min : min;
+    sec = sec < 10 ? "0" + sec : sec;
+    mSec = mSec < 10 ? "0" + mSec : mSec;
+    let orderPK = "ORD" + year + month + date + hour + min + sec + mSec;
+
+    const paymentResult = await axios({
+      url: `https://api.iamport.kr/subscribe/payments/again`,
+      method: "post",
+      headers: { Authorization: access_token }, // 인증 토큰을 Authorization header에 추가
+      data: {
+        customer_uid: currentUser.userCode,
+        merchant_uid: orderPK, // 새로 생성한 결제(재결제)용 주문 번호
+        amount: currentKeepBoxMaster.KeepBoxes[0].price,
+        name: "아이오박스 정기결제",
+        buyer_name: currentUser.nickname,
+      },
+    });
+    if (currentKeepBoxMaster.KeepBoxes[0].deliveryPay !== 0) {
+      d = new Date();
+      year = d.getFullYear() + "";
+      month = d.getMonth() + 1 + "";
+      date = d.getDate() + "";
+      hour = d.getHours() + "";
+      min = d.getMinutes() + "";
+      sec = d.getSeconds() + "";
+      mSec = d.getMilliseconds() + "";
+      month = month < 10 ? "0" + month : month;
+      date = date < 10 ? "0" + date : date;
+      hour = hour < 10 ? "0" + hour : hour;
+      min = min < 10 ? "0" + min : min;
+      sec = sec < 10 ? "0" + sec : sec;
+      mSec = mSec < 10 ? "0" + mSec : mSec;
+      let orderPK2 = "DEL" + year + month + date + hour + min + sec + mSec;
+
+      const paymentResult = await axios({
+        url: `https://api.iamport.kr/subscribe/payments/again`,
+        method: "post",
+        headers: { Authorization: access_token }, // 인증 토큰을 Authorization header에 추가
+        data: {
+          customer_uid: currentUser.userCode,
+          merchant_uid: orderPK2, // 새로 생성한 결제(재결제)용 주문 번호
+          amount: currentKeepBoxMaster.KeepBoxes[0].deliveryPay,
+          name: "아이오박스 배송비 결제",
+          buyer_name: currentUser.nickname,
+        },
+      });
+    }
+
+    const { code, message } = paymentResult.data;
+
+    if (code === 0) {
+      // 카드사 통신에 성공(실제 승인 성공 여부는 추가 판단이 필요함)
+      if (paymentResult.data.response.status === "paid") {
+        //카드 정상 승인
+
+        const resultPay = await KeepBoxSchedule.create({
+          merchantUid: orderPK,
+          isComplate: true,
+          UserId: parseInt(userId),
+          KeepBoxMasterId: parseInt(id),
+        });
+
+        const d = new Date();
+        let year = d.getFullYear() + "";
+        let month = d.getMonth() + 1 + "";
+        let date = d.getDate() + "";
+        let hour = d.getHours() + "";
+        let min = d.getMinutes() + "";
+        let sec = d.getSeconds() + "";
+        let mSec = d.getMilliseconds() + "";
+        month = month < 10 ? "0" + month : month;
+        date = date < 10 ? "0" + date : date;
+        hour = hour < 10 ? "0" + hour : hour;
+        min = min < 10 ? "0" + min : min;
+        sec = sec < 10 ? "0" + sec : sec;
+        mSec = mSec < 10 ? "0" + mSec : mSec;
+        let schedulePK = "ORD" + year + month + date + hour + min + sec + mSec;
+
+        let time = moment().add(1, `M`).unix();
+
+        axios({
+          url: "https://api.iamport.kr/subscribe/payments/schedule", // 예:
+          method: "post",
+          headers: { Authorization: access_token }, // 인증 토큰 Authorization header에 추가
+          data: {
+            customer_uid: currentUser.userCode, // 카드(빌링키)와 1:1로 대응하는 값
+            schedules: [
+              {
+                merchant_uid: schedulePK, // 주문 번호
+                schedule_at: time, // 결제 시도 시각 in Unix Time Stamp. 예: 다음 달 1일
+                amount: currentKeepBoxMaster.KeepBoxes[0].price,
+                name: "아이오박스 정기결제",
+                buyer_name: currentUser.nickname,
+              },
+            ],
+          },
+        });
+
+        const schedulePay = await KeepBoxSchedule.create({
+          merchantUid: schedulePK,
+          UserId: parseInt(userId),
+          KeepBoxMasterId: parseInt(id),
+        });
+      } else {
+        //카드 승인 실패 (예: 고객 카드 한도초과, 거래정지카드, 잔액부족 등)
+        //paymentResult.status : failed 로 수신됨
+        // console.log("실패", paymentResult);
+        return res.status(401).send("카드 결제를 진행할 수 없습니다.");
+      }
+    } else {
+      // 카드사 요청에 실패 (paymentResult is null)
+      console.log("요청 실패", paymentResult);
+      return res.status(401).send("카드 결제를 진행할 수 없습니다.");
+    }
+  }
 
   try {
     const updateResult = await KeepBoxMaster.update(
@@ -790,131 +1029,6 @@ router.patch("/update", isAdminCheck, async (req, res, next) => {
     }
 
     //  정기 결제 api
-
-    const getToken = await axios({
-      url: "https://api.iamport.kr/users/getToken",
-      method: "post", // POST method
-      headers: { "Content-Type": "application/json" }, // "Content-Type": "application/json"
-      data: {
-        imp_key: "9134198546040290", // REST API 키
-        imp_secret:
-          "786198908d47a63ad00927cece057a617666d0a2436b56a731a6f857fa1cd72c57035d200ac6df0a", // REST API Secret
-      },
-    });
-    const { access_token } = getToken.data.response; // 인증 토큰
-
-    d = new Date();
-    year = d.getFullYear() + "";
-    month = d.getMonth() + 1 + "";
-    date = d.getDate() + "";
-    hour = d.getHours() + "";
-    min = d.getMinutes() + "";
-    sec = d.getSeconds() + "";
-    mSec = d.getMilliseconds() + "";
-    month = month < 10 ? "0" + month : month;
-    date = date < 10 ? "0" + date : date;
-    hour = hour < 10 ? "0" + hour : hour;
-    min = min < 10 ? "0" + min : min;
-    sec = sec < 10 ? "0" + sec : sec;
-    mSec = mSec < 10 ? "0" + mSec : mSec;
-    let orderPK = "ORD" + year + month + date + hour + min + sec + mSec;
-
-    const paymentResult = await axios({
-      url: `https://api.iamport.kr/subscribe/payments/again`,
-      method: "post",
-      headers: { Authorization: access_token }, // 인증 토큰을 Authorization header에 추가
-      data: {
-        customer_uid: userCode,
-        merchant_uid: orderPK, // 새로 생성한 결제(재결제)용 주문 번호
-        amount: 1000,
-        name: "카드 도용 zz",
-      },
-    });
-
-    const { code, message } = paymentResult.data;
-
-    if (code === 0) {
-      // 카드사 통신에 성공(실제 승인 성공 여부는 추가 판단이 필요함)
-      if (paymentResult.data.response.status === "paid") {
-        //카드 정상 승인
-
-        const resultPay = await KeepBoxSchedule.create({
-          merchantUid: orderPK,
-          isComplate: true,
-          UserId: parseInt(userId),
-          KeepBoxId: parseInt(id),
-        });
-
-        const d = new Date();
-        let year = d.getFullYear() + "";
-        let month = d.getMonth() + 1 + "";
-        let date = d.getDate() + "";
-        let hour = d.getHours() + "";
-        let min = d.getMinutes() + "";
-        let sec = d.getSeconds() + "";
-        let mSec = d.getMilliseconds() + "";
-        month = month < 10 ? "0" + month : month;
-        date = date < 10 ? "0" + date : date;
-        hour = hour < 10 ? "0" + hour : hour;
-        min = min < 10 ? "0" + min : min;
-        sec = sec < 10 ? "0" + sec : sec;
-        mSec = mSec < 10 ? "0" + mSec : mSec;
-        let schedulePK = "ORD" + year + month + date + hour + min + sec + mSec;
-
-        let time = moment().add(1, `month`).unix();
-
-        axios({
-          url: "https://api.iamport.kr/subscribe/payments/schedule", // 예:
-          method: "post",
-          headers: { Authorization: access_token }, // 인증 토큰 Authorization header에 추가
-          data: {
-            customer_uid: userCode, // 카드(빌링키)와 1:1로 대응하는 값
-            schedules: [
-              {
-                merchant_uid: schedulePK, // 주문 번호
-                schedule_at: time, // 결제 시도 시각 in Unix Time Stamp. 예: 다음 달 1일
-                amount: 1000,
-                name: "tezt",
-              },
-            ],
-          },
-        });
-
-        const schedulePay = await KeepBoxSchedule.create({
-          merchantUid: schedulePK,
-          UserId: parseInt(userId),
-          KeepBoxId: parseInt(id),
-        });
-
-        const updateResult = await KeepBox.update(
-          {
-            // isPickup: true,
-            deliveryCom,
-            deliveryCode,
-            deliveryCom2,
-            deliveryCode2,
-          },
-          {
-            where: { id: parseInt(id) },
-          }
-        );
-
-        if (updateResult[0] > 0) {
-          return res.status(200).json({ result: true });
-        } else {
-          return res.status(200).json({ result: false });
-        }
-      } else {
-        //카드 승인 실패 (예: 고객 카드 한도초과, 거래정지카드, 잔액부족 등)
-        //paymentResult.status : failed 로 수신됨
-        // console.log("실패", paymentResult);
-        return res.status(401).send("카드 결제를 진행할 수 없습니다.");
-      }
-    } else {
-      // 카드사 요청에 실패 (paymentResult is null)
-      console.log("요청 실패", paymentResult);
-      return res.status(401).send("카드 결제를 진행할 수 없습니다.");
-    }
   } catch (error) {
     console.error(error);
     return res.status(401).send("처리중 문제가 발생하였습니다.");

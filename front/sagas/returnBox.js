@@ -1,45 +1,45 @@
 import { all, call, delay, fork, put, takeLatest } from "redux-saga/effects";
 import axios from "axios";
 import {
-  INFO_LIST_REQUEST,
-  INFO_LIST_SUCCESS,
-  INFO_LIST_FAILURE,
+  RETURNBOX_LIST_REQUEST,
+  RETURNBOX_LIST_SUCCESS,
+  RETURNBOX_LIST_FAILURE,
   //
-  INFO_UPLOAD_REQUEST,
-  INFO_UPLOAD_SUCCESS,
-  INFO_UPLOAD_FAILURE,
+  RETURNBOX_UPLOAD_REQUEST,
+  RETURNBOX_UPLOAD_SUCCESS,
+  RETURNBOX_UPLOAD_FAILURE,
   //
-  INFO_CREATE_REQUEST,
-  INFO_CREATE_SUCCESS,
-  INFO_CREATE_FAILURE,
+  RETURNBOX_CREATE_REQUEST,
+  RETURNBOX_CREATE_SUCCESS,
+  RETURNBOX_CREATE_FAILURE,
   //
-  INFO_UPDATE_REQUEST,
-  INFO_UPDATE_SUCCESS,
-  INFO_UPDATE_FAILURE,
+  RETURNBOX_UPDATE_REQUEST,
+  RETURNBOX_UPDATE_SUCCESS,
+  RETURNBOX_UPDATE_FAILURE,
   //
-  INFO_DELETE_REQUEST,
-  INFO_DELETE_SUCCESS,
-  INFO_DELETE_FAILURE,
-} from "../reducers/info";
+  RETURNBOX_DELETE_REQUEST,
+  RETURNBOX_DELETE_SUCCESS,
+  RETURNBOX_DELETE_FAILURE,
+} from "../reducers/returnBox";
 
 // SAGA AREA ********************************************************************************************************
 // ******************************************************************************************************************
-function infoListAPI(data) {
-  return axios.get(`/api/info/list/${data.qs}`, data);
+function returnBoxListAPI(data) {
+  return axios.get(`/api/return/list/${data.qs}`, data);
 }
 
-function* infoList(action) {
+function* returnBoxList(action) {
   try {
-    const result = yield call(infoListAPI, action.data);
+    const result = yield call(returnBoxListAPI, action.data);
 
     yield put({
-      type: INFO_LIST_SUCCESS,
+      type: RETURNBOX_LIST_SUCCESS,
       data: result.data,
     });
   } catch (err) {
     console.error(err);
     yield put({
-      type: INFO_LIST_FAILURE,
+      type: RETURNBOX_LIST_FAILURE,
       error: err.response.data,
     });
   }
@@ -51,22 +51,22 @@ function* infoList(action) {
 
 // SAGA AREA ********************************************************************************************************
 // ******************************************************************************************************************
-function infoThumbnailAPI(data) {
-  return axios.post(`/api/info/image`, data);
+function returnBoxThumbnailAPI(data) {
+  return axios.post(`/api/return/image`, data);
 }
 
-function* infoThumbnail(action) {
+function* returnBoxThumbnail(action) {
   try {
-    const result = yield call(infoThumbnailAPI, action.data);
+    const result = yield call(returnBoxThumbnailAPI, action.data);
 
     yield put({
-      type: INFO_UPLOAD_SUCCESS,
+      type: RETURNBOX_UPLOAD_SUCCESS,
       data: result.data,
     });
   } catch (err) {
     console.error(err);
     yield put({
-      type: INFO_UPLOAD_FAILURE,
+      type: RETURNBOX_UPLOAD_FAILURE,
       error: err.response.data,
     });
   }
@@ -78,22 +78,23 @@ function* infoThumbnail(action) {
 
 // SAGA AREA ********************************************************************************************************
 // ******************************************************************************************************************
-function infoCreateAPI(data) {
-  return axios.post(`/api/info/create`, data);
+function returnBoxCreateAPI(data) {
+  console.log(data);
+  return axios.post(`/api/return/create`, data);
 }
 
-function* infoCreate(action) {
+function* returnBoxCreate(action) {
   try {
-    const result = yield call(infoCreateAPI, action.data);
+    const result = yield call(returnBoxCreateAPI, action.data);
 
     yield put({
-      type: INFO_CREATE_SUCCESS,
+      type: RETURNBOX_CREATE_SUCCESS,
       data: result.data,
     });
   } catch (err) {
     console.error(err);
     yield put({
-      type: INFO_CREATE_FAILURE,
+      type: RETURNBOX_CREATE_FAILURE,
       error: err.response.data,
     });
   }
@@ -105,22 +106,22 @@ function* infoCreate(action) {
 
 // SAGA AREA ********************************************************************************************************
 // ******************************************************************************************************************
-function infoUpdateAPI(data) {
-  return axios.patch(`/api/info/update`, data);
+function returnBoxUpdateAPI(data) {
+  return axios.patch(`/api/return/update`, data);
 }
 
-function* infoUpdate(action) {
+function* returnBoxUpdate(action) {
   try {
-    const result = yield call(infoUpdateAPI, action.data);
+    const result = yield call(returnBoxUpdateAPI, action.data);
 
     yield put({
-      type: INFO_UPDATE_SUCCESS,
+      type: RETURNBOX_UPDATE_SUCCESS,
       data: result.data,
     });
   } catch (err) {
     console.error(err);
     yield put({
-      type: INFO_UPDATE_FAILURE,
+      type: RETURNBOX_UPDATE_FAILURE,
       error: err.response.data,
     });
   }
@@ -132,22 +133,22 @@ function* infoUpdate(action) {
 
 // SAGA AREA ********************************************************************************************************
 // ******************************************************************************************************************
-function infoDeleteAPI(data) {
-  return axios.delete(`/api/info/delete/${data.infoId}`);
+function returnBoxDeleteAPI(data) {
+  return axios.delete(`/api/return/delete/${data.returnBoxId}`);
 }
 
-function* infoDelete(action) {
+function* returnBoxDelete(action) {
   try {
-    const result = yield call(infoDeleteAPI, action.data);
+    const result = yield call(returnBoxDeleteAPI, action.data);
 
     yield put({
-      type: INFO_DELETE_SUCCESS,
+      type: RETURNBOX_DELETE_SUCCESS,
       data: result.data,
     });
   } catch (err) {
     console.error(err);
     yield put({
-      type: INFO_DELETE_FAILURE,
+      type: RETURNBOX_DELETE_FAILURE,
       error: err.response.data,
     });
   }
@@ -158,34 +159,34 @@ function* infoDelete(action) {
 // ******************************************************************************************************************
 
 //////////////////////////////////////////////////////////////
-function* watchInfoList() {
-  yield takeLatest(INFO_LIST_REQUEST, infoList);
+function* watchReturnBoxList() {
+  yield takeLatest(RETURNBOX_LIST_REQUEST, returnBoxList);
 }
 
-function* watchInfoUpload() {
-  yield takeLatest(INFO_UPLOAD_REQUEST, infoThumbnail);
+function* watchReturnBoxUpload() {
+  yield takeLatest(RETURNBOX_UPLOAD_REQUEST, returnBoxThumbnail);
 }
 
-function* watchInfoCreate() {
-  yield takeLatest(INFO_CREATE_REQUEST, infoCreate);
+function* watchReturnBoxCreate() {
+  yield takeLatest(RETURNBOX_CREATE_REQUEST, returnBoxCreate);
 }
 
-function* watchInfoUpdate() {
-  yield takeLatest(INFO_UPDATE_REQUEST, infoUpdate);
+function* watchReturnBoxUpdate() {
+  yield takeLatest(RETURNBOX_UPDATE_REQUEST, returnBoxUpdate);
 }
 
-function* watchInfoDelete() {
-  yield takeLatest(INFO_DELETE_REQUEST, infoDelete);
+function* watchReturnBoxDelete() {
+  yield takeLatest(RETURNBOX_DELETE_REQUEST, returnBoxDelete);
 }
 
 //////////////////////////////////////////////////////////////
-export default function* infoSaga() {
+export default function* returnBoxSaga() {
   yield all([
-    fork(watchInfoList),
-    fork(watchInfoUpload),
-    fork(watchInfoCreate),
-    fork(watchInfoUpdate),
-    fork(watchInfoDelete),
+    fork(watchReturnBoxList),
+    fork(watchReturnBoxUpload),
+    fork(watchReturnBoxCreate),
+    fork(watchReturnBoxUpdate),
+    fork(watchReturnBoxDelete),
     //
   ]);
 }

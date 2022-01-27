@@ -361,24 +361,52 @@ const Index = () => {
       return message.error("보관 기간을 선택해주세요.");
     }
 
-    console.log(
-      currentBuy,
-      //
-      startDate,
-      endDate,
-      //
-      radioValue === 0 ? "선결제방식" : "매월결제방식",
-      inputStartAddress,
-      inputStartZoneCode,
-      inputStartDetail,
-      startFloor,
-      startEle,
-      //
-      inputEndAddress,
-      inputEndZoneCode,
-      inputEndDetail,
-      endFloor,
-      endEle
+    if (!inputStartAddress.value || inputStartAddress.value.trim() === "") {
+      return message.error("출발지 주소를 입력해주세요.");
+    }
+
+    if (!startFloor) {
+      return message.error("출발지 층수를 선택해주세요.");
+    }
+
+    // if(!inputStartDetail.value || inputStartDetail.value.trim() === ""){
+    //   return message.error("")
+    // }
+    if (!inputEndAddress.value || inputEndAddress.value.trim() === "") {
+      return message.error("도착지 주소를 입력해주세요.");
+    }
+
+    if (!endFloor) {
+      return message.error("출발지 층수를 선택해주세요.");
+    }
+
+    // if(!inputEndDetail.value || inputEndDetail.value.trim() === ""){
+    //   return message.error("")
+    // }
+
+    moveLinkHandler("/bullet/keep");
+    sessionStorage.setItem(
+      "DATA",
+      JSON.stringify({
+        boxs: currentBuy,
+        totalPay: price,
+        //
+        startDate,
+        endDate,
+        //
+        type: radioValue === 0 ? "선결제방식" : "매월결제방식",
+        startAdd: inputStartAddress.value,
+        // startZoninputStartZoneCode,
+        startDetail: inputStartDetail.value,
+        startFloor,
+        startEle,
+        //
+        endAdd: inputEndAddress.value,
+        // inputEndZoneCode,
+        endDetail: inputEndDetail.value,
+        endFloor,
+        endEle,
+      })
     );
   }, [
     price,
@@ -1077,10 +1105,8 @@ const Index = () => {
                 </Text>
               </Wrapper>
               <CommonButton
-                color={Theme.darkGrey_C}
                 width={`130px`}
                 height={`50px`}
-                kindOf={`grey`}
                 onClick={nextStepHandler}
               >
                 다음

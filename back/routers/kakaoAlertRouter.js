@@ -25,7 +25,6 @@ router.post(`/callback`, async (req, res, next) => {
       recv_addr, // 수취인 주소
       estmate, // 예정 시간
     } = req.body;
-    console.log("JSON", req.body);
 
     const updateResult = await KeepBox.findOne({
       where: { merchantUid: fid },

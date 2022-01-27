@@ -466,9 +466,10 @@ const Index = () => {
             <Wrapper width={`50%`} al={`flex-start`}>
               특이사항 :
               <Text>
-                {keepBoxDetails[0].remark.split("\n").map((data, idx) => {
-                  return <Text key={idx}>{data}</Text>;
-                })}
+                {keepBoxDetails[0].remark &&
+                  keepBoxDetails[0].remark.split("\n").map((data, idx) => {
+                    return <Text key={idx}>{data}</Text>;
+                  })}
               </Text>
             </Wrapper>
           </Wrapper>
