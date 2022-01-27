@@ -149,16 +149,22 @@ const AdminMenu = () => {
             </MenuName>
           </Menu.Item>
         </SubMenu>
-        {/* <SubMenu
-          key="sub7"
+        <SubMenu
+          key="sub9"
           icon={<FolderOutlined />}
           title="반환 요청 관리"
-          onTitleClick={titleClickHandler("sub7")}
+          onTitleClick={titleClickHandler("sub9")}
         >
           <Menu.Item key="/admin/returnBox/list?listType=3">
-            <MenuName>반환 리스트</MenuName>
+            <MenuName>전체 반환 리스트</MenuName>
           </Menu.Item>
-        </SubMenu> */}
+          <Menu.Item key="/admin/returnBox/list?listType=1">
+            <MenuName>미처리 반환 리스트</MenuName>
+          </Menu.Item>
+          <Menu.Item key="/admin/returnBox/list?listType=2">
+            <MenuName>처리 반환 리스트</MenuName>
+          </Menu.Item>
+        </SubMenu>
         <SubMenu
           key="sub3"
           icon={<BookOutlined />}

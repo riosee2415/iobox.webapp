@@ -152,6 +152,7 @@ const Index = () => {
     { label: "번호", key: "no" },
     { label: "박스 유형", key: "boxes" },
     { label: "구매 유형", key: "type" },
+    { label: "주소", key: "address" },
     { label: "구매자", key: "name" },
     { label: "연락처", key: "mobile" },
     { label: "배송 방법", key: "pickWay" },
@@ -361,6 +362,7 @@ const Index = () => {
             no: data.id,
             boxes: type[0],
             type: info.type === "일반 배송" ? "일반 배송" : "하루 배송",
+            address: info.address + " " + info.detailAddress,
             name: info.name,
             mobile: `${info.mobile.slice(0, 3)}-${info.mobile.slice(
               3,
