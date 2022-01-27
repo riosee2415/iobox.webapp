@@ -78,7 +78,7 @@ router.post(`/schedule`, async (req, res, next) => {
           {
             merchant_uid: schedulePK, // 주문 번호
             schedule_at: time, // 결제 시도 시각 in Unix Time Stamp. 예: 다음 달 1일
-            amount: 1000,
+            amount: data.KeepBoxMaster.KeepBoxes[0].price,
             name: "아이오박스 정기결제 3",
             buyer_name: data.User.nickname,
           },

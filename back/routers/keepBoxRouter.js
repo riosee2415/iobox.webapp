@@ -803,8 +803,8 @@ router.patch("/master/status", isLoggedIn, async (req, res, next) => {
       data: {
         customer_uid: currentUser.userCode,
         merchant_uid: orderPK, // 새로 생성한 결제(재결제)용 주문 번호
-        amount: 1000,
-        name: "아이오박스 정기결제 1",
+        amount: currentKeepBoxMaster.KeepBoxes[0].price,
+        name: "아이오박스 정기결제",
         buyer_name: currentUser.nickname,
       },
     });
@@ -851,8 +851,8 @@ router.patch("/master/status", isLoggedIn, async (req, res, next) => {
               {
                 merchant_uid: schedulePK, // 주문 번호
                 schedule_at: time, // 결제 시도 시각 in Unix Time Stamp. 예: 다음 달 1일
-                amount: 1000,
-                name: "아이오박스 정기결제 2",
+                amount: currentKeepBoxMaster.KeepBoxes[0].price,
+                name: "아이오박스 정기결제",
                 buyer_name: currentUser.nickname,
               },
             ],
