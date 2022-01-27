@@ -1004,6 +1004,7 @@ router.patch("/update", isAdminCheck, async (req, res, next) => {
         callback_url: "https://api.iobox.kr/api/kakao/callback/",
         fid: fidKey,
         callback_type: "map",
+        // 배송 정보 변경 필요
         tier: "testuser",
         key: "testuser",
         type: "json",

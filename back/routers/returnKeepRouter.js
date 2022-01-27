@@ -200,21 +200,57 @@ router.patch("/update", isAdminCheck, async (req, res, next) => {
       return res.status(401).send("존재하지 않는 상자입니다.");
     }
 
-    const updateResult = await ReturnKeep.update(
-      {
-        isComplete: true,
-        deliveryCom,
-        deliveryCode,
-      },
-      {
-        where: { id: parseInt(id) },
-      }
-    );
+    let d = new Date();
+    let year = d.getFullYear() + "";
+    let month = d.getMonth() + 1 + "";
+    let date = d.getDate() + "";
+    let hour = d.getHours() + "";
+    let min = d.getMinutes() + "";
+    let sec = d.getSeconds() + "";
+    let mSec = d.getMilliseconds() + "";
+    month = month < 10 ? "0" + month : month;
+    date = date < 10 ? "0" + date : date;
+    hour = hour < 10 ? "0" + hour : hour;
+    min = min < 10 ? "0" + min : min;
+    sec = sec < 10 ? "0" + sec : sec;
+    mSec = mSec < 10 ? "0" + mSec : mSec;
+    let fidKey = "ORD" + year + month + date + hour + min + sec + mSec;
 
-    if (updateResult[0] > 0) {
-      return res.status(200).json({ result: true });
+    const trakerApi = await axios({
+      url: "http://trace-api-dev.sweettracker.net:8102/add_invoice",
+      method: "post", // POST method
+      headers: { "Content-Type": "application/json" }, // "Content-Type": "application/json"
+      data: {
+        num: deliveryCode, // 송장번호
+        code: "04",
+        callback_url: "https://api.iobox.kr/api/kakao/callback/",
+        fid: fidKey,
+        callback_type: "map",
+        tier: "testuser",
+        key: "testuser",
+        type: "json",
+      },
+    });
+
+    if (trakerApi.data.success) {
+      const updateResult = await ReturnKeep.update(
+        {
+          isComplete: true,
+          deliveryCom,
+          deliveryCode,
+        },
+        {
+          where: { id: parseInt(id) },
+        }
+      );
+
+      if (updateResult[0] > 0) {
+        return res.status(200).json({ result: true });
+      } else {
+        return res.status(200).json({ result: false });
+      }
     } else {
-      return res.status(200).json({ result: false });
+      return res.status(401).send(trakerApi.data.e_message);
     }
   } catch (error) {
     console.error(error);
