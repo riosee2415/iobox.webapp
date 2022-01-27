@@ -57,7 +57,7 @@ router.post(`/schedule`, async (req, res, next) => {
     mSec = mSec < 10 ? "0" + mSec : mSec;
     let schedulePK = "ORD" + year + month + date + hour + min + sec + mSec;
 
-    let time = moment().add(10, `s`).unix();
+    let time = moment().add(1, `M`).unix();
 
     await KeepBoxSchedule.update(
       {
@@ -79,7 +79,7 @@ router.post(`/schedule`, async (req, res, next) => {
             merchant_uid: schedulePK, // 주문 번호
             schedule_at: time, // 결제 시도 시각 in Unix Time Stamp. 예: 다음 달 1일
             amount: data.KeepBoxMaster.KeepBoxes[0].price,
-            name: "아이오박스 정기결제 3",
+            name: "아이오박스 정기결제",
             buyer_name: data.User.nickname,
           },
         ],

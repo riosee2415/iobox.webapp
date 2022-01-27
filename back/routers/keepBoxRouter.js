@@ -808,6 +808,36 @@ router.patch("/master/status", isLoggedIn, async (req, res, next) => {
         buyer_name: currentUser.nickname,
       },
     });
+    if (currentKeepBoxMaster.KeepBoxes[0].deliveryPay !== 0) {
+      d = new Date();
+      year = d.getFullYear() + "";
+      month = d.getMonth() + 1 + "";
+      date = d.getDate() + "";
+      hour = d.getHours() + "";
+      min = d.getMinutes() + "";
+      sec = d.getSeconds() + "";
+      mSec = d.getMilliseconds() + "";
+      month = month < 10 ? "0" + month : month;
+      date = date < 10 ? "0" + date : date;
+      hour = hour < 10 ? "0" + hour : hour;
+      min = min < 10 ? "0" + min : min;
+      sec = sec < 10 ? "0" + sec : sec;
+      mSec = mSec < 10 ? "0" + mSec : mSec;
+      let orderPK2 = "DEL" + year + month + date + hour + min + sec + mSec;
+
+      const paymentResult = await axios({
+        url: `https://api.iamport.kr/subscribe/payments/again`,
+        method: "post",
+        headers: { Authorization: access_token }, // 인증 토큰을 Authorization header에 추가
+        data: {
+          customer_uid: currentUser.userCode,
+          merchant_uid: orderPK2, // 새로 생성한 결제(재결제)용 주문 번호
+          amount: currentKeepBoxMaster.KeepBoxes[0].deliveryPay,
+          name: "아이오박스 배송비 결제",
+          buyer_name: currentUser.nickname,
+        },
+      });
+    }
 
     const { code, message } = paymentResult.data;
 
@@ -839,7 +869,7 @@ router.patch("/master/status", isLoggedIn, async (req, res, next) => {
         mSec = mSec < 10 ? "0" + mSec : mSec;
         let schedulePK = "ORD" + year + month + date + hour + min + sec + mSec;
 
-        let time = moment().add(10, `s`).unix();
+        let time = moment().add(1, `M`).unix();
 
         axios({
           url: "https://api.iamport.kr/subscribe/payments/schedule", // 예:
