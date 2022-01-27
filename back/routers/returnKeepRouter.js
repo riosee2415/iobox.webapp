@@ -6,27 +6,94 @@ const { ReturnKeep, BoxImage, KeepBox, User } = require("../models");
 
 const router = express.Router();
 
-router.get("/list", isAdminCheck, async (req, res, next) => {
-  try {
-    const lists = await ReturnKeep.findAll({
-      include: [
-        {
-          model: BoxImage,
-          include: [
-            {
-              model: KeepBox,
-            },
-          ],
-        },
-      ],
-    });
+router.get(
+  ["/list", "/list/:listType"],
+  isAdminCheck,
+  async (req, res, next) => {
+    const { listType } = req.params;
 
-    return res.status(200).json(lists);
-  } catch (error) {
-    console.error(error);
-    return res.status(401).send("목록을 조회할 수 없습니다.");
+    let nanFlag = isNaN(listType);
+
+    if (!listType) {
+      nanFlag = false;
+    }
+
+    if (nanFlag) {
+      return res.status(400).send("잘못된 요청 입니다.");
+    }
+
+    let _listType = Number(listType);
+
+    if (_listType > 3 || !listType) {
+      _listType = 3;
+    }
+
+    try {
+      let lists = [];
+
+      switch (_listType) {
+        case 1:
+          lists = await ReturnKeep.findAll({
+            where: {
+              isComplete: false,
+            },
+            include: [
+              {
+                model: BoxImage,
+                include: [
+                  {
+                    model: KeepBox,
+                  },
+                ],
+              },
+            ],
+          });
+          break;
+
+        case 2:
+          lists = await ReturnKeep.findAll({
+            where: {
+              isComplete: true,
+            },
+            include: [
+              {
+                model: BoxImage,
+                include: [
+                  {
+                    model: KeepBox,
+                  },
+                ],
+              },
+            ],
+          });
+          break;
+
+        case 3:
+          lists = await ReturnKeep.findAll({
+            include: [
+              {
+                model: BoxImage,
+                include: [
+                  {
+                    model: KeepBox,
+                  },
+                ],
+              },
+            ],
+          });
+          break;
+
+        default:
+          break;
+      }
+
+      return res.status(200).json(lists);
+    } catch (error) {
+      console.error(error);
+      return res.status(401).send("목록을 조회할 수 없습니다.");
+    }
   }
-});
+);
 
 router.post("/create", isLoggedIn, async (req, res, next) => {
   const { imageIds, boxId } = req.body;
@@ -119,6 +186,39 @@ router.post("/create", isLoggedIn, async (req, res, next) => {
   } catch (e) {
     console.error(e);
     return res.status(401).send("박스 찾기가 불가능합니다.");
+  }
+});
+
+router.patch("/update", isAdminCheck, async (req, res, next) => {
+  const { id, deliveryCom, deliveryCode } = req.body;
+  try {
+    const exReturn = await ReturnKeep.findOne({
+      where: { id: parseInt(id) },
+    });
+
+    if (!exReturn) {
+      return res.status(401).send("존재하지 않는 상자입니다.");
+    }
+
+    const updateResult = await ReturnKeep.update(
+      {
+        isComplete: true,
+        deliveryCom,
+        deliveryCode,
+      },
+      {
+        where: { id: parseInt(id) },
+      }
+    );
+
+    if (updateResult[0] > 0) {
+      return res.status(200).json({ result: true });
+    } else {
+      return res.status(200).json({ result: false });
+    }
+  } catch (error) {
+    console.error(error);
+    return res.status(401).send("정보를 변경할 수 없습니다.");
   }
 });
 
