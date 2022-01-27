@@ -31,6 +31,14 @@ import { KEEPBOX_CREATE_REQUEST } from "../../../reducers/keepBox";
 import wrapper from "../../../store/configureStore";
 import { END } from "redux-saga";
 
+const LoadNotification = (msg, content) => {
+  notification.open({
+    message: msg,
+    description: content,
+    onClick: () => {},
+  });
+};
+
 const PayButtton = styled(Wrapper)`
   color: ${Theme.basicTheme_C};
   width: auto;
@@ -112,6 +120,11 @@ const Index = () => {
   }, [router.query]);
 
   useEffect(() => {
+    if (!me) {
+      router.push("/");
+
+      return LoadNotification("로그인 후 이용해주세요.");
+    }
     if (me) {
       if (me.cardNum) {
         setCardNum(
