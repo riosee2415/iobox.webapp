@@ -17,19 +17,27 @@ import ClientLayout from "../../../components/ClientLayout";
 import useWidth from "../../../hooks/useWidth";
 import { CloseOutlined, DownOutlined, UpOutlined } from "@ant-design/icons";
 import { useRouter } from "next/dist/client/router";
-import { message, Radio } from "antd";
+import { message, notification, Radio } from "antd";
 import { CloseCircleOutlined, SearchOutlined } from "@ant-design/icons";
 import useInput from "../../../hooks/useInput";
 import PostCode from "../../../components/postCode/PostCode";
 import { numberWithCommas } from "../../../components/commonUtils";
-import axios from "axios";
 import { useDispatch, useSelector } from "react-redux";
 import { SUBSCRIPTION_CREATE_REQUEST } from "../../../reducers/subscription";
 import Footer from "../../../components/Footer";
 import { LOAD_MY_INFO_REQUEST } from "../../../reducers/user";
 import { KEEPBOX_CREATE_REQUEST } from "../../../reducers/keepBox";
+import axios from "axios";
 import wrapper from "../../../store/configureStore";
 import { END } from "redux-saga";
+
+const LoadNotification = (msg, content) => {
+  notification.open({
+    message: msg,
+    description: content,
+    onClick: () => {},
+  });
+};
 
 const PayButtton = styled(Wrapper)`
   color: ${Theme.basicTheme_C};
@@ -112,6 +120,11 @@ const Index = () => {
   }, [router.query]);
 
   useEffect(() => {
+    if (!me) {
+      router.push("/");
+
+      return LoadNotification("로그인 후 이용해주세요.");
+    }
     if (me) {
       if (me.cardNum) {
         setCardNum(
