@@ -140,8 +140,8 @@ const GlobalStyles = createGlobalStyle`
   .ant-radio-inner::after {
     top: 3px;
     left: 3px;
-    width: 22px;
-    height: 22px;
+    width: 22px !important;
+    height: 22px !important;
     border-radius: 50%;
     background-color: ${(props) => props.theme.subTheme4_C};
     border-color: ${(props) => props.theme.grey_C} !important;
@@ -152,6 +152,10 @@ const GlobalStyles = createGlobalStyle`
 
   .ant-checkbox-checked::after{
     border : 1px solid ${(props) => props.theme.basicTheme_C} !important;
+  }
+
+  .ant-radio-checked .ant-radio-inner:after{
+    transform : scale(1);
   }
 
   .ant-checkbox-wrapper:hover .ant-checkbox-inner, .ant-checkbox:hover .ant-checkbox-inner, .ant-checkbox-input:focus + .ant-checkbox-inner{
