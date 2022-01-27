@@ -155,7 +155,7 @@ const GlobalStyles = createGlobalStyle`
   }
 
   .ant-radio-checked .ant-radio-inner:after{
-    transform : scale(1);
+    transform : scale(1) !important;
   }
 
   .ant-checkbox-wrapper:hover .ant-checkbox-inner, .ant-checkbox:hover .ant-checkbox-inner, .ant-checkbox-input:focus + .ant-checkbox-inner{
