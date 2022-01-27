@@ -133,6 +133,13 @@ const Index = () => {
   const _WIDTH = `400`;
   const _HEIGHT = `400`;
 
+  const statusData = {
+    보관예약: 1,
+    수거중: 2,
+    센터도착: 3,
+    보관중: 4,
+  };
+
   const dataArr = [
     //
     ["행거박스", "W58 x H100 x D30 (CM)", "월", 19000],
@@ -454,6 +461,10 @@ const Index = () => {
 
   const updateDelivery = useCallback(
     (value) => {
+      if (statusData[updateData.status] > statusData[value.status]) {
+        return message.error("이전 단계로 돌아갈 수 없습니다.");
+      }
+
       dispatch({
         type: MASTER_KEEPBOX_UPDATE_REQUEST,
         data: {

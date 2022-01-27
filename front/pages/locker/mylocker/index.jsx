@@ -333,9 +333,14 @@ const Index = () => {
   );
 
   const updateKeepBoxHandler = useCallback((info) => {
+    console.log("ASJKDLNAJKLSDNAJKLSNDJKANJKSLNJKLAZD", info.period);
     if (info.period === "정기") {
       const boxDate = moment(info.updated);
       const current = moment();
+
+      console.log(boxDate.add(1, "M").format("DD-MM-YYYY"));
+
+      console.log(boxDate.format("DD-MM-YYYY"));
 
       if (boxDate.diff(current, "month") < 6) {
         setNoneReturnBox(true);
