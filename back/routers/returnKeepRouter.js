@@ -3,6 +3,7 @@ const isAdminCheck = require("../middlewares/isAdminCheck");
 const isLoggedIn = require("../middlewares/isLoggedIn");
 const axios = require("axios");
 const { ReturnKeep, BoxImage, KeepBox, User } = require("../models");
+const isNanCheck = require("../middlewares/isNanCheck");
 
 const router = express.Router();
 
@@ -186,6 +187,39 @@ router.post("/create", isLoggedIn, async (req, res, next) => {
   } catch (e) {
     console.error(e);
     return res.status(401).send("박스 찾기가 불가능합니다.");
+  }
+});
+
+router.get("/listOne/:returnId", isAdminCheck, async (req, res, next) => {
+  const { returnId } = req.params;
+
+  if (isNanCheck(returnId)) {
+    return res.status(401).send("잘못된 요청입니다.");
+  }
+
+  try {
+    const returnBox = await ReturnKeep.findOne({
+      where: { id: parseInt(returnId) },
+      include: [
+        {
+          model: BoxImage,
+          include: [
+            {
+              model: KeepBox,
+            },
+          ],
+        },
+      ],
+    });
+
+    if (!returnBox) {
+      return res.status(401).send("존재하지 않는 박스입니다.");
+    }
+
+    return res.status(200).json(returnBox);
+  } catch (error) {
+    console.error(error);
+    return res.status(401).send("박스를 찾을 수 없습니다.");
   }
 });
 
