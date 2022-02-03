@@ -206,6 +206,12 @@ router.get("/listOne/:returnId", isAdminCheck, async (req, res, next) => {
           include: [
             {
               model: KeepBox,
+              include: [
+                {
+                  model: User,
+                  attributes: ["userId", "email", "nickname", "mobile"],
+                },
+              ],
             },
           ],
         },
