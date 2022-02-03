@@ -5,6 +5,10 @@ import {
   RETURNBOX_LIST_SUCCESS,
   RETURNBOX_LIST_FAILURE,
   //
+  RETURNBOX_LIST_ONE_REQUEST,
+  RETURNBOX_LIST_ONE_SUCCESS,
+  RETURNBOX_LIST_ONE_FAILURE,
+  //
   RETURNBOX_UPLOAD_REQUEST,
   RETURNBOX_UPLOAD_SUCCESS,
   RETURNBOX_UPLOAD_FAILURE,
@@ -40,6 +44,33 @@ function* returnBoxList(action) {
     console.error(err);
     yield put({
       type: RETURNBOX_LIST_FAILURE,
+      error: err.response.data,
+    });
+  }
+}
+
+// ******************************************************************************************************************
+// ******************************************************************************************************************
+// ******************************************************************************************************************
+
+// SAGA AREA ********************************************************************************************************
+// ******************************************************************************************************************
+function returnBoxListOneAPI(data) {
+  return axios.get(`/api/return/listOne/${data.id}`, data);
+}
+
+function* returnBoxListOne(action) {
+  try {
+    const result = yield call(returnBoxListOneAPI, action.data);
+
+    yield put({
+      type: RETURNBOX_LIST_ONE_SUCCESS,
+      data: result.data,
+    });
+  } catch (err) {
+    console.error(err);
+    yield put({
+      type: RETURNBOX_LIST_ONE_FAILURE,
       error: err.response.data,
     });
   }
@@ -163,6 +194,10 @@ function* watchReturnBoxList() {
   yield takeLatest(RETURNBOX_LIST_REQUEST, returnBoxList);
 }
 
+function* watchReturnBoxListOne() {
+  yield takeLatest(RETURNBOX_LIST_ONE_REQUEST, returnBoxListOne);
+}
+
 function* watchReturnBoxUpload() {
   yield takeLatest(RETURNBOX_UPLOAD_REQUEST, returnBoxThumbnail);
 }
@@ -183,6 +218,7 @@ function* watchReturnBoxDelete() {
 export default function* returnBoxSaga() {
   yield all([
     fork(watchReturnBoxList),
+    fork(watchReturnBoxListOne),
     fork(watchReturnBoxUpload),
     fork(watchReturnBoxCreate),
     fork(watchReturnBoxUpdate),

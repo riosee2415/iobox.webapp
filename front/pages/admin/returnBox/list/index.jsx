@@ -385,9 +385,7 @@ const Index = ({}) => {
     {
       title: "상세정보",
       render: (data) => (
-        <Button
-          onClick={() => moveLinkHandler(`/admin/keepBox/list/${data.id}`)}
-        >
+        <Button onClick={() => moveLinkHandler(`/admin/returnBox/${data.id}`)}>
           확인
         </Button>
       ),

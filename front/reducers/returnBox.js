@@ -2,6 +2,7 @@ import produce from "../util/produce";
 
 export const initailState = {
   returnBoxs: null,
+  returnBoxOne: null,
   uploadReturnBoxPath: "",
   maxPage: 1,
   modal: false,
@@ -11,6 +12,10 @@ export const initailState = {
   st_returnBoxListLoading: false, // 반환 박스 가져오기
   st_returnBoxListDone: false,
   st_returnBoxListError: null,
+  //
+  st_returnBoxListOneLoading: false, // 반환 박스 가져오기
+  st_returnBoxListOneDone: false,
+  st_returnBoxListOneError: null,
   //
   st_returnBoxCreateLoading: false, // 반환 박스 만들기
   st_returnBoxCreateDone: false,
@@ -29,6 +34,10 @@ export const initailState = {
 export const RETURNBOX_LIST_REQUEST = "RETURNBOX_LIST_REQUEST";
 export const RETURNBOX_LIST_SUCCESS = "RETURNBOX_LIST_SUCCESS";
 export const RETURNBOX_LIST_FAILURE = "RETURNBOX_LIST_FAILURE";
+
+export const RETURNBOX_LIST_ONE_REQUEST = "RETURNBOX_LIST_ONE_REQUEST";
+export const RETURNBOX_LIST_ONE_SUCCESS = "RETURNBOX_LIST_ONE_SUCCESS";
+export const RETURNBOX_LIST_ONE_FAILURE = "RETURNBOX_LIST_ONE_FAILURE";
 
 export const RETURNBOX_UPLOAD_REQUEST = "RETURNBOX_UPLOAD_REQUEST";
 export const RETURNBOX_UPLOAD_SUCCESS = "RETURNBOX_UPLOAD_SUCCESS";
@@ -73,6 +82,26 @@ const reducer = (state = initailState, action) =>
         draft.st_returnBoxListLoading = false;
         draft.st_returnBoxListDone = false;
         draft.st_returnBoxListError = action.error;
+        break;
+      }
+
+      case RETURNBOX_LIST_ONE_REQUEST: {
+        draft.st_returnBoxListOneLoading = true;
+        draft.st_returnBoxListOneDone = null;
+        draft.st_returnBoxListOneError = false;
+        break;
+      }
+      case RETURNBOX_LIST_ONE_SUCCESS: {
+        draft.st_returnBoxListOneLoading = false;
+        draft.st_returnBoxListOneDone = true;
+        draft.returnBoxOne = action.data;
+
+        break;
+      }
+      case RETURNBOX_LIST_ONE_FAILURE: {
+        draft.st_returnBoxListOneLoading = false;
+        draft.st_returnBoxListOneDone = false;
+        draft.st_returnBoxListOneError = action.error;
         break;
       }
 
