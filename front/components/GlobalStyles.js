@@ -138,8 +138,8 @@ const GlobalStyles = createGlobalStyle`
   }
 
   .ant-radio-inner::after {
-    top: 10px;
-    left: 11px;
+    top: 3px;
+    left: 3px;
     width: 22px !important;
     height: 22px !important;
     border-radius: 50%;
