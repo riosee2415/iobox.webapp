@@ -9,8 +9,6 @@ import wrapper from "../store/configureStore";
 import WidthProvider from "../components/WidthProvider";
 
 const Fourleaf = ({ Component }) => {
-
-
   return (
     <ThemeProvider theme={Theme}>
       <GlobalStyles />
@@ -45,7 +43,7 @@ const Fourleaf = ({ Component }) => {
           src="https://cdn.iamport.kr/js/iamport.payment-1.1.5.js"
         ></script>
 
-        <script type="text/javascript" src="./customScript.js"></script>
+        <script type="text/javascript" src="../customScript.js"></script>
       </Head>
       <Component />
     </ThemeProvider>
