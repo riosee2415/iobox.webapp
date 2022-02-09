@@ -108,9 +108,14 @@ const Index = () => {
 
   ////// REDUX //////
   const dispatch = useDispatch();
+
   const { me, st_userCardCreateDone, st_userCardCreateError } = useSelector(
     (state) => state.user
   );
+
+
+
+
   const { createInfo, st_keepBoxCreateDone, st_keepBoxCreateError } =
     useSelector((state) => state.keepBox);
 
@@ -223,22 +228,25 @@ const Index = () => {
     router.push(link);
   }, []);
 
+  console.log(me && me.userId);
+
   const handleFormSubmit = useCallback(() => {
     // dispatch({
     //   type: SUBSCRIPTION_CREATE_REQUEST,
     //   data: {
     //     // 카드번호
-    //     cardNumber: "4092160302741999",
+    //     cardNumber: me && me.cardNum,
     //     // 유효기간
-    //     expiry: "2024-07",
+    //     expiry: me && me.cardPeriod,
     //     // 생년월일
-    //     birth: "920131",
+    //     birth: me && me.cardIden,
     //     // 비밀번호 앞 두자리
-    //     pwd2Digit: "74",
+    //     pwd2Digit: me && me.cardPassword,
     //     // 고유 코드
-    //     customer_uid: "gildong_0001_1234",
+    //     customer_uid: me && me.userId,
     //   },
     // });
+
     if (!inputName.value || inputName.value.trim() === "") {
       return message.error("이름을 입력해주세요.");
     }
@@ -252,66 +260,63 @@ const Index = () => {
       return message.error("상세주소를 입력해주세요.");
     }
 
-    dispatch({
-      type: KEEPBOX_CREATE_REQUEST,
-      data: {
-        type: "일반 배송",
-        boxcount1: storeData.boxs[0],
-        boxcount2: storeData.boxs[1],
-        boxcount3: storeData.boxs[2],
-        boxcount4: storeData.boxs[3],
-        period: storeData.type,
-        isFilming: storeData.isCapture,
-        pickWay: storeData.pickUp,
-        price:
-          storeData.totalPay -
-          (storeData.type === "정기" ? storeData.totalPay * 0.1 : 0),
-        deliveryPay: storeData.pickUpPrice,
-        name: inputName.value,
-        mobile: inputMobile.value,
-        address: inputAddress.value,
-        detailAddress: inputDetail.value,
-        remark: inputContent.value,
-        UserId: me.id,
+    const d = new Date();
+    let year = d.getFullYear() + "";
+    let month = d.getMonth() + 1 + "";
+    let date = d.getDate() + "";
+    let hour = d.getHours() + "";
+    let min = d.getMinutes() + "";
+    let sec = d.getSeconds() + "";
+    let mSec = d.getMilliseconds() + "";
+    month = month < 10 ? "0" + month : month;
+    date = date < 10 ? "0" + date : date;
+    hour = hour < 10 ? "0" + hour : hour;
+    min = min < 10 ? "0" + min : min;
+    sec = sec < 10 ? "0" + sec : sec;
+    mSec = mSec < 10 ? "0" + mSec : mSec;
+    let orderPK = "ORD" + year + month + date + hour + min + sec + mSec;
+    const IMP = window.IMP;
+    IMP.request_pay(
+      {
+        pay_method: "card",
+        buyer_name: inputName.value,
+        buyer_mobile: inputMobile.value,
+        merchant_uid: orderPK,
+        name: "상자",
+        amount: storeData.totalPay + "",
       },
-    });
-    //
-    //
-    // const d = new Date();
-    // let year = d.getFullYear() + "";
-    // let month = d.getMonth() + 1 + "";
-    // let date = d.getDate() + "";
-    // let hour = d.getHours() + "";
-    // let min = d.getMinutes() + "";
-    // let sec = d.getSeconds() + "";
-    // let mSec = d.getMilliseconds() + "";
-    // month = month < 10 ? "0" + month : month;
-    // date = date < 10 ? "0" + date : date;
-    // hour = hour < 10 ? "0" + hour : hour;
-    // min = min < 10 ? "0" + min : min;
-    // sec = sec < 10 ? "0" + sec : sec;
-    // mSec = mSec < 10 ? "0" + mSec : mSec;
-    // let orderPK = "ORD" + year + month + date + hour + min + sec + mSec;
-    // const IMP = window.IMP;
-    // IMP.request_pay(
-    //   {
-    //     pay_method: "card",
-    //     buyer_name: inputName.value,
-    //     buyer_mobile: inputMobile.value,
-    //     merchant_uid: orderPK,
-    //     name: "상자",
-    //     amount: storeData.totalPay + "",
-    //   },
-    //   async (rsp) => {
-    //     if (rsp.success) {
-    //       console.log(rsp.success);
-    //     } else {
-    //       console.log(rsp.error_msg);
-    //       if (rsp.error_msg !== "사용자가 결제를 취소하셨습니다") {
-    //       }
-    //     }
-    //   }
-    // );
+      async (rsp) => {
+        if (rsp.success) {
+          dispatch({
+            type: KEEPBOX_CREATE_REQUEST,
+            data: {
+              type: "일반 배송",
+              boxcount1: storeData.boxs[0],
+              boxcount2: storeData.boxs[1],
+              boxcount3: storeData.boxs[2],
+              boxcount4: storeData.boxs[3],
+              period: storeData.type,
+              isFilming: storeData.isCapture,
+              pickWay: storeData.pickUp,
+              price:
+                storeData.totalPay -
+                (storeData.type === "정기" ? storeData.totalPay * 0.1 : 0),
+              deliveryPay: storeData.pickUpPrice,
+              name: inputName.value,
+              mobile: inputMobile.value,
+              address: inputAddress.value,
+              detailAddress: inputDetail.value,
+              remark: inputContent.value,
+              UserId: me.id,
+            },
+          });
+        } else {
+          console.log(rsp.error_msg);
+          if (rsp.error_msg !== "사용자가 결제를 취소하셨습니다") {
+          }
+        }
+      }
+    );
   }, [
     storeData,
     inputName,
