@@ -24,14 +24,14 @@ const Fourleaf = ({ Component }) => {
         <meta property="og:type" content="website" />
         <meta property="og:title" content="iobox" />
         <meta property="og:site_name" content="iobox" />
-        <meta property="og:url" content="https://www.sample.com/" />
+        <meta property="og:url" content="https://iobox.kr/" />
         <meta property="og:description" content="iobox" />
         <meta property="og:keywords" content="iobox" />
         <meta property="og:image" content="/og_img.png" />
         <meta property="og:image:width" content="800" />
         <meta property="og:image:height" content="400" />
         <link rel="shortcut icon" href="/favicon.ico" />
-        <link rel="canonical" href="https://www.sample.com" />
+        <link rel="canonical" href="https://iobox.kr/" />
 
         <script
           type="text/javascript"
@@ -45,6 +45,14 @@ const Fourleaf = ({ Component }) => {
 
         <script type="text/javascript" src="../customScript.js"></script>
       </Head>
+
+      <script
+        async
+        src="https://www.googletagmanager.com/gtag/js?id=G-FP4D9TRNW2"
+      ></script>
+      <script type="text/javascript" src="//wcs.naver.net/wcslog.js"></script>
+
+      <script type="text/javascript" src="./customScript.js"></script>
       <Component />
     </ThemeProvider>
   );
