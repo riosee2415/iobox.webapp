@@ -69,12 +69,12 @@ const Home = ({}) => {
     scrollTo(0, 0);
   }, [router.route]);
 
-  useEffect(() => {
-    if (typeof window !== "undefined") {
-      console.log(window.Kakao);
-      window.Kakao.init("ee41ebc5b6da97b7f6aed5ef579fa9a4");
-    }
-  }, []);
+  // useEffect(() => {
+  //   if (typeof window !== "undefined") {
+  //     console.log(window.Kakao);
+  //     window.Kakao.init("ee41ebc5b6da97b7f6aed5ef579fa9a4");
+  //   }
+  // }, []);
 
   useEffect(() => {
     const query = router.query;
@@ -191,8 +191,8 @@ const Home = ({}) => {
               render={(props) => ( */}
 
             <KakaoLogin
-              jsKey={process.env[`SNS_KAKAO_KEY`]}
-              onSuccess={loginKakaoHandler}
+              jsKey={`05c1451fde777cd46d364795da27c426`}
+              onSuccess={(req) => loginKakaoHandler(req)}
               onFailure={(error) => {
                 console.log(error);
               }}
