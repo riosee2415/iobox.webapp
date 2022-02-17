@@ -421,8 +421,8 @@ router.post("/phoneNumberCheck", isLoggedIn, async (req, res, next) => {
 
     // 알림톡 전환 필요
 
-    // const profile_key = "569bebdbe801200fcfa70fcf12b2d587bd95f8a7";
-    const profile_key = "a52fe945072e0cf2ec85bc9811590d6065ef33e0";
+    const profile_key = "569bebdbe801200fcfa70fcf12b2d587bd95f8a7";
+    // const profile_key = "a52fe945072e0cf2ec85bc9811590d6065ef33e0";
 
     let str = "";
     for (let i = 0; i < 6; i++) {
@@ -441,8 +441,8 @@ router.post("/phoneNumberCheck", isLoggedIn, async (req, res, next) => {
           msgid: mKey, // 고유한 메시지 코드
           message_type: "AT", // 알림톡 타입 => AT : 알림톡, AI : 이지미 알림톡
           profile_key, // 발신 프로필 키
-          template_code: "io_num2", // 템플릿 코드
-          // template_code: "io_num", // 템플릿 코드
+          // template_code: "io_num2", // 템플릿 코드
+          template_code: "io_num", // 템플릿 코드
           receiver_num: `${phoneNum}`, // 사용자 연락처
           message: `[아이오박스]
 아이오박스 휴대폰 인증을 위한 인증번호는 아래와 같습니다.
