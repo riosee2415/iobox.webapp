@@ -9,6 +9,7 @@ import {
   CommonButton,
   TextInput,
   IoBoxWrapper,
+  ATag,
 } from "../../components/commonComponents";
 import styled from "styled-components";
 import ClientLayout from "../../components/ClientLayout";
@@ -178,10 +179,12 @@ const Index = () => {
               radius={`50%`}
               bgColor={Theme.kakao_C}
             >
-              <Image
-                src={`https://4leaf-s3.s3.ap-northeast-2.amazonaws.com/iobox/assets/images/consulitng/kakao.png`}
-                alt={`kakao_image`}
-              />
+              <ATag href="http://pf.kakao.com/_rIEsb" target={`_blank`}>
+                <Image
+                  src={`https://4leaf-s3.s3.ap-northeast-2.amazonaws.com/iobox/assets/images/consulitng/kakao.png`}
+                  alt={`kakao_image`}
+                />
+              </ATag>
             </Wrapper>
             <Wrapper
               width={`50px`}
@@ -190,10 +193,12 @@ const Index = () => {
               bgColor={Theme.white_C}
               margin={`0 10px`}
             >
-              <Image
-                src={`https://4leaf-s3.s3.ap-northeast-2.amazonaws.com/iobox/assets/images/consulitng/call.png`}
-                alt={`kakao_image`}
-              />
+              <ATag href="tel:1644-2753">
+                <Image
+                  src={`https://4leaf-s3.s3.ap-northeast-2.amazonaws.com/iobox/assets/images/consulitng/call.png`}
+                  alt={`kakao_image`}
+                />
+              </ATag>
             </Wrapper>
 
             <Wrapper

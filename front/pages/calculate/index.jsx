@@ -35,7 +35,6 @@ const Index = () => {
 
   ////// HOOKS //////
 
-  const [currentBox, setCurrentBox] = useState(0);
   const [currentBuy, setCurrentBuy] = useState([0, 0, 0, 0, 0, 0, 0, 0, 0]);
 
   ////// REDUX //////
@@ -49,23 +48,18 @@ const Index = () => {
   ////// TOGGLE ///////
 
   ///// HANDLER //////
-  const numberHandler = useCallback(
-    (value) => {
-      let tempArr = currentBuy.map((data, idx) => {
-        return idx === currentBox
-          ? data + value < 0
-            ? 0
-            : data + value
-          : data;
-      });
 
-      console.log(tempArr);
+  const numberHandler = useCallback(
+    (value, index) => {
+      let tempArr = currentBuy.map((data, idx) => {
+        return idx === index ? (data + value < 0 ? 0 : data + value) : data;
+      });
 
       setCurrentBuy(tempArr);
 
       // if (number + value >= 0) setNumber(number + value);
     },
-    [currentBox, currentBuy]
+    [, currentBuy]
   );
 
   const moveBackHandler = useCallback(() => {
@@ -207,8 +201,7 @@ const Index = () => {
               <Wrapper width={`40%`} dr={`row`} ju={`space-between`}>
                 <Box
                   onClick={() => {
-                    setCurrentBox(0);
-                    numberHandler(-1);
+                    numberHandler(-1, 0);
                   }}
                 >
                   <MinusOutlined />
@@ -216,8 +209,7 @@ const Index = () => {
                 <Text fontWeight={`700`}>{currentBuy[0]}</Text>
                 <Box
                   onClick={() => {
-                    setCurrentBox(0);
-                    numberHandler(+1);
+                    numberHandler(+1, 0);
                   }}
                 >
                   <PlusOutlined />
@@ -248,8 +240,7 @@ const Index = () => {
               <Wrapper width={`40%`} dr={`row`} ju={`space-between`}>
                 <Box
                   onClick={() => {
-                    setCurrentBox(1);
-                    numberHandler(-1);
+                    numberHandler(-1, 1);
                   }}
                 >
                   <MinusOutlined />
@@ -257,8 +248,7 @@ const Index = () => {
                 <Text fontWeight={`700`}>{currentBuy[1]}</Text>
                 <Box
                   onClick={() => {
-                    setCurrentBox(1);
-                    numberHandler(+1);
+                    numberHandler(+1, 1);
                   }}
                 >
                   <PlusOutlined />
@@ -289,8 +279,7 @@ const Index = () => {
               <Wrapper width={`40%`} dr={`row`} ju={`space-between`}>
                 <Box
                   onClick={() => {
-                    setCurrentBox(2);
-                    numberHandler(-1);
+                    numberHandler(-1, 2);
                   }}
                 >
                   <MinusOutlined />
@@ -298,8 +287,7 @@ const Index = () => {
                 <Text fontWeight={`700`}>{currentBuy[2]}</Text>
                 <Box
                   onClick={() => {
-                    setCurrentBox(2);
-                    numberHandler(+1);
+                    numberHandler(+1, 2);
                   }}
                 >
                   <PlusOutlined />
@@ -330,8 +318,7 @@ const Index = () => {
               <Wrapper width={`40%`} dr={`row`} ju={`space-between`}>
                 <Box
                   onClick={() => {
-                    setCurrentBox(3);
-                    numberHandler(-1);
+                    numberHandler(-1, 3);
                   }}
                 >
                   <MinusOutlined />
@@ -339,8 +326,7 @@ const Index = () => {
                 <Text fontWeight={`700`}>{currentBuy[3]}</Text>
                 <Box
                   onClick={() => {
-                    setCurrentBox(3);
-                    numberHandler(+1);
+                    numberHandler(+1, 3);
                   }}
                 >
                   <PlusOutlined />
@@ -371,8 +357,7 @@ const Index = () => {
               <Wrapper width={`40%`} dr={`row`} ju={`space-between`}>
                 <Box
                   onClick={() => {
-                    setCurrentBox(4);
-                    numberHandler(-1);
+                    numberHandler(-1, 4);
                   }}
                 >
                   <MinusOutlined />
@@ -380,8 +365,7 @@ const Index = () => {
                 <Text fontWeight={`700`}>{currentBuy[4]}</Text>
                 <Box
                   onClick={() => {
-                    setCurrentBox(4);
-                    numberHandler(+1);
+                    numberHandler(+1, 4);
                   }}
                 >
                   <PlusOutlined />
@@ -412,8 +396,7 @@ const Index = () => {
               <Wrapper width={`40%`} dr={`row`} ju={`space-between`}>
                 <Box
                   onClick={() => {
-                    setCurrentBox(5);
-                    numberHandler(-1);
+                    numberHandler(-1, 5);
                   }}
                 >
                   <MinusOutlined />
@@ -421,8 +404,7 @@ const Index = () => {
                 <Text fontWeight={`700`}>{currentBuy[5]}</Text>
                 <Box
                   onClick={() => {
-                    setCurrentBox(5);
-                    numberHandler(+1);
+                    numberHandler(+1, 5);
                   }}
                 >
                   <PlusOutlined />
@@ -453,8 +435,7 @@ const Index = () => {
               <Wrapper width={`40%`} dr={`row`} ju={`space-between`}>
                 <Box
                   onClick={() => {
-                    setCurrentBox(6);
-                    numberHandler(-1);
+                    numberHandler(-1, 6);
                   }}
                 >
                   <MinusOutlined />
@@ -462,8 +443,7 @@ const Index = () => {
                 <Text fontWeight={`700`}>{currentBuy[6]}</Text>
                 <Box
                   onClick={() => {
-                    setCurrentBox(6);
-                    numberHandler(+1);
+                    numberHandler(+1, 6);
                   }}
                 >
                   <PlusOutlined />
@@ -494,8 +474,7 @@ const Index = () => {
               <Wrapper width={`40%`} dr={`row`} ju={`space-between`}>
                 <Box
                   onClick={() => {
-                    setCurrentBox(7);
-                    numberHandler(-1);
+                    numberHandler(-1, 7);
                   }}
                 >
                   <MinusOutlined />
@@ -503,8 +482,7 @@ const Index = () => {
                 <Text fontWeight={`700`}>{currentBuy[7]}</Text>
                 <Box
                   onClick={() => {
-                    setCurrentBox(7);
-                    numberHandler(+1);
+                    numberHandler(+1, 7);
                   }}
                 >
                   <PlusOutlined />
@@ -535,8 +513,7 @@ const Index = () => {
               <Wrapper width={`40%`} dr={`row`} ju={`space-between`}>
                 <Box
                   onClick={() => {
-                    setCurrentBox(8);
-                    numberHandler(-1);
+                    numberHandler(-1, 8);
                   }}
                 >
                   <MinusOutlined />
@@ -544,8 +521,7 @@ const Index = () => {
                 <Text fontWeight={`700`}>{currentBuy[8]}</Text>
                 <Box
                   onClick={() => {
-                    setCurrentBox(8);
-                    numberHandler(+1);
+                    numberHandler(+1, 8);
                   }}
                 >
                   <PlusOutlined />

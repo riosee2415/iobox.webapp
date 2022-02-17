@@ -640,6 +640,9 @@ const AppFooter = () => {
                 </IconBox>
 
                 <IconBox
+                  onClick={() => {
+                    moveLinkHandler(`/iobox?type=tentBox`);
+                  }}
                   bottom={
                     width < 700
                       ? screen.height / 2 < 390
@@ -663,9 +666,6 @@ const AppFooter = () => {
                   />
                   <Text
                     fontSize={`1.1rem`}
-                    onClick={() => {
-                      moveLinkHandler(`/iobox?type=bigBox`);
-                    }}
                     color={
                       currentMenu === 2 ? Theme.white_C : Theme.darkGrey4_C
                     }
@@ -676,7 +676,7 @@ const AppFooter = () => {
 
                 <IconBox
                   onClick={() => {
-                    moveLinkHandler(`/iobox?type=tentBox`);
+                    moveLinkHandler(`/iobox?type=bigBox`);
                   }}
                   bottom={screen.height / 2 < 390 ? `20px` : `20px`}
                   left={`50%`}
