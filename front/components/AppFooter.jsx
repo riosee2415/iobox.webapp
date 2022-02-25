@@ -761,7 +761,7 @@ const AppFooter = () => {
             <TextWrapper
               width={`auto`}
               onClick={() => {
-                moveLinkHandler("/locker");
+                moveLinkHandler(me ? "/locker" : "/login");
               }}
             >
               <Image

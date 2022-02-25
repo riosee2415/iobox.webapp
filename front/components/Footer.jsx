@@ -131,9 +131,20 @@ const Index = () => {
         >
           <Wrapper
             width={`300px`}
+            al={`flex-end`}
+            padding={`10px`}
+            bgColor={Theme.white_C}
+            radius={`10px 10px 0 0`}
+          >
+            <Wrapper width={`auto`} cursor={`pointer`} onClick={modalToggle}>
+              <CloseOutlined />
+            </Wrapper>
+          </Wrapper>
+          <Wrapper
+            width={`300px`}
             height={`500px`}
             overflow={`hidden`}
-            radius={`10px`}
+            radius={`0 0 10px 10px`}
           >
             <Wrapper
               bgColor={Theme.white_C}
@@ -144,16 +155,6 @@ const Index = () => {
               ju={`flex-start`}
               overflowY={`scroll`}
             >
-              <Wrapper al={`flex-end`} padding={`10px 0`}>
-                <Wrapper
-                  width={`auto`}
-                  cursor={`pointer`}
-                  onClick={modalToggle}
-                >
-                  <CloseOutlined />
-                </Wrapper>
-              </Wrapper>
-
               <Text bold={true} margin={`0 0 10px`}>
                 이용약관 &#38; 개인정보처리방침
               </Text>
@@ -778,13 +779,23 @@ Chrome의 경우 : 설정 메뉴 > 개인정보 및 보안 > 쿠키 및 기타 �
         >
           <Wrapper
             width={`300px`}
+            bgColor={Theme.white_C}
+            al={`flex-end`}
+            padding={`10px`}
+            radius={`10px 10px 0 0`}
+          >
+            <Wrapper width={`auto`} cursor={`pointer`} onClick={modalToggle2}>
+              <CloseOutlined />
+            </Wrapper>
+          </Wrapper>
+          <Wrapper
+            width={`300px`}
             height={`500px`}
             overflow={`hidden`}
-            radius={`10px`}
+            radius={`0 0 10px 10px`}
           >
             <Wrapper
               bgColor={Theme.white_C}
-              radius={`10px`}
               shadow={`0 0 10px ${Theme.grey_C}`}
               height={`500px`}
               width={`300px`}
@@ -793,16 +804,6 @@ Chrome의 경우 : 설정 메뉴 > 개인정보 및 보안 > 쿠키 및 기타 �
               ju={`flex-start`}
               overflowY={`auto`}
             >
-              <Wrapper al={`flex-end`} padding={`10px 0`}>
-                <Wrapper
-                  width={`auto`}
-                  cursor={`pointer`}
-                  onClick={modalToggle2}
-                >
-                  <CloseOutlined />
-                </Wrapper>
-              </Wrapper>
-
               <Text bold={true} margin={`0 0 10px`}>
                 배송 정보
               </Text>
@@ -877,13 +878,23 @@ Chrome의 경우 : 설정 메뉴 > 개인정보 및 보안 > 쿠키 및 기타 �
         >
           <Wrapper
             width={`300px`}
+            bgColor={Theme.white_C}
+            radius={`10px 10px 0 0`}
+            al={`flex-end`}
+            padding={`10px`}
+          >
+            <Wrapper width={`auto`} cursor={`pointer`} onClick={modalToggle3}>
+              <CloseOutlined />
+            </Wrapper>
+          </Wrapper>
+          <Wrapper
+            width={`300px`}
             height={`500px`}
             overflow={`hidden`}
-            radius={`10px`}
+            radius={`0 0 10px 10px`}
           >
             <Wrapper
               bgColor={Theme.white_C}
-              radius={`10px`}
               shadow={`0 0 10px ${Theme.grey_C}`}
               height={`500px`}
               width={`300px`}
@@ -892,16 +903,6 @@ Chrome의 경우 : 설정 메뉴 > 개인정보 및 보안 > 쿠키 및 기타 �
               ju={`flex-start`}
               overflowY={`auto`}
             >
-              <Wrapper al={`flex-end`} padding={`10px 0`}>
-                <Wrapper
-                  width={`auto`}
-                  cursor={`pointer`}
-                  onClick={modalToggle3}
-                >
-                  <CloseOutlined />
-                </Wrapper>
-              </Wrapper>
-
               <Text bold={true} margin={`0 0 10px`}>
                 환불 정보
               </Text>
