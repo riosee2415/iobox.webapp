@@ -7,6 +7,7 @@ const multer = require("multer");
 const path = require("path");
 const AWS = require("aws-sdk");
 const multerS3 = require("multer-s3");
+const isNanCheck = require("../middlewares/isNanCheck");
 
 const router = express.Router();
 
@@ -48,7 +49,7 @@ router.get("/list", async (req, res, next) => {
     return res.status(200).json({ totalImage });
   } catch (error) {
     console.error(error);
-    return res.status(401).send("이이미미지 목록을 불러올 수 없습니다.");
+    return res.status(401).send("이미지 목록을 불러올 수 없습니다.");
   }
 });
 
@@ -80,6 +81,24 @@ router.post(
   }
 );
 
+router.post("/create", isAdminCheck, async (req, res, next) => {
+  const { imagePath } = req.body;
+  try {
+    const createResult = await MenuImage.create({
+      imagePath,
+    });
+
+    if (!createResult) {
+      return res.status(401).send("처리중 문제가 발생하였습니다.");
+    }
+
+    return res.status(201).json({ result: true });
+  } catch (error) {
+    console.error(error);
+    return res.status(401).send("이미지를 추가할 수 없습니다.");
+  }
+});
+
 router.patch("/update", isAdminCheck, async (req, res, next) => {
   const { id, imagePath } = req.body;
   try {
@@ -108,6 +127,32 @@ router.patch("/update", isAdminCheck, async (req, res, next) => {
   } catch (error) {
     console.error(error);
     return res.status(401).send("이미지를 수정할 수 없습니다.");
+  }
+});
+
+router.delete("/delete/:imageId", isAdminCheck, async (req, res, next) => {
+  const { imageId } = req.params;
+
+  if (isNanCheck(imageId)) {
+    return res.status(401).send("잘못된 요청입니다.");
+  }
+  try {
+    const exMenuImage = await MenuImage.findOne({
+      where: { id: parseInt(imageId) },
+    });
+
+    if (!exMenuImage) {
+      return res.status(401).send("존재하지 않는 이미지입니다.");
+    }
+
+    const deleteResult = await MenuImage.destroy({
+      where: { id: parseInt(imageId) },
+    });
+
+    return res.status(200).json({ result: true });
+  } catch (error) {
+    console.error(error);
+    return res.status(401).send("이미지를 삭제할 수 없습니다.");
   }
 });
 
