@@ -140,7 +140,7 @@ const Index = () => {
 
   const formRef = useRef();
   const imageInput = useRef();
-
+  const [currentViewImagePath, setCurrentViewImagePath] = useState(``);
   const [updateData, setUpdateData] = useState(null);
 
   const [deletePopVisible, setDeletePopVisible] = useState(false);
@@ -174,13 +174,12 @@ const Index = () => {
         data.push({
           id: menuImages[i].id,
           key: i,
-          age: menuImages[i].imagePath,
+          imagePath: menuImages[i].imagePath,
           createdAt: menuImages[i].createdAt,
           updatedAt: menuImages[i].updatedAt,
         });
       }
       setShowData(data);
-      console.log(data);
     }
   }, [menuImages]);
 
@@ -569,6 +568,8 @@ const Index = () => {
               src={
                 uploadMenuImagePath
                   ? `${uploadMenuImagePath}`
+                  : updateData
+                  ? updateData.imagePath
                   : `https://via.placeholder.com/${_WIDTH}x${_HEIGHT}`
               }
               alt="main_GALLEY_image"
