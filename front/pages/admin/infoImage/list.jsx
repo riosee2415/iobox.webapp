@@ -113,12 +113,6 @@ const Index = () => {
   const _WIDTH = `400`;
   const _HEIGHT = `400`;
 
-  const data = [
-    "아이오 박스란?",
-    "서비스 이용방법",
-    "서비스 이용료",
-    "IO박스 보관센터",
-  ];
   // LOAD CURRENT INFO AREA /////////////////////////////////////////////
   const { me, st_loadMyInfoDone } = useSelector((state) => state.user);
 
@@ -152,6 +146,8 @@ const Index = () => {
   const [deletePopVisible, setDeletePopVisible] = useState(false);
   const [deleteId, setDeleteId] = useState(null);
 
+  const [showData, setShowData] = useState(null);
+
   const {
     menuImages,
     uploadMenuImagePath,
@@ -170,6 +166,24 @@ const Index = () => {
   } = useSelector((state) => state.menuImage);
 
   ////// USEEFFECT //////
+
+  useEffect(() => {
+    if (menuImages) {
+      let data = [];
+      for (let i = 0; i < menuImages.length; i++) {
+        data.push({
+          id: menuImages[i].id,
+          key: i,
+          age: menuImages[i].imagePath,
+          createdAt: menuImages[i].createdAt,
+          updatedAt: menuImages[i].updatedAt,
+        });
+      }
+      setShowData(data);
+      console.log(data);
+    }
+  }, [menuImages]);
+
   useEffect(() => {
     const qs = getQs();
     dispatch({
@@ -253,9 +267,7 @@ const Index = () => {
   }, [st_menuImageDeleteError]);
 
   useEffect(() => {
-    if (!modal && formRef.current) {
-      formRef.current.resetFields();
-
+    if (!modal) {
       dispatch({
         type: UPDATE_MENU_PATH,
         data: "",
@@ -352,6 +364,15 @@ const Index = () => {
 
   const createModalOk = useCallback(() => {
     dispatch({
+      type: MENU_CREATE_REQUEST,
+      data: {
+        imagePath: uploadMenuImagePath,
+      },
+    });
+  }, [uploadMenuImagePath, updateData]);
+
+  const updateModalOk = useCallback(() => {
+    dispatch({
       type: MENU_UPDATE_REQUEST,
       data: {
         id: updateData.id,
@@ -388,7 +409,7 @@ const Index = () => {
     }
     dispatch({
       type: MENU_DELETE_REQUEST,
-      data: { infoId: deleteId },
+      data: { menuImageId: deleteId },
     });
 
     setDeleteId(null);
@@ -417,11 +438,11 @@ const Index = () => {
   };
 
   const onFill = useCallback((data) => {
-    formRef.current.setFieldsValue({
-      hint: data.hint,
-      content: data.title,
-      answer: data.answer,
-    });
+    // formRef.current.setFieldsValue({
+    //   hint: data.hint,
+    //   content: data.title,
+    //   answer: data.answer,
+    // });
 
     dispatch({
       type: UPDATE_MENU_PATH,
@@ -431,6 +452,14 @@ const Index = () => {
   ////// DATAVIEW //////
 
   // Table
+
+  const nameData = [
+    "아이오 박스란?",
+    "서비스 이용방법",
+    "서비스 이용료",
+    "IO박스 보관센터",
+  ];
+
   const columns = [
     {
       title: "No",
@@ -438,7 +467,7 @@ const Index = () => {
     },
     {
       title: "이름",
-      render: (info) => <div>{data[info.id - 1]}</div>,
+      render: (info) => <div>{nameData[info.key]}</div>,
     },
 
     {
@@ -450,6 +479,14 @@ const Index = () => {
       render: (data) => (
         <Button type="primary" onClick={() => updateModalOpen(data)}>
           수정
+        </Button>
+      ),
+    },
+    {
+      title: "DEL",
+      render: (data) => (
+        <Button type="danger" onClick={deletePopToggle(data.id)}>
+          DEL
         </Button>
       ),
     },
@@ -491,7 +528,7 @@ const Index = () => {
         <Table
           rowKey="id"
           columns={columns}
-          dataSource={menuImages ? menuImages : []}
+          dataSource={showData ? showData : []}
           size="small"
           pagination={
             false
@@ -513,7 +550,7 @@ const Index = () => {
         size="small"
         // footer={false}
         onCancel={modalClose}
-        onOk={createModalOk}
+        onOk={updateData ? updateModalOk : createModalOk}
       >
         <Wrapper padding={`10px`}>
           <ImageWrapper>
@@ -559,12 +596,11 @@ const Index = () => {
             </UploadWrapper>
           </ImageWrapper>
 
-          <Form
+          {/* <Form
             style={{ width: `80%` }}
             onFinish={updateData ? onSubmitUpdate : onSubmit}
             ref={formRef}
           >
-            {/* 
             <Form.Item
               name={"content"}
               label="문제"
@@ -597,8 +633,8 @@ const Index = () => {
                 placeholder="Answer..."
                 type="number"
               />
-            </Form.Item> */}
-          </Form>
+            </Form.Item>
+          </Form> */}
         </Wrapper>
       </Modal>
 
